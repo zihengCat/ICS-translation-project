@@ -23,11 +23,15 @@
 
 # 翻译进度
 
--[] Lesson-01-Overview
--[] Lesson-02-Bits-ints Part1
--[] Lesson-03-Bits-ints Part2
--[] Lesson-04-Floating Point
--[] Lesson-05-Machine-Level-Programming-Basic
+1. finished
+2. working
+3. unplanned
+
+- Lesson-01-Overview
+- Lesson-02-Bits-ints Part1
+- Lesson-03-Bits-ints Part2
+- Lesson-04-Floating Point
+- Lesson-05-Machine-Level-Programming-Basic
 
 # 翻译须知
 
