@@ -1,0 +1,3064 @@
+1
+00:00:00,000 --> 00:00:05,085
+we're still slogging through the
+
+2
+00:00:02,179 --> 00:00:08,790
+material on machine level programming
+
+3
+00:00:05,085 --> 00:00:10,124
+which is I talked to you earlier I think
+
+4
+00:00:08,079 --> 00:00:12,141
+is in some ways the core of this course
+
+5
+00:00:10,889 --> 00:00:16,710
+that much of the rest of material builds
+
+6
+00:00:13,041 --> 00:00:20,049
+upon and hopefully you've all had a
+
+7
+00:00:16,071 --> 00:00:22,107
+chance to check out lab - and your bomb
+
+8
+00:00:20,049 --> 00:00:25,080
+lab and you've gotten started on that
+
+9
+00:00:23,007 --> 00:00:27,012
+and certainly by the time you're
+
+10
+00:00:25,008 --> 00:00:29,013
+finished with the material from today
+
+11
+00:00:27,057 --> 00:00:32,130
+you will be well on the way to solving
+
+12
+00:00:30,003 --> 00:00:36,014
+all but the last one or two stages of
+
+13
+00:00:33,003 --> 00:00:38,085
+the bomb web so I highly recommend you
+
+14
+00:00:36,041 --> 00:00:43,370
+get going on that not put it off to the
+
+15
+00:00:39,012 --> 00:00:48,131
+last minute so and what we're talking
+
+16
+00:00:43,739 --> 00:00:50,070
+about today is is how procedures proceed
+
+17
+00:00:48,239 --> 00:00:50,303
+I'm going to use the same terminology
+
+18
+00:00:50,007 --> 00:00:54,036
+here
+
+19
+00:00:50,879 --> 00:00:56,730
+whether it's a function a procedure or
+
+20
+00:00:54,036 --> 00:00:58,985
+an object-oriented programming a method
+
+21
+00:00:56,073 --> 00:01:00,102
+those are all roughly the same thing and
+
+22
+00:00:59,309 --> 00:01:03,361
+what we'll talk about covers them
+
+23
+00:01:01,002 --> 00:01:03,811
+overall
+
+24
+00:01:09,024 --> 00:01:16,027
+I'll also mention at the outset that the
+
+25
+00:01:13,015 --> 00:01:17,104
+way this is handled in the procedures
+
+26
+00:01:16,027 --> 00:01:21,046
+that we'll be talking about today is a
+
+27
+00:01:18,004 --> 00:01:24,100
+combination of the actual x86 hardware
+
+28
+00:01:21,046 --> 00:01:26,101
+and how it supports it but also in some
+
+29
+00:01:25,000 --> 00:01:30,009
+ways more importantly a set of
+
+30
+00:01:27,001 --> 00:01:32,095
+conventions that were developed that
+
+31
+00:01:30,009 --> 00:01:36,045
+basically everyone agreed to and it's
+
+32
+00:01:32,095 --> 00:01:38,131
+known as an ABI that's why I want to
+
+33
+00:01:36,045 --> 00:01:50,122
+wood stands for application binary
+
+34
+00:01:39,031 --> 00:01:54,130
+interface so the idea is the document
+
+35
+00:01:51,022 --> 00:01:58,084
+you can get it online it's and it's
+
+36
+00:01:55,003 --> 00:02:01,030
+cited in the book it's the document that
+
+37
+00:01:58,084 --> 00:02:04,117
+people put together the initial version
+
+38
+00:02:01,057 --> 00:02:07,105
+when the first x86 64 machines were
+
+39
+00:02:05,017 --> 00:02:10,084
+first being developed and specifically
+
+40
+00:02:08,005 --> 00:02:15,022
+for Linux they said ok all Linux
+
+41
+00:02:10,084 --> 00:02:16,141
+programs that all compilers all the
+
+42
+00:02:15,022 --> 00:02:20,035
+operating system all the different parts
+
+43
+00:02:17,041 --> 00:02:22,069
+of a system that need to have some
+
+44
+00:02:20,035 --> 00:02:25,054
+common understanding of how to manage
+
+45
+00:02:22,069 --> 00:02:28,131
+the resources on the machine will agree
+
+46
+00:02:25,054 --> 00:02:31,105
+to adhere to this set of rules and so it
+
+47
+00:02:29,031 --> 00:02:34,048
+it goes beyond the actual what the
+
+48
+00:02:32,005 --> 00:02:37,009
+hardware does to a set of software
+
+49
+00:02:34,048 --> 00:02:38,062
+standards and it's called application
+
+50
+00:02:37,009 --> 00:02:40,087
+binary interface because it's
+
+51
+00:02:38,062 --> 00:02:42,114
+particularly the interface at the
+
+52
+00:02:40,087 --> 00:02:45,178
+Machine level machine level programming
+
+53
+00:02:43,014 --> 00:02:49,015
+the machine program level and so that's
+
+54
+00:02:46,078 --> 00:02:50,161
+what we'll be covering today so people
+
+55
+00:02:49,015 --> 00:02:53,047
+asked sort of well you know who makes up
+
+56
+00:02:51,061 --> 00:02:54,103
+these rules and things and the point was
+
+57
+00:02:53,047 --> 00:02:57,085
+there was a working group that did this
+
+58
+00:02:55,003 --> 00:03:00,462
+and there's a separate ABI for Windows
+
+59
+00:02:57,085 --> 00:03:03,474
+it's similar but not quite the same
+
+60
+00:03:00,489 --> 00:03:08,560
+there's a separate ABI for OSX for Apple
+
+61
+00:03:04,239 --> 00:03:11,560
+and even FreeBSD a different variant of
+
+62
+00:03:08,056 --> 00:03:13,132
+a unix-like operating system has its own
+
+63
+00:03:11,056 --> 00:03:18,057
+ABI that they all share a lot in common
+
+64
+00:03:14,032 --> 00:03:18,066
+but some of the details differ
+
+65
+00:03:19,054 --> 00:03:23,153
+so if you think about what goes on in a
+
+66
+00:03:22,055 --> 00:03:26,141
+procedure even in C which is a
+
+67
+00:03:24,053 --> 00:03:30,592
+relatively unsophisticated language in
+
+68
+00:03:27,041 --> 00:03:32,045
+many ways there's a lot going on and so
+
+69
+00:03:31,069 --> 00:03:34,880
+it's worth breaking down those and
+
+70
+00:03:32,081 --> 00:03:36,167
+thinking about it one is there's a
+
+71
+00:03:34,088 --> 00:03:39,164
+notion of control so in my example I
+
+72
+00:03:37,067 --> 00:03:44,116
+show a procedure P calling a procedure Q
+
+73
+00:03:40,064 --> 00:03:47,141
+and so when when P calls Q then somehow
+
+74
+00:03:45,016 --> 00:03:51,095
+the program has to jump down and begin
+
+75
+00:03:48,041 --> 00:03:55,046
+executing the the lines of code for Q
+
+76
+00:03:51,095 --> 00:03:57,173
+and then when Q hits its exit point it's
+
+77
+00:03:55,091 --> 00:04:00,098
+returned point somehow is to get back to
+
+78
+00:03:58,073 --> 00:04:03,862
+P and not just to any old place in P but
+
+79
+00:04:01,061 --> 00:04:07,073
+specifically to whatever it came comes
+
+80
+00:04:04,519 --> 00:04:09,980
+in P right after the call to Q so
+
+81
+00:04:07,073 --> 00:04:11,084
+somehow we have to record the
+
+82
+00:04:09,098 --> 00:04:13,133
+information about where the return
+
+83
+00:04:11,084 --> 00:04:15,181
+should be to be able to return to the
+
+84
+00:04:14,033 --> 00:04:20,048
+correct place so that's first of all
+
+85
+00:04:16,081 --> 00:04:21,119
+passing control to a function and having
+
+86
+00:04:20,048 --> 00:04:25,072
+that function return back to where it
+
+87
+00:04:22,019 --> 00:04:29,057
+should get back to our second lose data
+
+88
+00:04:25,072 --> 00:04:31,076
+how do we get operands to it so in this
+
+89
+00:04:29,057 --> 00:04:33,143
+particular case Q is a function that
+
+90
+00:04:32,012 --> 00:04:37,049
+takes a single argument that it calls
+
+91
+00:04:34,043 --> 00:04:39,137
+internally it calls i and up here where
+
+92
+00:04:37,049 --> 00:04:43,097
+p is calling it it's passing some value
+
+93
+00:04:40,037 --> 00:04:47,039
+within p called X so hump somehow that
+
+94
+00:04:43,097 --> 00:04:49,133
+data value of X has to be recorded in a
+
+95
+00:04:47,039 --> 00:04:54,068
+form that within Q it will have access
+
+96
+00:04:50,033 --> 00:04:58,040
+to that information and similarly when q
+
+97
+00:04:54,068 --> 00:05:00,101
+wants to return a value back up and then
+
+98
+00:04:59,003 --> 00:05:03,031
+P will make use of that value there has
+
+99
+00:05:01,001 --> 00:05:08,012
+to be some convention of how that data
+
+100
+00:05:03,031 --> 00:05:11,113
+gets communicated back and then finally
+
+101
+00:05:08,012 --> 00:05:15,074
+in a function might have some local data
+
+102
+00:05:12,013 --> 00:05:18,112
+that requires allocation of some amount
+
+103
+00:05:15,074 --> 00:05:19,115
+of space and so where does that space
+
+104
+00:05:18,229 --> 00:05:23,060
+get allocated how do we make sure it
+
+105
+00:05:20,015 --> 00:05:25,015
+gets allocated properly in particular in
+
+106
+00:05:23,006 --> 00:05:28,100
+C as you know when a function returns
+
+107
+00:05:25,015 --> 00:05:31,046
+any local data that it allocated should
+
+108
+00:05:29,000 --> 00:05:34,025
+get D allocated should be freed
+
+109
+00:05:31,046 --> 00:05:36,134
+so that we don't sort of start consuming
+
+110
+00:05:34,025 --> 00:05:38,117
+an unbounded amount of storage so how do
+
+111
+00:05:37,034 --> 00:05:41,108
+we do that those are all the sort of
+
+112
+00:05:39,017 --> 00:05:45,022
+different aspects that a procedure call
+
+113
+00:05:42,008 --> 00:05:47,042
+and return have to deal with somehow and
+
+114
+00:05:45,022 --> 00:05:51,097
+part of the reason for breaking it down
+
+115
+00:05:47,042 --> 00:05:54,101
+into those little segments is in x86 64
+
+116
+00:05:51,097 --> 00:05:56,183
+one of the clever things they did was to
+
+117
+00:05:55,001 --> 00:05:59,045
+try and reduce the overhead of procedure
+
+118
+00:05:57,083 --> 00:06:01,115
+calls as much as possible
+
+119
+00:05:59,045 --> 00:06:05,066
+because as you know in good programming
+
+120
+00:06:02,015 --> 00:06:07,106
+style you often write these functions
+
+121
+00:06:05,066 --> 00:06:11,069
+that do a fairly small amount of actual
+
+122
+00:06:08,006 --> 00:06:13,085
+useful stuff and it's sort of good
+
+123
+00:06:11,069 --> 00:06:15,074
+programming style to do that especially
+
+124
+00:06:13,085 --> 00:06:17,147
+in a more object-oriented programming
+
+125
+00:06:15,074 --> 00:06:19,148
+style and so you don't want the overhead
+
+126
+00:06:18,047 --> 00:06:22,076
+the extra number of steps taken to
+
+127
+00:06:20,048 --> 00:06:23,051
+invoke a procedure and deal with all
+
+128
+00:06:22,076 --> 00:06:26,102
+that it's a SPECT
+
+129
+00:06:23,078 --> 00:06:29,143
+to take any more time than it needs to
+
+130
+00:06:27,002 --> 00:06:33,011
+because it's a fairly critical overhead
+
+131
+00:06:30,043 --> 00:06:36,095
+so one of the things they do in in this
+
+132
+00:06:33,092 --> 00:06:39,104
+is they only do whatever is absolutely
+
+133
+00:06:36,095 --> 00:06:42,143
+needed so for in particular if no local
+
+134
+00:06:40,004 --> 00:06:45,020
+storage is needed on this for data then
+
+135
+00:06:43,043 --> 00:06:47,090
+don't allocate it and therefore don't
+
+136
+00:06:45,002 --> 00:06:51,047
+free it if you're not passing any values
+
+137
+00:06:47,009 --> 00:06:53,042
+don't pass them and in general sort of
+
+138
+00:06:51,065 --> 00:06:55,094
+how little can you get away with and
+
+139
+00:06:54,023 --> 00:06:58,028
+that makes it a little bit confusing
+
+140
+00:06:55,094 --> 00:06:59,189
+from a teaching point of view and that
+
+141
+00:06:58,073 --> 00:07:02,081
+there's no set template that it follows
+
+142
+00:07:00,089 --> 00:07:04,187
+every time it's sort of you have to each
+
+143
+00:07:03,053 --> 00:07:10,061
+case is a special case for how a
+
+144
+00:07:05,087 --> 00:07:13,109
+particular procedure gets implemented so
+
+145
+00:07:11,033 --> 00:07:15,095
+we'll go through all these parts and see
+
+146
+00:07:14,009 --> 00:07:18,032
+how they happen and you've already seen
+
+147
+00:07:15,095 --> 00:07:18,179
+little glimpses of them we'll get the
+
+148
+00:07:18,032 --> 00:07:24,071
+little fragments of code that we've
+
+149
+00:07:19,079 --> 00:07:25,151
+shown already so the first one and sort
+
+150
+00:07:24,071 --> 00:07:29,102
+of the most critical is how do we pass
+
+151
+00:07:26,051 --> 00:07:31,064
+control to a function but before we can
+
+152
+00:07:30,002 --> 00:07:34,079
+even talk about that we have to talk
+
+153
+00:07:31,064 --> 00:07:37,160
+about the stack so and you've heard that
+
+154
+00:07:34,079 --> 00:07:40,085
+term the stack in various ways the stack
+
+155
+00:07:38,006 --> 00:07:43,088
+is really not a special memory it's just
+
+156
+00:07:41,039 --> 00:07:47,123
+a region of the normal memory remember
+
+157
+00:07:44,042 --> 00:07:50,123
+to the programmers perspective assembly
+
+158
+00:07:48,023 --> 00:07:53,038
+level programmers perspective is memory
+
+159
+00:07:51,023 --> 00:07:55,118
+is just a big array of bytes and
+
+160
+00:07:53,038 --> 00:07:58,046
+somewhere within that bunch of bytes
+
+161
+00:07:56,018 --> 00:08:01,091
+we're going to call it the stack and the
+
+162
+00:07:59,018 --> 00:08:04,109
+stack is used by the program to manage
+
+163
+00:08:01,091 --> 00:08:07,142
+the state associated with the procedures
+
+164
+00:08:05,009 --> 00:08:11,057
+that it calls and as they return so it's
+
+165
+00:08:08,042 --> 00:08:14,101
+where it passes all these potential
+
+166
+00:08:11,057 --> 00:08:18,146
+information the the control information
+
+167
+00:08:15,001 --> 00:08:21,044
+data and allocates local data and the
+
+168
+00:08:19,046 --> 00:08:24,053
+reason why it can be managed is a stack
+
+169
+00:08:21,044 --> 00:08:26,069
+is because of the nature of the whole
+
+170
+00:08:24,053 --> 00:08:28,142
+idea of procedure calls and returns that
+
+171
+00:08:26,069 --> 00:08:31,091
+you make a call and you might need some
+
+172
+00:08:29,042 --> 00:08:33,050
+information but when you return from a
+
+173
+00:08:31,091 --> 00:08:37,100
+call all that information can be
+
+174
+00:08:34,022 --> 00:08:40,076
+discarded and so it makes use of that
+
+175
+00:08:38,000 --> 00:08:43,016
+sort of last in first out allocation
+
+176
+00:08:40,076 --> 00:08:46,081
+principle mesh is very well with this
+
+177
+00:08:43,016 --> 00:08:51,107
+idea of procedure call and return so in
+
+178
+00:08:47,026 --> 00:08:55,057
+x86 stacks actually start with a very
+
+179
+00:08:52,007 --> 00:08:59,018
+high numbered address and when they grow
+
+180
+00:08:55,057 --> 00:09:01,148
+when more data are allocated for this
+
+181
+00:08:59,018 --> 00:09:05,051
+deck it's done by decrementing the stack
+
+182
+00:09:02,048 --> 00:09:08,099
+pointer so the stack pointer as you know
+
+183
+00:09:05,051 --> 00:09:11,084
+is just a regular register RSP and its
+
+184
+00:09:08,099 --> 00:09:13,166
+value is the address of the current top
+
+185
+00:09:11,084 --> 00:09:15,170
+of the stack and every time you allocate
+
+186
+00:09:14,066 --> 00:09:19,097
+more space on the stack it does it by
+
+187
+00:09:16,007 --> 00:09:23,063
+decrementing that pointer now just for a
+
+188
+00:09:19,097 --> 00:09:25,183
+convention and I'm not sure why this
+
+189
+00:09:24,026 --> 00:09:30,041
+happens but this is the way we do it is
+
+190
+00:09:26,083 --> 00:09:33,158
+we draw stacks upside down so that the
+
+191
+00:09:30,041 --> 00:09:37,054
+term the top of the stack is actually
+
+192
+00:09:34,058 --> 00:09:36,154
+shown at the bottom
+
+193
+00:09:37,087 --> 00:09:45,115
+and just to add to that confusion and
+
+194
+00:09:42,019 --> 00:09:47,032
+also remember that the addresses go from
+
+195
+00:09:46,015 --> 00:09:49,063
+bottom to top
+
+196
+00:09:47,032 --> 00:09:51,091
+not from top to bottom so when you add
+
+197
+00:09:49,063 --> 00:09:53,152
+to the stack you decrement the stack
+
+198
+00:09:51,091 --> 00:09:56,143
+pointer neither of those kind of meshes
+
+199
+00:09:54,052 --> 00:09:58,144
+with your intuition perhaps but you just
+
+200
+00:09:57,043 --> 00:10:04,075
+have to get used to it because we're not
+
+201
+00:09:59,044 --> 00:10:07,135
+going to redraw out all this one so
+
+202
+00:10:04,075 --> 00:10:09,124
+anyways that's just remember that over
+
+203
+00:10:08,035 --> 00:10:12,121
+and over again it and that's why these
+
+204
+00:10:10,024 --> 00:10:15,031
+arrows show that if we were to enumerate
+
+205
+00:10:13,021 --> 00:10:17,083
+the addresses of these different bytes
+
+206
+00:10:15,031 --> 00:10:20,062
+in the data they'd be increasing in this
+
+207
+00:10:17,083 --> 00:10:22,129
+direction and when we add to the stack
+
+208
+00:10:20,062 --> 00:10:25,075
+the stack top is at the bottom of the
+
+209
+00:10:23,029 --> 00:10:30,034
+picture and we do it by decrementing the
+
+210
+00:10:25,075 --> 00:10:33,082
+stack pointer so in particular others
+
+211
+00:10:30,079 --> 00:10:37,083
+saw explicit instructions push and pop
+
+212
+00:10:33,082 --> 00:10:41,086
+that make use of the stack and it's
+
+213
+00:10:38,019 --> 00:10:46,027
+often written push cue and pop cue but
+
+214
+00:10:41,086 --> 00:10:49,108
+that cue is actually an optional suffix
+
+215
+00:10:46,027 --> 00:10:52,044
+on the instruction so the the idea of
+
+216
+00:10:50,008 --> 00:10:56,008
+pushing something onto the stack then is
+
+217
+00:10:52,044 --> 00:10:59,077
+there is some source operand it could be
+
+218
+00:10:56,008 --> 00:11:02,023
+from register or for memory or an
+
+219
+00:10:59,077 --> 00:11:05,104
+immediate so this is sort of like a move
+
+220
+00:11:02,023 --> 00:11:08,067
+instruction but the destination of the
+
+221
+00:11:06,004 --> 00:11:11,005
+move will be toward memory and that
+
+222
+00:11:08,067 --> 00:11:12,133
+address of the memory is determined by
+
+223
+00:11:11,014 --> 00:11:16,071
+first decrementing the stack pointer and
+
+224
+00:11:13,033 --> 00:11:16,071
+then doing a right
+
+225
+00:11:18,099 --> 00:11:24,136
+and similarly the pop instruction takes
+
+226
+00:11:22,009 --> 00:11:26,047
+reads data from the stack and stores it
+
+227
+00:11:25,036 --> 00:11:30,061
+in the destination which must be a
+
+228
+00:11:27,028 --> 00:11:33,037
+register for this particular instruction
+
+229
+00:11:30,061 --> 00:11:35,128
+I think push must be a register too now
+
+230
+00:11:34,018 --> 00:11:41,074
+that I think of it for immediate you
+
+231
+00:11:36,028 --> 00:11:44,104
+can't push from memory to so pop reads
+
+232
+00:11:41,074 --> 00:11:47,170
+from memory the address that reads from
+
+233
+00:11:45,004 --> 00:11:50,089
+is given by the current stack pointer it
+
+234
+00:11:48,007 --> 00:11:54,010
+and then it increments the stack pointer
+
+235
+00:11:50,089 --> 00:11:55,176
+by 8 these both work only on 8 byte
+
+236
+00:11:54,073 --> 00:12:00,076
+operands I'll get to you in a second and
+
+237
+00:11:56,076 --> 00:12:06,082
+then the result of that is stored in a
+
+238
+00:12:01,003 --> 00:12:10,078
+register question pop and push or just
+
+239
+00:12:06,082 --> 00:12:12,109
+like doing the liquidation like is there
+
+240
+00:12:10,078 --> 00:12:15,121
+a difference between like using the like
+
+241
+00:12:13,009 --> 00:12:19,071
+the top Oh could you write it as a set
+
+242
+00:12:16,021 --> 00:12:22,084
+of instructions yeah you could actually
+
+243
+00:12:19,071 --> 00:12:24,117
+except for some weird corner cases write
+
+244
+00:12:22,084 --> 00:12:28,132
+it out as a set of separate instructions
+
+245
+00:12:25,017 --> 00:12:31,092
+but it's a common enough thing that it's
+
+246
+00:12:29,032 --> 00:12:34,069
+sort of built in as a as an operation
+
+247
+00:12:31,092 --> 00:12:37,153
+whereas call and return are special they
+
+248
+00:12:34,069 --> 00:12:39,163
+can't be simulated so one thing to
+
+249
+00:12:38,053 --> 00:12:43,102
+remember too is it's important that in
+
+250
+00:12:40,063 --> 00:12:45,151
+one case you decrement you do the
+
+251
+00:12:44,002 --> 00:12:48,100
+arithmetic on the stack pointer before
+
+252
+00:12:46,051 --> 00:12:50,122
+you write because when you first start
+
+253
+00:12:49,000 --> 00:12:52,081
+it out the stack pointer is pointing to
+
+254
+00:12:51,022 --> 00:12:54,031
+whatever was the top element of the
+
+255
+00:12:52,081 --> 00:12:55,168
+stack we want to create a new top
+
+256
+00:12:55,012 --> 00:13:00,043
+element so we're going to decrement
+
+257
+00:12:56,068 --> 00:13:02,131
+first and then do the right whereas
+
+258
+00:13:00,043 --> 00:13:04,078
+going the other direction you want to
+
+259
+00:13:03,031 --> 00:13:07,045
+read off the current top of stack
+
+260
+00:13:04,078 --> 00:13:09,151
+element and then you want to increment
+
+261
+00:13:07,045 --> 00:13:11,137
+the stack pointer to sort of deallocate
+
+262
+00:13:10,051 --> 00:13:13,150
+it and one thing you'll notice here is
+
+263
+00:13:12,037 --> 00:13:17,098
+when I say deallocate it's not like I
+
+264
+00:13:14,005 --> 00:13:19,006
+magically erased this or or something
+
+265
+00:13:17,098 --> 00:13:21,193
+all I'm doing is just moving a stack
+
+266
+00:13:19,006 --> 00:13:24,070
+pointer whatever was there at the top of
+
+267
+00:13:22,093 --> 00:13:28,104
+the stack is still in memory it's just
+
+268
+00:13:25,024 --> 00:13:28,032
+no longer considered part of the stack
+
+269
+00:13:31,003 --> 00:13:38,071
+okay so that's the idea of the stack and
+
+270
+00:13:34,069 --> 00:13:41,388
+the instructions push and pop are are to
+
+271
+00:13:38,098 --> 00:13:43,187
+put data on the stack or take it off but
+
+272
+00:13:42,009 --> 00:13:50,053
+we use the same basic idea for a call
+
+273
+00:13:44,087 --> 00:13:51,556
+and return so let's look at some
+
+274
+00:13:50,449 --> 00:13:55,550
+examples and there's a lot of stuff up
+
+275
+00:13:52,339 --> 00:13:58,344
+here but this is a see function called
+
+276
+00:13:55,055 --> 00:14:02,069
+mult store and then this is the output
+
+277
+00:13:58,839 --> 00:14:05,170
+slightly cleaned up output from the
+
+278
+00:14:02,069 --> 00:14:06,898
+disassembler of that exact function and
+
+279
+00:14:05,017 --> 00:14:10,073
+similarly this is a function called mult
+
+280
+00:14:07,519 --> 00:14:12,544
+to and this is it's disassembled version
+
+281
+00:14:10,073 --> 00:14:14,602
+and the reason I'm showing this is
+
+282
+00:14:12,769 --> 00:14:17,800
+because I want to make use of the
+
+283
+00:14:15,259 --> 00:14:20,000
+addresses that these instructions are at
+
+284
+00:14:18,079 --> 00:14:22,490
+that you don't see when you write it an
+
+285
+00:14:20,000 --> 00:14:27,005
+assembly code so I'm showing it the
+
+286
+00:14:22,049 --> 00:14:28,198
+disassembled version and the reason all
+
+287
+00:14:27,005 --> 00:14:33,023
+this is up here is because you'll see
+
+288
+00:14:28,639 --> 00:14:37,810
+the function multi so I want to show how
+
+289
+00:14:33,023 --> 00:14:39,110
+that works so and there's two
+
+290
+00:14:37,081 --> 00:14:42,083
+instructions and you've seen these in
+
+291
+00:14:40,001 --> 00:14:46,058
+some form to call a function you just
+
+292
+00:14:43,001 --> 00:14:48,940
+call it where you give a label but keep
+
+293
+00:14:46,067 --> 00:14:50,296
+in mind that this these two instructions
+
+294
+00:14:48,949 --> 00:14:53,120
+and the other is when you're ready to
+
+295
+00:14:50,899 --> 00:14:56,120
+return you just execute the RET
+
+296
+00:14:53,012 --> 00:14:58,161
+instruction and keep in mind though that
+
+297
+00:14:56,012 --> 00:15:00,661
+these functions don't do the whole
+
+298
+00:14:58,269 --> 00:15:02,600
+business of procedure call and return
+
+299
+00:15:00,769 --> 00:15:04,940
+they just do the control part of it
+
+300
+00:15:02,006 --> 00:15:09,115
+which is we saw is only one of three
+
+301
+00:15:04,094 --> 00:15:12,101
+aspects of a procedure also mention
+
+302
+00:15:09,709 --> 00:15:18,350
+you'll see especially in sometimes it
+
+303
+00:15:13,001 --> 00:15:21,700
+will say ret semicolon ret and you can
+
+304
+00:15:18,035 --> 00:15:24,098
+pretty much just ignore that and it's a
+
+305
+00:15:21,709 --> 00:15:27,714
+bit obscure why it's even there so it's
+
+306
+00:15:24,098 --> 00:15:26,877
+really the same idea
+
+307
+00:15:29,679 --> 00:15:36,691
+okay so let's to break this down into
+
+308
+00:15:32,809 --> 00:15:40,882
+its simplest part so let's imagine a
+
+309
+00:15:36,799 --> 00:15:43,873
+scenario in which the top of stack is at
+
+310
+00:15:41,539 --> 00:15:46,636
+hex address 1 to 0 which is not
+
+311
+00:15:44,539 --> 00:15:49,567
+realistic by the way and the program
+
+312
+00:15:47,509 --> 00:15:54,582
+counter which is called our IP which is
+
+313
+00:15:49,819 --> 00:15:56,827
+not anything to do with death is is
+
+314
+00:15:55,239 --> 00:16:02,275
+indicating that the current instruction
+
+315
+00:15:57,619 --> 00:16:05,623
+is this at 5:44 which is this call
+
+316
+00:16:02,599 --> 00:16:08,692
+instruction and so what would happen
+
+317
+00:16:05,659 --> 00:16:13,687
+with the call instruction is it would do
+
+318
+00:16:09,529 --> 00:16:15,541
+two things it would actually three
+
+319
+00:16:13,939 --> 00:16:18,940
+things it would decrement the stack
+
+320
+00:16:15,649 --> 00:16:21,736
+pointer and so subjecting 8 from 1 to 0
+
+321
+00:16:18,949 --> 00:16:25,950
+and hex gives you 1 1 8 and it would
+
+322
+00:16:22,519 --> 00:16:30,532
+write the address of the instruction
+
+323
+00:16:25,959 --> 00:16:33,037
+following to call onto the top of the
+
+324
+00:16:30,649 --> 00:16:36,685
+stack and it's important that it does it
+
+325
+00:16:33,739 --> 00:16:39,747
+the one following the call is it that
+
+326
+00:16:37,009 --> 00:16:43,018
+that's instruction I'm going to return
+
+327
+00:16:39,819 --> 00:16:46,903
+used for my return address and I want to
+
+328
+00:16:43,099 --> 00:16:49,156
+resume execution in this function at the
+
+329
+00:16:47,659 --> 00:16:50,740
+instruction after the call not to call
+
+330
+00:16:49,669 --> 00:16:56,755
+itself otherwise you'd have an infinite
+
+331
+00:16:51,469 --> 00:17:00,496
+loop and it also this call instruction
+
+332
+00:16:57,529 --> 00:17:03,610
+also embedded in the encoding of the
+
+333
+00:17:00,739 --> 00:17:09,350
+instruction is the destination address
+
+334
+00:17:04,339 --> 00:17:11,480
+of it and which happens to be the
+
+335
+00:17:09,035 --> 00:17:14,134
+starting address of this particular
+
+336
+00:17:11,048 --> 00:17:18,757
+function so the program counter will be
+
+337
+00:17:14,449 --> 00:17:21,457
+set to that value and now the the
+
+338
+00:17:19,189 --> 00:17:22,285
+processor starts just executing along
+
+339
+00:17:21,529 --> 00:17:25,730
+these instructions so it did a
+
+340
+00:17:23,149 --> 00:17:27,740
+combination of a jump and a push and
+
+341
+00:17:25,073 --> 00:17:30,124
+that's why the question was raised
+
+342
+00:17:27,074 --> 00:17:32,983
+earlier is a push instruction could you
+
+343
+00:17:31,024 --> 00:17:35,323
+assemble that out of existing
+
+344
+00:17:33,649 --> 00:17:39,651
+instructions the answer is yes for push
+
+345
+00:17:35,539 --> 00:17:39,552
+but not for call question back there
+
+346
+00:17:40,021 --> 00:17:48,034
+bump in in like both story would put the
+
+347
+00:17:42,085 --> 00:17:51,169
+address of multitude in RIT no no it did
+
+348
+00:17:48,034 --> 00:17:54,093
+that RIT you never explicitly there
+
+349
+00:17:52,069 --> 00:17:56,388
+aren't instructions that manipulate that
+
+350
+00:17:54,399 --> 00:17:59,710
+directly it's implicitly part of the
+
+351
+00:17:57,009 --> 00:18:03,038
+call instruction the call instruction
+
+352
+00:17:59,071 --> 00:18:07,108
+will take I don't have the actual
+
+353
+00:18:03,299 --> 00:18:09,850
+encoding but embedded in this call
+
+354
+00:18:08,008 --> 00:18:11,457
+instruction you see that it's five bytes
+
+355
+00:18:09,085 --> 00:18:13,164
+long I don't show you the bike coding
+
+356
+00:18:11,529 --> 00:18:17,710
+but embedded in it is the target address
+
+357
+00:18:13,929 --> 00:18:19,330
+and so it will take that address and use
+
+358
+00:18:17,071 --> 00:18:22,132
+it for the new value of the program
+
+359
+00:18:19,033 --> 00:18:25,033
+counter so the call does both the
+
+360
+00:18:23,032 --> 00:18:27,711
+pushing of the old the return pointer
+
+361
+00:18:25,033 --> 00:18:33,252
+and setting the program counter to the
+
+362
+00:18:27,999 --> 00:18:36,038
+new the the new target for it so it does
+
+363
+00:18:33,549 --> 00:18:35,633
+both of those things
+
+364
+00:18:37,094 --> 00:18:39,178
+question
+
+365
+00:18:45,059 --> 00:18:54,148
+I don't think so would either call or
+
+366
+00:18:48,799 --> 00:18:58,861
+return if so it would be really obscure
+
+367
+00:18:55,048 --> 00:19:01,627
+no I don't think so no so call and
+
+368
+00:18:59,419 --> 00:19:03,457
+return are the there might be some weird
+
+369
+00:19:02,059 --> 00:19:05,510
+system instructions that let you do that
+
+370
+00:19:03,799 --> 00:19:10,340
+but not in you'd see in any normal
+
+371
+00:19:05,051 --> 00:19:16,960
+program of a question good question so
+
+372
+00:19:10,034 --> 00:19:22,843
+so okay so that shows you the control
+
+373
+00:19:17,419 --> 00:19:26,090
+McCall works and then so now imagine
+
+374
+00:19:23,149 --> 00:19:28,370
+this multitude chugs along and it hits
+
+375
+00:19:26,009 --> 00:19:30,958
+its return point and it hits this rep
+
+376
+00:19:28,037 --> 00:19:36,058
+instruction by the way again ret Q and
+
+377
+00:19:31,039 --> 00:19:39,950
+rather the same instruction and ret will
+
+378
+00:19:36,058 --> 00:19:42,907
+its purpose is to reverse the effect of
+
+379
+00:19:39,095 --> 00:19:46,148
+a call it assumes that the top of the
+
+380
+00:19:43,429 --> 00:19:51,470
+stack has an address that you want to
+
+381
+00:19:47,048 --> 00:19:53,377
+jump to so it will pop that address off
+
+382
+00:19:51,047 --> 00:19:55,109
+the stack meaning it will increment the
+
+383
+00:19:53,809 --> 00:19:57,814
+stack pointer like I said the value
+
+384
+00:19:56,009 --> 00:20:00,448
+doesn't really disappear from the memory
+
+385
+00:19:58,309 --> 00:20:03,860
+it just is no longer considered part of
+
+386
+00:20:00,529 --> 00:20:05,542
+the stack and then it will set the
+
+387
+00:20:03,086 --> 00:20:07,175
+program counter to what it just popped
+
+388
+00:20:05,659 --> 00:20:10,723
+off the stack and that will cause the
+
+389
+00:20:08,075 --> 00:20:11,086
+program to resume back to where it came
+
+390
+00:20:11,299 --> 00:20:15,110
+from
+
+391
+00:20:11,086 --> 00:20:17,155
+so you see that to the clever idea of
+
+392
+00:20:15,011 --> 00:20:20,080
+pushing the address of the next
+
+393
+00:20:17,929 --> 00:20:22,610
+instruction so when the return comes it
+
+394
+00:20:20,179 --> 00:20:25,120
+will get it to the point where it should
+
+395
+00:20:22,061 --> 00:20:24,112
+resume execution
+
+396
+00:20:26,006 --> 00:20:30,048
+okay so that's passing control it's
+
+397
+00:20:29,007 --> 00:20:33,045
+pretty simple all these things by the
+
+398
+00:20:31,002 --> 00:20:35,097
+way and is just the nature machine code
+
+399
+00:20:33,045 --> 00:20:38,524
+every single part of it is pretty simple
+
+400
+00:20:35,097 --> 00:20:41,306
+because it's designed to be executed by
+
+401
+00:20:38,929 --> 00:20:45,360
+the original hardware is fairly simple
+
+402
+00:20:42,179 --> 00:20:48,278
+it's not any more but it's really the
+
+403
+00:20:45,036 --> 00:20:50,133
+basic ideas are and that we use kind of
+
+404
+00:20:49,169 --> 00:20:53,630
+combinations of instructions to build up
+
+405
+00:20:51,033 --> 00:20:55,089
+all the layers associated with
+
+406
+00:20:53,063 --> 00:20:59,732
+operations like procedure call and
+
+407
+00:20:55,089 --> 00:21:01,161
+return okay so passing data now we've
+
+408
+00:21:00,299 --> 00:21:06,120
+already seen a few small examples of
+
+409
+00:21:02,061 --> 00:21:07,110
+passing data we've seen a couple
+
+410
+00:21:06,012 --> 00:21:10,053
+registers that get used when you're
+
+411
+00:21:08,001 --> 00:21:13,038
+passing arguments to a function and
+
+412
+00:21:10,053 --> 00:21:15,060
+we've seen the register RA X getting
+
+413
+00:21:13,047 --> 00:21:18,144
+used to return values from a function
+
+414
+00:21:15,006 --> 00:21:21,053
+and so those that's the basic idea and
+
+415
+00:21:19,044 --> 00:21:24,072
+again this is all built into this ABI
+
+416
+00:21:22,007 --> 00:21:27,078
+you know defined as a set of conventions
+
+417
+00:21:24,072 --> 00:21:28,161
+not particularly part of the hardware so
+
+418
+00:21:27,078 --> 00:21:34,146
+in particular the rule is that the first
+
+419
+00:21:29,061 --> 00:21:40,062
+six arguments get passed within these
+
+420
+00:21:35,046 --> 00:21:43,062
+particular registers and you just have
+
+421
+00:21:40,062 --> 00:21:45,096
+to memorize the order of them or have a
+
+422
+00:21:43,062 --> 00:21:47,351
+table handy to look at or something like
+
+423
+00:21:45,096 --> 00:21:55,101
+that because there's no particular logic
+
+424
+00:21:47,909 --> 00:21:58,590
+to it and the return value is returned
+
+425
+00:21:56,001 --> 00:22:00,670
+in register RA X and by the way this is
+
+426
+00:21:58,059 --> 00:22:04,388
+all four arguments that are either
+
+427
+00:22:00,679 --> 00:22:06,750
+integers or pointers well I think I've
+
+428
+00:22:04,919 --> 00:22:08,190
+got a little bit unfolding point those
+
+429
+00:22:06,075 --> 00:22:09,171
+are passed in a separate set of
+
+430
+00:22:08,019 --> 00:22:12,638
+registers so these are just for assumed
+
+431
+00:22:10,071 --> 00:22:15,147
+now we just are dealing with integer
+
+432
+00:22:12,809 --> 00:22:18,450
+data pointer data and then you ask well
+
+433
+00:22:16,047 --> 00:22:20,082
+what happens if you have more than six
+
+434
+00:22:18,045 --> 00:22:22,053
+arguments to a function which isn't very
+
+435
+00:22:20,082 --> 00:22:24,171
+common but it happens well the rule on
+
+436
+00:22:23,025 --> 00:22:28,184
+that is those get put in memory on the
+
+437
+00:22:25,071 --> 00:22:30,078
+stack and I'll show straight what I mean
+
+438
+00:22:28,409 --> 00:22:32,880
+by that so they're passed to the
+
+439
+00:22:30,078 --> 00:22:35,123
+function and then the function has to
+
+440
+00:22:32,088 --> 00:22:38,135
+retrieve those values off the stack
+
+441
+00:22:36,023 --> 00:22:41,032
+back in the bad old days of ia-32 by the
+
+442
+00:22:39,035 --> 00:22:44,344
+way all the arguments got passed on the
+
+443
+00:22:41,239 --> 00:22:46,318
+stack but now for the most part you pass
+
+444
+00:22:44,659 --> 00:22:49,340
+arguments and the registers and the
+
+445
+00:22:47,029 --> 00:22:53,062
+reason for that is register access is
+
+446
+00:22:49,034 --> 00:22:56,048
+way faster than memory access okay so
+
+447
+00:22:53,359 --> 00:22:59,416
+here's a kind of a messy bunch of code
+
+448
+00:22:56,048 --> 00:23:03,997
+but just to show you how they show up
+
+449
+00:22:59,929 --> 00:23:08,210
+all the time in the function not store
+
+450
+00:23:04,429 --> 00:23:10,820
+as three arguments XY and desk and you
+
+451
+00:23:08,021 --> 00:23:14,680
+can just see within this code that it's
+
+452
+00:23:10,082 --> 00:23:19,094
+making use of of registers like RDI
+
+453
+00:23:14,869 --> 00:23:22,921
+and does it show where and in other
+
+454
+00:23:19,094 --> 00:23:25,094
+places like mult - as two arguments and
+
+455
+00:23:23,389 --> 00:23:28,453
+you can see how it's making use of our
+
+456
+00:23:25,094 --> 00:23:29,953
+GI and our si and the code so basically
+
+457
+00:23:29,029 --> 00:23:32,128
+the code is generated under the
+
+458
+00:23:30,799 --> 00:23:34,858
+assumptions that whatever arguments is
+
+459
+00:23:33,019 --> 00:23:37,700
+being passed to it will be passed in
+
+460
+00:23:35,389 --> 00:23:39,442
+that particular set of registers and the
+
+461
+00:23:37,007 --> 00:23:41,356
+particular orders are listed and the
+
+462
+00:23:39,919 --> 00:23:43,995
+code is sort of makes those assumptions
+
+463
+00:23:42,049 --> 00:23:47,110
+and then similarly
+
+464
+00:23:44,679 --> 00:23:49,728
+when you have a return value from a
+
+465
+00:23:47,659 --> 00:23:49,710
+function
+
+466
+00:23:50,289 --> 00:23:58,291
+it's the multi-store does not have a
+
+467
+00:23:52,073 --> 00:24:00,202
+return values but of mul - does and the
+
+468
+00:23:58,309 --> 00:24:04,850
+way it does is it deposits the value
+
+469
+00:24:00,859 --> 00:24:09,830
+into our ax and then when the return
+
+470
+00:24:04,085 --> 00:24:15,146
+from our X occurs a tumult store you see
+
+471
+00:24:09,083 --> 00:24:18,772
+that it assumes now that the mult store
+
+472
+00:24:16,046 --> 00:24:22,121
+code can assume that register RA X holds
+
+473
+00:24:19,519 --> 00:24:25,618
+the value of the return value and it can
+
+474
+00:24:23,021 --> 00:24:28,600
+store it in its destination register and
+
+475
+00:24:26,509 --> 00:24:31,573
+we'll look in a minute why RB X gets
+
+476
+00:24:28,789 --> 00:24:34,970
+used here we'll cover that in just a
+
+477
+00:24:32,149 --> 00:24:36,235
+little later but that's the point that
+
+478
+00:24:34,097 --> 00:24:39,098
+as long as everyone sticks to this
+
+479
+00:24:37,009 --> 00:24:42,950
+common interface standard then you can
+
+480
+00:24:40,007 --> 00:24:47,296
+even use different compilers to compile
+
+481
+00:24:42,095 --> 00:24:48,544
+code and have them be able to cooperate
+
+482
+00:24:47,359 --> 00:24:49,730
+with each other in terms of passing
+
+483
+00:24:49,399 --> 00:24:52,400
+argue
+
+484
+00:24:49,073 --> 00:24:56,074
+it's returning data and that's the
+
+485
+00:24:52,004 --> 00:24:56,038
+reason why you want that convention yes
+
+486
+00:24:58,024 --> 00:25:03,065
+eight bytes because the well first of
+
+487
+00:25:02,039 --> 00:25:06,080
+all for call and return
+
+488
+00:25:03,065 --> 00:25:09,158
+it's a 64-bit machine so all addresses
+
+489
+00:25:06,008 --> 00:25:12,092
+are 64 bits or 8 bytes but also even the
+
+490
+00:25:10,058 --> 00:25:17,075
+push in the pop instruction only work on
+
+491
+00:25:13,064 --> 00:25:19,130
+8 byte values if you said push L if you
+
+492
+00:25:17,075 --> 00:25:21,133
+tried to write that an X in 64-bit code
+
+493
+00:25:20,003 --> 00:25:30,005
+it would come back with a syntax error
+
+494
+00:25:22,033 --> 00:25:32,042
+if you had in the assembly so oh that
+
+495
+00:25:30,032 --> 00:25:39,059
+and that's different I three to there'd
+
+496
+00:25:32,042 --> 00:25:41,045
+be four byte values here okay so like I
+
+497
+00:25:39,059 --> 00:25:42,092
+said you've certain seen that implicitly
+
+498
+00:25:41,045 --> 00:25:44,054
+and some of the code you've already been
+
+499
+00:25:42,092 --> 00:25:47,093
+looking at and it's pretty
+
+500
+00:25:44,054 --> 00:25:50,117
+straightforward to get an example that
+
+501
+00:25:47,093 --> 00:25:52,100
+shows passing arguments you have to have
+
+502
+00:25:51,017 --> 00:25:55,019
+a function with at least seven arguments
+
+503
+00:25:53,000 --> 00:25:58,096
+which is pretty messy to do so I won't
+
+504
+00:25:55,019 --> 00:25:58,096
+do it but there's examples in the book
+
+505
+00:25:59,047 --> 00:26:06,049
+but now and we'll sort of pick it up
+
+506
+00:26:02,048 --> 00:26:10,052
+I'll show you also in this later part
+
+507
+00:26:06,049 --> 00:26:12,083
+and now the third part of it is again
+
+508
+00:26:10,088 --> 00:26:15,119
+what if there's some local data that we
+
+509
+00:26:12,083 --> 00:26:18,115
+need to make use of and so to get that
+
+510
+00:26:16,019 --> 00:26:22,046
+idea across I have to illness to another
+
+511
+00:26:19,015 --> 00:26:27,047
+concept which is called the stack frame
+
+512
+00:26:22,046 --> 00:26:29,072
+and so this is a particularly intense
+
+513
+00:26:27,047 --> 00:26:32,114
+it's used in memory and as I mentioned
+
+514
+00:26:29,072 --> 00:26:35,075
+earlier one of the features of calling
+
+515
+00:26:33,014 --> 00:26:39,101
+and returning is you can imagine when
+
+516
+00:26:36,002 --> 00:26:42,089
+you have a nested series of calls to a
+
+517
+00:26:40,001 --> 00:26:48,092
+function when a particular function is
+
+518
+00:26:42,089 --> 00:26:50,126
+executing it only it only needs to
+
+519
+00:26:48,092 --> 00:26:53,105
+reference the data within that function
+
+520
+00:26:51,026 --> 00:26:56,039
+or values that have been passed to it
+
+521
+00:26:54,005 --> 00:26:58,070
+some which might be pointers and
+
+522
+00:26:56,039 --> 00:27:01,103
+therefore pointing to other locations in
+
+523
+00:26:58,007 --> 00:27:02,070
+memory but the point is sort of the rest
+
+524
+00:27:02,003 --> 00:27:06,021
+of the functions
+
+525
+00:27:03,033 --> 00:27:07,131
+in your code however many they are are
+
+526
+00:27:06,021 --> 00:27:10,047
+sort of frozen at that moment really
+
+527
+00:27:08,031 --> 00:27:13,118
+there's only one function executing at
+
+528
+00:27:10,047 --> 00:27:16,050
+any given time I'm assuming a suit of
+
+529
+00:27:14,018 --> 00:27:21,054
+what you'd call a single-threaded model
+
+530
+00:27:16,077 --> 00:27:23,172
+here and so we can just allocate on the
+
+531
+00:27:21,054 --> 00:27:26,061
+stack whatever space is required for
+
+532
+00:27:24,072 --> 00:27:29,094
+this particular function and then when
+
+533
+00:27:27,024 --> 00:27:32,073
+we return from that function oh we
+
+534
+00:27:29,094 --> 00:27:33,183
+shouldn't if it's correctly written need
+
+535
+00:27:32,073 --> 00:27:35,127
+any of the information associated with
+
+536
+00:27:34,083 --> 00:27:37,137
+that function that can just sort of
+
+537
+00:27:36,027 --> 00:27:41,075
+disappear forever and that's why this
+
+538
+00:27:38,037 --> 00:27:43,113
+idea of a stack you allocate something
+
+539
+00:27:41,075 --> 00:27:45,159
+if you make more calls you keep
+
+540
+00:27:44,013 --> 00:27:48,099
+allocating more stuff but as they return
+
+541
+00:27:46,059 --> 00:27:51,090
+you kind of back out of the stack and
+
+542
+00:27:48,099 --> 00:27:54,111
+and free things up so the stack
+
+543
+00:27:51,009 --> 00:27:56,013
+discipline is is exactly the right match
+
+544
+00:27:55,011 --> 00:28:00,048
+as well this whole idea of procedure
+
+545
+00:27:56,094 --> 00:28:02,100
+calling returns so each block we use for
+
+546
+00:28:00,048 --> 00:28:08,111
+a particular call then it's called a
+
+547
+00:28:03,000 --> 00:28:12,096
+stack frame and to be suitum more
+
+548
+00:28:09,011 --> 00:28:15,015
+technical we'll say it's a frame for a
+
+549
+00:28:12,096 --> 00:28:18,183
+particular instance of a procedure a
+
+550
+00:28:15,051 --> 00:28:22,125
+particular call to a procedure so just
+
+551
+00:28:19,083 --> 00:28:25,092
+imagine we had a set of functions one
+
+552
+00:28:23,025 --> 00:28:30,033
+called you which calls a function called
+
+553
+00:28:25,092 --> 00:28:32,139
+who and who has multiple calls to
+
+554
+00:28:30,033 --> 00:28:35,037
+another function called MI and mi is
+
+555
+00:28:33,039 --> 00:28:41,100
+itself recurrence recursive it calls
+
+556
+00:28:35,073 --> 00:28:44,109
+itself and so an imagine we had a chain
+
+557
+00:28:42,000 --> 00:28:48,051
+of calls where you call two calls
+
+558
+00:28:45,009 --> 00:28:52,017
+mi which calls itself recursively twice
+
+559
+00:28:48,051 --> 00:28:54,123
+and then we'll exit out of MI and get
+
+560
+00:28:52,089 --> 00:28:57,171
+back to who and then who will hit it
+
+561
+00:28:55,023 --> 00:29:01,070
+second call to mi which won't go any
+
+562
+00:28:58,071 --> 00:29:04,083
+further and that will be it so this
+
+563
+00:29:01,007 --> 00:29:07,100
+picture here shows the soul whole
+
+564
+00:29:04,083 --> 00:29:12,146
+history of all these calls that get made
+
+565
+00:29:08,063 --> 00:29:12,146
+but in terms of the stack of
+
+566
+00:29:13,065 --> 00:29:19,084
+all we need what will keep a frame for
+
+567
+00:29:17,044 --> 00:29:24,097
+every sort of procedure that has been
+
+568
+00:29:19,084 --> 00:29:27,663
+called but not yet returned on this deck
+
+569
+00:29:24,097 --> 00:29:30,163
+and in general this deck of is delimited
+
+570
+00:29:28,419 --> 00:29:33,400
+by delimited by two pointers one is the
+
+571
+00:29:31,063 --> 00:29:35,074
+stack pointer which we're familiar with
+
+572
+00:29:33,004 --> 00:29:39,018
+and then there's another called the base
+
+573
+00:29:35,074 --> 00:29:43,165
+pointer which register RB P indicates
+
+574
+00:29:39,054 --> 00:29:47,062
+but one a feature of actually it's now
+
+575
+00:29:44,065 --> 00:29:51,076
+become a feature of ia32 as well is that
+
+576
+00:29:48,034 --> 00:29:53,076
+this is an optional pointer and in
+
+577
+00:29:51,076 --> 00:29:56,128
+particularly the code that we'll see
+
+578
+00:29:53,076 --> 00:30:00,172
+does not use a base pointer except in
+
+579
+00:29:57,028 --> 00:30:04,917
+some very special cases so this this
+
+580
+00:30:01,072 --> 00:30:07,081
+register doesn't really won't show up in
+
+581
+00:30:05,169 --> 00:30:10,245
+your programs being used in a special
+
+582
+00:30:08,062 --> 00:30:13,138
+way as a frame pointer it will be used
+
+583
+00:30:10,929 --> 00:30:16,450
+instead just as a regular register so
+
+584
+00:30:14,038 --> 00:30:17,089
+typically then the only thing you'll
+
+585
+00:30:16,045 --> 00:30:18,100
+know about the stack pointer you
+
+586
+00:30:17,089 --> 00:30:22,096
+wouldn't even be able to figure out
+
+587
+00:30:19,000 --> 00:30:25,096
+where where the frame is exactly you'll
+
+588
+00:30:22,096 --> 00:30:27,184
+just know that the top part of the stack
+
+589
+00:30:25,096 --> 00:30:32,104
+is the top frame for the topmost
+
+590
+00:30:28,084 --> 00:30:37,123
+function and this is all managed by the
+
+591
+00:30:33,004 --> 00:30:39,076
+code itself and this is the same stack
+
+592
+00:30:38,023 --> 00:30:42,085
+by the way in which you're pushing and
+
+593
+00:30:39,076 --> 00:30:44,148
+popping addresses - and they all kind of
+
+594
+00:30:42,085 --> 00:30:44,148
+get mixed together
+
+595
+00:30:46,083 --> 00:30:51,087
+so we haven't actually seen any code up
+
+596
+00:30:49,086 --> 00:30:53,154
+til now that makes you have to do any
+
+597
+00:30:52,023 --> 00:30:56,030
+explicit management of the stack because
+
+598
+00:30:54,054 --> 00:31:00,105
+all our examples were very simple and
+
+599
+00:30:56,093 --> 00:31:03,135
+just did a made use of the stack only
+
+600
+00:31:01,005 --> 00:31:07,044
+for return addresses but we'll see some
+
+601
+00:31:04,035 --> 00:31:09,120
+that uses more but so in general then
+
+602
+00:31:07,044 --> 00:31:13,062
+imagine that each time you begin a
+
+603
+00:31:10,002 --> 00:31:16,005
+function some space key delicated
+
+604
+00:31:13,062 --> 00:31:21,077
+potentially on the stack for its frame
+
+605
+00:31:16,005 --> 00:31:25,028
+and then and that frame is indicated by
+
+606
+00:31:21,077 --> 00:31:30,111
+either one pointer only or two pointers
+
+607
+00:31:25,073 --> 00:31:32,100
+and so now as you calls who then that
+
+608
+00:31:31,011 --> 00:31:36,033
+will create a new stack frame for who
+
+609
+00:31:33,000 --> 00:31:38,097
+and some way when mi gets called that
+
+610
+00:31:36,033 --> 00:31:40,038
+creates the new stack frame and as we
+
+611
+00:31:38,097 --> 00:31:41,175
+continue with these recursive calls
+
+612
+00:31:40,083 --> 00:31:44,145
+we're just adding more stuff to the
+
+613
+00:31:42,075 --> 00:31:46,098
+stack getting deeper and deeper and that
+
+614
+00:31:45,045 --> 00:31:48,123
+will keep happening it's one of the
+
+615
+00:31:46,098 --> 00:31:51,150
+reasons why recursion is a little bit of
+
+616
+00:31:49,023 --> 00:31:55,092
+a risky thing is that it compared to
+
+617
+00:31:52,005 --> 00:31:58,047
+iteration it keeps requiring more space
+
+618
+00:31:55,092 --> 00:32:02,121
+as you go deeper in the recursion and in
+
+619
+00:31:58,092 --> 00:32:07,107
+particular most systems limit the total
+
+620
+00:32:03,021 --> 00:32:09,114
+depth of the stack and you can have what
+
+621
+00:32:08,007 --> 00:32:11,073
+because they're they're afraid of the
+
+622
+00:32:10,014 --> 00:32:13,113
+sort of infinite loop version of
+
+623
+00:32:11,073 --> 00:32:14,172
+recursion is runaway recursion where it
+
+624
+00:32:14,013 --> 00:32:20,045
+just keeps trying to push more and more
+
+625
+00:32:15,072 --> 00:32:25,119
+stuff onto the stack that's an aside and
+
+626
+00:32:20,045 --> 00:32:28,047
+then as these begin to return they those
+
+627
+00:32:26,019 --> 00:32:32,055
+frames get de-allocated removed from the
+
+628
+00:32:28,065 --> 00:32:34,134
+stack so part of it it the nice thing
+
+629
+00:32:32,055 --> 00:32:38,079
+about this is it means that every time I
+
+630
+00:32:35,034 --> 00:32:41,073
+if I have multiple calls to MI because
+
+631
+00:32:38,079 --> 00:32:44,097
+I've gone deep recursively each one of
+
+632
+00:32:41,073 --> 00:32:48,114
+them will have its own local state that
+
+633
+00:32:44,097 --> 00:32:50,100
+it needs to manage and again the whole
+
+634
+00:32:49,014 --> 00:32:54,111
+stack discipline is what makes it work
+
+635
+00:32:51,027 --> 00:32:57,032
+and what we'll find out in particular is
+
+636
+00:32:55,011 --> 00:32:59,067
+because of the way this is set up
+
+637
+00:32:57,032 --> 00:33:00,371
+recursive calls are handled the same way
+
+638
+00:32:59,067 --> 00:33:01,706
+that
+
+639
+00:33:00,659 --> 00:33:03,743
+regular calls are there's nothing
+
+640
+00:33:02,309 --> 00:33:06,392
+special about them all the heart all the
+
+641
+00:33:04,499 --> 00:33:09,210
+sort of infrastructure required to
+
+642
+00:33:07,139 --> 00:33:12,166
+support recursion is built into this
+
+643
+00:33:09,021 --> 00:33:12,220
+whole stack discipline
+
+644
+00:33:13,019 --> 00:33:19,478
+so anyways imagine that all these calls
+
+645
+00:33:16,549 --> 00:33:24,090
+return back to who and then who would
+
+646
+00:33:19,649 --> 00:33:25,727
+call mi again and then again as we exit
+
+647
+00:33:24,009 --> 00:33:29,348
+we were sort of deallocating these stack
+
+648
+00:33:26,429 --> 00:33:30,200
+frames and getting back to the starting
+
+649
+00:33:29,429 --> 00:33:38,474
+point
+
+650
+00:33:30,002 --> 00:33:40,301
+yes question oh so the question was if
+
+651
+00:33:38,879 --> 00:33:42,932
+RB P is optional
+
+652
+00:33:40,499 --> 00:33:45,515
+then how does the program know how to do
+
+653
+00:33:43,409 --> 00:33:47,486
+the D allocation how can it reset the
+
+654
+00:33:45,659 --> 00:33:49,748
+stack back to the right place and the
+
+655
+00:33:48,179 --> 00:33:54,450
+answer is and we'll see examples that
+
+656
+00:33:50,549 --> 00:33:58,080
+the code is compiled so it knows for
+
+657
+00:33:54,045 --> 00:34:00,404
+example when it does the allocation is
+
+658
+00:33:58,008 --> 00:34:02,657
+going to allocate 16 bytes and then it
+
+659
+00:34:00,809 --> 00:34:04,844
+knows at the end that it can be
+
+660
+00:34:02,729 --> 00:34:05,822
+allocated 16 bytes and it actually
+
+661
+00:34:05,159 --> 00:34:09,203
+brings up a good point there is sort of
+
+662
+00:34:06,659 --> 00:34:11,700
+an obscure part of the book that goes
+
+663
+00:34:09,599 --> 00:34:14,460
+over this there's a few special cases
+
+664
+00:34:11,007 --> 00:34:16,136
+where it can't know in advance how much
+
+665
+00:34:14,046 --> 00:34:21,075
+space will be allocated when it has to
+
+666
+00:34:16,829 --> 00:34:24,450
+allocate an array or a memory buffer of
+
+667
+00:34:21,075 --> 00:34:27,102
+variable size and then it will actually
+
+668
+00:34:24,045 --> 00:34:30,274
+use the the RB P in those cases for
+
+669
+00:34:28,002 --> 00:34:30,661
+exactly that purpose
+
+670
+00:34:33,007 --> 00:34:41,406
+okay and so in general that what the
+
+671
+00:34:38,799 --> 00:34:44,826
+stack frame will look like in one of
+
+672
+00:34:42,099 --> 00:34:49,131
+these machines will be something like
+
+673
+00:34:45,069 --> 00:34:53,200
+this that look and you'll see this is
+
+674
+00:34:49,419 --> 00:34:56,457
+the caller and then this is the the
+
+675
+00:34:53,002 --> 00:35:02,029
+stack frame of the the function that got
+
+676
+00:34:56,799 --> 00:35:05,470
+called so working our way back if we
+
+677
+00:35:02,047 --> 00:35:08,128
+have to pass more than six arguments the
+
+678
+00:35:05,047 --> 00:35:15,103
+caller will actually use its own stack
+
+679
+00:35:09,028 --> 00:35:17,817
+frame to store those arguments and so
+
+680
+00:35:16,003 --> 00:35:21,019
+that they'd be available and we already
+
+681
+00:35:18,069 --> 00:35:24,700
+saw when you do a call it will push the
+
+682
+00:35:21,019 --> 00:35:27,091
+return address onto the stack so before
+
+683
+00:35:24,007 --> 00:35:30,061
+a function even starts all this
+
+684
+00:35:27,091 --> 00:35:34,500
+information would be on the stack now if
+
+685
+00:35:31,024 --> 00:35:37,078
+there's a if this particular if we're
+
+686
+00:35:35,319 --> 00:35:39,700
+making use of a base pointer then we
+
+687
+00:35:37,078 --> 00:35:40,917
+have to have some way where to store the
+
+688
+00:35:39,007 --> 00:35:44,041
+old value of the base pointer so that we
+
+689
+00:35:41,619 --> 00:35:47,140
+could fix it back when we return we
+
+690
+00:35:45,004 --> 00:35:49,093
+won't show any code doing that here so
+
+691
+00:35:47,014 --> 00:35:53,017
+this is optional but in general if
+
+692
+00:35:49,093 --> 00:35:53,188
+there's some local state like some
+
+693
+00:35:53,017 --> 00:35:57,040
+registers that need to be saved can
+
+694
+00:35:54,088 --> 00:35:59,104
+we'll see examples of that or an array
+
+695
+00:35:57,004 --> 00:36:02,053
+that needs to be allocated locally that
+
+696
+00:36:00,004 --> 00:36:05,053
+will be stored within the stack frame
+
+697
+00:36:02,089 --> 00:36:07,090
+and there might be some requirement for
+
+698
+00:36:05,053 --> 00:36:10,066
+some extra space in the stack frame for
+
+699
+00:36:07,099 --> 00:36:11,167
+other stuff in particular if it we're
+
+700
+00:36:10,066 --> 00:36:14,235
+going to pass more than seven arguments
+
+701
+00:36:12,067 --> 00:36:15,076
+that need space somewhere in the stack
+
+702
+00:36:14,829 --> 00:36:19,210
+frame to do it
+
+703
+00:36:15,076 --> 00:36:21,144
+and what we'll see in typical a code is
+
+704
+00:36:19,021 --> 00:36:25,096
+this stack pointer gets decremented
+
+705
+00:36:22,044 --> 00:36:28,090
+pretty soon after the procedure begins
+
+706
+00:36:25,096 --> 00:36:28,174
+and it gets incremented back just before
+
+707
+00:36:28,009 --> 00:36:33,978
+it returns
+
+708
+00:36:29,074 --> 00:36:37,119
+that's how it manages this deck so let's
+
+709
+00:36:34,869 --> 00:36:38,190
+do some examples
+
+710
+00:36:41,006 --> 00:36:50,012
+um what he looked at this before but
+
+711
+00:36:48,053 --> 00:36:51,152
+this is a function oh I think the
+
+712
+00:36:50,066 --> 00:36:54,097
+interesting thing about this function is
+
+713
+00:36:52,052 --> 00:36:57,125
+that it has a pointer being passed to it
+
+714
+00:36:54,097 --> 00:36:59,152
+so this function takes an argument one
+
+715
+00:36:58,025 --> 00:37:05,063
+argument is a pointer or another is a
+
+716
+00:37:00,052 --> 00:37:07,061
+integer value and you can see what it
+
+717
+00:37:05,063 --> 00:37:12,139
+does is that dereferences that pointer
+
+718
+00:37:08,042 --> 00:37:16,079
+to get a value code X it computes a
+
+719
+00:37:13,039 --> 00:37:21,041
+value Y by summing X and the value
+
+720
+00:37:16,079 --> 00:37:23,177
+passed to it it stores Y back at P but
+
+721
+00:37:21,041 --> 00:37:26,090
+it returns X the original value of the
+
+722
+00:37:24,077 --> 00:37:28,130
+pointer not the updated version of the
+
+723
+00:37:26,009 --> 00:37:31,070
+pointer and you can see that in the code
+
+724
+00:37:29,003 --> 00:37:34,097
+here it's code pretty short remember
+
+725
+00:37:32,051 --> 00:37:37,100
+that in general Rd I will hold the first
+
+726
+00:37:35,024 --> 00:37:39,098
+argument in this case it's a pointer so
+
+727
+00:37:38,000 --> 00:37:43,004
+it will do a read from that pointer and
+
+728
+00:37:39,098 --> 00:37:45,101
+it will put the value in our ax which is
+
+729
+00:37:43,004 --> 00:37:50,006
+where the return value should be anyhow
+
+730
+00:37:46,001 --> 00:37:53,009
+and then it will increment our si which
+
+731
+00:37:50,024 --> 00:37:56,033
+has the value called Val here initially
+
+732
+00:37:53,081 --> 00:38:05,096
+and now it has the value of x plus Val
+
+733
+00:37:56,033 --> 00:38:08,111
+and then it will store that in the value
+
+734
+00:38:05,096 --> 00:38:10,097
+pointed to by P and it will do a return
+
+735
+00:38:09,011 --> 00:38:13,085
+so you see these three instructions do
+
+736
+00:38:11,006 --> 00:38:16,073
+all the different parts of this and as
+
+737
+00:38:13,085 --> 00:38:18,092
+this shows in general also you know
+
+738
+00:38:16,073 --> 00:38:19,145
+register usage it's handy by the way to
+
+739
+00:38:18,092 --> 00:38:24,116
+document this when you're looking at
+
+740
+00:38:20,045 --> 00:38:27,077
+code rgi is the first argument RSI gets
+
+741
+00:38:25,016 --> 00:38:30,110
+used initially it's Val but now it will
+
+742
+00:38:27,077 --> 00:38:35,102
+be set to Y during the call and
+
+743
+00:38:31,001 --> 00:38:39,029
+similarly our ax is initially the value
+
+744
+00:38:36,002 --> 00:38:41,065
+well it's it's both what X is here and
+
+745
+00:38:39,038 --> 00:38:45,089
+it's used as a return value
+
+746
+00:38:41,065 --> 00:38:46,118
+okay so what's the reason to go through
+
+747
+00:38:45,089 --> 00:38:48,143
+all that is to actually show you
+
+748
+00:38:47,018 --> 00:38:52,046
+examples of calling this and how
+
+749
+00:38:49,043 --> 00:38:55,108
+arguments get passed to the function and
+
+750
+00:38:52,046 --> 00:38:55,108
+how it makes use of the stack
+
+751
+00:38:56,038 --> 00:39:02,090
+so now there's a function called call
+
+752
+00:38:58,088 --> 00:39:06,104
+incre and it's going to create a value
+
+753
+00:39:02,009 --> 00:39:09,107
+called vet v1 and have to generate a
+
+754
+00:39:07,004 --> 00:39:13,022
+pointer to that so what that means is v1
+
+755
+00:39:10,088 --> 00:39:13,169
+can't just stay in a register because
+
+756
+00:39:13,022 --> 00:39:17,030
+you can't create an address of a
+
+757
+00:39:14,069 --> 00:39:18,077
+register it has to be stored in memory
+
+758
+00:39:17,003 --> 00:39:23,024
+somewhere so that you can create a
+
+759
+00:39:19,049 --> 00:39:26,051
+pointer an address of it and where does
+
+760
+00:39:23,051 --> 00:39:28,082
+it store it what puts it in the stack so
+
+761
+00:39:26,051 --> 00:39:31,097
+how does it find space on the stack will
+
+762
+00:39:28,082 --> 00:39:32,168
+allocate so the function call inker then
+
+763
+00:39:31,097 --> 00:39:35,105
+and we'll go through all the different
+
+764
+00:39:33,068 --> 00:39:41,102
+parts of it but you see that this red
+
+765
+00:39:36,077 --> 00:39:44,098
+code here is generated generates these
+
+766
+00:39:42,002 --> 00:39:44,098
+two instructions
+

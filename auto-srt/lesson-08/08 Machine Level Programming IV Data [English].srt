@@ -1,0 +1,5412 @@
+1
+00:00:00,003 --> 00:00:08,025
+okay so continuing on with the saga of
+
+2
+00:00:05,043 --> 00:00:12,002
+machine level programming when number
+
+3
+00:00:08,025 --> 00:00:14,294
+four of our series of this and I think
+
+4
+00:00:12,389 --> 00:00:18,150
+that the total will be five so we're
+
+5
+00:00:14,519 --> 00:00:19,553
+almost through and as always this is a
+
+6
+00:00:18,015 --> 00:00:21,057
+lot of material for the course that's
+
+7
+00:00:19,859 --> 00:00:23,927
+essentially a third of the course if you
+
+8
+00:00:21,057 --> 00:00:27,356
+think about well no not that much but
+
+9
+00:00:24,539 --> 00:00:30,840
+it's a lot of the course and part that
+
+10
+00:00:27,869 --> 00:00:33,450
+we consider very central to it so a lot
+
+11
+00:00:30,084 --> 00:00:35,138
+of this involves since we're talking
+
+12
+00:00:33,045 --> 00:00:39,084
+about a particular machine the Intel x86
+
+13
+00:00:36,038 --> 00:00:42,066
+64 machines a lot of its kind of
+
+14
+00:00:39,084 --> 00:00:44,157
+low-level nitty gritty stuff but part of
+
+15
+00:00:42,066 --> 00:00:46,074
+what we hope you also are understanding
+
+16
+00:00:45,057 --> 00:00:49,136
+some of the general principles involved
+
+17
+00:00:47,046 --> 00:00:53,094
+too and you'll find if you move from
+
+18
+00:00:49,649 --> 00:00:54,740
+this machine to another machine sort of
+
+19
+00:00:53,094 --> 00:00:56,783
+learning your first assembly languages
+
+20
+00:00:55,559 --> 00:01:02,250
+your hardest one learning successive
+
+21
+00:00:57,629 --> 00:01:03,725
+ones a lot easier so today we're going
+
+22
+00:01:02,025 --> 00:01:06,644
+to talk about data representations we've
+
+23
+00:01:04,589 --> 00:01:11,670
+so far all the programs we've looked at
+
+24
+00:01:06,869 --> 00:01:14,250
+have been either just manipulating
+
+25
+00:01:11,067 --> 00:01:15,135
+integers or long integers and pointers
+
+26
+00:01:14,025 --> 00:01:19,004
+so that's all what we'd call scalar data
+
+27
+00:01:16,035 --> 00:01:22,092
+data that's not in any aggregated form
+
+28
+00:01:19,229 --> 00:01:25,320
+today we'll look at places where data
+
+29
+00:01:22,092 --> 00:01:26,157
+gets collected into you put together
+
+30
+00:01:25,032 --> 00:01:29,079
+multiple data elements and then see
+
+31
+00:01:27,057 --> 00:01:33,111
+there's really two ways to do that one
+
+32
+00:01:29,079 --> 00:01:36,338
+is with arrays where you can create many
+
+33
+00:01:34,011 --> 00:01:38,097
+copies or many copies of an identical
+
+34
+00:01:37,049 --> 00:01:43,070
+data types you can have an array of int
+
+35
+00:01:38,097 --> 00:01:46,276
+and array of pointers a second is where
+
+36
+00:01:43,259 --> 00:01:49,860
+you have struck so you create a small
+
+37
+00:01:47,149 --> 00:01:52,170
+collection of values that can be of
+
+38
+00:01:49,086 --> 00:01:56,121
+different data types and each one you
+
+39
+00:01:52,017 --> 00:01:59,079
+access by its name or a tag and it turns
+
+40
+00:01:57,021 --> 00:02:01,068
+out those definitions can be recursive
+
+41
+00:01:59,079 --> 00:02:04,095
+so you can have arrays of structs and
+
+42
+00:02:01,068 --> 00:02:06,117
+structs with arrays and nested it to an
+
+43
+00:02:04,095 --> 00:02:08,172
+arbitrary degree
+
+44
+00:02:07,017 --> 00:02:11,064
+and what we'll see is both how its
+
+45
+00:02:09,072 --> 00:02:12,171
+represented in the machine memory and
+
+46
+00:02:11,064 --> 00:02:15,069
+also then what the code looks like that
+
+47
+00:02:13,071 --> 00:02:17,166
+will manipulate these different data
+
+48
+00:02:16,014 --> 00:02:24,021
+structures and the main thing to see is
+
+49
+00:02:18,066 --> 00:02:26,093
+that there's no the at the machine code
+
+50
+00:02:24,021 --> 00:02:29,085
+level there is no notion of an array
+
+51
+00:02:26,093 --> 00:02:32,109
+that you'd have at a high level except
+
+52
+00:02:29,085 --> 00:02:35,148
+to think of it as a collection of bytes
+
+53
+00:02:33,009 --> 00:02:39,041
+that you can are in contiguous part of
+
+54
+00:02:36,048 --> 00:02:41,079
+storage and same with a struct is just
+
+55
+00:02:39,041 --> 00:02:43,125
+allocated as a collection of bytes and
+
+56
+00:02:41,079 --> 00:02:45,090
+it's the job of the C compiler then to
+
+57
+00:02:44,025 --> 00:02:50,034
+generate the appropriate code to
+
+58
+00:02:45,009 --> 00:02:52,050
+allocate that memory to get the right
+
+59
+00:02:51,015 --> 00:02:56,109
+value when you refer to some element of
+
+60
+00:02:53,031 --> 00:03:01,055
+a struct or in a read but the good news
+
+61
+00:02:57,009 --> 00:03:01,055
+is this is such a commonplace type of
+
+62
+00:03:01,094 --> 00:03:05,190
+requirement for a programming language
+
+63
+00:03:03,081 --> 00:03:08,142
+that the Machine gives you sort of
+
+64
+00:03:06,009 --> 00:03:10,032
+instructions that you'll see now they
+
+65
+00:03:09,042 --> 00:03:12,105
+make perfect sense they're exactly
+
+66
+00:03:11,013 --> 00:03:17,054
+designed for this particular class of
+
+67
+00:03:13,005 --> 00:03:20,444
+applications so we'll talk about
+
+68
+00:03:17,054 --> 00:03:22,101
+structure A's first and then structures
+
+69
+00:03:20,489 --> 00:03:24,810
+who struck and I'll also mention we'll
+
+70
+00:03:23,001 --> 00:03:26,087
+do a little bit I'll give you a glimpse
+
+71
+00:03:24,081 --> 00:03:28,134
+of floating point today too because it's
+
+72
+00:03:26,087 --> 00:03:30,236
+it's worth knowing how floating point
+
+73
+00:03:29,034 --> 00:03:33,108
+arithmetic is implemented as well on a
+
+74
+00:03:31,019 --> 00:03:36,900
+machine so the basic idea of array
+
+75
+00:03:34,008 --> 00:03:40,014
+allocation is fairly straightforward if
+
+76
+00:03:36,009 --> 00:03:44,010
+you have n an array with n elements then
+
+77
+00:03:40,014 --> 00:03:49,062
+that's represented by enough bytes in
+
+78
+00:03:45,000 --> 00:03:52,056
+memory all in one span to hold that much
+
+79
+00:03:49,062 --> 00:03:55,134
+data so if the underlying data type say
+
+80
+00:03:52,056 --> 00:03:59,142
+it's an int or a care is a single byte
+
+81
+00:03:56,034 --> 00:04:03,090
+of data type so to have a array of 12
+
+82
+00:04:00,042 --> 00:04:06,087
+cares takes 12 bytes and int takes four
+
+83
+00:04:03,009 --> 00:04:09,012
+bytes so to have an array of five int
+
+84
+00:04:06,087 --> 00:04:11,106
+take 20 bytes you get the idea you just
+
+85
+00:04:09,093 --> 00:04:13,104
+multiply the size the underlying data
+
+86
+00:04:12,006 --> 00:04:15,995
+type by the number of elements and
+
+87
+00:04:14,004 --> 00:04:17,040
+that's how big the array has to be in
+
+88
+00:04:16,049 --> 00:04:21,060
+terms of bytes
+
+89
+00:04:17,004 --> 00:04:24,053
+and we've already seen that in the care
+
+90
+00:04:21,006 --> 00:04:26,094
+is one bite and it is for a double or a
+
+91
+00:04:24,449 --> 00:04:30,750
+long would be eight bytes and so would
+
+92
+00:04:26,094 --> 00:04:32,543
+be a pointer so those are all different
+
+93
+00:04:30,075 --> 00:04:37,122
+amounts of storage and you see in this
+
+94
+00:04:33,389 --> 00:04:39,464
+diagram we use the X denote the starting
+
+95
+00:04:38,022 --> 00:04:44,031
+address of the beginning of this region
+
+96
+00:04:40,139 --> 00:04:51,300
+of memory and so we can use address
+
+97
+00:04:45,012 --> 00:04:53,031
+computation to compute offset by adding
+
+98
+00:04:51,003 --> 00:04:55,005
+numbers to X to get the address in
+
+99
+00:04:53,031 --> 00:04:59,130
+particulars of this array and that's
+
+100
+00:04:55,005 --> 00:05:03,060
+exactly what the code does so in general
+
+101
+00:05:00,003 --> 00:05:06,036
+then if you imagine array a has some
+
+102
+00:05:04,005 --> 00:05:08,654
+underlying type T what the elements of
+
+103
+00:05:06,063 --> 00:05:09,662
+the array are and some number of
+
+104
+00:05:08,699 --> 00:05:17,580
+elements in that array in the
+
+105
+00:05:10,229 --> 00:05:20,210
+declaration L then we will that
+
+106
+00:05:17,058 --> 00:05:22,517
+declaration actually does two things
+
+107
+00:05:20,021 --> 00:05:26,025
+one is it allocates enough bytes of
+
+108
+00:05:23,039 --> 00:05:27,870
+storage to hold the entire array and the
+
+109
+00:05:26,061 --> 00:05:30,740
+second from a programming language
+
+110
+00:05:27,087 --> 00:05:33,099
+perspective it is the identifier of the
+
+111
+00:05:31,289 --> 00:05:35,970
+array a can in some ways be treated like
+
+112
+00:05:33,099 --> 00:05:36,998
+a pointer that you can do pointer
+
+113
+00:05:35,097 --> 00:05:40,182
+arithmetic off of it and that's one of
+
+114
+00:05:37,889 --> 00:05:43,970
+the features of C that is was a fairly
+
+115
+00:05:41,082 --> 00:05:46,128
+unique to see when it was created and is
+
+116
+00:05:44,699 --> 00:05:48,780
+still unique to this day this idea of
+
+117
+00:05:47,028 --> 00:05:54,137
+the sort of interchangeability of
+
+118
+00:05:48,078 --> 00:05:56,100
+pointers and arrays array identifiers so
+
+119
+00:05:54,389 --> 00:06:00,690
+for example I can use an array notation
+
+120
+00:05:57,000 --> 00:06:02,094
+to say Val of four is element four of
+
+121
+00:06:00,069 --> 00:06:05,168
+this array and it's a five element array
+
+122
+00:06:02,094 --> 00:06:10,152
+so that would just be this final element
+
+123
+00:06:06,068 --> 00:06:14,237
+but I can also just refer to Val and its
+
+124
+00:06:11,052 --> 00:06:17,127
+underlying data type is as an int star
+
+125
+00:06:14,849 --> 00:06:21,270
+so pointer to imp and its value would be
+
+126
+00:06:18,027 --> 00:06:23,055
+X it's just a pointer a pointer is
+
+127
+00:06:21,027 --> 00:06:24,093
+remember an address and it's just the
+
+128
+00:06:23,055 --> 00:06:28,604
+address at the beginning of the array
+
+129
+00:06:24,093 --> 00:06:30,148
+and I can do pointer arithmetic on Val
+
+130
+00:06:29,099 --> 00:06:34,690
+which as you know in
+
+131
+00:06:31,048 --> 00:06:35,137
+II and this is a little confusing we'll
+
+132
+00:06:34,069 --> 00:06:39,127
+have to we'll go back and forth because
+
+133
+00:06:36,037 --> 00:06:43,042
+in C when you do pointer arithmetic like
+
+134
+00:06:40,027 --> 00:06:48,118
+you say you know P plus pause for a
+
+135
+00:06:43,042 --> 00:06:51,061
+pointer we just give you an example so
+
+136
+00:06:49,018 --> 00:06:55,027
+if you had something like care star P as
+
+137
+00:06:51,061 --> 00:06:59,089
+a declaration and you said P is equal to
+
+138
+00:06:55,027 --> 00:07:04,032
+some string s and then you say P plus
+
+139
+00:06:59,089 --> 00:07:03,177
+plus so you're incrementing that pointer
+
+140
+00:07:05,082 --> 00:07:09,124
+one in this case you're incrementing it
+
+141
+00:07:08,029 --> 00:07:17,080
+by one because the underlying data type
+
+142
+00:07:10,024 --> 00:07:24,066
+is a is a care but if you said something
+
+143
+00:07:17,008 --> 00:07:27,009
+like in star or caught IP and I
+
+144
+00:07:24,066 --> 00:07:27,090
+different pen
+
+145
+00:07:35,094 --> 00:07:47,099
+and I said you know IP plus plus then IP
+
+146
+00:07:43,083 --> 00:07:55,125
+would get IP plus what does anyone know
+
+147
+00:07:48,044 --> 00:07:58,059
+for yes so it's a confusion and see this
+
+148
+00:07:56,025 --> 00:08:02,049
+remember is the same as saying IP plus
+
+149
+00:07:58,059 --> 00:08:04,152
+equals 1 but what you're actually doing
+
+150
+00:08:02,049 --> 00:08:09,123
+is incrementing that the number of the
+
+151
+00:08:05,052 --> 00:08:12,057
+value of P by 4 because you want a
+
+152
+00:08:10,023 --> 00:08:15,117
+pointer when you jump from one place to
+
+153
+00:08:13,002 --> 00:08:18,018
+another you want it to increment by
+
+154
+00:08:16,017 --> 00:08:26,040
+enough bytes to point to the next
+
+155
+00:08:18,018 --> 00:08:31,086
+integer in this case for IP and so
+
+156
+00:08:26,004 --> 00:08:36,045
+similarly valve s 1 denotes this value X
+
+157
+00:08:31,086 --> 00:08:40,134
+plus 4 because it's a the address of the
+
+158
+00:08:36,081 --> 00:08:42,180
+next integer in the array by the way the
+
+159
+00:08:41,034 --> 00:08:46,092
+one thing different between an array and
+
+160
+00:08:43,008 --> 00:08:48,087
+a pointer is I can't say Val plus plus
+
+161
+00:08:46,092 --> 00:08:51,165
+right I can't change the value of valid
+
+162
+00:08:49,059 --> 00:08:55,092
+fixed by the declaration whereas a
+
+163
+00:08:52,065 --> 00:08:57,138
+pointer I can increment it I can change
+
+164
+00:08:55,092 --> 00:09:03,092
+it in various ways and similarly
+
+165
+00:08:58,038 --> 00:09:06,072
+ampersand L of 2 says give me the
+
+166
+00:09:03,092 --> 00:09:09,188
+address of the second element of the
+
+167
+00:09:06,072 --> 00:09:12,159
+array so that would be at X plus 8 and
+
+168
+00:09:10,088 --> 00:09:17,126
+this is again one of the fundamental
+
+169
+00:09:13,059 --> 00:09:17,126
+properties of see that
+
+170
+00:09:22,097 --> 00:09:28,148
+basically in NC if you take a pointer
+
+171
+00:09:37,075 --> 00:09:40,093
+that's rude
+
+172
+00:09:43,024 --> 00:09:51,068
+this is an eye not very well written
+
+173
+00:09:45,068 --> 00:09:53,069
+these are equivalent statement right
+
+174
+00:09:51,068 --> 00:09:53,117
+there just two notations for the same
+
+175
+00:09:53,069 --> 00:09:56,150
+thing
+
+176
+00:09:54,017 --> 00:10:03,046
+so on the upper part it says IP plus two
+
+177
+00:09:57,005 --> 00:10:05,060
+meaning actually add 8 to I pee and then
+
+178
+00:10:03,046 --> 00:10:08,072
+dereference that it's the same as
+
+179
+00:10:06,005 --> 00:10:13,043
+finding the second element of array an
+
+180
+00:10:08,072 --> 00:10:14,081
+imaginary array of where IP is indicates
+
+181
+00:10:13,043 --> 00:10:17,105
+the beginning of the array so that's a
+
+182
+00:10:15,062 --> 00:10:19,103
+very fundamental principle of see that
+
+183
+00:10:18,005 --> 00:10:22,022
+again this whole idea of pointer
+
+184
+00:10:20,003 --> 00:10:27,011
+arithmetic is fairly unique to see
+
+185
+00:10:22,022 --> 00:10:32,039
+question yes
+
+186
+00:10:27,011 --> 00:10:36,086
+the compiler will happily let you use
+
+187
+00:10:32,039 --> 00:10:39,041
+negative values for array indices and it
+
+188
+00:10:36,086 --> 00:10:42,113
+will give you a potentially undefined
+
+189
+00:10:39,059 --> 00:10:44,117
+value but there's nothing in C that
+
+190
+00:10:43,013 --> 00:10:47,039
+prevents you from giving out of bounds
+
+191
+00:10:45,017 --> 00:10:49,031
+either numbers that are too big for an
+
+192
+00:10:47,039 --> 00:10:53,135
+array or too small for an array there's
+
+193
+00:10:49,031 --> 00:10:57,067
+no bounds checking it yes if we have
+
+194
+00:10:54,035 --> 00:11:00,064
+some fun Megan and disaster
+
+195
+00:10:57,067 --> 00:11:03,094
+yes the question that's becoming what
+
+196
+00:11:00,064 --> 00:11:07,099
+about negative indices and the answer is
+
+197
+00:11:03,094 --> 00:11:15,160
+very simple because in other words in
+
+198
+00:11:07,099 --> 00:11:17,101
+general something like IP plus X maybe
+
+199
+00:11:16,006 --> 00:11:24,013
+there can you see it
+
+200
+00:11:18,019 --> 00:11:32,028
+should I try to kind of break is really
+
+201
+00:11:25,003 --> 00:11:32,082
+equivalent to I T plus 4x
+
+202
+00:11:34,589 --> 00:11:46,690
+so this is the notation and until in our
+
+203
+00:11:44,062 --> 00:11:49,069
+derivative you and the right-hand side
+
+204
+00:11:46,069 --> 00:11:52,138
+is the computation so you and see you
+
+205
+00:11:50,032 --> 00:11:54,921
+write it using you don't have to give
+
+206
+00:11:53,038 --> 00:11:56,187
+scaling factors to your data types
+
+207
+00:11:55,209 --> 00:11:58,380
+otherwise it would drive you out of your
+
+208
+00:11:56,529 --> 00:12:02,290
+mind
+
+209
+00:11:58,038 --> 00:12:03,807
+but you secretly underneath when the
+
+210
+00:12:02,029 --> 00:12:06,085
+compiler generates the code we'll see
+
+211
+00:12:04,149 --> 00:12:09,670
+examples of this it's scaling everything
+
+212
+00:12:06,085 --> 00:12:10,141
+so now the question that is being asked
+
+213
+00:12:09,067 --> 00:12:13,108
+is what if X is a negative number
+
+214
+00:12:11,041 --> 00:12:15,133
+well the rule still applies it's just
+
+215
+00:12:14,008 --> 00:12:19,060
+that the final result will be less than
+
+216
+00:12:16,033 --> 00:12:21,912
+IP instead of greater than IP but it's
+
+217
+00:12:19,006 --> 00:12:23,083
+totally valid C and there's actually
+
+218
+00:12:22,209 --> 00:12:32,350
+times you will use it in this term I can
+
+219
+00:12:24,037 --> 00:12:36,058
+promise you yes question how do you know
+
+220
+00:12:32,035 --> 00:12:38,088
+you can't write to plus IP try it
+
+221
+00:12:36,058 --> 00:12:42,091
+I'm pretty sure you can't do that in
+
+222
+00:12:38,088 --> 00:12:43,737
+with pointer arithmetic try if somebody
+
+223
+00:12:42,091 --> 00:12:45,190
+wants to type in some code and do it I
+
+224
+00:12:44,529 --> 00:12:48,700
+don't think you can do that but if you
+
+225
+00:12:46,009 --> 00:12:50,023
+did it would have to figure it out that
+
+226
+00:12:48,007 --> 00:12:53,041
+you know the parser knows the datatypes
+
+227
+00:12:51,004 --> 00:12:56,008
+of its two arguments so yeah you could
+
+228
+00:12:54,004 --> 00:12:57,055
+probably do it I've never seen this you
+
+229
+00:12:56,008 --> 00:12:59,047
+could do it but the compiler would know
+
+230
+00:12:57,055 --> 00:13:01,081
+that one of the arguments is a pointer
+
+231
+00:12:59,047 --> 00:13:04,123
+and therefore scale the other what you
+
+232
+00:13:01,081 --> 00:13:07,123
+can't do is add two pointers you can
+
+233
+00:13:05,023 --> 00:13:09,070
+take the difference to two pointers this
+
+234
+00:13:08,023 --> 00:13:13,039
+is obscure I'm not even going to tell
+
+235
+00:13:09,007 --> 00:13:15,016
+you about this hook it up in knr but you
+
+236
+00:13:13,039 --> 00:13:17,068
+can do arithmetic but you can only for
+
+237
+00:13:15,079 --> 00:13:19,068
+addition it can only be one pointer and
+
+238
+00:13:17,068 --> 00:13:21,136
+one and then the other has to be a
+
+239
+00:13:19,779 --> 00:13:24,790
+regular integer value and it will scale
+
+240
+00:13:22,036 --> 00:13:27,088
+it appropriately so I believe you can do
+
+241
+00:13:24,079 --> 00:13:28,138
+it it's just somebody will smack you on
+
+242
+00:13:27,088 --> 00:13:32,145
+the back of the hand if you actually
+
+243
+00:13:29,038 --> 00:13:38,187
+write code enough but not the compiler
+
+244
+00:13:33,045 --> 00:13:41,098
+so in particular you know you can if you
+
+245
+00:13:38,529 --> 00:13:44,500
+go beyond the bounds of an array of this
+
+246
+00:13:41,098 --> 00:13:44,190
+you'll get whatever is beyond the bounds
+
+247
+00:13:44,005 --> 00:13:47,534
+of that array
+
+248
+00:13:45,009 --> 00:13:49,050
+and it might be an invalid or it might
+
+249
+00:13:48,029 --> 00:13:52,320
+not even be a valid address and you get
+
+250
+00:13:50,031 --> 00:13:56,058
+a segmentation fault but more typically
+
+251
+00:13:52,032 --> 00:13:59,055
+you'll get some whatever it happens to
+
+252
+00:13:56,058 --> 00:14:00,090
+be there and that's not so bad when you
+
+253
+00:13:59,055 --> 00:14:03,057
+read it but you can also potentially
+
+254
+00:14:00,009 --> 00:14:06,045
+write it as we saw before and corrupt
+
+255
+00:14:03,075 --> 00:14:08,118
+data that's already in memory so here's
+
+256
+00:14:07,026 --> 00:14:13,095
+again the same statement I was making
+
+257
+00:14:09,018 --> 00:14:15,117
+before that IP valve plus I just get
+
+258
+00:14:13,095 --> 00:14:17,174
+scaled the value computed would be the
+
+259
+00:14:16,017 --> 00:14:20,626
+starting address plus four times
+
+260
+00:14:18,029 --> 00:14:20,104
+whatever eyes
+
+261
+00:14:23,091 --> 00:14:28,186
+so let's look at so that's sort of
+
+262
+00:14:27,052 --> 00:14:33,058
+that's all see everything I said before
+
+263
+00:14:29,086 --> 00:14:34,138
+is just basic see stuff now let's start
+
+264
+00:14:33,058 --> 00:14:38,065
+looking at the actual machine code
+
+265
+00:14:35,038 --> 00:14:43,132
+involved and so I made up this example
+
+266
+00:14:38,065 --> 00:14:47,089
+here where I declare three arrays each
+
+267
+00:14:44,032 --> 00:14:50,040
+with five in and I go through what is
+
+268
+00:14:47,089 --> 00:14:53,107
+considered sort of good form when you're
+
+269
+00:14:50,004 --> 00:14:55,072
+building up data that instead of having
+
+270
+00:14:54,007 --> 00:14:58,093
+arbitrary constants sprinkled through
+
+271
+00:14:56,008 --> 00:15:02,008
+your program often called magic numbers
+
+272
+00:14:58,093 --> 00:15:02,188
+that you instead use a pound define and
+
+273
+00:15:02,008 --> 00:15:06,103
+you give it some meaningful name and
+
+274
+00:15:03,088 --> 00:15:09,136
+some documentation usually at the top of
+
+275
+00:15:07,003 --> 00:15:12,055
+a file or in a dot H file and then the
+
+276
+00:15:10,036 --> 00:15:14,041
+type def is a very handy way if you're
+
+277
+00:15:12,055 --> 00:15:16,141
+going to create complex data structures
+
+278
+00:15:14,086 --> 00:15:19,158
+I highly recommend you sort of break
+
+279
+00:15:17,041 --> 00:15:22,126
+that into type deaths because the
+
+280
+00:15:20,058 --> 00:15:25,069
+declaration notation in C gets fairly
+
+281
+00:15:23,026 --> 00:15:29,050
+obscure fairly quickly but all this is
+
+282
+00:15:25,069 --> 00:15:32,167
+saying is the the data type I'm going to
+
+283
+00:15:29,005 --> 00:15:36,046
+call a zip didge is defined to be five
+
+284
+00:15:33,067 --> 00:15:39,124
+an array of five int and now whenever I
+
+285
+00:15:36,091 --> 00:15:41,137
+say zip did something I'm just popping
+
+286
+00:15:40,024 --> 00:15:46,105
+down I'm saying this is an array of five
+
+287
+00:15:42,037 --> 00:15:48,079
+int and so I created three of them with
+
+288
+00:15:47,005 --> 00:15:53,023
+the appropriate depth codes for the
+
+289
+00:15:48,079 --> 00:15:56,094
+schools represented here and now I'm
+
+290
+00:15:53,023 --> 00:16:00,028
+just making up for sake of presentation
+
+291
+00:15:56,094 --> 00:16:01,132
+actual addresses for these in general
+
+292
+00:16:00,028 --> 00:16:05,032
+you don't have any control over that and
+
+293
+00:16:02,032 --> 00:16:06,124
+I made it up so that they all happen to
+
+294
+00:16:05,032 --> 00:16:09,079
+be in contiguous part of memory and
+
+295
+00:16:07,024 --> 00:16:11,068
+again there's no fundamental reason that
+
+296
+00:16:09,079 --> 00:16:13,123
+should be true so you can never trust
+
+297
+00:16:11,068 --> 00:16:15,076
+what particular address anything is ever
+
+298
+00:16:14,023 --> 00:16:18,058
+going to be allocated at but you are
+
+299
+00:16:16,048 --> 00:16:22,086
+certain that each of these blocks will
+
+300
+00:16:18,058 --> 00:16:22,086
+be a contiguous collection of 20 bytes
+
+301
+00:16:23,035 --> 00:16:30,067
+so here's some example code then to say
+
+302
+00:16:27,007 --> 00:16:34,026
+I want to retrieve for one of these
+
+303
+00:16:30,067 --> 00:16:38,089
+arrays I want to retrieve a element
+
+304
+00:16:34,089 --> 00:16:40,092
+whose index is digit and this gets
+
+305
+00:16:38,089 --> 00:16:42,127
+turned into the following code so
+
+306
+00:16:40,092 --> 00:16:45,118
+remember the first argument which will
+
+307
+00:16:43,027 --> 00:16:49,054
+be a pointer now will be passed in
+
+308
+00:16:46,018 --> 00:16:51,082
+register RDI and the second will it will
+
+309
+00:16:49,054 --> 00:16:54,133
+be an INT will be passed and register
+
+310
+00:16:51,082 --> 00:16:58,084
+RSI and what I want to get out of this
+
+311
+00:16:55,033 --> 00:17:01,087
+is an int and so you see that it here's
+
+312
+00:16:59,002 --> 00:17:04,017
+where that scaled addressing this is
+
+313
+00:17:01,087 --> 00:17:05,182
+exactly what it was designed for and why
+
+314
+00:17:04,017 --> 00:17:10,066
+why they went to the trouble of adding
+
+315
+00:17:06,082 --> 00:17:12,087
+the sort of fancy address modes to x86
+
+316
+00:17:10,066 --> 00:17:15,070
+because this is such a common thing so
+
+317
+00:17:13,032 --> 00:17:18,291
+remember what this says is take RDI
+
+318
+00:17:16,006 --> 00:17:21,100
+and add to it what you get by
+
+319
+00:17:18,579 --> 00:17:24,670
+multiplying RSI by four so you scale
+
+320
+00:17:22,000 --> 00:17:26,008
+that and of course that's exactly the
+
+321
+00:17:24,067 --> 00:17:29,125
+computation we want to do if we compare
+
+322
+00:17:26,008 --> 00:17:36,061
+it to you know what this is what we're
+
+323
+00:17:30,025 --> 00:17:44,047
+trying to get computed it's exactly it's
+
+324
+00:17:37,033 --> 00:17:45,100
+exactly this computation here and that
+
+325
+00:17:44,047 --> 00:17:48,100
+gives us an address and then we're
+
+326
+00:17:46,000 --> 00:17:51,067
+reading from that address and we're
+
+327
+00:17:49,000 --> 00:17:53,083
+going to copy it in EAX remember this is
+
+328
+00:17:51,067 --> 00:17:57,118
+an in total be in the e-version the
+
+329
+00:17:53,083 --> 00:17:59,089
+lower 4 bytes of register raf and that's
+
+330
+00:17:58,018 --> 00:18:02,107
+all the code it takes to implement this
+
+331
+00:17:59,089 --> 00:18:07,174
+particular operation yes RDI is the base
+
+332
+00:18:03,007 --> 00:18:09,104
+address all right yeah and I on the
+
+333
+00:18:08,074 --> 00:18:13,085
+right side
+
+334
+00:18:10,004 --> 00:18:17,026
+yeah this is a typo thank you thanks for
+
+335
+00:18:13,085 --> 00:18:20,120
+pointing it out I'll make a note of that
+
+336
+00:18:17,026 --> 00:18:23,117
+right so this slide is incorrect and
+
+337
+00:18:21,002 --> 00:18:29,063
+I'll fix it so this should be our di
+
+338
+00:18:24,017 --> 00:18:32,074
+plus for RSI right thanks for noting
+
+339
+00:18:29,081 --> 00:18:31,174
+that let me make it
+
+340
+00:18:36,047 --> 00:18:51,062
+okay and so now let's just look at a
+
+341
+00:18:43,097 --> 00:18:52,154
+another distant code in particular what
+
+342
+00:18:51,062 --> 00:18:55,148
+if I wanted to go through one of these
+
+343
+00:18:53,054 --> 00:18:58,070
+arrays and for every element of the
+
+344
+00:18:56,048 --> 00:19:01,064
+array add one to it so increment every
+
+345
+00:18:58,007 --> 00:19:02,075
+single element by one well first of all
+
+346
+00:19:01,064 --> 00:19:05,137
+you can see that we're setting up a loop
+
+347
+00:19:03,038 --> 00:19:10,073
+and it uses the jump to middle of
+
+348
+00:19:06,037 --> 00:19:13,037
+business where the initial part is to
+
+349
+00:19:10,073 --> 00:19:17,129
+jump to the test and all the testing
+
+350
+00:19:13,037 --> 00:19:20,063
+involves were increasing our a X's for I
+
+351
+00:19:18,029 --> 00:19:28,057
+here and we're incrementing it and
+
+352
+00:19:20,063 --> 00:19:32,072
+comparing it at various places but um
+
+353
+00:19:28,057 --> 00:19:37,064
+here's the the line of code that does
+
+354
+00:19:32,072 --> 00:19:41,087
+all the real work again it's taking the
+
+355
+00:19:37,064 --> 00:19:44,159
+ice element which is in our ax scaling
+
+356
+00:19:41,087 --> 00:19:47,141
+by four adding it to the base of the
+
+357
+00:19:45,059 --> 00:19:50,120
+array and that gives us an address and
+
+358
+00:19:48,041 --> 00:19:52,124
+now remember you can have an an
+
+359
+00:19:51,002 --> 00:19:56,006
+arithmetic instruction where the second
+
+360
+00:19:53,024 --> 00:19:57,119
+operand the destination is a memory
+
+361
+00:19:56,024 --> 00:20:01,031
+reference and what this actually
+
+362
+00:19:58,019 --> 00:20:05,105
+requires is to first read the original
+
+363
+00:20:01,094 --> 00:20:07,115
+value from the memory do the addition
+
+364
+00:20:06,005 --> 00:20:11,069
+and then store the result back in memory
+
+365
+00:20:08,015 --> 00:20:14,048
+so this one instruction is exactly
+
+366
+00:20:11,069 --> 00:20:18,076
+encrypt doing this plus plus operation
+
+367
+00:20:14,048 --> 00:20:18,076
+on this stored data in the array
+
+368
+00:20:21,036 --> 00:20:29,088
+oh by the way I should mention the whole
+
+369
+00:20:25,098 --> 00:20:32,166
+idea of pointer arithmetic and and si
+
+370
+00:20:29,088 --> 00:20:35,100
+was a si was really people who'd
+
+371
+00:20:33,066 --> 00:20:38,067
+programmed an assembly code for most of
+
+372
+00:20:36,000 --> 00:20:40,008
+their lives thinking about how could I
+
+373
+00:20:38,076 --> 00:20:42,084
+make this look like a high-level
+
+374
+00:20:40,008 --> 00:20:44,064
+language but keep all the flexibility
+
+375
+00:20:42,084 --> 00:20:46,133
+all the tricks I learned to play at
+
+376
+00:20:44,064 --> 00:20:48,111
+assembly code in a programming language
+
+377
+00:20:47,033 --> 00:20:50,037
+because it was designed it was
+
+378
+00:20:49,011 --> 00:20:52,023
+originally designed to implement an
+
+379
+00:20:50,073 --> 00:20:54,162
+operating system the UNIX operating
+
+380
+00:20:52,023 --> 00:20:56,097
+system and historically operating
+
+381
+00:20:55,062 --> 00:20:59,121
+systems were written directly in
+
+382
+00:20:56,097 --> 00:21:04,098
+assembly code and these people Kernighan
+
+383
+00:21:00,021 --> 00:21:08,073
+Ritchie Dennis Ritchie and realized that
+
+384
+00:21:04,098 --> 00:21:10,182
+the way to do this is to sort of build
+
+385
+00:21:08,073 --> 00:21:14,130
+point arithmetic into a programming
+
+386
+00:21:11,082 --> 00:21:17,135
+language so anyways the reason I'm
+
+387
+00:21:15,003 --> 00:21:21,012
+saying this is you see a pretty close
+
+388
+00:21:18,035 --> 00:21:24,087
+correspondence here between instructions
+
+389
+00:21:21,039 --> 00:21:26,067
+and machine code and constructs in a
+
+390
+00:21:24,087 --> 00:21:28,131
+program in the C programming language
+
+391
+00:21:26,067 --> 00:21:31,071
+and that whole plus plus operator and
+
+392
+00:21:29,031 --> 00:21:35,037
+plus equals is sort of something you see
+
+393
+00:21:31,071 --> 00:21:37,110
+variations of institutes and we code ok
+
+394
+00:21:35,091 --> 00:21:43,104
+so that's a sort of single dimension
+
+395
+00:21:38,001 --> 00:21:51,015
+array and I'd like to just change things
+
+396
+00:21:44,004 --> 00:21:55,005
+up a little bit by having a look at what
+
+397
+00:21:51,024 --> 00:21:57,030
+the real difference is between of arrays
+
+398
+00:21:55,014 --> 00:22:02,037
+and pointers in a programming language
+
+399
+00:21:57,084 --> 00:22:05,087
+in C and so I have a couple of these
+
+400
+00:22:02,037 --> 00:22:09,075
+examples that I'll bring out one by one
+
+401
+00:22:06,014 --> 00:22:12,038
+but the idea of this is you see the
+
+402
+00:22:09,075 --> 00:22:14,076
+declaration on the Left there's
+
+403
+00:22:12,038 --> 00:22:19,080
+something called a1 and something called
+
+404
+00:22:14,085 --> 00:22:23,091
+a 2 so call those a sub m and now what I
+
+405
+00:22:19,008 --> 00:22:26,025
+want to know for each of these is does
+
+406
+00:22:24,045 --> 00:22:29,139
+it compile is this a valid statement in
+
+407
+00:22:26,097 --> 00:22:31,128
+c ii with this potentially give me a
+
+408
+00:22:30,039 --> 00:22:34,056
+null pointer reference because i'm
+
+409
+00:22:32,028 --> 00:22:37,115
+referencing a pointer
+
+410
+00:22:34,056 --> 00:22:41,091
+for which the I haven't actually
+
+411
+00:22:38,015 --> 00:22:44,022
+allocated space for the that that
+
+412
+00:22:41,091 --> 00:22:45,150
+pointer is indicated I haven't I haven't
+
+413
+00:22:44,022 --> 00:22:49,053
+initialized the pointer to a valid
+
+414
+00:22:46,005 --> 00:22:51,102
+memory reference and then finally if I
+
+415
+00:22:49,053 --> 00:22:59,145
+were to use the sizeof operator on that
+
+416
+00:22:52,047 --> 00:23:01,122
+particular value with that and including
+
+417
+00:23:00,045 --> 00:23:12,090
+for the case where there's a star in
+
+418
+00:23:02,022 --> 00:23:14,025
+front of it and a part of this is to
+
+419
+00:23:12,009 --> 00:23:16,011
+understand the difference then between
+
+420
+00:23:14,025 --> 00:23:20,027
+an array and a pointer and the main
+
+421
+00:23:17,001 --> 00:23:23,001
+reason this the main factor is an array
+
+422
+00:23:20,027 --> 00:23:26,111
+when you declare an array and see you're
+
+423
+00:23:23,001 --> 00:23:29,070
+both you're actually allocating space
+
+424
+00:23:27,011 --> 00:23:33,030
+the space is being allocated somewhere
+
+425
+00:23:29,079 --> 00:23:36,105
+for it and you're creating a using
+
+426
+00:23:33,003 --> 00:23:39,081
+allowed to now use the Ray name of in
+
+427
+00:23:37,005 --> 00:23:42,066
+pointer arithmetic whereas when you just
+
+428
+00:23:40,008 --> 00:23:44,013
+declare in a ret a pointer all you're
+
+429
+00:23:42,066 --> 00:23:46,095
+allocating is the space for the pointer
+
+430
+00:23:44,058 --> 00:23:55,059
+itself and not for anything that it's
+
+431
+00:23:46,095 --> 00:23:56,124
+you're pointing to so just - you've
+
+432
+00:23:55,068 --> 00:23:59,087
+probably figured out that these both
+
+433
+00:23:57,024 --> 00:23:59,087
+compile
+
+434
+00:24:00,094 --> 00:24:11,763
+let me get my chief chief Andy well but
+
+435
+00:24:04,539 --> 00:24:15,620
+what would be the size of a one here if
+
+436
+00:24:12,609 --> 00:24:15,683
+I ran the size of operator on
+
+437
+00:24:23,078 --> 00:24:34,133
+let's do the easier one what's the size
+
+438
+00:24:26,028 --> 00:24:38,082
+of a two eight because the pointer
+
+439
+00:24:35,033 --> 00:24:44,090
+what's the size of a one a one is an
+
+440
+00:24:38,082 --> 00:24:44,090
+array of three in 12 right
+
+441
+00:24:47,179 --> 00:24:53,440
+oh and those those aren't no oops
+
+442
+00:24:55,033 --> 00:25:13,132
+and now if I said star a one or start a
+
+443
+00:25:02,021 --> 00:25:15,240
+- those would both compile could either
+
+444
+00:25:13,429 --> 00:25:26,485
+of them possibly give you a null
+
+445
+00:25:15,429 --> 00:25:31,522
+dereference oh yes the pointer itself is
+
+446
+00:25:26,989 --> 00:25:34,820
+no but that the I haven't dereferenced
+
+447
+00:25:32,359 --> 00:25:37,410
+it yet it's a null pointer but I haven't
+
+448
+00:25:34,082 --> 00:25:40,133
+it's not a bad potentially bad reference
+
+449
+00:25:37,869 --> 00:25:43,870
+right it's not a runtime I will create a
+
+450
+00:25:41,033 --> 00:25:46,432
+runtime error if I just say a - in my
+
+451
+00:25:43,969 --> 00:25:49,033
+code okay so your step ahead of me
+
+452
+00:25:46,729 --> 00:25:51,950
+basically so in it you kind of answered
+
+453
+00:25:49,609 --> 00:25:53,707
+the second question though this one
+
+454
+00:25:51,095 --> 00:25:55,234
+could give you a null pointer error if
+
+455
+00:25:54,589 --> 00:25:57,682
+you try to dereference a pointer that
+
+456
+00:25:56,089 --> 00:26:02,182
+hasn't been initialized it doesn't point
+
+457
+00:25:58,519 --> 00:26:07,560
+to anything whereas this one is fine and
+
+458
+00:26:03,019 --> 00:26:15,070
+now what's the size of a one of star a
+
+459
+00:26:07,929 --> 00:26:17,962
+1/4 and what about star a 2/4 yeah
+
+460
+00:26:15,007 --> 00:26:20,476
+because they're both pointers to ends so
+
+461
+00:26:18,259 --> 00:26:24,264
+one way to think about that is as a
+
+462
+00:26:20,539 --> 00:26:24,561
+picture a one
+
+463
+00:26:26,094 --> 00:26:34,683
+is like we've been showing here it's an
+
+464
+00:26:30,097 --> 00:26:38,736
+array of of for intz and when I declare
+
+465
+00:26:35,529 --> 00:26:42,543
+a one I'm allocating all so the program
+
+466
+00:26:39,609 --> 00:26:46,090
+is allocating 12 bytes of storage that's
+
+467
+00:26:42,669 --> 00:26:54,720
+able to hold that a 2 on the other hand
+
+468
+00:26:46,009 --> 00:26:57,708
+is just a pointer which I'll show there
+
+469
+00:26:54,072 --> 00:26:59,841
+until it's 8 bytes long but it doesn't
+
+470
+00:26:57,789 --> 00:27:03,846
+point to anything so that's what I meant
+
+471
+00:27:00,489 --> 00:27:05,505
+that if you tried to say star a 2 you
+
+472
+00:27:04,359 --> 00:27:09,384
+potentially have a null pointer
+
+473
+00:27:05,649 --> 00:27:12,702
+reference dereference out there and so
+
+474
+00:27:09,609 --> 00:27:15,100
+that's why this is 8 and this is 12 so
+
+475
+00:27:13,179 --> 00:27:17,225
+those are the warm-up 1 let's make it a
+
+476
+00:27:15,001 --> 00:27:17,540
+little more interesting
+
+477
+00:27:27,034 --> 00:27:31,088
+these aren't in the slides you'll notice
+
+478
+00:27:29,096 --> 00:27:36,185
+but I'm going to I'll update the slides
+
+479
+00:27:31,088 --> 00:27:39,161
+to include these later I'll but I think
+
+480
+00:27:37,085 --> 00:27:42,179
+the point that if you find this
+
+481
+00:27:40,061 --> 00:27:45,158
+confusing it's a sign that you really
+
+482
+00:27:43,079 --> 00:27:49,148
+really really need to understand what a
+
+483
+00:27:46,058 --> 00:27:51,083
+pointer is and what an array is and how
+
+484
+00:27:50,048 --> 00:27:55,121
+they're the same and how they're
+
+485
+00:27:51,083 --> 00:27:57,170
+different because it's it's a it's a
+
+486
+00:27:56,021 --> 00:28:01,240
+core part of programming and see that
+
+487
+00:27:58,007 --> 00:28:02,051
+will lead to endless hours of confusion
+
+488
+00:28:01,429 --> 00:28:09,380
+if you don't really have this wired down
+
+489
+00:28:03,014 --> 00:28:11,683
+pretty strongly so let me just give you
+
+490
+00:28:09,038 --> 00:28:13,052
+a preview of what's so interesting about
+
+491
+00:28:11,809 --> 00:28:16,070
+this is I'm going to give you some
+
+492
+00:28:13,052 --> 00:28:19,057
+numbers and then we're going to have to
+
+493
+00:28:16,007 --> 00:28:19,102
+explain how those numbers come around
+
+494
+00:28:31,027 --> 00:28:40,070
+okay so let's try and understand what's
+
+495
+00:28:38,051 --> 00:28:42,100
+happening here and you see that all of
+
+496
+00:28:40,007 --> 00:28:45,008
+these declarations involve some
+
+497
+00:28:42,559 --> 00:28:48,260
+combination of pointer and array and the
+
+498
+00:28:45,008 --> 00:28:53,045
+question is is it a pointer to an array
+
+499
+00:28:48,026 --> 00:28:56,045
+is it an array of pointers and the
+
+500
+00:28:54,017 --> 00:28:58,115
+answer to those will depend on the
+
+501
+00:28:56,045 --> 00:29:00,116
+particular syntax so of course the first
+
+502
+00:28:59,015 --> 00:29:05,018
+one is one you've already seen before
+
+503
+00:29:01,016 --> 00:29:07,085
+and so you know that compiles and it's
+
+504
+00:29:05,045 --> 00:29:10,112
+not know and you can dereference it and
+
+505
+00:29:07,085 --> 00:29:15,107
+it's not null but if you try to say star
+
+506
+00:29:11,012 --> 00:29:18,029
+star a one that's not valid it won't
+
+507
+00:29:16,007 --> 00:29:23,015
+even compile because you're trying to
+
+508
+00:29:18,029 --> 00:29:24,113
+here take the data type of star a and is
+
+509
+00:29:23,015 --> 00:29:28,022
+int and then you're trying to take a
+
+510
+00:29:25,013 --> 00:29:32,020
+dereference an int so that will compile
+
+511
+00:29:28,085 --> 00:29:35,087
+and therefore you can't even test it
+
+512
+00:29:32,083 --> 00:29:40,088
+okay the question is for these other
+
+513
+00:29:36,005 --> 00:29:45,037
+three you can see that somehow one is a
+
+514
+00:29:41,033 --> 00:29:50,069
+well let's look at the bottom two first
+
+515
+00:29:45,037 --> 00:29:52,055
+so the one on the bottom says that and
+
+516
+00:29:50,069 --> 00:29:53,132
+this is part of and there's actually a
+
+517
+00:29:52,055 --> 00:29:55,124
+really great section in Kernighan
+
+518
+00:29:54,032 --> 00:29:58,094
+Ritchie that I highly encourage you
+
+519
+00:29:56,024 --> 00:30:01,049
+which is how to read pointers how to
+
+520
+00:29:58,094 --> 00:30:02,165
+read declarations and see and the basic
+
+521
+00:30:01,049 --> 00:30:06,095
+rule is you start from the inside and
+
+522
+00:30:03,065 --> 00:30:12,151
+you work your way outward so that
+
+523
+00:30:06,095 --> 00:30:12,151
+declaration of of a3 says that
+
+524
+00:30:15,048 --> 00:30:21,113
+with that parentheses says a three is a
+
+525
+00:30:24,289 --> 00:30:27,860
+what is victory
+
+526
+00:30:30,014 --> 00:30:32,020
+you
+
+527
+00:30:32,045 --> 00:30:38,048
+a three is a pointer that to parentheses
+
+528
+00:30:37,001 --> 00:30:41,069
+around it
+
+529
+00:30:38,048 --> 00:30:43,069
+what does it point to it points to an
+
+530
+00:30:41,069 --> 00:30:54,077
+array of three inch
+
+531
+00:30:43,069 --> 00:31:02,152
+okay so we can diagram a three then to
+
+532
+00:30:55,049 --> 00:31:03,052
+be something like this
+
+533
+00:31:11,054 --> 00:31:16,095
+a three is a pointer like I said read it
+
+534
+00:31:16,011 --> 00:31:21,090
+from the inside out
+
+535
+00:31:16,095 --> 00:31:23,133
+a three as a pointer and what does it
+
+536
+00:31:21,009 --> 00:31:25,098
+point to it points to an array of three
+
+537
+00:31:24,033 --> 00:31:31,047
+elements and what type of elements are
+
+538
+00:31:26,079 --> 00:31:33,120
+they there in so you're sort of reading
+
+539
+00:31:31,047 --> 00:31:35,085
+outward and picking up pizzas from the
+
+540
+00:31:34,002 --> 00:31:39,039
+right and from the left as you do this
+
+541
+00:31:35,085 --> 00:31:42,144
+and so when you know that this all makes
+
+542
+00:31:39,057 --> 00:31:46,119
+sense that these numbers the size of a3
+
+543
+00:31:43,044 --> 00:31:50,112
+itself is eight but since it points to
+
+544
+00:31:47,019 --> 00:31:56,106
+an array of three in the size of star a
+
+545
+00:31:51,012 --> 00:31:59,070
+three is twelve and then star star a
+
+546
+00:31:57,006 --> 00:32:02,031
+three would indicate this particular
+
+547
+00:31:59,007 --> 00:32:06,012
+element of the array and so it sizes
+
+548
+00:32:02,031 --> 00:32:08,058
+four so these all compile but which of
+
+549
+00:32:06,075 --> 00:32:12,137
+them could cause a null pointer
+
+550
+00:32:08,058 --> 00:32:12,137
+dereferences which of the left two
+
+551
+00:32:16,087 --> 00:32:28,266
+yes you can flip coin yes well I'm only
+
+552
+00:32:27,007 --> 00:32:32,059
+looking at it I'm trying to fill in a
+
+553
+00:32:29,049 --> 00:32:35,320
+three right now so a three is fine but
+
+554
+00:32:33,022 --> 00:32:42,971
+if I said star a three could that have a
+
+555
+00:32:35,032 --> 00:32:46,033
+null pointer of problem yes why because
+
+556
+00:32:43,169 --> 00:32:48,820
+when I declare a three here all I'm
+
+557
+00:32:46,033 --> 00:32:50,050
+declaring is this particular I'm only
+
+558
+00:32:48,082 --> 00:32:52,671
+allocating enough storage for that
+
+559
+00:32:50,005 --> 00:32:54,079
+pointer I have an initial lot I haven't
+
+560
+00:32:53,409 --> 00:32:57,250
+allocated the space for an array I
+
+561
+00:32:55,024 --> 00:32:59,062
+haven't initialized a three to actually
+
+562
+00:32:57,025 --> 00:33:01,069
+point to an array so it could be a null
+
+563
+00:32:59,062 --> 00:33:03,085
+pointer it could be arbitrary junk but
+
+564
+00:33:01,069 --> 00:33:04,135
+it the chances of it actually pointing
+
+565
+00:33:03,085 --> 00:33:08,110
+to an array of three inches is highly
+
+566
+00:33:05,035 --> 00:33:11,083
+unlikely so this would be a potentially
+
+567
+00:33:09,001 --> 00:33:16,440
+bad and therefore double stars doubly
+
+568
+00:33:11,083 --> 00:33:23,086
+dead right okay so now let's look at a
+
+569
+00:33:16,539 --> 00:33:29,980
+four so a four to understand that you
+
+570
+00:33:24,013 --> 00:33:33,094
+actually have to look at the charts and
+
+571
+00:33:29,098 --> 00:33:35,098
+see the precedent chart which if you're
+
+572
+00:33:33,094 --> 00:33:37,177
+like me your book falls open to that
+
+573
+00:33:35,098 --> 00:33:40,177
+precedence chart the different operators
+
+574
+00:33:38,077 --> 00:33:44,113
+and what levels they are and one thing
+
+575
+00:33:41,077 --> 00:33:45,148
+you'll see is that a level one of
+
+576
+00:33:45,013 --> 00:33:51,015
+precedence the highest precedence
+
+577
+00:33:46,048 --> 00:33:55,737
+include square brackets and level to
+
+578
+00:33:51,033 --> 00:33:59,742
+include star in other words bracket is
+
+579
+00:33:56,169 --> 00:34:03,194
+higher precedence and star so this
+
+580
+00:34:00,039 --> 00:34:08,640
+particular statement here
+
+581
+00:34:03,419 --> 00:34:08,640
+the binding is is actually like this
+
+582
+00:34:11,339 --> 00:34:22,365
+it says that a four is an array of three
+
+583
+00:34:17,379 --> 00:34:35,381
+elements and those elements are pointers
+
+584
+00:34:22,599 --> 00:34:41,740
+and they point to in high so a four is
+
+585
+00:34:35,399 --> 00:34:48,790
+an array can you see this but each of
+
+586
+00:34:41,074 --> 00:34:51,683
+those elements is pointing to an INT
+
+587
+00:34:48,079 --> 00:34:51,638
+somewhere hopefully
+
+588
+00:34:54,046 --> 00:34:59,119
+and so what the fat matches the numbers
+
+589
+00:34:57,069 --> 00:35:02,250
+we got so the size of a four is twenty
+
+590
+00:35:00,019 --> 00:35:07,024
+four because it's eight times three
+
+591
+00:35:02,025 --> 00:35:12,121
+if I were to dereference a four it would
+
+592
+00:35:07,069 --> 00:35:15,166
+just indicate this particular pointer
+
+593
+00:35:13,021 --> 00:35:20,026
+right a four is an array of pointers so
+
+594
+00:35:16,066 --> 00:35:24,975
+when I get an element out of that array
+
+595
+00:35:20,026 --> 00:35:28,625
+what I'll get is a pointer and so of a
+
+596
+00:35:25,569 --> 00:35:31,950
+four is a pointer and so it's also eight
+
+597
+00:35:28,859 --> 00:35:35,800
+but if I now do a second dereference
+
+598
+00:35:31,095 --> 00:35:39,138
+then I'll get an int and it's size is
+
+599
+00:35:35,008 --> 00:35:39,066
+four okay
+
+600
+00:35:42,074 --> 00:35:55,167
+these all compile so could I have a it
+
+601
+00:35:51,092 --> 00:36:00,128
+could start a for them of cause problems
+
+602
+00:35:56,067 --> 00:36:00,128
+as far as a null pointer or bed pointer
+
+603
+00:36:01,085 --> 00:36:11,160
+no that's right no is the correct answer
+
+604
+00:36:07,029 --> 00:36:16,032
+no is yes because you've a for this your
+
+605
+00:36:12,006 --> 00:36:19,098
+a for is an array you've you've defined
+
+606
+00:36:16,032 --> 00:36:22,101
+an array and it arrays get allocated by
+
+607
+00:36:20,052 --> 00:36:24,135
+their declaration as a for LM a three
+
+608
+00:36:23,001 --> 00:36:28,059
+element array on the other hand this
+
+609
+00:36:25,035 --> 00:36:29,127
+could give you a null pointer because I
+
+610
+00:36:28,059 --> 00:36:34,059
+haven't initialized the array to
+
+611
+00:36:30,027 --> 00:36:36,027
+anything so for example if it were
+
+612
+00:36:34,059 --> 00:36:39,113
+initialized to all zeros it would just
+
+613
+00:36:36,027 --> 00:36:44,058
+be three no null pointers in that array
+
+614
+00:36:40,013 --> 00:36:50,037
+so this is sort of that stuff the
+
+615
+00:36:44,058 --> 00:36:52,074
+nitty-gritties of c question yes how
+
+616
+00:36:50,037 --> 00:36:54,099
+does it know that the size twelve other
+
+617
+00:36:52,074 --> 00:36:56,082
+side c didn't really know how many
+
+618
+00:36:54,099 --> 00:37:01,134
+things are in an array the composite the
+
+619
+00:36:57,054 --> 00:37:04,122
+question of how the compiler that what
+
+620
+00:37:02,034 --> 00:37:08,109
+i'm i'll into your question by saying
+
+621
+00:37:05,022 --> 00:37:10,083
+remember the compiler knows a lot so the
+
+622
+00:37:09,009 --> 00:37:13,062
+in particular I've declared this to be
+
+623
+00:37:10,083 --> 00:37:14,136
+an array of three pointers I'm compiling
+
+624
+00:37:13,062 --> 00:37:17,091
+for a machine where pointers are eight
+
+625
+00:37:15,036 --> 00:37:22,038
+bytes and so the compiler knows that SP
+
+626
+00:37:17,091 --> 00:37:24,096
+24 bytes in general when you're when
+
+627
+00:37:22,038 --> 00:37:26,136
+you're referencing and see there's no
+
+628
+00:37:24,096 --> 00:37:28,104
+you know the machine doesn't have built
+
+629
+00:37:27,036 --> 00:37:31,043
+into it any bounds and doesn't do bounds
+
+630
+00:37:29,076 --> 00:37:38,109
+checking for you but that's in the
+
+631
+00:37:32,006 --> 00:37:41,049
+runtime execution if but in C if I when
+
+632
+00:37:39,009 --> 00:37:43,053
+I declare something it's known it has to
+
+633
+00:37:41,049 --> 00:37:45,398
+be known at that point when the
+
+634
+00:37:43,053 --> 00:37:49,512
+declaration occurs
+
+635
+00:37:45,839 --> 00:37:55,630
+question go back there so instead of
+
+636
+00:37:49,989 --> 00:37:58,440
+doing three I just wanted empty bracket
+
+637
+00:37:55,063 --> 00:38:03,672
+yeah I think empty bracket is is it just
+
+638
+00:37:58,044 --> 00:38:05,883
+another name for a pointer it's usually
+
+639
+00:38:04,239 --> 00:38:07,293
+it's just given as arguments some
+
+640
+00:38:06,279 --> 00:38:10,287
+restrictions on it but when you use the
+
+641
+00:38:07,779 --> 00:38:11,811
+empty bracket notation and see it's
+
+642
+00:38:10,359 --> 00:38:13,690
+equivalent to doing a pointer
+
+643
+00:38:12,099 --> 00:38:21,114
+declaration you're not allocating any
+
+644
+00:38:13,069 --> 00:38:23,958
+space for it one reality very different
+
+645
+00:38:21,249 --> 00:38:26,880
+area yes right here it really means when
+
+646
+00:38:24,579 --> 00:38:28,674
+you declare an array and you give a
+
+647
+00:38:26,088 --> 00:38:35,037
+number the size of that array it really
+
+648
+00:38:29,529 --> 00:38:37,536
+allocates that memories if question yes
+
+649
+00:38:35,829 --> 00:38:40,450
+oh yes and that's the final one you'll
+
+650
+00:38:37,599 --> 00:38:42,670
+notice that the numbers for a 2 and a 4
+
+651
+00:38:40,045 --> 00:38:44,874
+the same and the reason is it's the same
+
+652
+00:38:42,067 --> 00:38:50,016
+thing and that again goes by the
+
+653
+00:38:45,279 --> 00:38:55,305
+precedence rules of see that a 2 first
+
+654
+00:38:50,619 --> 00:38:58,630
+binds this way and then this way and so
+
+655
+00:38:55,539 --> 00:39:01,556
+a 2 and a 4 are synonymous just with
+
+656
+00:38:58,063 --> 00:39:01,142
+less parentheses
+
+657
+00:39:02,009 --> 00:39:08,060
+okay so that was a bit of an aside but
+
+658
+00:39:06,014 --> 00:39:10,097
+as you can see I think this is the kind
+
+659
+00:39:09,041 --> 00:39:13,139
+of thing that will really probe your
+
+660
+00:39:10,097 --> 00:39:14,180
+your understanding and now though it's a
+
+661
+00:39:14,039 --> 00:39:17,045
+beginning seed programmer where you
+
+662
+00:39:15,008 --> 00:39:18,083
+don't have a very good sense of the
+
+663
+00:39:17,045 --> 00:39:20,132
+underlying representation of a program
+
+664
+00:39:19,055 --> 00:39:24,056
+it's really hard to figure these things
+
+665
+00:39:21,032 --> 00:39:26,033
+out but now that you know what it means
+
+666
+00:39:24,056 --> 00:39:28,067
+to compile code and you can actually
+
+667
+00:39:26,033 --> 00:39:32,111
+look at compiled code that'll sort of
+
+668
+00:39:28,067 --> 00:39:40,130
+clear up a lot of the what's really
+
+669
+00:39:33,011 --> 00:39:43,025
+going on in a program so let's now
+
+670
+00:39:41,003 --> 00:39:44,006
+generalize from one dimension to two
+
+671
+00:39:43,025 --> 00:39:47,072
+just to make life a little more
+
+672
+00:39:44,006 --> 00:39:50,027
+interesting and again it's an important
+
+673
+00:39:47,072 --> 00:39:51,119
+principle to understand that in a one
+
+674
+00:39:50,081 --> 00:39:55,103
+you want to declare a multi-dimensional
+
+675
+00:39:52,019 --> 00:39:57,115
+array and see you do it by a sequence of
+
+676
+00:39:56,003 --> 00:40:00,098
+brackets with the balance for each one
+
+677
+00:39:58,015 --> 00:40:03,028
+and the reason for that is actually
+
+678
+00:40:00,098 --> 00:40:02,101
+there
+
+679
+00:40:06,028 --> 00:40:13,034
+it will see that it has to do with this
+
+680
+00:40:11,063 --> 00:40:15,142
+notation that we just went through so if
+
+681
+00:40:13,088 --> 00:40:15,142
+I segment
+
+682
+00:40:30,094 --> 00:40:40,148
+it turns out that I can read it like
+
+683
+00:40:35,033 --> 00:40:46,040
+this that a is an array of three
+
+684
+00:40:41,048 --> 00:40:48,095
+elements and each of those elements is
+
+685
+00:40:46,004 --> 00:40:54,011
+in itself an array of five elements of
+
+686
+00:40:48,095 --> 00:40:56,144
+type int and we'll get back to that but
+
+687
+00:40:54,047 --> 00:41:00,074
+that kind of explains everything I'm
+
+688
+00:40:57,044 --> 00:41:04,073
+about to tell you in this picture so in
+
+689
+00:41:00,074 --> 00:41:07,151
+particular if I declare an array with
+
+690
+00:41:04,073 --> 00:41:10,162
+our rows and C columns and you think of
+
+691
+00:41:08,051 --> 00:41:15,077
+it mathematically as sort of a matrix
+
+692
+00:41:11,062 --> 00:41:24,068
+two-dimensional matrix what it really
+
+693
+00:41:15,077 --> 00:41:28,133
+does is it says look he is on the yep
+
+694
+00:41:25,022 --> 00:41:31,043
+sometimes see actually ends up being the
+
+695
+00:41:29,033 --> 00:41:38,041
+inner element it says first of all I
+
+696
+00:41:31,043 --> 00:41:39,140
+want row 0 will be an array of C in
+
+697
+00:41:38,041 --> 00:41:42,065
+being the number of columns
+
+698
+00:41:40,004 --> 00:41:44,099
+I'll put so all the elements of row 0
+
+699
+00:41:42,065 --> 00:41:47,123
+will come first all the elements of Row
+
+700
+00:41:45,035 --> 00:41:50,120
+1 come next and so forth up to the end
+
+701
+00:41:48,023 --> 00:41:54,032
+of it all and so the total allocation
+
+702
+00:41:51,002 --> 00:41:56,048
+will be 4 times the data size times the
+
+703
+00:41:55,013 --> 00:41:59,090
+number of rows times the number of
+
+704
+00:41:56,066 --> 00:42:01,160
+columns bytes but the reason why they're
+
+705
+00:41:59,009 --> 00:42:03,062
+in that order which is called row major
+
+706
+00:42:02,006 --> 00:42:05,099
+order because if we thought of it these
+
+707
+00:42:04,043 --> 00:42:08,128
+terms we go through the first row and
+
+708
+00:42:06,053 --> 00:42:16,105
+then the second row in the third row is
+
+709
+00:42:09,028 --> 00:42:16,105
+precisely because of this
+
+710
+00:42:18,004 --> 00:42:29,039
+notation let me write it down like this
+
+711
+00:42:22,004 --> 00:42:32,069
+int of a of well let me just use that
+
+712
+00:42:29,075 --> 00:42:38,170
+the one I said you can write this out as
+
+713
+00:42:32,069 --> 00:42:39,070
+a is a array a free all may be right
+
+714
+00:42:49,066 --> 00:42:53,101
+over half and select 2/3
+
+715
+00:42:56,829 --> 00:43:04,831
+I'll just put it over here okay so a is
+
+716
+00:43:01,067 --> 00:43:07,115
+the 3 element array and or generalizing
+
+717
+00:43:04,849 --> 00:43:11,720
+to this picture a is an array of our
+
+718
+00:43:08,015 --> 00:43:14,024
+element this is the first element this
+
+719
+00:43:11,072 --> 00:43:17,221
+is the second element and this is the
+
+720
+00:43:14,024 --> 00:43:26,092
+arts element but what kind of elements
+
+721
+00:43:17,869 --> 00:43:26,920
+are those each is an array
+
+722
+00:43:28,005 --> 00:43:31,062
+of five minutes
+
+723
+00:43:35,088 --> 00:43:47,121
+so within array a here each subpart of a
+
+724
+00:43:42,024 --> 00:43:49,116
+then is an array of C in and so that's
+
+725
+00:43:48,021 --> 00:43:53,039
+why logically the way these are
+
+726
+00:43:50,016 --> 00:43:58,074
+organized actually comes from this
+
+727
+00:43:53,039 --> 00:44:03,137
+declaration notation directly and what's
+
+728
+00:43:58,074 --> 00:44:08,109
+the examples of that so for example if I
+
+729
+00:44:04,037 --> 00:44:12,054
+wanted to extend my zip tidge idea and
+
+730
+00:44:09,009 --> 00:44:18,032
+introduce an array of four of these I
+
+731
+00:44:12,054 --> 00:44:20,103
+could declare it this way and again with
+
+732
+00:44:18,032 --> 00:44:23,037
+remember I used a type def to declare
+
+733
+00:44:21,003 --> 00:44:26,010
+zip tidge but if i were to expand this
+
+734
+00:44:23,082 --> 00:44:29,151
+out it was would be as if i was
+
+735
+00:44:26,073 --> 00:44:32,073
+declaring this array PGH to be a four
+
+736
+00:44:30,051 --> 00:44:35,088
+rows and five columns but what it really
+
+737
+00:44:32,073 --> 00:44:38,124
+is is the array of four elements one two
+
+738
+00:44:35,088 --> 00:44:42,126
+three four each of which is an array of
+
+739
+00:44:39,024 --> 00:44:46,029
+five minutes okay so think of that
+
+740
+00:44:43,026 --> 00:44:48,125
+nesting when you read declarations you
+
+741
+00:44:46,074 --> 00:44:51,150
+start from the name of the element and
+
+742
+00:44:49,025 --> 00:44:56,027
+you work your way outward through these
+
+743
+00:44:52,005 --> 00:44:55,100
+brackets and stars in some order
+
+744
+00:44:57,509 --> 00:45:05,531
+oh and so in particular if I want to
+
+745
+00:45:03,239 --> 00:45:07,276
+reference a particular element of an
+
+746
+00:45:05,729 --> 00:45:16,766
+array
+
+747
+00:45:07,609 --> 00:45:18,695
+the general rule is wrong here oh the
+
+748
+00:45:17,099 --> 00:45:24,172
+general rule is this one if I want to
+
+749
+00:45:19,469 --> 00:45:24,505
+reference literally
+
+750
+00:45:25,056 --> 00:45:38,139
+so I'm building up to it so yes this
+
+751
+00:45:34,074 --> 00:45:40,140
+shows that a of I I can actually just do
+
+752
+00:45:39,039 --> 00:45:44,100
+the reference a of I I don't have to
+
+753
+00:45:41,004 --> 00:45:48,072
+give a of I of J in C and what that
+
+754
+00:45:45,000 --> 00:45:51,072
+denotes is one of these our rows of the
+
+755
+00:45:49,008 --> 00:45:56,040
+array and each of which is an array of
+
+756
+00:45:51,072 --> 00:45:59,085
+see elements of type int and so imagine
+
+757
+00:45:56,004 --> 00:46:01,065
+that in general we have K bytes for data
+
+758
+00:45:59,085 --> 00:46:04,134
+type T the underlying data type in this
+
+759
+00:46:02,001 --> 00:46:07,098
+case of T is an int and K equals four
+
+760
+00:46:05,034 --> 00:46:12,063
+but in general the starting address then
+
+761
+00:46:07,098 --> 00:46:15,161
+of row I would be gotten by multiplying
+
+762
+00:46:12,063 --> 00:46:20,141
+the number of columns by K and then
+
+763
+00:46:16,061 --> 00:46:20,069
+multiplying that by the row number
+
+764
+00:46:23,026 --> 00:46:30,079
+and now if within the array I want to
+
+765
+00:46:25,075 --> 00:46:32,134
+reference a ray element a sub IJ then it
+
+766
+00:46:30,079 --> 00:46:35,131
+comes up to this computation you take
+
+767
+00:46:33,034 --> 00:46:38,125
+the starting address you scale the row
+
+768
+00:46:36,031 --> 00:46:41,038
+number by the number of columns add to
+
+769
+00:46:39,025 --> 00:46:44,098
+it which column you want and then
+
+770
+00:46:41,038 --> 00:46:48,115
+multiply that all by okay so the way to
+
+771
+00:46:44,098 --> 00:46:53,170
+see that is here I can get to row number
+
+772
+00:46:49,015 --> 00:46:56,101
+I by just scaling I by the number of
+
+773
+00:46:54,007 --> 00:47:00,076
+columns times the size of the elements
+
+774
+00:46:57,001 --> 00:47:05,005
+are four and now I want to get to the JC
+
+775
+00:47:01,039 --> 00:47:07,135
+element of this sub array here and I can
+
+776
+00:47:05,005 --> 00:47:10,093
+do that by scaling J by four and adding
+
+777
+00:47:08,035 --> 00:47:13,126
+it to the beginning of this sub array
+
+778
+00:47:10,093 --> 00:47:15,160
+and now I can just collect the force
+
+779
+00:47:14,026 --> 00:47:18,049
+together and that's what and pull it
+
+780
+00:47:16,006 --> 00:47:23,059
+outside here that's what gives you this
+
+781
+00:47:18,049 --> 00:47:26,068
+formula so again the the point of this
+
+782
+00:47:24,013 --> 00:47:30,076
+is that this all kind of is a natural
+
+783
+00:47:26,068 --> 00:47:32,131
+outcome of the Declaration and it's easy
+
+784
+00:47:30,076 --> 00:47:36,185
+to think of it in terms of this storage
+
+785
+00:47:33,031 --> 00:47:39,590
+model here of how the actual array is
+
+786
+00:47:36,869 --> 00:47:39,869
+allocated
+
+787
+00:47:41,066 --> 00:47:49,140
+okay now a different style of
+
+788
+00:47:45,000 --> 00:47:54,033
+declaration is imagine I create three of
+
+789
+00:47:50,004 --> 00:48:01,068
+these arrays and now I want to create an
+
+790
+00:47:54,033 --> 00:48:05,058
+array that contains that appoints to
+
+791
+00:48:02,004 --> 00:48:07,008
+these so this is a different data
+
+792
+00:48:05,058 --> 00:48:09,117
+structure you'll observe from before
+
+793
+00:48:07,044 --> 00:48:12,107
+what Univ now is an array of three
+
+794
+00:48:10,017 --> 00:48:17,046
+pointers in each of those pointers
+
+795
+00:48:13,007 --> 00:48:19,079
+points to a one of these arrays of five
+
+796
+00:48:17,046 --> 00:48:19,079
+ends
+
+797
+00:48:21,008 --> 00:48:23,014
+you
+
+798
+00:48:24,219 --> 00:48:31,223
+and their underlying data type by the
+
+799
+00:48:26,041 --> 00:48:34,117
+way of these elements are in stars right
+
+800
+00:48:31,619 --> 00:48:36,700
+and C does not differentiate when you
+
+801
+00:48:35,017 --> 00:48:38,316
+want to declare a ring like this you
+
+802
+00:48:36,007 --> 00:48:41,856
+just say it's an int star you don't say
+
+803
+00:48:38,469 --> 00:48:45,531
+how many elements are the underlying
+
+804
+00:48:42,549 --> 00:48:48,210
+array is so you'll see by these picture
+
+805
+00:48:46,089 --> 00:48:52,107
+that these are different data structures
+
+806
+00:48:48,021 --> 00:48:53,880
+so now let's go through the what the
+
+807
+00:48:52,269 --> 00:49:01,317
+assembly code looks like to reference
+
+808
+00:48:54,069 --> 00:49:07,180
+these two data structures we didn't did
+
+809
+00:49:01,749 --> 00:49:12,700
+we do the I'm sorry I would have thought
+
+810
+00:49:07,018 --> 00:49:16,887
+I'd have assembly code system might be a
+
+811
+00:49:12,007 --> 00:49:19,916
+missing slide you so we'll see so
+
+812
+00:49:17,049 --> 00:49:20,105
+imagine I wanted to reference
+
+813
+00:49:24,051 --> 00:49:29,084
+I'm sorry I'm confused why there is no
+
+814
+00:49:32,039 --> 00:49:34,039
+ah
+
+815
+00:49:46,031 --> 00:49:49,035
+they should have been I'm sorry this is
+
+816
+00:49:49,005 --> 00:49:52,020
+uh
+
+817
+00:49:49,035 --> 00:49:58,059
+I'm pausing here because I think I meant
+
+818
+00:49:52,002 --> 00:50:02,015
+to have a slide that would show what the
+
+819
+00:49:58,059 --> 00:50:01,133
+code looks like and I don't
+
+820
+00:50:02,041 --> 00:50:06,045
+okay what we're going to have to wing it
+
+821
+00:50:08,058 --> 00:50:16,125
+so if you wanted to in assembly code
+
+822
+00:50:12,049 --> 00:50:19,096
+then reference an element of an array
+
+823
+00:50:17,025 --> 00:50:21,106
+like this a multi-dimensional array what
+
+824
+00:50:19,096 --> 00:50:25,131
+you'll see is that the code kind of
+
+825
+00:50:22,006 --> 00:50:30,034
+builds up a computation like this and
+
+826
+00:50:26,031 --> 00:50:33,040
+typically in the compiled code the value
+
+827
+00:50:30,034 --> 00:50:36,097
+of K is a kind of a constant value and
+
+828
+00:50:34,021 --> 00:50:40,042
+if it's a Ray that's been declared with
+
+829
+00:50:36,097 --> 00:50:43,138
+a constant bounds then the value of C
+
+830
+00:50:40,042 --> 00:50:46,048
+will also be a constant and so a piece
+
+831
+00:50:44,038 --> 00:50:49,084
+of code for this and that's why got
+
+832
+00:50:46,048 --> 00:50:51,121
+omitted by accident will basically take
+
+833
+00:50:49,084 --> 00:50:54,088
+this value and use some combination of
+
+834
+00:50:52,021 --> 00:50:58,033
+the memory referencing and shifting and
+
+835
+00:50:55,024 --> 00:51:00,109
+le.a instructions and so forth to
+
+836
+00:50:58,033 --> 00:51:04,105
+implement this computation and then do a
+
+837
+00:51:01,009 --> 00:51:07,051
+dereference so let's look at the second
+
+838
+00:51:05,005 --> 00:51:09,007
+example and there is code for this and
+
+839
+00:51:07,051 --> 00:51:11,077
+it's actually a little bit more complex
+
+840
+00:51:09,007 --> 00:51:15,013
+because this is going through two levels
+
+841
+00:51:11,077 --> 00:51:21,160
+of indirection so you'll see that to get
+
+842
+00:51:15,013 --> 00:51:26,086
+the digit a particular digit from a
+
+843
+00:51:22,006 --> 00:51:31,074
+particular of one of these universities
+
+844
+00:51:26,086 --> 00:51:35,095
+then it has to first of all figure out
+
+845
+00:51:32,028 --> 00:51:39,040
+do this D references get the a pointer
+
+846
+00:51:36,076 --> 00:51:42,141
+to the beginning of the array and that's
+
+847
+00:51:39,004 --> 00:51:43,005
+what this reference is doing here
+
+848
+00:51:48,031 --> 00:51:55,040
+okay but first of all what it's doing is
+
+849
+00:51:51,038 --> 00:51:58,097
+shifting RSA I left by two which is
+
+850
+00:51:55,004 --> 00:52:02,018
+equivalent to scaling the the digit by
+
+851
+00:51:58,097 --> 00:52:04,163
+four because it's getting ready to take
+
+852
+00:52:02,054 --> 00:52:11,090
+that digit of parameter and scale it
+
+853
+00:52:05,063 --> 00:52:19,064
+appropriately and then it takes that
+
+854
+00:52:11,009 --> 00:52:25,078
+number and add to it the value I get by
+
+855
+00:52:19,073 --> 00:52:29,171
+reading from their array Univ but using
+
+856
+00:52:26,059 --> 00:52:32,123
+the index scaling it by eight to
+
+857
+00:52:30,071 --> 00:52:34,154
+actually do a memory reference so
+
+858
+00:52:33,023 --> 00:52:37,037
+remember this instruction then and it
+
+859
+00:52:35,054 --> 00:52:40,061
+looks a little weird is actually doing a
+
+860
+00:52:37,037 --> 00:52:43,049
+memory reference here of this three
+
+861
+00:52:40,061 --> 00:52:45,104
+element array of called units so it's
+
+862
+00:52:43,049 --> 00:52:48,116
+reading from memory and doing an array
+
+863
+00:52:46,004 --> 00:52:52,010
+index directly here by scaling and now
+
+864
+00:52:49,016 --> 00:52:56,042
+getting from that a pointer adding to
+
+865
+00:52:52,064 --> 00:52:59,078
+that the the scaled value of of the
+
+866
+00:52:56,042 --> 00:53:08,066
+digit and so that gives me a pointer now
+
+867
+00:52:59,078 --> 00:53:09,143
+as this notation shows to to the
+
+868
+00:53:08,066 --> 00:53:12,134
+particular element I want and now it
+
+869
+00:53:10,043 --> 00:53:15,119
+does a dereference so that's a pretty
+
+870
+00:53:13,034 --> 00:53:18,121
+tough example to get as you're one of
+
+871
+00:53:16,019 --> 00:53:19,021
+your first array one
+
+872
+00:53:22,022 --> 00:53:29,057
+and as I said I apologize for missing
+
+873
+00:53:25,004 --> 00:53:32,077
+the reference to a particular element of
+
+874
+00:53:29,057 --> 00:53:35,093
+this array is done entirely by computing
+
+875
+00:53:33,013 --> 00:53:41,041
+scaling indices in appropriate ways you
+
+876
+00:53:35,093 --> 00:53:44,102
+want to take the array and scale the
+
+877
+00:53:41,041 --> 00:53:48,095
+first index by 20 because each row is 20
+
+878
+00:53:45,083 --> 00:53:52,106
+elements it's 5 times 4 and you want to
+
+879
+00:53:48,095 --> 00:53:54,101
+scale the digit by 4 to select the
+
+880
+00:53:53,006 --> 00:53:59,051
+particular element within that array and
+
+881
+00:53:55,001 --> 00:54:01,013
+so you all this address computation
+
+882
+00:53:59,051 --> 00:54:03,053
+takes place and then there's a single
+
+883
+00:54:01,013 --> 00:54:04,088
+memory reference whereas in this data
+
+884
+00:54:03,053 --> 00:54:06,116
+structure you have to go through to
+
+885
+00:54:04,088 --> 00:54:08,135
+memory references first of all to you
+
+886
+00:54:07,016 --> 00:54:11,087
+have to index and get the appropriate
+
+887
+00:54:09,035 --> 00:54:14,090
+element here but that's just a pointer
+
+888
+00:54:11,087 --> 00:54:15,170
+now and then we add an offset to that
+
+889
+00:54:14,009 --> 00:54:19,031
+pointer to get the appropriate element
+
+890
+00:54:16,007 --> 00:54:21,071
+in this array here and then we read from
+
+891
+00:54:20,012 --> 00:54:24,017
+that so that's what this notation means
+
+892
+00:54:22,034 --> 00:54:26,108
+is that I'm doing two memory references
+
+893
+00:54:24,062 --> 00:54:27,146
+here and just one there and it's a
+
+894
+00:54:27,008 --> 00:54:32,045
+little bit curious because if you look
+
+895
+00:54:28,046 --> 00:54:34,055
+in the C code it looks the same but the
+
+896
+00:54:32,045 --> 00:54:37,099
+underlying data types are different and
+
+897
+00:54:34,055 --> 00:54:37,099
+so the references are different
+
+898
+00:54:39,091 --> 00:54:45,030
+okay so let's look at some other
+
+899
+00:54:43,349 --> 00:54:48,700
+variations on this code and these are
+
+900
+00:54:45,849 --> 00:54:51,894
+all we'll do to fall out from these
+
+901
+00:54:48,007 --> 00:54:54,010
+general principles I've described so
+
+902
+00:54:52,299 --> 00:54:56,220
+first of all what introduced an array a
+
+903
+00:54:55,000 --> 00:54:59,002
+two by two
+
+904
+00:54:56,022 --> 00:55:03,091
+I'm sorry sixteen by sixteen array of
+
+905
+00:54:59,002 --> 00:55:06,111
+intz and it used to be and see if you
+
+906
+00:55:03,091 --> 00:55:07,123
+wanted to do multi-dimensional arrays
+
+907
+00:55:06,309 --> 00:55:10,900
+where the size of the array was not
+
+908
+00:55:08,023 --> 00:55:12,118
+fixed at compile time you basically had
+
+909
+00:55:10,009 --> 00:55:16,418
+to implement your own version of that
+
+910
+00:55:13,018 --> 00:55:21,417
+computation I showed before of scaling
+
+911
+00:55:17,309 --> 00:55:26,230
+the the row number by the number of
+
+912
+00:55:21,579 --> 00:55:28,210
+columns and adding to it J so this is
+
+913
+00:55:26,023 --> 00:55:30,028
+sort of classic C I've written it as a
+
+914
+00:55:28,021 --> 00:55:33,088
+macro here but you can see it it's just
+
+915
+00:55:30,073 --> 00:55:36,088
+doing the row major scaling directly
+
+916
+00:55:33,088 --> 00:55:39,237
+here is the address arithmetic now since
+
+917
+00:55:36,088 --> 00:55:42,115
+a more recent generation of the C
+
+918
+00:55:40,029 --> 00:55:52,750
+compiler what they call c99 it was
+
+919
+00:55:43,015 --> 00:55:56,424
+introduced in 1999 you can actually pass
+
+920
+00:55:52,075 --> 00:55:58,614
+as a parameter an array where the number
+
+921
+00:55:56,559 --> 00:56:01,634
+of elements in the array is also a
+
+922
+00:55:59,289 --> 00:56:05,170
+parameter that's being passed to the
+
+923
+00:56:02,309 --> 00:56:07,407
+function and similarly you can declare
+
+924
+00:56:05,017 --> 00:56:10,063
+an array to be of n elements as long as
+
+925
+00:56:08,289 --> 00:56:13,150
+n has been computed before it hits that
+
+926
+00:56:10,063 --> 00:56:14,071
+array declaration and the compiler will
+
+927
+00:56:13,015 --> 00:56:18,063
+do the right thing it will allocate the
+
+928
+00:56:15,043 --> 00:56:18,045
+proper number of elements
+
+929
+00:56:19,055 --> 00:56:34,079
+um so let's just look at some of this
+
+930
+00:56:26,018 --> 00:56:36,056
+code examples and again what we'll see
+
+931
+00:56:34,079 --> 00:56:37,175
+here and this will show you an example
+
+932
+00:56:36,056 --> 00:56:39,152
+of the two turrets the the kind of
+
+933
+00:56:38,075 --> 00:56:42,164
+address computation that takes place
+
+934
+00:56:40,052 --> 00:56:46,088
+with a two dimensional array in this
+
+935
+00:56:43,064 --> 00:56:50,090
+case I know C is 16 and K is 4 so if I
+
+936
+00:56:46,088 --> 00:56:56,110
+want to get element I sub j IJ out of
+
+937
+00:56:50,009 --> 00:57:03,056
+this array then first of all scale I by
+
+938
+00:56:57,001 --> 00:57:09,001
+64 because that's and I'll add that to
+
+939
+00:57:04,037 --> 00:57:13,094
+the base and then I'll scale RDX by 4
+
+940
+00:57:09,001 --> 00:57:16,004
+that's J and add it to this array and so
+
+941
+00:57:13,094 --> 00:57:18,122
+and then do a memory reference there so
+
+942
+00:57:16,013 --> 00:57:22,042
+in the end I'm doing you see these two
+
+943
+00:57:19,022 --> 00:57:24,086
+instructions have done the appropriate
+
+944
+00:57:22,042 --> 00:57:27,095
+the three instructions have done the
+
+945
+00:57:24,086 --> 00:57:29,111
+appropriate scaling of I and J as of
+
+946
+00:57:27,095 --> 00:57:35,102
+them to the beginning address of a and
+
+947
+00:57:30,011 --> 00:57:41,057
+I've done the computation on the other
+
+948
+00:57:36,002 --> 00:57:43,094
+hand if it's a 1 the third example I
+
+949
+00:57:41,057 --> 00:57:45,083
+showed where N is a parameter that's
+
+950
+00:57:43,094 --> 00:57:45,173
+passed to the function so it's not known
+
+951
+00:57:45,083 --> 00:57:50,096
+at compile time
+
+952
+00:57:46,073 --> 00:57:51,158
+how big a scaling factor to use you see
+
+953
+00:57:50,096 --> 00:57:54,139
+that it has to use a multiply
+
+954
+00:57:52,058 --> 00:57:57,086
+instruction to do that which is a
+
+955
+00:57:55,039 --> 00:58:00,128
+relatively expensive instruction in
+
+956
+00:57:57,086 --> 00:58:03,119
+terms of performance and then once it
+
+957
+00:58:01,028 --> 00:58:07,028
+has that that's just n times I and then
+
+958
+00:58:04,019 --> 00:58:11,023
+it uses various combinations of le A's
+
+959
+00:58:07,028 --> 00:58:13,034
+and the scaling notation from before to
+
+960
+00:58:11,023 --> 00:58:17,081
+compute an appropriate offset into the
+
+961
+00:58:13,088 --> 00:58:22,172
+array to do the reference so here I
+
+962
+00:58:17,081 --> 00:58:24,173
+could do it with a shift and here I had
+
+963
+00:58:23,072 --> 00:58:30,077
+to introduce a multiply because I don't
+
+964
+00:58:25,073 --> 00:58:42,131
+know in advance how big it is if you
+
+965
+00:58:31,022 --> 00:58:51,026
+want to torture yourself here's an
+
+966
+00:58:43,031 --> 00:58:54,047
+example I was going to go over of triply
+
+967
+00:58:51,026 --> 00:59:00,098
+nested possibilities and dereferencing
+
+968
+00:58:54,047 --> 00:59:06,053
+of the same idea but let's move on to
+
+969
+00:59:00,098 --> 00:59:07,153
+pointers oh it just drugs so the idea of
+
+970
+00:59:06,053 --> 00:59:11,072
+a struct is actually quite simple oh
+
+971
+00:59:08,053 --> 00:59:12,062
+well the base idea is since when it gets
+
+972
+00:59:11,072 --> 00:59:17,171
+more complicated
+
+973
+00:59:12,062 --> 00:59:20,078
+oh the idea that is I want to I declare
+
+974
+00:59:18,071 --> 00:59:23,129
+a struct to have some number of fields
+
+975
+00:59:20,078 --> 00:59:26,120
+each of which can be an int or it could
+
+976
+00:59:24,029 --> 00:59:29,093
+be in this case a pointer or it could be
+
+977
+00:59:27,002 --> 00:59:31,040
+an array itself but the rule is
+
+978
+00:59:29,093 --> 00:59:35,102
+basically what I'll do is allocate
+
+979
+00:59:31,058 --> 00:59:37,109
+enough space if I introduce one of these
+
+980
+00:59:36,002 --> 00:59:41,096
+drugs for all the different array
+
+981
+00:59:38,009 --> 00:59:44,090
+elements fields and that our struct and
+
+982
+00:59:41,096 --> 00:59:46,097
+then I'll I'll basically keep track the
+
+983
+00:59:44,009 --> 00:59:50,018
+compiler will keep track of where each
+
+984
+00:59:47,006 --> 00:59:53,024
+of these fields starts and generate the
+
+985
+00:59:50,099 --> 00:59:54,188
+appropriate code to offset from the
+
+986
+00:59:53,024 --> 00:59:57,041
+beginning so the structure itself the
+
+987
+00:59:55,088 --> 00:59:59,090
+reference to it will be the beginning
+
+988
+00:59:57,041 --> 01:00:01,133
+address of the struct and then I'll use
+
+989
+00:59:59,009 --> 01:00:08,018
+appropriate offset to get to the
+
+990
+01:00:02,033 --> 01:00:13,039
+different field so here's an example of
+
+991
+01:00:09,008 --> 01:00:12,067
+some code imagine I
+
+992
+01:00:14,073 --> 01:00:20,121
+have a struct a pointer to one of these
+
+993
+01:00:17,028 --> 01:00:23,037
+structures and I have an index and what
+
+994
+01:00:21,021 --> 01:00:29,082
+I want to do is get to the that
+
+995
+01:00:24,018 --> 01:00:32,037
+appropriate part of array a within this
+
+996
+01:00:29,082 --> 01:00:33,099
+struct well array a is right at the
+
+997
+01:00:32,037 --> 01:00:35,124
+beginning of the structure so I can
+
+998
+01:00:33,099 --> 01:00:39,141
+treat this just like I would any array
+
+999
+01:00:36,024 --> 01:00:42,072
+reference of scaling idx by 4 and adding
+
+1000
+01:00:40,041 --> 01:00:43,119
+it to the base to get the appropriate
+
+1001
+01:00:42,072 --> 01:00:44,118
+element so I don't really have to do
+
+1002
+01:00:44,019 --> 01:00:48,084
+anything special
+
+1003
+01:00:45,018 --> 01:00:52,077
+for this one let's go get some other
+
+1004
+01:00:48,084 --> 01:00:56,148
+code that you'll typically see actually
+
+1005
+01:00:52,077 --> 01:00:58,095
+this example is pretty involved so I'm
+
+1006
+01:00:57,048 --> 01:01:01,107
+actually doing a whole bunch of stuff
+
+1007
+01:00:58,095 --> 01:01:03,153
+here with this one struct first of all
+
+1008
+01:01:02,007 --> 01:01:10,106
+I'm trying to retrieve element I from
+
+1009
+01:01:04,053 --> 01:01:14,127
+the structure then I'm using that to
+
+1010
+01:01:11,006 --> 01:01:19,014
+index into array a and and insert a
+
+1011
+01:01:15,027 --> 01:01:23,126
+value into there and then I'm updating
+
+1012
+01:01:19,014 --> 01:01:24,026
+this pointer to point to the next
+
+1013
+01:01:26,034 --> 01:01:31,065
+I'm if this were a link twist
+
+1014
+01:01:30,036 --> 01:01:34,127
+what I want to do is step to the next
+
+1015
+01:01:31,065 --> 01:01:38,154
+owner is a list so I need to retrieve
+
+1016
+01:01:35,027 --> 01:01:41,064
+the next field from here and so these in
+
+1017
+01:01:39,054 --> 01:01:43,119
+so I'm actually making three references
+
+1018
+01:01:41,064 --> 01:01:45,069
+to this structure and this one rather
+
+1019
+01:01:44,019 --> 01:01:51,024
+small function so let's try and figure
+
+1020
+01:01:46,014 --> 01:01:53,061
+it all out so first of all I have to
+
+1021
+01:01:51,024 --> 01:01:55,086
+retrieve element I from it and here you
+
+1022
+01:01:53,061 --> 01:01:59,070
+see that we know that element I is that
+
+1023
+01:01:55,086 --> 01:02:01,086
+offset 16 and so and here's where you
+
+1024
+01:01:59,007 --> 01:02:03,093
+see that displacement field being used
+
+1025
+01:02:01,086 --> 01:02:07,131
+in the memory reference exactly for this
+
+1026
+01:02:04,056 --> 01:02:10,110
+purpose I want to take R but add 16 to
+
+1027
+01:02:08,031 --> 01:02:13,064
+it to get a memory address that I can
+
+1028
+01:02:11,001 --> 01:02:13,055
+use for
+
+1029
+01:02:14,049 --> 01:02:26,082
+for I and it you see it actually uses
+
+1030
+01:02:21,015 --> 01:02:28,080
+move slq because I itself is an int but
+
+1031
+01:02:26,082 --> 01:02:32,127
+I'm going to use it as an array index in
+
+1032
+01:02:28,008 --> 01:02:35,057
+which case I have to scale it I have to
+
+1033
+01:02:33,027 --> 01:02:37,119
+do address arithmetic using 8 byte
+
+1034
+01:02:35,849 --> 01:02:40,830
+quantities so this actually retrieves
+
+1035
+01:02:38,019 --> 01:02:46,026
+the 4 byte value and does a sign
+
+1036
+01:02:40,083 --> 01:02:53,100
+extension on it and now what I want to
+
+1037
+01:02:46,026 --> 01:02:57,081
+do is store at a Val at element I and so
+
+1038
+01:02:54,000 --> 01:03:02,119
+here you'll see that it's using our ax
+
+1039
+01:02:57,081 --> 01:03:01,390
+is the value of just computed for I
+
+1040
+01:03:02,045 --> 01:03:09,138
+scale linked by 4 and using the starting
+
+1041
+01:03:07,068 --> 01:03:12,072
+address of the R which happens to be the
+
+1042
+01:03:10,038 --> 01:03:14,747
+starting address of a as well and doing
+
+1043
+01:03:12,072 --> 01:03:19,131
+a store so that's sort of an array
+
+1044
+01:03:15,089 --> 01:03:26,165
+operation there and then the next part
+
+1045
+01:03:20,031 --> 01:03:30,126
+is I'm going to offset 24 which is the
+
+1046
+01:03:26,849 --> 01:03:35,060
+position of next read from that location
+
+1047
+01:03:31,026 --> 01:03:37,095
+and store that in our GI which is aa R
+
+1048
+01:03:35,006 --> 01:03:41,022
+so this is the operation argit's our
+
+1049
+01:03:37,095 --> 01:03:42,183
+arrow next and then the loop is I'm
+
+1050
+01:03:41,022 --> 01:03:47,024
+testing until R is no so that's going on
+
+1051
+01:03:43,083 --> 01:03:49,164
+here so you see that those three
+
+1052
+01:03:47,024 --> 01:03:53,025
+references to destruct we're implemented
+
+1053
+01:03:50,064 --> 01:03:55,143
+using three instructions here so it's a
+
+1054
+01:03:53,025 --> 01:03:59,384
+very direct mapping between the the code
+
+1055
+01:03:56,043 --> 01:04:01,131
+here and the x86 instructions and part
+
+1056
+01:03:59,609 --> 01:04:04,230
+of the x86 instructions because this
+
+1057
+01:04:02,031 --> 01:04:06,090
+kind of stuff is so commonplace in
+
+1058
+01:04:04,023 --> 01:04:08,091
+programs they kind of made the
+
+1059
+01:04:06,009 --> 01:04:12,042
+instructions map very directly toward
+
+1060
+01:04:08,091 --> 01:04:14,178
+these operations and now you should
+
+1061
+01:04:13,023 --> 01:04:17,088
+probably see why all the bells and
+
+1062
+01:04:15,078 --> 01:04:21,113
+whistles are there for these address
+
+1063
+01:04:17,088 --> 01:04:27,152
+references questions what if I was
+
+1064
+01:04:22,013 --> 01:04:35,075
+what if I was three I'm sorry because
+
+1065
+01:04:28,052 --> 01:04:39,085
+they fucking name 300 a had a eyes three
+
+1066
+01:04:35,075 --> 01:04:39,076
+elements yes it will access
+
+1067
+01:04:41,064 --> 01:04:49,092
+actually I think that's the typo Hayes
+
+1068
+01:04:45,049 --> 01:04:52,103
+supposed to be for visit with them so if
+
+1069
+01:04:49,092 --> 01:04:55,511
+I for it would access itself yeah and it
+
+1070
+01:04:52,589 --> 01:05:03,596
+would mess things up question this is a
+
+1071
+01:04:56,339 --> 01:05:09,140
+typo by the way it should be a 4 yes a
+
+1072
+01:05:04,289 --> 01:05:09,140
+null pointer I know is a 0
+
+1073
+01:05:12,076 --> 01:05:16,115
+so that's sort of the easy version of
+
+1074
+01:05:15,035 --> 01:05:20,066
+structs now let's make them a little
+
+1075
+01:05:17,015 --> 01:05:25,022
+harder one is for reasons that are a bit
+
+1076
+01:05:20,066 --> 01:05:26,147
+obscure the machine generally prefers
+
+1077
+01:05:25,022 --> 01:05:30,029
+that if you have a data type and
+
+1078
+01:05:27,047 --> 01:05:32,090
+underlying data type of K bytes that the
+
+1079
+01:05:30,092 --> 01:05:37,147
+address that that starts at be a
+
+1080
+01:05:32,009 --> 01:05:41,018
+multiple of K and so that introduces a
+
+1081
+01:05:38,047 --> 01:05:44,095
+property we call alignment which will
+
+1082
+01:05:42,008 --> 01:05:47,066
+actually when a structure gets allocated
+
+1083
+01:05:44,095 --> 01:05:50,096
+well the the compiler will actually
+
+1084
+01:05:48,038 --> 01:05:54,125
+insert some blank unused bytes in the
+
+1085
+01:05:50,096 --> 01:05:56,159
+data structure in its allocation just so
+
+1086
+01:05:55,025 --> 01:06:02,111
+that it can maintain this alignment so
+
+1087
+01:05:57,059 --> 01:06:04,103
+for example here I is a as an int and I
+
+1088
+01:06:03,011 --> 01:06:08,057
+want it to address to be a multiple of
+
+1089
+01:06:05,003 --> 01:06:09,049
+four now I'll give you a minute why
+
+1090
+01:06:08,057 --> 01:06:11,144
+that's true
+
+1091
+01:06:09,049 --> 01:06:15,074
+I'll just so trust me for a minute and
+
+1092
+01:06:12,044 --> 01:06:18,050
+so it'll actually had three unused bytes
+
+1093
+01:06:15,074 --> 01:06:20,135
+here because the first byte is being
+
+1094
+01:06:18,005 --> 01:06:22,034
+used by C and in general we'll see in
+
+1095
+01:06:21,035 --> 01:06:24,086
+the allocation we're going to make sure
+
+1096
+01:06:22,079 --> 01:06:26,162
+that the pointer to this data structure
+
+1097
+01:06:24,086 --> 01:06:28,124
+is itself a multiple of eight and the
+
+1098
+01:06:27,062 --> 01:06:32,125
+reason for that is because there's a
+
+1099
+01:06:29,024 --> 01:06:35,057
+double here and it should reside on a
+
+1100
+01:06:33,025 --> 01:06:38,036
+boundary that its starting address
+
+1101
+01:06:35,057 --> 01:06:40,076
+should be a multiple of eight and you
+
+1102
+01:06:38,036 --> 01:06:43,070
+see as long as this is eight a multiple
+
+1103
+01:06:40,076 --> 01:06:44,168
+of 8 and this offset here is a multiple
+
+1104
+01:06:43,007 --> 01:06:47,102
+of 8 then this address will be a
+
+1105
+01:06:45,068 --> 01:06:52,154
+multiple of eight so that's the idea of
+
+1106
+01:06:48,065 --> 01:06:55,097
+alignment and so why is that true well
+
+1107
+01:06:53,054 --> 01:07:00,059
+it's really a hardware issue that the
+
+1108
+01:06:55,097 --> 01:07:01,106
+memory system instead of the actual
+
+1109
+01:07:00,059 --> 01:07:05,147
+hardware memory does not reference one
+
+1110
+01:07:02,087 --> 01:07:08,138
+byte at a time at references actually in
+
+1111
+01:07:06,047 --> 01:07:11,126
+most machines nowadays about 64 bytes at
+
+1112
+01:07:09,038 --> 01:07:15,080
+a time or depending on various widths
+
+1113
+01:07:12,026 --> 01:07:18,101
+within the hardware and in general if if
+
+1114
+01:07:15,008 --> 01:07:21,037
+a particular piece of data across is the
+
+1115
+01:07:19,001 --> 01:07:23,003
+boundaries between 2 blocks of that are
+
+1116
+01:07:22,009 --> 01:07:25,073
+the
+
+1117
+01:07:23,021 --> 01:07:27,400
+a misaligned address that will take
+
+1118
+01:07:25,073 --> 01:07:29,114
+extra steps by the hardware and
+
+1119
+01:07:27,589 --> 01:07:32,510
+potentially even the operating system to
+
+1120
+01:07:30,014 --> 01:07:35,973
+deal with so just for efficiency reason
+
+1121
+01:07:32,051 --> 01:07:39,098
+they say do this alignment trust me in
+
+1122
+01:07:36,099 --> 01:07:42,170
+x86 machines if you have unaligned data
+
+1123
+01:07:39,098 --> 01:07:43,139
+it will execute just fine it just might
+
+1124
+01:07:42,017 --> 01:07:46,070
+run a little bit more slowly on some
+
+1125
+01:07:44,039 --> 01:07:48,097
+other machines if you try to do an
+
+1126
+01:07:46,007 --> 01:08:02,009
+unwind access it will actually cause a
+
+1127
+01:07:48,097 --> 01:08:03,131
+memory fault question yes the cecum the
+
+1128
+01:08:02,072 --> 01:08:07,124
+question was how could you force it to
+
+1129
+01:08:04,031 --> 01:08:12,098
+generate unwind data I don't know if you
+
+1130
+01:08:08,024 --> 01:08:15,065
+could and we'll talk about ways you can
+
+1131
+01:08:12,098 --> 01:08:19,227
+sort of be more clever in how you do
+
+1132
+01:08:15,065 --> 01:08:23,072
+your allocation to avoid wasting space
+
+1133
+01:08:20,109 --> 01:08:25,201
+so in general then we have we're mostly
+
+1134
+01:08:24,035 --> 01:08:30,077
+looking here at data types that are
+
+1135
+01:08:26,029 --> 01:08:34,102
+either 1 2 or 4 8 bytes long there are
+
+1136
+01:08:30,077 --> 01:08:36,086
+some 16 byte data types but we won't be
+
+1137
+01:08:34,759 --> 01:08:40,250
+looking at those and in general would be
+
+1138
+01:08:37,067 --> 01:08:42,110
+address then you can tell the alignment
+
+1139
+01:08:40,025 --> 01:08:45,062
+of an address by how many zeros if it's
+
+1140
+01:08:43,001 --> 01:08:46,079
+a power of 2 alignment how many zeros
+
+1141
+01:08:45,062 --> 01:08:50,120
+are at the end of a bit level
+
+1142
+01:08:46,088 --> 01:08:52,777
+representation of that address and so as
+
+1143
+01:08:51,002 --> 01:08:56,791
+we showed in general the C compiler when
+
+1144
+01:08:53,569 --> 01:09:01,730
+it's creating the layout for a structure
+
+1145
+01:08:56,989 --> 01:09:06,020
+a struct will put in padding bytes in
+
+1146
+01:09:01,073 --> 01:09:07,114
+there to make the alignment work the
+
+1147
+01:09:06,002 --> 01:09:11,491
+other thing it will do is if it need be
+
+1148
+01:09:08,014 --> 01:09:13,043
+it will add bytes to the end to make
+
+1149
+01:09:11,509 --> 01:09:15,950
+sure that the overall size of the data
+
+1150
+01:09:13,043 --> 01:09:17,452
+structure meets whatever underlying
+
+1151
+01:09:15,095 --> 01:09:19,654
+alignment requirement there is and this
+
+1152
+01:09:17,839 --> 01:09:22,370
+one because it contains a double the
+
+1153
+01:09:20,509 --> 01:09:25,620
+overall data structure has to be aligned
+
+1154
+01:09:22,037 --> 01:09:28,051
+on an 8 byte boundary
+
+1155
+01:09:25,062 --> 01:09:33,124
+and the reasoning for that is imagine I
+
+1156
+01:09:28,051 --> 01:09:37,117
+had an array of structs of these trucks
+
+1157
+01:09:34,024 --> 01:09:41,035
+in particular then if I can assume that
+
+1158
+01:09:38,017 --> 01:09:43,038
+if I can ensure that this array is a
+
+1159
+01:09:41,035 --> 01:09:45,504
+multi address to the multiple of eight
+
+1160
+01:09:43,038 --> 01:09:48,099
+then you can see that each successive
+
+1161
+01:09:45,819 --> 01:09:51,867
+element of this array of these trucks is
+
+1162
+01:09:48,099 --> 01:09:54,103
+a multiple of eight and then within that
+
+1163
+01:09:52,299 --> 01:09:58,110
+struct I've ensured that each field that
+
+1164
+01:09:55,003 --> 01:10:00,064
+requires an alignment by eight is
+
+1165
+01:09:58,011 --> 01:10:02,062
+positioned with an offset that's the
+
+1166
+01:10:00,064 --> 01:10:04,069
+multiple of eight and so it all works
+
+1167
+01:10:02,062 --> 01:10:08,080
+out but if you try to tinker with this
+
+1168
+01:10:05,014 --> 01:10:11,022
+by making this too short then you start
+
+1169
+01:10:08,008 --> 01:10:11,022
+getting misaligned reference
+
+1170
+01:10:18,409 --> 01:10:24,210
+and so one thing you'll see is for every
+
+1171
+01:10:22,002 --> 01:10:27,101
+struck the actual alignment requirement
+
+1172
+01:10:24,021 --> 01:10:29,085
+depends on what's the sort of worst-case
+
+1173
+01:10:27,119 --> 01:10:32,150
+alignment the the maximum alignment of
+
+1174
+01:10:29,085 --> 01:10:36,117
+any element so this particular structure
+
+1175
+01:10:32,429 --> 01:10:39,527
+for example contains a a float V which
+
+1176
+01:10:37,017 --> 01:10:44,816
+has a size of four and so this would be
+
+1177
+01:10:40,409 --> 01:10:49,650
+an alignment of four and you'll see in
+
+1178
+01:10:44,969 --> 01:10:52,260
+the code in general when it has to this
+
+1179
+01:10:49,065 --> 01:10:53,153
+all this address arithmetic we've seen
+
+1180
+01:10:52,026 --> 01:10:57,033
+get fused in various different ways to
+
+1181
+01:10:54,053 --> 01:11:01,142
+scale values compute offsets and so
+
+1182
+01:10:57,096 --> 01:11:04,128
+forth to get the appropriate elements so
+
+1183
+01:11:02,042 --> 01:11:07,083
+your question before is could I tell the
+
+1184
+01:11:05,028 --> 01:11:12,075
+compiler not to do alignment and the
+
+1185
+01:11:07,083 --> 01:11:13,176
+better way is to declare your fields in
+
+1186
+01:11:12,075 --> 01:11:19,103
+a way that minimizes the amount of
+
+1187
+01:11:14,076 --> 01:11:21,935
+wasted space so for example here I
+
+1188
+01:11:20,003 --> 01:11:24,009
+wasted three bytes here and three bytes
+
+1189
+01:11:22,619 --> 01:11:27,630
+here to meet the alignment requirements
+
+1190
+01:11:24,063 --> 01:11:29,115
+but if I just put I at the beginning and
+
+1191
+01:11:27,063 --> 01:11:34,112
+then C and D I would have only wasted
+
+1192
+01:11:30,015 --> 01:11:36,021
+two bytes total and in general because
+
+1193
+01:11:34,679 --> 01:11:38,681
+all the alignment requirements are
+
+1194
+01:11:36,021 --> 01:11:40,077
+powers of two the sort of greedy
+
+1195
+01:11:38,699 --> 01:11:41,741
+algorithm works it says if I just take
+
+1196
+01:11:40,077 --> 01:11:44,082
+put the biggest stuff at the beginning
+
+1197
+01:11:42,119 --> 01:11:48,210
+and then successfully smaller elements I
+
+1198
+01:11:45,027 --> 01:11:53,726
+will be able to minimize any wasted
+
+1199
+01:11:48,021 --> 01:11:56,025
+space and that's a general property but
+
+1200
+01:11:53,969 --> 01:11:59,042
+this is a case where you is the writer
+
+1201
+01:11:56,025 --> 01:12:01,056
+of C code have that effect if the
+
+1202
+01:11:59,699 --> 01:12:04,772
+compiler will not do this for you
+
+1203
+01:12:01,056 --> 01:12:06,092
+automatically question oh Jesus well
+
+1204
+01:12:05,429 --> 01:12:10,430
+coming in
+
+1205
+01:12:06,092 --> 01:12:12,098
+under race what's that oh but remember
+
+1206
+01:12:10,043 --> 01:12:14,084
+an array I don't care about the array I
+
+1207
+01:12:12,098 --> 01:12:16,127
+care about the elements of the array
+
+1208
+01:12:14,084 --> 01:12:18,101
+because this is only down at the lowest
+
+1209
+01:12:17,027 --> 01:12:22,043
+level where I'm accessing either a
+
+1210
+01:12:19,001 --> 01:12:24,095
+single int a single double or a pointer
+
+1211
+01:12:22,043 --> 01:12:26,126
+and not all the rest of the stuff
+
+1212
+01:12:24,095 --> 01:12:29,183
+remember I never read an entire array
+
+1213
+01:12:27,026 --> 01:12:33,035
+from memory so alignment only refers
+
+1214
+01:12:30,083 --> 01:12:38,084
+down to the most the primitive types not
+
+1215
+01:12:33,035 --> 01:12:43,091
+the aggregate types if this is confusing
+
+1216
+01:12:38,093 --> 01:12:44,096
+the book covers this fairly carefully so
+
+1217
+01:12:43,091 --> 01:12:48,176
+let me just finish up with a little
+
+1218
+01:12:45,023 --> 01:12:53,057
+glimpse of floating-point floating-point
+
+1219
+01:12:49,076 --> 01:12:55,114
+is a complicated history in x86 how back
+
+1220
+01:12:53,057 --> 01:12:58,109
+in the really ancient days
+
+1221
+01:12:56,014 --> 01:13:02,096
+there was a chip that went with the 8086
+
+1222
+01:12:59,009 --> 01:13:06,038
+processor called the 8087 and at the
+
+1223
+01:13:02,096 --> 01:13:08,108
+time it was a masterpiece of engineering
+
+1224
+01:13:06,038 --> 01:13:11,063
+to be able to come all the hardware
+
+1225
+01:13:09,008 --> 01:13:15,083
+necessary to implement full I Triple E
+
+1226
+01:13:11,063 --> 01:13:18,089
+floating point on a single chip and it
+
+1227
+01:13:15,083 --> 01:13:20,135
+was the first one of its type in fact it
+
+1228
+01:13:18,089 --> 01:13:22,165
+was a sort of co-developed with the I
+
+1229
+01:13:21,035 --> 01:13:26,069
+Triple E floating point standard itself
+
+1230
+01:13:23,065 --> 01:13:29,162
+but the programming model for it is
+
+1231
+01:13:26,069 --> 01:13:32,108
+horrendously awful and ugly I used to an
+
+1232
+01:13:30,062 --> 01:13:34,115
+older addition to the book there were it
+
+1233
+01:13:33,008 --> 01:13:37,046
+was in the first edition it was in a
+
+1234
+01:13:35,015 --> 01:13:39,110
+website in the second edition and now
+
+1235
+01:13:37,046 --> 01:13:44,054
+it's been expunged completely because
+
+1236
+01:13:40,001 --> 01:13:48,026
+it's so awful but more recently in the
+
+1237
+01:13:45,026 --> 01:13:50,102
+world of x86 they realized that to
+
+1238
+01:13:48,035 --> 01:13:52,076
+support things like video and all the
+
+1239
+01:13:51,002 --> 01:13:56,006
+stuff people actually do with their
+
+1240
+01:13:52,076 --> 01:13:58,130
+machines they needed some more
+
+1241
+01:13:56,042 --> 01:14:01,139
+horsepower in numeric processing and
+
+1242
+01:13:59,003 --> 01:14:09,100
+they implemented a class of instructions
+
+1243
+01:14:02,039 --> 01:14:09,127
+called SSE which stands for sim D
+
+1244
+01:14:10,006 --> 01:14:14,092
+something Cindy execution anyways and
+
+1245
+01:14:14,002 --> 01:14:18,067
+I'll show you in a minute what that
+
+1246
+01:14:15,046 --> 01:14:21,091
+means and that's now in the more recent
+
+1247
+01:14:18,085 --> 01:14:26,104
+versions of x86 has been juiced up to
+
+1248
+01:14:21,091 --> 01:14:28,156
+something called a VX which but the
+
+1249
+01:14:27,004 --> 01:14:31,081
+shark machines support this version of
+
+1250
+01:14:29,056 --> 01:14:33,097
+what's called SSE so let me just give
+
+1251
+01:14:31,081 --> 01:14:34,165
+you a feeling for that and in
+
+1252
+01:14:33,097 --> 01:14:37,105
+particularly the shark machine support
+
+1253
+01:14:35,065 --> 01:14:40,072
+what's called SSE version 3 and what it
+
+1254
+01:14:38,077 --> 01:14:42,103
+is is that there are 16 special
+
+1255
+01:14:40,072 --> 01:14:44,161
+registers distinct from the other
+
+1256
+01:14:43,003 --> 01:14:48,009
+registers we've talked about before each
+
+1257
+01:14:45,061 --> 01:14:51,064
+of which has 16 bytes and then there's
+
+1258
+01:14:48,063 --> 01:14:52,150
+operations that can operate on those and
+
+1259
+01:14:51,064 --> 01:14:55,162
+treat them in different ways so one is
+
+1260
+01:14:53,005 --> 01:15:00,012
+to treat this section of register as an
+
+1261
+01:14:56,062 --> 01:15:06,141
+array of sixteen cares or as eight of
+
+1262
+01:15:00,057 --> 01:15:11,062
+shorts or four is or and also to support
+
+1263
+01:15:07,041 --> 01:15:13,108
+a double floating-point arithmetic so
+
+1264
+01:15:12,007 --> 01:15:16,069
+this stuff was certainly going on and
+
+1265
+01:15:14,008 --> 01:15:19,075
+somebody had the observation that said
+
+1266
+01:15:16,069 --> 01:15:20,071
+well I could just then sort of subset
+
+1267
+01:15:19,075 --> 01:15:22,162
+all this and implement the
+
+1268
+01:15:20,089 --> 01:15:27,094
+floating-point operations directly using
+
+1269
+01:15:23,062 --> 01:15:30,064
+this SSE stuff and skip the old x87
+
+1270
+01:15:28,039 --> 01:15:33,040
+stuff and so that's the way floating
+
+1271
+01:15:30,082 --> 01:15:36,088
+point is now generated on say the shark
+
+1272
+01:15:33,004 --> 01:15:40,012
+machines and most recent machines this
+
+1273
+01:15:36,088 --> 01:15:41,146
+is a this is again an example of where
+
+1274
+01:15:40,048 --> 01:15:44,092
+the world is more complicated than it
+
+1275
+01:15:42,046 --> 01:15:48,085
+should have to be so for example there
+
+1276
+01:15:44,092 --> 01:15:50,116
+is an instruction that says add SS so
+
+1277
+01:15:48,085 --> 01:15:54,177
+add a single scalar is what that
+
+1278
+01:15:51,016 --> 01:15:55,077
+notation add a single precision scalar
+
+1279
+01:15:57,449 --> 01:16:04,110
+at a scaler single-precision and it
+
+1280
+01:16:01,035 --> 01:16:06,614
+looks a little like the add instruction
+
+1281
+01:16:04,011 --> 01:16:11,037
+the add Q instructions you've seen that
+
+1282
+01:16:06,929 --> 01:16:15,360
+it it increments it adds the source to
+
+1283
+01:16:11,037 --> 01:16:18,042
+the destination there's ways I can do
+
+1284
+01:16:15,036 --> 01:16:21,039
+for ads in a all at the same time using
+
+1285
+01:16:18,087 --> 01:16:22,152
+this is what they call Cindy execution
+
+1286
+01:16:21,039 --> 01:16:26,117
+which stands for single instruction
+
+1287
+01:16:23,052 --> 01:16:29,135
+multiple data one instruction the add
+
+1288
+01:16:27,017 --> 01:16:34,086
+PSP since repect
+
+1289
+01:16:30,035 --> 01:16:36,674
+will do will will perform that one
+
+1290
+01:16:34,086 --> 01:16:40,131
+instruction will do ad with four
+
+1291
+01:16:36,989 --> 01:16:44,040
+different numbers and similar you can do
+
+1292
+01:16:41,031 --> 01:16:46,940
+it with double precision you can do one
+
+1293
+01:16:44,004 --> 01:16:49,083
+of them you can do pet and so actually
+
+1294
+01:16:47,219 --> 01:16:52,320
+the underlying and we'll see this when
+
+1295
+01:16:49,083 --> 01:16:53,091
+we look at code optimizations if you
+
+1296
+01:16:52,032 --> 01:16:55,086
+write codes to make use of these
+
+1297
+01:16:53,091 --> 01:16:58,400
+instructions you can really boost the
+
+1298
+01:16:55,086 --> 01:16:59,094
+performance of the computer but this
+
+1299
+01:16:59,219 --> 01:17:03,120
+just gives you a flavor for what
+
+1300
+01:17:00,066 --> 01:17:04,113
+floating-point code looks like and the
+
+1301
+01:17:03,012 --> 01:17:07,020
+rules are pretty simple that just as we
+
+1302
+01:17:05,013 --> 01:17:10,044
+saw before that that arguments get
+
+1303
+01:17:07,092 --> 01:17:11,187
+passed in in registers while 14-point
+
+1304
+01:17:10,044 --> 01:17:16,343
+arguments get passed in these xmm
+
+1305
+01:17:12,087 --> 01:17:18,686
+registers x mmm 0 you don't have to
+
+1306
+01:17:16,739 --> 01:17:22,890
+memorize our dir si RDX
+
+1307
+01:17:19,469 --> 01:17:25,920
+there in X mmm 0 1 2 it's all very
+
+1308
+01:17:22,089 --> 01:17:27,141
+logical and the return value is in X mmm
+
+1309
+01:17:25,092 --> 01:17:30,123
+0 and all the registers are calling
+
+1310
+01:17:28,041 --> 01:17:32,870
+callers safe there's no calling safe so
+
+1311
+01:17:31,023 --> 01:17:37,026
+something like adding 2 floating point
+
+1312
+01:17:33,239 --> 01:17:41,280
+numbers will just look like a single
+
+1313
+01:17:37,026 --> 01:17:45,051
+floating point addition instruction same
+
+1314
+01:17:41,028 --> 01:17:48,677
+with double and if you mix together code
+
+1315
+01:17:45,051 --> 01:17:51,087
+that has a pointer and a floating point
+
+1316
+01:17:48,929 --> 01:17:55,230
+operator the pointer will be passed in a
+
+1317
+01:17:51,087 --> 01:17:57,146
+regular register RDI and this double
+
+1318
+01:17:55,023 --> 01:18:00,084
+will be passed in x mm 0 so it sort of
+
+1319
+01:17:57,929 --> 01:18:04,290
+as it goes through the argument list you
+
+1320
+01:18:00,084 --> 01:18:05,181
+sort of in the particular order if it's
+
+1321
+01:18:04,029 --> 01:18:09,117
+an integer or a pointer it's in one of
+
+1322
+01:18:06,081 --> 01:18:10,125
+the our registers and if it's a floating
+
+1323
+01:18:10,017 --> 01:18:14,025
+point value it's
+
+1324
+01:18:11,025 --> 01:18:16,076
+one of the xmm registers and potentially
+
+1325
+01:18:14,025 --> 01:18:16,076
+interleaved
+
+1326
+01:18:17,024 --> 01:18:24,078
+almost done and so this is a code that
+
+1327
+01:18:21,096 --> 01:18:25,170
+does this particular operation and it's
+
+1328
+01:18:24,078 --> 01:18:29,175
+interesting because it's returning a
+
+1329
+01:18:26,007 --> 01:18:31,098
+it's doing memory referencing so again
+
+1330
+01:18:30,075 --> 01:18:35,151
+there's instructions that will read from
+
+1331
+01:18:32,061 --> 01:18:39,087
+memory and copy into an XML register you
+
+1332
+01:18:36,051 --> 01:18:42,096
+can add registers you can make a copy of
+
+1333
+01:18:39,087 --> 01:18:45,099
+from one XML M register to another and
+
+1334
+01:18:42,096 --> 01:18:47,178
+you can store results so this code looks
+
+1335
+01:18:45,099 --> 01:18:50,154
+a lot like what you do in integer
+
+1336
+01:18:48,078 --> 01:18:52,136
+arithmetic except it's using XML and
+
+1337
+01:18:51,054 --> 01:18:55,055
+special floating-point instructions
+
+1338
+01:18:53,036 --> 01:18:58,109
+rather than the ones you've seen before
+
+1339
+01:18:55,064 --> 01:19:01,110
+so the basic idea of it is fairly simple
+
+1340
+01:18:59,009 --> 01:19:05,037
+it gets way more complicated because
+
+1341
+01:19:02,001 --> 01:19:08,082
+there are lots of instructions double
+
+1342
+01:19:05,037 --> 01:19:10,071
+float on and on and on there's a special
+
+1343
+01:19:08,091 --> 01:19:12,144
+instruction to do square root and all
+
+1344
+01:19:10,071 --> 01:19:15,072
+this stuff and the comparison stuff is
+
+1345
+01:19:13,044 --> 01:19:19,140
+really nasty and messy and hard to
+
+1346
+01:19:15,081 --> 01:19:21,168
+understand and then you'll see various
+
+1347
+01:19:20,004 --> 01:19:23,070
+tricks to use constant values to so it's
+
+1348
+01:19:22,068 --> 01:19:24,165
+covered in the book we're not going to
+
+1349
+01:19:24,006 --> 01:19:28,065
+really talk about it much in in this
+
+1350
+01:19:25,065 --> 01:19:29,091
+course but the underlying the the basic
+
+1351
+01:19:28,065 --> 01:19:31,074
+principles of it are fairly
+
+1352
+01:19:29,091 --> 01:19:33,176
+straightforward ok that'll do us for
+
+1353
+01:19:32,055 --> 01:19:34,076
+today
+

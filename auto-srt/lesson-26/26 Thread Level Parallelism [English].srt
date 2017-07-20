@@ -1,0 +1,5304 @@
+1
+00:00:00,003 --> 00:00:07,047
+well hello everyone interesting how our
+
+2
+00:00:05,027 --> 00:00:10,526
+fewer seats are filled than at the
+
+3
+00:00:07,047 --> 00:00:13,256
+beginning of the course so that of
+
+4
+00:00:10,769 --> 00:00:16,080
+course we're in the final stretch of
+
+5
+00:00:13,679 --> 00:00:20,430
+this course you're working on the last
+
+6
+00:00:16,008 --> 00:00:22,047
+lab and the material that we're covering
+
+7
+00:00:20,043 --> 00:00:23,124
+both this lecture and next lecture are
+
+8
+00:00:22,047 --> 00:00:25,053
+not on the exam and you don't need them
+
+9
+00:00:24,024 --> 00:00:28,047
+for your web so at some level you could
+
+10
+00:00:26,007 --> 00:00:29,091
+just tune out and skip it all and if
+
+11
+00:00:28,047 --> 00:00:34,053
+your only purpose in taking this course
+
+12
+00:00:29,091 --> 00:00:37,146
+is to pass it or to get some grade in it
+
+13
+00:00:35,007 --> 00:00:39,105
+and that's it well go ahead tune out but
+
+14
+00:00:38,046 --> 00:00:43,050
+on the other hand the material we're
+
+15
+00:00:40,005 --> 00:00:45,021
+talking about is very relevant to where
+
+16
+00:00:43,005 --> 00:00:47,016
+computers are today and where they're
+
+17
+00:00:45,021 --> 00:00:49,080
+going in the future and so if you think
+
+18
+00:00:47,061 --> 00:00:51,150
+about the longer term and whatever your
+
+19
+00:00:49,008 --> 00:00:54,497
+investment is in the computer industry
+
+20
+00:00:52,005 --> 00:00:57,078
+and computer technology is then I think
+
+21
+00:00:55,289 --> 00:01:01,020
+you'll find these very worthwhile but so
+
+22
+00:00:58,023 --> 00:01:02,372
+think of this more as the icing on the
+
+23
+00:01:01,002 --> 00:01:05,351
+cake you've learned the hard stuff
+
+24
+00:01:02,579 --> 00:01:08,340
+you've you've done the grinding part and
+
+25
+00:01:05,369 --> 00:01:10,530
+now you get to thank beyond the sort of
+
+26
+00:01:08,034 --> 00:01:13,047
+narrow confines of the course material
+
+27
+00:01:10,053 --> 00:01:14,082
+and and think bigger but that's really
+
+28
+00:01:13,047 --> 00:01:16,736
+the way you should be viewing this
+
+29
+00:01:14,082 --> 00:01:18,881
+lecture in the last lecture which will
+
+30
+00:01:17,159 --> 00:01:23,130
+be on Thursday so today what we're going
+
+31
+00:01:19,619 --> 00:01:30,170
+to talk about is parallelism and the
+
+32
+00:01:23,013 --> 00:01:30,017
+issue is that that Wow
+
+33
+00:01:32,005 --> 00:01:38,018
+that PowerPoint is a product made by a
+
+34
+00:01:35,042 --> 00:01:41,108
+certain company in Seattle that it's not
+
+35
+00:01:38,018 --> 00:01:44,066
+always reliable but the issue is as you
+
+36
+00:01:42,008 --> 00:01:48,047
+know nowadays when you buy a computer
+
+37
+00:01:44,066 --> 00:01:50,114
+you don't get just one CPU on the
+
+38
+00:01:48,047 --> 00:01:55,112
+processor chip you have at least two on
+
+39
+00:01:51,014 --> 00:01:59,018
+a typical laptop even my phone has two
+
+40
+00:01:56,012 --> 00:02:04,034
+cores in it and as well as four graphics
+
+41
+00:01:59,054 --> 00:02:06,059
+processing units and a typical the the
+
+42
+00:02:04,034 --> 00:02:09,083
+next generation of iPad will be a six
+
+43
+00:02:06,059 --> 00:02:11,144
+core processor so these have become not
+
+44
+00:02:09,083 --> 00:02:17,087
+just the sort of specialized domain of
+
+45
+00:02:12,044 --> 00:02:19,091
+of high-end machines but actually there
+
+46
+00:02:17,087 --> 00:02:23,105
+all the time and actually we'll talk
+
+47
+00:02:19,091 --> 00:02:25,100
+some next time why is it that instead of
+
+48
+00:02:24,005 --> 00:02:29,033
+having one fast computer you get to a
+
+49
+00:02:26,081 --> 00:02:30,134
+medium size medium performance
+
+50
+00:02:29,033 --> 00:02:32,084
+processors on a chip or more and that
+
+51
+00:02:31,034 --> 00:02:34,079
+that's actually a really interesting
+
+52
+00:02:32,084 --> 00:02:37,097
+technology issue that I'll talk about
+
+53
+00:02:34,079 --> 00:02:38,138
+next time but it's the way it is so you
+
+54
+00:02:37,097 --> 00:02:43,151
+can think of it when you write a program
+
+55
+00:02:39,038 --> 00:02:47,045
+and it runs as a single thread then
+
+56
+00:02:44,051 --> 00:02:48,113
+you're basically not making use of the
+
+57
+00:02:47,045 --> 00:02:51,113
+computing resources that you have
+
+58
+00:02:49,013 --> 00:02:53,090
+available to you so the natural thing is
+
+59
+00:02:52,013 --> 00:02:57,062
+well could we make our programs run
+
+60
+00:02:53,009 --> 00:02:59,098
+faster by doing multiple threads so
+
+61
+00:02:57,062 --> 00:03:02,116
+you've already learned or you're in the
+
+62
+00:02:59,989 --> 00:03:10,780
+process of applying a multi-threaded
+
+63
+00:03:03,016 --> 00:03:14,018
+programming as a way to deal with a
+
+64
+00:03:10,078 --> 00:03:16,091
+concurrency of external events there's
+
+65
+00:03:14,018 --> 00:03:19,079
+multiple clients who want to make use of
+
+66
+00:03:16,091 --> 00:03:20,147
+a server and instead of serving one and
+
+67
+00:03:19,079 --> 00:03:22,166
+then another and then another if you can
+
+68
+00:03:21,047 --> 00:03:26,138
+handle them all it's sort of a an
+
+69
+00:03:23,066 --> 00:03:28,705
+external use of concurrency but what
+
+70
+00:03:27,038 --> 00:03:31,927
+we'll talk about today is more internal
+
+71
+00:03:29,299 --> 00:03:34,730
+use can I make use of multiple threads
+
+72
+00:03:32,269 --> 00:03:37,310
+running on multiple cores to make a
+
+73
+00:03:34,073 --> 00:03:40,100
+program run a single program run faster
+
+74
+00:03:37,031 --> 00:03:43,118
+and the message behind that is yes but
+
+75
+00:03:41,000 --> 00:03:44,045
+and what I mean is it is truly possible
+
+76
+00:03:44,018 --> 00:03:46,061
+and
+
+77
+00:03:44,045 --> 00:03:49,046
+people spend a lot of time making
+
+78
+00:03:46,061 --> 00:03:52,064
+programs run faster by using multiple
+
+79
+00:03:49,055 --> 00:03:54,140
+threads but it's harder than you'd think
+
+80
+00:03:52,064 --> 00:03:56,093
+it should be and it's fraught with as
+
+81
+00:03:55,004 --> 00:03:58,070
+you probably already experienced
+
+82
+00:03:56,093 --> 00:04:00,167
+programming bugs but also it's just
+
+83
+00:03:59,006 --> 00:04:03,295
+really darn hard to get the kind of
+
+84
+00:04:01,067 --> 00:04:04,139
+performance out of a multi-core
+
+85
+00:04:03,349 --> 00:04:07,400
+processor that you should would think
+
+86
+00:04:05,039 --> 00:04:10,070
+it'd be available so we'll talk about
+
+87
+00:04:07,004 --> 00:04:15,005
+some of that and then we'll finish it up
+
+88
+00:04:10,007 --> 00:04:16,052
+a little bit understanding of how how
+
+89
+00:04:15,005 --> 00:04:19,144
+when you're writing concurrent programs
+
+90
+00:04:17,015 --> 00:04:22,037
+you want to think about the state of
+
+91
+00:04:19,639 --> 00:04:25,100
+memory and how that's the challenge for
+
+92
+00:04:22,037 --> 00:04:32,045
+multi-core processors or in fact any
+
+93
+00:04:25,001 --> 00:04:35,069
+concurrent concurrent system so there's
+
+94
+00:04:32,045 --> 00:04:37,124
+actually two sources of concurrency on a
+
+95
+00:04:35,078 --> 00:04:41,132
+modern processor multiple cores which is
+
+96
+00:04:38,024 --> 00:04:44,033
+you have actually multiple CPUs on a
+
+97
+00:04:42,032 --> 00:04:46,118
+single chip but there's also something
+
+98
+00:04:44,033 --> 00:04:49,034
+called hyper-threading which is in my
+
+99
+00:04:47,018 --> 00:04:51,107
+experience less useful but let me go
+
+100
+00:04:49,043 --> 00:04:55,097
+through this so this is what a typical
+
+101
+00:04:52,007 --> 00:04:58,007
+modern processor looks like processor
+
+102
+00:04:55,097 --> 00:05:00,103
+chip is that there's actually on a
+
+103
+00:04:58,007 --> 00:05:06,053
+single chip there is multiple
+
+104
+00:05:01,003 --> 00:05:10,052
+independent CPUs and each of them has
+
+105
+00:05:06,053 --> 00:05:14,135
+some part of the cache hierarchy which
+
+106
+00:05:10,052 --> 00:05:17,081
+is private to that particular core and
+
+107
+00:05:15,035 --> 00:05:19,043
+then there is another part of the cache
+
+108
+00:05:17,081 --> 00:05:22,097
+hierarchy that's shared across cores and
+
+109
+00:05:20,015 --> 00:05:26,021
+then they all have a common interface to
+
+110
+00:05:22,097 --> 00:05:27,101
+main memory so if these cores are
+
+111
+00:05:26,021 --> 00:05:29,045
+running and this is what happens to
+
+112
+00:05:28,001 --> 00:05:31,022
+audits they're running programs that are
+
+113
+00:05:29,045 --> 00:05:32,126
+completely independent have nothing to
+
+114
+00:05:31,022 --> 00:05:35,030
+do with each other then they more or
+
+115
+00:05:33,026 --> 00:05:38,084
+less just exist and run and they're
+
+116
+00:05:35,003 --> 00:05:42,005
+happy as can be they are caching parts
+
+117
+00:05:38,084 --> 00:05:44,138
+of their own state and you know
+
+118
+00:05:42,032 --> 00:05:48,059
+sometimes this cache will get polluted
+
+119
+00:05:45,038 --> 00:05:50,090
+by the junk from other programs in terms
+
+120
+00:05:48,059 --> 00:05:52,130
+of performance but it will matter with
+
+121
+00:05:50,009 --> 00:05:54,038
+functionality the trick when you're
+
+122
+00:05:53,003 --> 00:05:56,060
+trying to do multi-core programming as a
+
+123
+00:05:55,019 --> 00:05:58,048
+parallel computing thing somehow getting
+
+124
+00:05:56,087 --> 00:06:02,162
+all these cores
+
+125
+00:05:58,048 --> 00:06:06,116
+working on parts of different parts of a
+
+126
+00:06:03,062 --> 00:06:08,108
+single problem in a way that makes it so
+
+127
+00:06:07,016 --> 00:06:09,113
+that you get the performance out of it
+
+128
+00:06:09,008 --> 00:06:11,105
+they don't spend all their time
+
+129
+00:06:10,013 --> 00:06:15,062
+basically arguing with each other about
+
+130
+00:06:12,005 --> 00:06:17,018
+who has access to what and also that
+
+131
+00:06:15,062 --> 00:06:22,078
+they're not stepping over each other and
+
+132
+00:06:17,018 --> 00:06:25,022
+messing up each other's state so
+
+133
+00:06:22,078 --> 00:06:27,083
+hyper-threading is a little bit more
+
+134
+00:06:25,022 --> 00:06:30,068
+into the deep works of how a processor
+
+135
+00:06:28,028 --> 00:06:34,046
+operates you'll recall from the lecture
+
+136
+00:06:30,068 --> 00:06:36,089
+on performance or what's chapter 5 of
+
+137
+00:06:34,046 --> 00:06:40,070
+the book that a modern microprocessor
+
+138
+00:06:36,089 --> 00:06:41,186
+looks absolutely nothing like the model
+
+139
+00:06:40,007 --> 00:06:44,048
+that you get by looking at assembly code
+
+140
+00:06:42,086 --> 00:06:47,087
+instructions the model of assembly code
+
+141
+00:06:45,011 --> 00:06:49,076
+is you execute one instruction then you
+
+142
+00:06:47,096 --> 00:06:51,119
+execute the next one then you execute
+
+143
+00:06:49,076 --> 00:06:54,094
+the next one modern processors don't do
+
+144
+00:06:52,019 --> 00:06:56,116
+that at all they haven't done it for
+
+145
+00:06:54,094 --> 00:07:02,159
+well they haven't done it that way for
+
+146
+00:06:57,016 --> 00:07:05,084
+30 years and since 1995 so since 20
+
+147
+00:07:03,059 --> 00:07:07,142
+years they do it in this totally
+
+148
+00:07:05,084 --> 00:07:09,131
+different way which is sometimes
+
+149
+00:07:08,042 --> 00:07:13,085
+referred to as out of order processing
+
+150
+00:07:10,031 --> 00:07:16,052
+and so just real quickly the the basic
+
+151
+00:07:13,085 --> 00:07:17,123
+idea is on the processor chip there's
+
+152
+00:07:16,052 --> 00:07:19,091
+multiple functional units that are
+
+153
+00:07:18,023 --> 00:07:22,028
+capable of doing different types of
+
+154
+00:07:19,091 --> 00:07:23,096
+operation these ones for integer
+
+155
+00:07:22,028 --> 00:07:27,056
+arithmetic these ones for floating-point
+
+156
+00:07:24,041 --> 00:07:30,080
+arithmetic and so forth and then there's
+
+157
+00:07:27,056 --> 00:07:32,060
+separate blocks that interface to the
+
+158
+00:07:30,008 --> 00:07:35,021
+memory actually to the cache memories
+
+159
+00:07:32,006 --> 00:07:37,013
+and they're both loading meaning reading
+
+160
+00:07:35,093 --> 00:07:40,120
+from the memory and storing writing out
+
+161
+00:07:38,003 --> 00:07:44,003
+to memory but these units are sort of
+
+162
+00:07:41,002 --> 00:07:46,010
+operate independently and what happens
+
+163
+00:07:44,003 --> 00:07:48,062
+is there's a block of logic which is
+
+164
+00:07:46,028 --> 00:07:51,044
+actually an enormous with huge block of
+
+165
+00:07:48,089 --> 00:07:52,121
+logic in the next 86 processor that
+
+166
+00:07:51,044 --> 00:07:55,091
+reads the instructions out of the
+
+167
+00:07:53,021 --> 00:07:58,088
+instruction stream rips them apart into
+
+168
+00:07:55,091 --> 00:08:00,098
+little pieces keeps track of data
+
+169
+00:07:58,088 --> 00:08:02,180
+dependencies and control dependencies
+
+170
+00:08:00,098 --> 00:08:05,287
+and then schedules all the various
+
+171
+00:08:03,008 --> 00:08:07,627
+operations in your program on these
+
+172
+00:08:06,169 --> 00:08:11,210
+different functional units so we talked
+
+173
+00:08:08,419 --> 00:08:11,434
+some about that of in the context of how
+
+174
+00:08:11,021 --> 00:08:13,260
+can
+
+175
+00:08:11,569 --> 00:08:18,490
+write a program that will sort of
+
+176
+00:08:13,449 --> 00:08:21,451
+maximize how much is going on down here
+
+177
+00:08:18,049 --> 00:08:25,468
+by writing your code in a particular way
+
+178
+00:08:21,469 --> 00:08:27,556
+so all this is an introduction to say
+
+179
+00:08:25,909 --> 00:08:31,630
+this is how you have to understand what
+
+180
+00:08:28,339 --> 00:08:33,382
+hyper threading is so in a single
+
+181
+00:08:31,063 --> 00:08:37,094
+execution mode there's basically one
+
+182
+00:08:33,769 --> 00:08:39,793
+instruction decoder and it has its own
+
+183
+00:08:37,094 --> 00:08:43,097
+set of state here its own program
+
+184
+00:08:40,009 --> 00:08:45,103
+counter its own queue of operations that
+
+185
+00:08:44,024 --> 00:08:48,103
+it's already decoded and haven't
+
+186
+00:08:45,949 --> 00:08:49,036
+completed yet it has its own set of
+
+187
+00:08:48,319 --> 00:08:51,346
+registers they're actually not
+
+188
+00:08:49,819 --> 00:08:54,560
+registered like you'd expect they're
+
+189
+00:08:51,589 --> 00:08:57,676
+they're highly virtualized registers but
+
+190
+00:08:54,056 --> 00:09:00,098
+all this state is there to help to
+
+191
+00:08:58,459 --> 00:09:04,310
+service the execution of one thread of
+
+192
+00:09:00,098 --> 00:09:06,447
+execution with hyper threading basically
+
+193
+00:09:04,031 --> 00:09:10,118
+what you do is the idea that is to say
+
+194
+00:09:07,329 --> 00:09:12,500
+90% of all programs don't really make
+
+195
+00:09:11,018 --> 00:09:16,055
+use of all these functional units
+
+196
+00:09:12,005 --> 00:09:19,043
+especially if you're blocking on a load
+
+197
+00:09:16,055 --> 00:09:21,086
+because there's a miss in a cache then
+
+198
+00:09:19,088 --> 00:09:24,104
+all these arithmetic units are sitting
+
+199
+00:09:21,086 --> 00:09:28,093
+there without any useful work to do well
+
+200
+00:09:25,004 --> 00:09:33,913
+and so why don't we just double up or
+
+201
+00:09:28,093 --> 00:09:37,112
+quadruple upper K times up the state
+
+202
+00:09:33,949 --> 00:09:40,610
+associated with the decoding and control
+
+203
+00:09:38,012 --> 00:09:43,831
+parts of the program so that you can
+
+204
+00:09:40,061 --> 00:09:45,092
+have multiple threads running and
+
+205
+00:09:43,939 --> 00:09:49,370
+sharing these functional units among
+
+206
+00:09:45,092 --> 00:09:50,129
+each other so they're operating really
+
+207
+00:09:49,037 --> 00:09:53,806
+independently their states are not
+
+208
+00:09:51,029 --> 00:09:58,138
+intertwined but they're sort of making
+
+209
+00:09:54,139 --> 00:09:59,221
+more use of the available hardware for
+
+210
+00:09:58,399 --> 00:10:01,880
+performing functions and so that's
+
+211
+00:09:59,959 --> 00:10:05,000
+called hyper threading that's an Intel
+
+212
+00:10:01,088 --> 00:10:07,091
+term you also sometimes hear call SMT
+
+213
+00:10:05,000 --> 00:10:10,939
+simultaneous multi-threading and in my
+
+214
+00:10:08,018 --> 00:10:12,026
+experience and we'll see here the
+
+215
+00:10:10,939 --> 00:10:16,550
+numbers it doesn't really make that big
+
+216
+00:10:12,098 --> 00:10:18,937
+a difference but it turns out to be in
+
+217
+00:10:16,055 --> 00:10:21,814
+the sort of large picture things a
+
+218
+00:10:19,819 --> 00:10:24,170
+relatively inexpensive feature for them
+
+219
+00:10:22,309 --> 00:10:25,040
+to throw on to processors and so they do
+
+220
+00:10:24,017 --> 00:10:28,546
+it
+
+221
+00:10:25,004 --> 00:10:31,019
+and so nowadays at least with an x86
+
+222
+00:10:28,699 --> 00:10:35,120
+processor usually have to weigh
+
+223
+00:10:31,019 --> 00:10:37,108
+hyper-threading in them so given that if
+
+224
+00:10:35,012 --> 00:10:39,017
+you look at our shark machines which are
+
+225
+00:10:37,279 --> 00:10:42,620
+a little bit old there's sort of 2010
+
+226
+00:10:39,062 --> 00:10:44,075
+era machine but they were high-end
+
+227
+00:10:42,062 --> 00:10:47,281
+machines in their day and so they still
+
+228
+00:10:44,075 --> 00:10:49,118
+actually are more powerful than what
+
+229
+00:10:47,839 --> 00:10:53,060
+you'd buy as say a desktop and way more
+
+230
+00:10:50,018 --> 00:10:54,056
+powerful than as a laptop that you'd get
+
+231
+00:10:53,006 --> 00:10:56,081
+today so they're actually pretty decent
+
+232
+00:10:54,056 --> 00:10:59,117
+machines and actually we'll talk next
+
+233
+00:10:56,081 --> 00:11:00,173
+time about why computers aren't a lot
+
+234
+00:11:00,017 --> 00:11:02,686
+faster than they were five years ago
+
+235
+00:11:01,073 --> 00:11:08,144
+that's actually an interesting
+
+236
+00:11:02,839 --> 00:11:10,888
+technology thing so they they're server
+
+237
+00:11:09,044 --> 00:11:13,091
+class machines so they have multiple
+
+238
+00:11:11,329 --> 00:11:19,660
+cores and they have eight of them which
+
+239
+00:11:13,091 --> 00:11:22,172
+is a lot you can buy ten core machines
+
+240
+00:11:19,066 --> 00:11:25,093
+x86 machines on a single chip but I
+
+241
+00:11:23,072 --> 00:11:27,167
+don't think you can get more yet so
+
+242
+00:11:25,093 --> 00:11:29,156
+these were fairly advanced machine of
+
+243
+00:11:28,067 --> 00:11:36,466
+their day and they also have two-way
+
+244
+00:11:30,056 --> 00:11:38,147
+hyper threading so in theory you should
+
+245
+00:11:37,069 --> 00:11:42,430
+be able to get 16 independent threads
+
+246
+00:11:39,047 --> 00:11:44,129
+running sort of 16 way parallelism
+
+247
+00:11:42,043 --> 00:11:47,048
+potentially out of a program if you can
+
+248
+00:11:45,029 --> 00:11:51,106
+keep everything working and keep bad
+
+249
+00:11:47,093 --> 00:11:51,106
+things from happening
+
+250
+00:11:54,199 --> 00:11:59,288
+so let's give a really trivial
+
+251
+00:11:57,049 --> 00:12:02,146
+application one that should be very
+
+252
+00:12:00,089 --> 00:12:05,135
+simple to make run in parallel that says
+
+253
+00:12:03,019 --> 00:12:08,042
+imaginary we want to sum up the numbers
+
+254
+00:12:05,549 --> 00:12:09,578
+between 0 and n minus 1 which is by the
+
+255
+00:12:08,249 --> 00:12:11,220
+way a really stupid thing to do because
+
+256
+00:12:09,839 --> 00:12:13,856
+there's a very simple closed-form
+
+257
+00:12:11,022 --> 00:12:15,251
+formula for it which is good in the
+
+258
+00:12:14,009 --> 00:12:18,046
+sense that will let us check our work
+
+259
+00:12:15,449 --> 00:12:21,497
+but it's a completely stupid application
+
+260
+00:12:18,379 --> 00:12:23,435
+but it just shows you this idea and so
+
+261
+00:12:21,929 --> 00:12:26,993
+what we're just going to do is is block
+
+262
+00:12:23,939 --> 00:12:29,941
+off if we have n way parallelism we're
+
+263
+00:12:27,569 --> 00:12:35,582
+just going to split our range of numbers
+
+264
+00:12:29,959 --> 00:12:38,030
+n ways and just have a single thread sum
+
+265
+00:12:35,699 --> 00:12:40,790
+up one n of the numbers and then they'll
+
+266
+00:12:38,669 --> 00:12:43,676
+collectively sum together the result in
+
+267
+00:12:41,609 --> 00:12:45,653
+some way or another so this is about as
+
+268
+00:12:44,369 --> 00:12:46,414
+easy a parallel program as you could
+
+269
+00:12:46,049 --> 00:12:50,090
+imagine
+
+270
+00:12:46,819 --> 00:12:52,825
+so let's do a one version which is said
+
+271
+00:12:50,459 --> 00:12:55,505
+well gee I understand how to use threads
+
+272
+00:12:53,419 --> 00:12:59,423
+P threads and I know about these things
+
+273
+00:12:55,919 --> 00:13:01,925
+called semaphores or mutual exclusion so
+
+274
+00:12:59,459 --> 00:13:05,730
+what I'll do is just all all love have
+
+275
+00:13:02,519 --> 00:13:09,545
+one place in memory where I'm collecting
+
+276
+00:13:05,073 --> 00:13:11,672
+the sum over all n values and for a
+
+277
+00:13:09,779 --> 00:13:14,970
+thread to be able to add to that if it
+
+278
+00:13:12,329 --> 00:13:17,402
+it will lock it it will get a mutual
+
+279
+00:13:14,097 --> 00:13:19,122
+exclusive access to it increment it and
+
+280
+00:13:18,059 --> 00:13:23,730
+then unlock it and we'll just let all
+
+281
+00:13:20,022 --> 00:13:26,141
+the threads go helter-skelter locking
+
+282
+00:13:23,073 --> 00:13:29,912
+and unlocking this so the code for that
+
+283
+00:13:26,339 --> 00:13:33,341
+is pretty easy to write it it's here's
+
+284
+00:13:30,569 --> 00:13:35,576
+the the code and of course all threaded
+
+285
+00:13:33,359 --> 00:13:38,160
+code looks a lot messier than you think
+
+286
+00:13:35,639 --> 00:13:41,674
+it should but in the end it's a fairly
+
+287
+00:13:38,016 --> 00:13:47,675
+straightforward code so in particular
+
+288
+00:13:41,989 --> 00:13:49,007
+this is the thread routine is passing
+
+289
+00:13:47,819 --> 00:13:52,918
+through this weird bargue
+
+290
+00:13:49,169 --> 00:13:56,174
+pea structure that you do with with
+
+291
+00:13:53,809 --> 00:13:59,220
+threads the way you pass arguments to a
+
+292
+00:13:56,669 --> 00:14:01,470
+thread routine but basically it's
+
+293
+00:13:59,022 --> 00:14:05,031
+figuring out where is the start and end
+
+294
+00:14:01,047 --> 00:14:08,073
+range of the numbers then adding a
+
+295
+00:14:06,012 --> 00:14:13,074
+for all I between the start and before
+
+296
+00:14:08,073 --> 00:14:16,074
+the end I'll lock that acquire a
+
+297
+00:14:13,074 --> 00:14:18,173
+semaphore lock I'll increment this
+
+298
+00:14:16,074 --> 00:14:21,165
+global sum and then I'll release the
+
+299
+00:14:18,839 --> 00:14:24,350
+lock okay so pretty much the style of
+
+300
+00:14:22,065 --> 00:14:26,088
+code that you've been working with and
+
+301
+00:14:24,035 --> 00:14:29,126
+what you find is actually this is really
+
+302
+00:14:26,088 --> 00:14:32,121
+a bad idea so running as a single thread
+
+303
+00:14:30,026 --> 00:14:35,028
+it takes 51 seconds to do that it would
+
+304
+00:14:33,021 --> 00:14:36,027
+be by the way if you didn't lock and
+
+305
+00:14:35,046 --> 00:14:38,675
+unlock because it's only one thread
+
+306
+00:14:36,081 --> 00:14:41,100
+you'd blow this away it would take just
+
+307
+00:14:39,089 --> 00:14:43,094
+a couple seconds so and then you see as
+
+308
+00:14:42,000 --> 00:14:46,005
+you add more threads it actually gets
+
+309
+00:14:43,589 --> 00:14:50,370
+worse and especially if you jump from
+
+310
+00:14:46,005 --> 00:14:52,101
+one to two you increase by a factor nine
+
+311
+00:14:50,037 --> 00:14:55,256
+how much time it takes and it only
+
+312
+00:14:53,046 --> 00:14:57,048
+starts to get better as you get up into
+
+313
+00:14:55,589 --> 00:15:03,480
+eight threads and then it gets worse
+
+314
+00:14:57,048 --> 00:15:05,657
+again so the reason is that locking and
+
+315
+00:15:03,048 --> 00:15:08,082
+unlocking is a very time consuming task
+
+316
+00:15:06,089 --> 00:15:11,108
+and basically you can think of is that
+
+317
+00:15:08,082 --> 00:15:12,129
+you if you have that map of the
+
+318
+00:15:11,279 --> 00:15:16,230
+multi-core processors with all their
+
+319
+00:15:13,029 --> 00:15:17,115
+private caches in one shared cache these
+
+320
+00:15:16,023 --> 00:15:21,060
+threads are basically fighting with each
+
+321
+00:15:18,015 --> 00:15:24,074
+other for control for that one memory
+
+322
+00:15:21,006 --> 00:15:26,091
+address that they that they're
+
+323
+00:15:24,074 --> 00:15:29,148
+incrementing and it has to grab the
+
+324
+00:15:27,045 --> 00:15:34,050
+control away from one core to your the
+
+325
+00:15:30,048 --> 00:15:36,135
+core that's accessing it do the lock
+
+326
+00:15:34,005 --> 00:15:38,070
+unlock and then it gets grabbed back for
+
+327
+00:15:37,035 --> 00:15:41,082
+it so it's a miserable performance or
+
+328
+00:15:39,015 --> 00:15:44,070
+cache huge overhead for the semaphore
+
+329
+00:15:41,082 --> 00:15:46,145
+activities and just really a bad thing
+
+330
+00:15:44,007 --> 00:15:47,094
+all around and so lesson one is
+
+331
+00:15:47,045 --> 00:15:52,056
+semaphores
+
+332
+00:15:48,057 --> 00:15:53,082
+or mutexes are very expensive and if
+
+333
+00:15:52,056 --> 00:15:55,775
+you're trying to do low level
+
+334
+00:15:53,082 --> 00:15:58,113
+parallelism you don't want fine-grained
+
+335
+00:15:56,279 --> 00:16:02,100
+locking at that level otherwise you're
+
+336
+00:15:59,013 --> 00:16:04,089
+just completely sunk and so that's not
+
+337
+00:16:02,001 --> 00:16:06,036
+the way to do it I will go into it but
+
+338
+00:16:04,089 --> 00:16:07,095
+there's quite a bit of literature about
+
+339
+00:16:06,045 --> 00:16:11,049
+what they call lock free synchronization
+
+340
+00:16:08,049 --> 00:16:13,056
+which is a way to avoid semaphores but
+
+341
+00:16:11,049 --> 00:16:15,126
+get the effect and they wouldn't work in
+
+342
+00:16:13,056 --> 00:16:17,064
+this context either those just if you've
+
+343
+00:16:16,026 --> 00:16:19,077
+ever heard that term those are generally
+
+344
+00:16:18,036 --> 00:16:22,104
+designed for
+
+345
+00:16:19,077 --> 00:16:24,896
+examples where you expect relatively
+
+346
+00:16:23,004 --> 00:16:27,069
+little contention between the threads
+
+347
+00:16:25,589 --> 00:16:31,070
+and so you try and be optimistic and
+
+348
+00:16:27,069 --> 00:16:33,111
+then roll back if something bad happens
+
+349
+00:16:31,007 --> 00:16:35,061
+this is a case where nope all those
+
+350
+00:16:34,011 --> 00:16:37,035
+threads are going to be pounding that
+
+351
+00:16:35,061 --> 00:16:39,063
+one memory location and they're really
+
+352
+00:16:37,035 --> 00:16:43,119
+fighting for it and so there is no good
+
+353
+00:16:39,081 --> 00:16:45,165
+solution to that problem the other thing
+
+354
+00:16:44,019 --> 00:16:49,074
+I'll point out is this jump here shows
+
+355
+00:16:46,065 --> 00:16:53,094
+you that hyper threading isn't really
+
+356
+00:16:49,074 --> 00:16:55,101
+helping us here going from the fact that
+
+357
+00:16:53,094 --> 00:16:56,169
+we slow down from eight to sixteen means
+
+358
+00:16:56,001 --> 00:16:59,010
+we can't really make use of sixteen
+
+359
+00:16:57,069 --> 00:17:01,140
+threads in this application eight
+
+360
+00:16:59,091 --> 00:17:03,138
+threads are better than four but
+
+361
+00:17:02,004 --> 00:17:05,049
+obviously all that's kind of a waste of
+
+362
+00:17:04,038 --> 00:17:10,053
+time because this is just really a bad
+
+363
+00:17:05,085 --> 00:17:12,137
+idea all around so let's do something
+
+364
+00:17:10,053 --> 00:17:15,602
+different let's have each of them
+
+365
+00:17:13,037 --> 00:17:19,125
+accumulate their own sum for their own
+
+366
+00:17:16,079 --> 00:17:24,650
+sub range and we'll give up so we'll
+
+367
+00:17:20,025 --> 00:17:27,974
+have an array of accumulators where the
+
+368
+00:17:24,065 --> 00:17:30,123
+each thread is incrementing only a one
+
+369
+00:17:28,199 --> 00:17:33,300
+element of this array so they're not
+
+370
+00:17:31,023 --> 00:17:35,972
+fighting with each other directly for it
+
+371
+00:17:33,003 --> 00:17:39,084
+but they are fighting for if you think
+
+372
+00:17:36,179 --> 00:17:42,600
+about it for the same cache line because
+
+373
+00:17:40,011 --> 00:17:47,022
+an array is typically stored and so it's
+
+374
+00:17:42,006 --> 00:17:49,029
+not totally nice but it gives you a
+
+375
+00:17:47,022 --> 00:17:53,025
+pointer to this idea if we could sort of
+
+376
+00:17:49,083 --> 00:17:55,100
+move into a private state the stuff that
+
+377
+00:17:53,052 --> 00:17:59,067
+we're making the most direct access to
+
+378
+00:17:56,000 --> 00:18:02,064
+then we'll get better performance so
+
+379
+00:17:59,067 --> 00:18:03,075
+this is the thread routine and the point
+
+380
+00:18:02,064 --> 00:18:07,103
+is that there's some global array called
+
+381
+00:18:04,047 --> 00:18:09,066
+P some but it's only incrementing the
+
+382
+00:18:07,679 --> 00:18:13,470
+the part of it that sort of assigned to
+
+383
+00:18:09,066 --> 00:18:14,163
+this particular thread and here you do
+
+384
+00:18:13,047 --> 00:18:18,048
+see a performance improvement right so
+
+385
+00:18:15,063 --> 00:18:20,094
+one thread takes five seconds remember
+
+386
+00:18:18,048 --> 00:18:24,077
+before it was 58 so that shows you just
+
+387
+00:18:20,094 --> 00:18:26,190
+the advantage of the cost of semaphores
+
+388
+00:18:24,077 --> 00:18:28,122
+right there is a factor of ten and you
+
+389
+00:18:27,009 --> 00:18:30,038
+see you are actually getting an
+
+390
+00:18:29,022 --> 00:18:32,091
+improvement all across the line
+
+391
+00:18:30,929 --> 00:18:35,190
+including up to 16 3
+
+392
+00:18:32,091 --> 00:18:36,108
+- still getting an improvement it would
+
+393
+00:18:35,019 --> 00:18:39,036
+flatten out I should have shown the
+
+394
+00:18:37,008 --> 00:18:41,076
+number 432 but it would flatten out at
+
+395
+00:18:39,036 --> 00:18:43,041
+this point but it actually is getting
+
+396
+00:18:41,076 --> 00:18:46,134
+some advantage out of hyper-threading as
+
+397
+00:18:43,041 --> 00:18:50,106
+well so that's good it's not an amazing
+
+398
+00:18:47,034 --> 00:18:52,116
+speed up so you can think of what they
+
+399
+00:18:51,006 --> 00:18:55,014
+call the speed up is the performance of
+
+400
+00:18:53,016 --> 00:18:58,029
+it running on a single core versus the
+
+401
+00:18:55,086 --> 00:19:00,135
+performance on n cores and in the ideal
+
+402
+00:18:58,029 --> 00:19:05,124
+case it goes n times faster and we're
+
+403
+00:19:01,035 --> 00:19:07,089
+not quite hitting that all but here's
+
+404
+00:19:06,024 --> 00:19:10,122
+you've already learned that it's
+
+405
+00:19:07,089 --> 00:19:13,140
+generally bad to be accumulating into a
+
+406
+00:19:11,022 --> 00:19:16,095
+memory and so why not do the thing we
+
+407
+00:19:14,004 --> 00:19:18,069
+learned before which is you accumulate
+
+408
+00:19:16,095 --> 00:19:20,136
+in a register and you only update the
+
+409
+00:19:19,005 --> 00:19:23,016
+memory when you're done with that so
+
+410
+00:19:21,036 --> 00:19:26,049
+let's just do that and I'll call that
+
+411
+00:19:23,016 --> 00:19:29,049
+the local version I'll just increment a
+
+412
+00:19:26,049 --> 00:19:33,086
+sum which is a local variable and only
+
+413
+00:19:29,049 --> 00:19:38,055
+when I'm done then I'll store it in the
+
+414
+00:19:33,086 --> 00:19:39,123
+global array okay so it functionally
+
+415
+00:19:38,055 --> 00:19:41,127
+equivalent to the one we just showed
+
+416
+00:19:40,023 --> 00:19:44,034
+we're just moving instead of
+
+417
+00:19:42,027 --> 00:19:47,031
+accumulating in a global array we're
+
+418
+00:19:44,034 --> 00:19:49,121
+accumulating in a register and here you
+
+419
+00:19:47,067 --> 00:19:53,085
+see a pretty big performance improvement
+
+420
+00:19:50,021 --> 00:19:57,033
+so blue is what we showed with the the
+
+421
+00:19:53,085 --> 00:20:00,171
+global array red or orange is what's
+
+422
+00:19:57,033 --> 00:20:02,112
+this local variable and so you see it's
+
+423
+00:20:01,071 --> 00:20:07,157
+actually interesting we're getting a
+
+424
+00:20:03,012 --> 00:20:11,091
+performance improvement as well although
+
+425
+00:20:08,057 --> 00:20:14,085
+it bottoms out at 8 and it actually gets
+
+426
+00:20:11,091 --> 00:20:15,132
+worse when you go to 16 and this is
+
+427
+00:20:14,085 --> 00:20:17,139
+showing that hyper-threading isn't
+
+428
+00:20:16,032 --> 00:20:20,078
+really helping here because basically
+
+429
+00:20:18,039 --> 00:20:23,103
+the the single thread is just
+
+430
+00:20:20,078 --> 00:20:27,132
+accumulating as fast as it can and
+
+431
+00:20:24,003 --> 00:20:30,039
+adding to a register and so it's making
+
+432
+00:20:28,032 --> 00:20:32,048
+pretty good use of what functional units
+
+433
+00:20:30,039 --> 00:20:34,122
+it uses and putting multiple threads
+
+434
+00:20:32,048 --> 00:20:40,062
+sharing it isn't really helping at least
+
+435
+00:20:35,022 --> 00:20:42,089
+not on the shark machines this actually
+
+436
+00:20:40,062 --> 00:20:44,120
+might be different on different machines
+
+437
+00:20:42,089 --> 00:20:46,121
+and actually if you recall from the
+
+438
+00:20:45,002 --> 00:20:48,451
+performance optimization we found that
+
+439
+00:20:47,021 --> 00:20:50,710
+if you're just doing a bunch of
+
+440
+00:20:48,649 --> 00:20:52,690
+additions you can make use of the
+
+441
+00:20:50,899 --> 00:20:55,220
+Scioscia tivity and get more
+
+442
+00:20:53,059 --> 00:20:57,440
+accumulation in parallel so you could
+
+443
+00:20:55,022 --> 00:20:58,094
+actually speed up this program just the
+
+444
+00:20:57,044 --> 00:21:01,003
+single threaded version of this program
+
+445
+00:20:58,094 --> 00:21:04,423
+pretty well but anyways it shows that
+
+446
+00:21:01,399 --> 00:21:07,477
+okay this is starting to look like your
+
+447
+00:21:05,269 --> 00:21:10,321
+your a your single threaded performance
+
+448
+00:21:08,179 --> 00:21:14,215
+is pretty good and B you're getting some
+
+449
+00:21:10,789 --> 00:21:15,814
+useful speed up out of parallelism but
+
+450
+00:21:14,539 --> 00:21:17,545
+as I said this is like the easiest
+
+451
+00:21:16,039 --> 00:21:21,950
+example in the world to parallel life so
+
+452
+00:21:18,139 --> 00:21:23,166
+if you can't do it here then then life
+
+453
+00:21:21,095 --> 00:21:27,101
+is pretty hopeless as far as
+
+454
+00:21:23,409 --> 00:21:30,740
+multi-threading so let's talk about as I
+
+455
+00:21:28,001 --> 00:21:33,026
+mentioned this idea of speed-up so
+
+456
+00:21:30,074 --> 00:21:35,135
+speed-up is just defined to be the time
+
+457
+00:21:33,026 --> 00:21:41,045
+for a single-threaded program divided by
+
+458
+00:21:36,035 --> 00:21:44,057
+the time for 4 P threads running or
+
+459
+00:21:41,045 --> 00:21:53,126
+actually will use it P cores instead of
+
+460
+00:21:44,057 --> 00:21:56,266
+P threads question yes generally the
+
+461
+00:21:54,026 --> 00:21:59,935
+scheduler has some kind of go dancing
+
+462
+00:21:56,779 --> 00:22:02,570
+built into it and it will tend to
+
+463
+00:22:00,169 --> 00:22:05,260
+especially in a case like this where the
+
+464
+00:22:02,057 --> 00:22:08,150
+threads are sort of grabbing and running
+
+465
+00:22:05,026 --> 00:22:12,083
+making they will generally get spread
+
+466
+00:22:09,005 --> 00:22:14,006
+across the course so that's a pretty the
+
+467
+00:22:12,083 --> 00:22:16,094
+Linux scheduler is pretty good at that
+
+468
+00:22:14,006 --> 00:22:23,695
+when you have more threads than there
+
+469
+00:22:16,094 --> 00:22:26,159
+are cores then then it basically starts
+
+470
+00:22:24,289 --> 00:22:32,720
+scheduling them in some cyclic order and
+
+471
+00:22:27,059 --> 00:22:34,124
+you won't you'll at best you will not
+
+472
+00:22:32,072 --> 00:22:36,107
+get any advantage and in the worst case
+
+473
+00:22:35,024 --> 00:22:39,122
+you actually start slowing down from
+
+474
+00:22:37,007 --> 00:22:42,032
+having more threads than are there good
+
+475
+00:22:40,022 --> 00:22:44,087
+question so there's really two versions
+
+476
+00:22:42,032 --> 00:22:46,121
+of speed-up one is if I take my
+
+477
+00:22:44,087 --> 00:22:49,109
+multi-threaded routine and run it with
+
+478
+00:22:47,021 --> 00:22:52,097
+one thread and then I met do with P
+
+479
+00:22:50,009 --> 00:22:54,958
+threads or cores I can get a speed-up
+
+480
+00:22:52,097 --> 00:22:55,126
+but actually the truer thing is if I
+
+481
+00:22:55,039 --> 00:22:58,690
+take the best-known
+
+482
+00:22:56,026 --> 00:23:01,075
+sequential algorithm for performing this
+
+483
+00:22:58,069 --> 00:23:03,097
+task with the best implementation of
+
+484
+00:23:01,075 --> 00:23:05,083
+that and then I compared against my
+
+485
+00:23:03,097 --> 00:23:08,146
+parallel one so that's referred to as
+
+486
+00:23:05,083 --> 00:23:11,089
+absolute speed up which is that the best
+
+487
+00:23:09,046 --> 00:23:13,132
+measures you know you give both sides
+
+488
+00:23:11,089 --> 00:23:15,145
+the opportunity to do the best
+
+489
+00:23:14,032 --> 00:23:18,037
+implementation that they can and then
+
+490
+00:23:16,045 --> 00:23:21,112
+you compare it and then what's referred
+
+491
+00:23:18,082 --> 00:23:23,131
+to as the efficiency is how close to the
+
+492
+00:23:22,012 --> 00:23:25,108
+speed-up get to the ideal speed-up which
+
+493
+00:23:24,031 --> 00:23:28,102
+is if I'm running on P cores
+
+494
+00:23:26,008 --> 00:23:31,057
+I should be P times faster and you'll
+
+495
+00:23:29,002 --> 00:23:33,073
+see that we're you know the question of
+
+496
+00:23:31,057 --> 00:23:36,082
+hyper-threading versus not we're sort of
+
+497
+00:23:33,073 --> 00:23:39,130
+here we're saying no you don't we're not
+
+498
+00:23:36,082 --> 00:23:41,113
+trying to gain from hyper-threading you
+
+499
+00:23:40,003 --> 00:23:44,080
+can play this game various ways and you
+
+500
+00:23:42,013 --> 00:23:47,062
+can argue back and forth whether
+
+501
+00:23:45,007 --> 00:23:50,059
+hyper-threading should count so for P is
+
+502
+00:23:47,062 --> 00:23:52,099
+P the total number of possible threads
+
+503
+00:23:50,059 --> 00:23:57,088
+or the total number of cores that's
+
+504
+00:23:52,099 --> 00:24:01,102
+really something to argue back and forth
+
+505
+00:23:57,088 --> 00:24:04,111
+about so the point is the efficiency
+
+506
+00:24:02,002 --> 00:24:09,061
+though is measured as how much do we do
+
+507
+00:24:05,011 --> 00:24:12,028
+relative to ideal and so this is what
+
+508
+00:24:09,061 --> 00:24:14,110
+you get for this code the local version
+
+509
+00:24:12,028 --> 00:24:17,107
+of P some you'll see that our efficiency
+
+510
+00:24:15,001 --> 00:24:21,076
+numbers are somewhere in the high
+
+511
+00:24:18,007 --> 00:24:24,022
+somebody range which is good but not
+
+512
+00:24:21,085 --> 00:24:26,116
+great it's pretty good actually if you
+
+513
+00:24:24,022 --> 00:24:28,027
+can get 75% efficiency you're doing
+
+514
+00:24:27,016 --> 00:24:29,095
+better than most but again that's
+
+515
+00:24:28,072 --> 00:24:32,103
+because this should have been the
+
+516
+00:24:29,095 --> 00:24:37,102
+world's easiest program to parallelize
+
+517
+00:24:33,003 --> 00:24:40,060
+so and the best speed-up we're getting
+
+518
+00:24:38,002 --> 00:24:43,060
+is a factor of six out of eight cores so
+
+519
+00:24:40,006 --> 00:24:47,020
+again that's pretty good but this really
+
+520
+00:24:43,006 --> 00:24:50,020
+should be something you can do well so
+
+521
+00:24:47,074 --> 00:24:53,152
+that just gives you a flavor of what
+
+522
+00:24:50,074 --> 00:24:56,089
+parallel computing can be so now it's
+
+523
+00:24:54,052 --> 00:25:00,094
+sort of back off and talk some general
+
+524
+00:24:56,089 --> 00:25:01,135
+principle just like the speed-up there's
+
+525
+00:25:00,094 --> 00:25:03,100
+a tonne of genome Dahl who
+
+526
+00:25:02,035 --> 00:25:06,073
+coincidentally just died a few weeks ago
+
+527
+00:25:04,054 --> 00:25:09,076
+you might have seen it in the news he
+
+528
+00:25:06,073 --> 00:25:09,522
+was one of the original pioneers at IBM
+
+529
+00:25:09,076 --> 00:25:12,105
+in
+
+530
+00:25:10,179 --> 00:25:17,217
+their mainframe computers then then at
+
+531
+00:25:12,789 --> 00:25:18,873
+some point he in the 60s he started his
+
+532
+00:25:17,559 --> 00:25:21,606
+own company called um dal computers and
+
+533
+00:25:19,629 --> 00:25:24,940
+they were like they were the the cool
+
+534
+00:25:22,029 --> 00:25:27,720
+company in mainframe computers if that
+
+535
+00:25:24,094 --> 00:25:30,693
+could ever be considered cool right and
+
+536
+00:25:27,072 --> 00:25:32,631
+he built a competitor's to IBM that
+
+537
+00:25:31,539 --> 00:25:35,562
+absolutely drove them crazy because they
+
+538
+00:25:33,279 --> 00:25:38,376
+had a virtual monopoly they actually
+
+539
+00:25:35,769 --> 00:25:41,868
+were subject to the antitrust suit so um
+
+540
+00:25:39,249 --> 00:25:44,590
+Dahl was a suit of the the rebel who
+
+541
+00:25:42,759 --> 00:25:47,847
+broke away from the mother company and
+
+542
+00:25:44,059 --> 00:25:49,878
+started a competitor and he made this
+
+543
+00:25:48,639 --> 00:25:54,940
+very simple observation that's called
+
+544
+00:25:50,409 --> 00:25:57,070
+Amdahl's law which is basically junior
+
+545
+00:25:54,094 --> 00:25:58,146
+high level algebra to think of this but
+
+546
+00:25:57,007 --> 00:26:02,316
+it's actually a fairly perceptive point
+
+547
+00:25:59,046 --> 00:26:04,069
+about what's the possible benefit of
+
+548
+00:26:02,379 --> 00:26:06,384
+speeding up something and this is
+
+549
+00:26:04,069 --> 00:26:07,111
+discussed in the book you know this
+
+550
+00:26:06,429 --> 00:26:09,940
+isn't just for computers it's any
+
+551
+00:26:08,011 --> 00:26:12,420
+process that you want to speed up and
+
+552
+00:26:09,094 --> 00:26:15,153
+it's very simple observations which is
+
+553
+00:26:12,519 --> 00:26:18,534
+supposed to some fraction of a system
+
+554
+00:26:15,999 --> 00:26:21,054
+that I can make go faster and I'll call
+
+555
+00:26:18,669 --> 00:26:25,674
+that fraction P P is some number between
+
+556
+00:26:21,549 --> 00:26:29,320
+zero and one point zero right 100% zero
+
+557
+00:26:26,169 --> 00:26:31,240
+percent and let's suppose we take that
+
+558
+00:26:29,032 --> 00:26:33,070
+part that we're going to make run faster
+
+559
+00:26:31,024 --> 00:26:38,107
+and improve its performance by a factor
+
+560
+00:26:33,007 --> 00:26:41,020
+okay then we can just very simply talk
+
+561
+00:26:39,007 --> 00:26:44,011
+about what will be the benefit of that
+
+562
+00:26:41,083 --> 00:26:47,892
+performance so we'll call it T sub K and
+
+563
+00:26:44,011 --> 00:26:53,400
+what it says is the fraction P of the
+
+564
+00:26:48,639 --> 00:26:56,710
+time will be reduced by K but the
+
+565
+00:26:53,499 --> 00:27:00,100
+fraction that you can't change a one
+
+566
+00:26:56,071 --> 00:27:02,370
+minus P will remain at its old time and
+
+567
+00:27:00,001 --> 00:27:04,090
+that I'm dolls law that's it that's the
+
+568
+00:27:03,009 --> 00:27:08,350
+whole thing and one interesting measure
+
+569
+00:27:04,099 --> 00:27:09,648
+is what if K were infinity what if we
+
+570
+00:27:08,035 --> 00:27:15,109
+had unbounded resources to speed things
+
+571
+00:27:10,539 --> 00:27:19,470
+up and what the observation is the best
+
+572
+00:27:16,009 --> 00:27:22,060
+speed up you'll get is a 1 minus P and
+
+573
+00:27:19,047 --> 00:27:23,098
+so just think it this way if you have
+
+574
+00:27:22,006 --> 00:27:27,455
+ten percent of it that
+
+575
+00:27:23,098 --> 00:27:31,126
+can't change the other 90% you make
+
+576
+00:27:28,049 --> 00:27:33,640
+infinitely fast then your performance
+
+577
+00:27:32,026 --> 00:27:35,122
+improvement will be a factor of 10
+
+578
+00:27:33,064 --> 00:27:38,733
+that's really all it's a pretty
+
+579
+00:27:36,022 --> 00:27:42,048
+straightforward idea so this has sort of
+
+580
+00:27:39,309 --> 00:27:45,309
+direct implications in so the example is
+
+581
+00:27:42,048 --> 00:27:47,867
+suppose that we can improve the
+
+582
+00:27:45,309 --> 00:27:51,130
+performance of some system of 90% of it
+
+583
+00:27:48,299 --> 00:27:52,540
+and we can speed up by factor 9 and that
+
+584
+00:27:51,013 --> 00:27:55,018
+number is chosen to make the numbers
+
+585
+00:27:52,054 --> 00:27:57,693
+work out then we'll get it best at 2x
+
+586
+00:27:55,063 --> 00:27:59,104
+performance improvement basically what
+
+587
+00:27:58,179 --> 00:28:02,080
+it says is the part of the system that
+
+588
+00:28:00,004 --> 00:28:06,004
+you can't speed up will become your
+
+589
+00:28:02,008 --> 00:28:07,096
+bottleneck and that's just the way it is
+
+590
+00:28:06,004 --> 00:28:09,079
+so the implication to this repair while
+
+591
+00:28:07,096 --> 00:28:11,173
+programming are fairly obvious that if
+
+592
+00:28:09,079 --> 00:28:14,137
+we can take our application and chop off
+
+593
+00:28:12,073 --> 00:28:18,078
+some fraction of it and make it run K
+
+594
+00:28:15,037 --> 00:28:19,119
+times faster by running it on K cores
+
+595
+00:28:18,078 --> 00:28:22,102
+then
+
+596
+00:28:20,019 --> 00:28:26,026
+the part of it that still running
+
+597
+00:28:23,002 --> 00:28:30,019
+sequentially will come to will limit the
+
+598
+00:28:26,026 --> 00:28:31,077
+ultimate performance we can get so
+
+599
+00:28:30,019 --> 00:28:34,027
+that's not really an issue for this
+
+600
+00:28:31,077 --> 00:28:36,175
+summation problem because it really does
+
+601
+00:28:34,027 --> 00:28:41,059
+divide into as many independent tasks as
+
+602
+00:28:37,075 --> 00:28:42,504
+you have numbers and as you can see you
+
+603
+00:28:41,059 --> 00:28:44,101
+can make them run but many other
+
+604
+00:28:43,179 --> 00:28:51,100
+applications do some part of it that I
+
+605
+00:28:45,001 --> 00:28:53,044
+can't really make no parallel so just as
+
+606
+00:28:51,001 --> 00:28:55,060
+an example and just for the sake of this
+
+607
+00:28:53,044 --> 00:28:57,109
+class you know an example of a little
+
+608
+00:28:55,069 --> 00:28:59,110
+bit more involved a problem in parallel
+
+609
+00:28:58,009 --> 00:29:02,023
+programming and multi-threading let's
+
+610
+00:29:00,001 --> 00:29:05,020
+think about sorting a bunch of numbers
+
+611
+00:29:02,023 --> 00:29:13,027
+so we have n numbers and we want to sort
+
+612
+00:29:05,029 --> 00:29:15,037
+them and we have some number of threads
+
+613
+00:29:13,027 --> 00:29:17,035
+that we can do this with is there way we
+
+614
+00:29:15,037 --> 00:29:19,132
+can speed this up and you think about it
+
+615
+00:29:18,007 --> 00:29:22,012
+not that clear how you do it there's
+
+616
+00:29:20,032 --> 00:29:24,891
+actually a vast literature in parallel
+
+617
+00:29:22,057 --> 00:29:27,145
+sorting and those you've taken or will
+
+618
+00:29:25,179 --> 00:29:30,640
+take the class to town will be exposed
+
+619
+00:29:28,045 --> 00:29:32,113
+to all of this but I'm just going to do
+
+620
+00:29:30,064 --> 00:29:40,072
+a very simple version which is quicksort
+
+621
+00:29:33,013 --> 00:29:43,072
+so quick SART is for example the the C
+
+622
+00:29:40,072 --> 00:29:47,080
+library program Q sort is quicksort it
+
+623
+00:29:43,072 --> 00:29:51,091
+was invented in the early 1960s or 1950s
+
+624
+00:29:48,052 --> 00:29:53,137
+by a guy named Tony Hoare who also
+
+625
+00:29:51,091 --> 00:29:55,147
+founded a lot of the fundamental logic
+
+626
+00:29:54,037 --> 00:29:59,044
+of program so he's like an amazing
+
+627
+00:29:56,047 --> 00:30:03,061
+person still alive today lives in
+
+628
+00:30:00,007 --> 00:30:06,019
+Cambridge England but if you ever have a
+
+629
+00:30:03,061 --> 00:30:08,077
+chance to go to talk by him do so he's
+
+630
+00:30:06,019 --> 00:30:11,023
+an amazing person anyways the idea
+
+631
+00:30:08,077 --> 00:30:12,163
+quicksort is very simple and this is
+
+632
+00:30:11,023 --> 00:30:16,102
+sort of the basic sorting algorithm you
+
+633
+00:30:13,063 --> 00:30:18,100
+grab some element from the array that
+
+634
+00:30:17,002 --> 00:30:21,094
+you're trying to sort and that's called
+
+635
+00:30:19,000 --> 00:30:23,559
+the pivot and then you split the data so
+
+636
+00:30:21,094 --> 00:30:26,125
+that you look at the elements that are
+
+637
+00:30:23,559 --> 00:30:29,590
+either greater or less than the pivot
+
+638
+00:30:27,025 --> 00:30:31,078
+and potentially also equal let's just
+
+639
+00:30:29,059 --> 00:30:33,148
+assume all the elements are unique here
+
+640
+00:30:31,078 --> 00:30:36,717
+so you just split it into two of piles
+
+641
+00:30:34,048 --> 00:30:39,103
+one is the lesson once a greater now you
+
+642
+00:30:37,419 --> 00:30:43,750
+creatively you recursively you sort
+
+643
+00:30:40,003 --> 00:30:45,025
+those two piles by the same method and
+
+644
+00:30:43,075 --> 00:30:46,081
+when it's all done you end up with
+
+645
+00:30:45,025 --> 00:30:49,063
+everything sorted one nice thing about
+
+646
+00:30:47,035 --> 00:30:51,064
+it is it can be done in place meaning if
+
+647
+00:30:49,063 --> 00:30:52,162
+you have an array of data you can do
+
+648
+00:30:51,064 --> 00:30:56,065
+this all just by swapping elements
+
+649
+00:30:53,062 --> 00:30:58,101
+around and not have to use any extra
+
+650
+00:30:56,065 --> 00:31:02,094
+space which you would for example with
+
+651
+00:30:58,659 --> 00:31:04,697
+merge sort so this is a fairly simple
+
+652
+00:31:02,679 --> 00:31:08,710
+algorithm and just to visualize it then
+
+653
+00:31:05,039 --> 00:31:10,360
+you have some block of data X array and
+
+654
+00:31:08,071 --> 00:31:11,098
+you want to sort it so you pick an
+
+655
+00:31:10,036 --> 00:31:13,845
+element called the pivot and there's
+
+656
+00:31:11,098 --> 00:31:17,185
+various strategies for doing that and
+
+657
+00:31:14,169 --> 00:31:22,210
+now you just subdivide X into three
+
+658
+00:31:18,085 --> 00:31:24,414
+parts L the left hand R the right hand
+
+659
+00:31:22,021 --> 00:31:28,024
+meaning less and greater than P and then
+
+660
+00:31:25,179 --> 00:31:31,330
+you place P in the middle and then you
+
+661
+00:31:28,024 --> 00:31:33,843
+recursively when you're doing this for
+
+662
+00:31:31,033 --> 00:31:36,058
+in a sequential code you'll pick one of
+
+663
+00:31:34,059 --> 00:31:38,890
+these two usually leftmost or rightmost
+
+664
+00:31:36,058 --> 00:31:41,121
+whatever doesn't really matter and
+
+665
+00:31:38,089 --> 00:31:46,098
+you'll recursively you apply the same
+
+666
+00:31:42,021 --> 00:31:48,990
+method to to the left side in
+
+667
+00:31:46,899 --> 00:31:50,910
+ultimately after enough recursions you
+
+668
+00:31:49,179 --> 00:31:53,220
+get to the point where el has been
+
+669
+00:31:51,009 --> 00:31:56,043
+sorted and that's shown in this kind of
+
+670
+00:31:53,589 --> 00:31:59,678
+a swishy color thing and call that L
+
+671
+00:31:56,349 --> 00:32:00,362
+Prime and same with
+
+672
+00:32:03,012 --> 00:32:07,107
+you'll do the same thing now with the
+
+673
+00:32:06,000 --> 00:32:10,062
+right hand side and when you're done
+
+674
+00:32:08,007 --> 00:32:14,043
+this is usually done in place so you're
+
+675
+00:32:10,062 --> 00:32:15,087
+just the L part works on one array
+
+676
+00:32:14,043 --> 00:32:17,064
+part of the array and our card on
+
+677
+00:32:15,087 --> 00:32:20,094
+another and when you're done they're in
+
+678
+00:32:17,064 --> 00:32:23,151
+sorted order so very simple sort and
+
+679
+00:32:21,057 --> 00:32:26,082
+generally has very good performance so
+
+680
+00:32:24,051 --> 00:32:29,085
+this is what the code for it looks like
+
+681
+00:32:26,082 --> 00:32:30,180
+which is usually you have is a special
+
+682
+00:32:29,085 --> 00:32:34,128
+case if there's only one or two elements
+
+683
+00:32:31,008 --> 00:32:37,026
+and then you do this partitioning so
+
+684
+00:32:35,028 --> 00:32:39,069
+this routine of splitting it between the
+
+685
+00:32:37,098 --> 00:32:41,103
+left and the right-hand part is handled
+
+686
+00:32:39,069 --> 00:32:44,133
+by a function called partition and then
+
+687
+00:32:42,048 --> 00:32:48,114
+if there's more than one element in the
+
+688
+00:32:45,033 --> 00:32:50,076
+left side you sort that and if there's
+
+689
+00:32:49,014 --> 00:32:55,080
+more than one element in the right-hand
+
+690
+00:32:50,076 --> 00:32:57,105
+side you sort that and then when all
+
+691
+00:32:55,008 --> 00:33:00,012
+these recursions are done then the array
+
+692
+00:32:58,005 --> 00:33:03,039
+is sorted so pretty typical code and we
+
+693
+00:33:00,084 --> 00:33:03,803
+won't go in the trickiest part writing
+
+694
+00:33:03,039 --> 00:33:08,061
+the code is how do you make this
+
+695
+00:33:04,559 --> 00:33:12,690
+partitioning go fast but I won't go into
+
+696
+00:33:08,061 --> 00:33:13,152
+that just imagine it happens so this
+
+697
+00:33:12,069 --> 00:33:17,091
+algorithm actually has a natural version
+
+698
+00:33:14,052 --> 00:33:19,116
+of parallelism which is in my sequential
+
+699
+00:33:17,091 --> 00:33:21,117
+version I was sorting both first the
+
+700
+00:33:20,016 --> 00:33:23,285
+left and then the left of the left and
+
+701
+00:33:22,017 --> 00:33:25,116
+the left of the left of the left and
+
+702
+00:33:23,429 --> 00:33:28,470
+kind of working my way until I got that
+
+703
+00:33:26,016 --> 00:33:30,030
+whole array sorted and then I was coming
+
+704
+00:33:28,047 --> 00:33:31,050
+back and I was working on the right and
+
+705
+00:33:30,003 --> 00:33:32,088
+then the left part of the right and the
+
+706
+00:33:31,077 --> 00:33:34,083
+left to the left to the right and blah
+
+707
+00:33:33,015 --> 00:33:40,017
+blah blah and doing these recursions
+
+708
+00:33:35,037 --> 00:33:43,038
+because the way the codes written right
+
+709
+00:33:40,017 --> 00:33:46,020
+I am doing the full sort of the
+
+710
+00:33:43,038 --> 00:33:48,039
+left-hand part and only after that is
+
+711
+00:33:46,002 --> 00:33:51,015
+sorted then I'm doing the complete sort
+
+712
+00:33:48,048 --> 00:33:54,051
+of the right-hand part so the point is
+
+713
+00:33:51,033 --> 00:33:56,105
+it's it's an algorithm where I'm working
+
+714
+00:33:54,078 --> 00:33:58,170
+just on one part of the array at a time
+
+715
+00:33:57,005 --> 00:34:02,013
+but there's a very natural recursion of
+
+716
+00:33:59,007 --> 00:34:04,095
+parallelism here that says okay I've got
+
+717
+00:34:02,085 --> 00:34:08,133
+two parts each beat need to be sorted
+
+718
+00:34:05,058 --> 00:34:13,095
+let me just fire off two threads and let
+
+719
+00:34:09,033 --> 00:34:15,057
+them deal with that and that's the so
+
+720
+00:34:13,095 --> 00:34:15,180
+it's what you call divide and conquer
+
+721
+00:34:15,057 --> 00:34:18,141
+parallelism it
+
+722
+00:34:16,008 --> 00:34:24,033
+a natural kind of parallelism it shows
+
+723
+00:34:19,041 --> 00:34:27,048
+up in this code so basically I'll do the
+
+724
+00:34:25,005 --> 00:34:29,019
+same thing as before all at the top
+
+725
+00:34:27,048 --> 00:34:34,110
+level will be a purely sequential
+
+726
+00:34:29,019 --> 00:34:36,096
+process of partitioning and but then
+
+727
+00:34:35,001 --> 00:34:39,036
+assuming the partition comes up with
+
+728
+00:34:36,096 --> 00:34:42,195
+some non-trivial split then I will
+
+729
+00:34:39,045 --> 00:34:45,144
+recursively begin fork off to threads
+
+730
+00:34:43,095 --> 00:34:47,121
+each of which will be responsible for
+
+731
+00:34:46,044 --> 00:34:50,052
+the other and so we'll sort of look like
+
+732
+00:34:48,021 --> 00:34:54,048
+I'm working on the two parts in parallel
+
+733
+00:34:51,024 --> 00:34:56,112
+and eventually both sides will end up
+
+734
+00:34:54,048 --> 00:34:58,065
+now this picture isn't really quite true
+
+735
+00:34:57,012 --> 00:35:00,060
+and that it looked makes it look like
+
+736
+00:34:58,065 --> 00:35:02,124
+they're all kind of synchronized
+
+737
+00:35:00,006 --> 00:35:05,073
+together and I'm doing you know
+
+738
+00:35:03,024 --> 00:35:07,107
+KABOOOM down like this in a strict way
+
+739
+00:35:06,027 --> 00:35:10,116
+but in fact they're not it's very
+
+740
+00:35:08,007 --> 00:35:13,092
+asynchronous the left part is one thread
+
+741
+00:35:11,016 --> 00:35:16,029
+the right is another they just go at
+
+742
+00:35:13,092 --> 00:35:19,092
+their own pace and at the end I'm just
+
+743
+00:35:16,029 --> 00:35:22,053
+going to wait for it all to complete but
+
+744
+00:35:19,092 --> 00:35:24,146
+there's no strict temporal ordering on
+
+745
+00:35:22,053 --> 00:35:24,146
+how that all occurs
+
+746
+00:35:27,021 --> 00:35:33,058
+so the way I'll write this in the code
+
+747
+00:35:30,088 --> 00:35:34,090
+is available on the courts website I'm
+
+748
+00:35:33,058 --> 00:35:36,067
+only going to show you a glimpse of it
+
+749
+00:35:35,008 --> 00:35:39,055
+it's a non-trivial amount of code it
+
+750
+00:35:37,048 --> 00:35:42,061
+takes to do it but basically what I'm
+
+751
+00:35:39,055 --> 00:35:45,076
+going to do is have a bunch of pool of
+
+752
+00:35:42,061 --> 00:35:47,062
+threads that are ready to work and
+
+753
+00:35:45,076 --> 00:35:50,175
+that's a pretty typical way you write
+
+754
+00:35:47,071 --> 00:35:53,077
+threaded code because actually the the
+
+755
+00:35:51,075 --> 00:35:56,143
+initiation of a thread is a non-trivial
+
+756
+00:35:54,031 --> 00:36:00,037
+amount of computation so usually what
+
+757
+00:35:57,043 --> 00:36:04,078
+you do is you say I've got this many
+
+758
+00:36:00,037 --> 00:36:08,073
+cores I'm going to create a set of that
+
+759
+00:36:04,078 --> 00:36:13,111
+many threads and they will each work by
+
+760
+00:36:08,073 --> 00:36:16,080
+sharing a task queue so some agent that
+
+761
+00:36:14,011 --> 00:36:20,032
+is forking off work for the different
+
+762
+00:36:17,043 --> 00:36:21,124
+threads to do they will do the work
+
+763
+00:36:20,032 --> 00:36:23,119
+assigned to them when that complete
+
+764
+00:36:22,024 --> 00:36:25,033
+we'll come back and say okay I'm ready
+
+765
+00:36:24,019 --> 00:36:28,060
+for something new and it will give them
+
+766
+00:36:26,014 --> 00:36:31,063
+something new so I there's a little bit
+
+767
+00:36:28,006 --> 00:36:33,025
+of code a very rudimentary code there of
+
+768
+00:36:31,063 --> 00:36:36,067
+creating this task model and task
+
+769
+00:36:33,079 --> 00:36:39,124
+adjoint so the basic rule will be any
+
+770
+00:36:37,003 --> 00:36:42,031
+given task any given thread then at any
+
+771
+00:36:40,024 --> 00:36:46,069
+given time has been assigned sub sub
+
+772
+00:36:42,031 --> 00:36:50,053
+range of this array to be a sorting and
+
+773
+00:36:46,069 --> 00:36:53,130
+it will be specified by the base meaning
+
+774
+00:36:50,053 --> 00:36:57,055
+the starting point of this particular
+
+775
+00:36:54,003 --> 00:37:04,024
+range and then the number of elements
+
+776
+00:36:57,055 --> 00:37:08,080
+that it's told it's sort and one other
+
+777
+00:37:04,051 --> 00:37:10,132
+thing I'll do is once I get down to this
+
+778
+00:37:08,008 --> 00:37:14,089
+array being small enough I'll just sort
+
+779
+00:37:11,032 --> 00:37:17,038
+it sequentially and and we'll see how
+
+780
+00:37:15,061 --> 00:37:19,063
+big that block is or not is actually
+
+781
+00:37:17,092 --> 00:37:21,097
+performance parameter that you can use
+
+782
+00:37:19,081 --> 00:37:23,134
+for tuning the program so the point is
+
+783
+00:37:22,042 --> 00:37:27,076
+that you don't want to take this down
+
+784
+00:37:24,034 --> 00:37:30,034
+too far because the sort of overhead of
+
+785
+00:37:27,076 --> 00:37:30,169
+threads is enough that when you get to
+
+786
+00:37:30,034 --> 00:37:34,052
+fine-grained you're actually going to
+
+787
+00:37:31,069 --> 00:37:36,104
+start losing performance
+
+788
+00:37:34,052 --> 00:37:39,104
+so assume that it's bigger than that
+
+789
+00:37:37,004 --> 00:37:43,025
+I've been given some block there what
+
+790
+00:37:40,004 --> 00:37:45,038
+I'll do then is I'll run the partition
+
+791
+00:37:43,025 --> 00:37:47,117
+step this thread will run it a
+
+792
+00:37:45,038 --> 00:37:50,107
+partitioned step just using the exact
+
+793
+00:37:48,017 --> 00:37:55,105
+function I showed you or didn't show you
+
+794
+00:37:51,007 --> 00:37:59,036
+and then as long as and then I will us
+
+795
+00:37:56,005 --> 00:38:03,077
+create and add to the task queue two new
+
+796
+00:37:59,036 --> 00:38:06,059
+tasks a one dhis for the left part and
+
+797
+00:38:03,077 --> 00:38:10,129
+one for the right part and then the
+
+798
+00:38:06,059 --> 00:38:13,106
+scheduler that will assign two threads
+
+799
+00:38:11,029 --> 00:38:15,074
+to handle those two parts and so that
+
+800
+00:38:14,006 --> 00:38:19,025
+code will that's exactly how the code is
+
+801
+00:38:15,074 --> 00:38:22,085
+going to work it's going to keep reusing
+
+802
+00:38:19,025 --> 00:38:25,052
+the same threads over and over again too
+
+803
+00:38:22,085 --> 00:38:27,161
+but at any given time they'll be given a
+
+804
+00:38:25,052 --> 00:38:29,129
+range of places what typically will
+
+805
+00:38:28,061 --> 00:38:34,082
+happen is they'll run their partitioning
+
+806
+00:38:30,029 --> 00:38:37,076
+step and then say okay I've done my job
+
+807
+00:38:34,082 --> 00:38:38,153
+now assigned to new to new threads to do
+
+808
+00:38:37,076 --> 00:38:41,084
+this and that's the general scheme of it
+
+809
+00:38:39,053 --> 00:38:43,118
+or they'll say this is a small enough
+
+810
+00:38:41,084 --> 00:38:45,158
+block I'm just going to sort the darn
+
+811
+00:38:44,018 --> 00:38:49,076
+thing okay so that's really all the code
+
+812
+00:38:46,058 --> 00:38:51,146
+does it's online if you're interested in
+
+813
+00:38:49,076 --> 00:38:53,135
+this kind of stuff it's I think it's
+
+814
+00:38:52,046 --> 00:38:56,050
+pretty well written code because I wrote
+
+815
+00:38:54,035 --> 00:38:56,050
+it
+
+816
+00:38:57,001 --> 00:39:05,001
+so this is sort of the somewhat
+
+817
+00:39:02,109 --> 00:39:08,530
+simplified version of the code say
+
+818
+00:39:05,001 --> 00:39:13,026
+initialize my task queue scheduling
+
+819
+00:39:08,053 --> 00:39:15,058
+system create global variables of
+
+820
+00:39:13,026 --> 00:39:19,033
+describing the beginning and end of this
+
+821
+00:39:16,003 --> 00:39:21,097
+array to be sorted create a new task
+
+822
+00:39:19,033 --> 00:39:25,096
+queue and then this is the main function
+
+823
+00:39:21,097 --> 00:39:29,131
+that the TQ sort helper is given some
+
+824
+00:39:25,096 --> 00:39:33,109
+range of of addresses and a pointer to
+
+825
+00:39:30,031 --> 00:39:40,129
+the task queue that fuse to manage these
+
+826
+00:39:34,009 --> 00:39:42,100
+tasks and then when it's all done it
+
+827
+00:39:41,029 --> 00:39:45,103
+will just wait till all the tasks have
+
+828
+00:39:43,000 --> 00:39:48,013
+completed this is the top level this
+
+829
+00:39:46,003 --> 00:39:50,011
+isn't part of any recursion this is the
+
+830
+00:39:48,013 --> 00:39:55,027
+top level code and then it will free up
+
+831
+00:39:50,083 --> 00:39:56,158
+the data structures and then this is the
+
+832
+00:39:55,027 --> 00:40:02,098
+part of it that actually does the real
+
+833
+00:39:57,058 --> 00:40:06,109
+work it will say so now the TQ sort
+
+834
+00:40:02,098 --> 00:40:13,102
+helper is the part that's assigned to to
+
+835
+00:40:07,009 --> 00:40:16,051
+sort some particulars from the starting
+
+836
+00:40:14,002 --> 00:40:21,007
+address the base and some number of
+
+837
+00:40:16,051 --> 00:40:24,058
+elements and so this is what each task
+
+838
+00:40:21,007 --> 00:40:27,031
+will do and it says ok if this is a
+
+839
+00:40:24,058 --> 00:40:29,104
+small enough block of elements I'm just
+
+840
+00:40:27,031 --> 00:40:35,082
+going to call my serial quicksort to do
+
+841
+00:40:30,004 --> 00:40:35,082
+it otherwise I'm going to
+
+842
+00:40:42,094 --> 00:40:50,155
+oh it's a little bit messier than this
+
+843
+00:40:46,599 --> 00:40:55,630
+okay now otherwise it's going to spawn a
+
+844
+00:40:51,055 --> 00:40:57,354
+task to do the sorting let's see I was a
+
+845
+00:40:55,063 --> 00:40:59,119
+little mixed up this is a high level so
+
+846
+00:40:57,849 --> 00:41:06,910
+the actual splitting occurs in this
+
+847
+00:41:00,019 --> 00:41:10,072
+thing which is where it's so this is the
+
+848
+00:41:06,091 --> 00:41:13,155
+actual thread routine and what it's
+
+849
+00:41:10,072 --> 00:41:17,170
+saying is run the partition here and
+
+850
+00:41:14,055 --> 00:41:20,364
+then call this TQ sort helper which you
+
+851
+00:41:18,007 --> 00:41:26,103
+just saw on the left and the right parts
+
+852
+00:41:20,859 --> 00:41:29,883
+of it so just to review then the actual
+
+853
+00:41:27,066 --> 00:41:34,075
+spawning of a task is done by this
+
+854
+00:41:30,099 --> 00:41:38,380
+helper routine but then that what it
+
+855
+00:41:34,075 --> 00:41:39,124
+calls is the the thread routine is what
+
+856
+00:41:38,038 --> 00:41:41,047
+does the work here and what it will do
+
+857
+00:41:40,024 --> 00:41:44,050
+is it will do the partitioning within
+
+858
+00:41:42,028 --> 00:41:50,065
+that thread and then it will just throw
+
+859
+00:41:44,005 --> 00:41:54,097
+back and add to the task you two calls
+
+860
+00:41:50,065 --> 00:41:56,514
+to this helper but as that kind of so
+
+861
+00:41:55,042 --> 00:41:58,114
+between these two routines you can see
+
+862
+00:41:57,099 --> 00:42:02,124
+it's doing this idea of divide and
+
+863
+00:41:59,014 --> 00:42:05,733
+conquer parallelism so this is a
+
+864
+00:42:02,349 --> 00:42:11,470
+performance running on the shark machine
+
+865
+00:42:05,859 --> 00:42:16,480
+and this is a fairly straightforward I'm
+
+866
+00:42:11,047 --> 00:42:19,104
+just taking some number of random value
+
+867
+00:42:16,048 --> 00:42:19,104
+two to this 37th
+
+868
+00:42:21,087 --> 00:42:28,104
+that can't be right this is numbers not
+
+869
+00:42:27,009 --> 00:42:34,047
+to the thirty-seventh right you agree
+
+870
+00:42:29,004 --> 00:42:36,078
+with me 237th is 128 billion roughly so
+
+871
+00:42:34,047 --> 00:42:43,125
+this number is not right I'll have to
+
+872
+00:42:36,078 --> 00:42:45,120
+check it out and now what this x axis so
+
+873
+00:42:44,025 --> 00:42:48,081
+the y axis just denotes how long does it
+
+874
+00:42:46,002 --> 00:42:50,016
+take to complete by the way one thing if
+
+875
+00:42:48,081 --> 00:42:53,082
+you're used to measuring performance
+
+876
+00:42:50,034 --> 00:42:55,038
+based on CPU time that's not useful when
+
+877
+00:42:53,082 --> 00:42:56,133
+you're talking a parallel computing you
+
+878
+00:42:55,074 --> 00:42:58,155
+really want to talk a elapsed time the
+
+879
+00:42:57,033 --> 00:43:02,052
+time that you get from looking at a
+
+880
+00:42:59,055 --> 00:43:04,086
+clock and measuring it and dealing with
+
+881
+00:43:02,052 --> 00:43:06,117
+whatever inefficiency occurs there so
+
+882
+00:43:04,086 --> 00:43:10,158
+these are actually the last runtime of
+
+883
+00:43:07,017 --> 00:43:13,074
+the entire program and you'll see that
+
+884
+00:43:11,058 --> 00:43:15,066
+it varies according to this thing called
+
+885
+00:43:13,074 --> 00:43:18,129
+the serial fraction the serial fraction
+
+886
+00:43:16,038 --> 00:43:24,072
+is just at what point do I slide between
+
+887
+00:43:19,029 --> 00:43:26,115
+a serial quicksort or keep dividing so
+
+888
+00:43:24,072 --> 00:43:28,128
+how big does the array need to be as a
+
+889
+00:43:27,015 --> 00:43:34,023
+fraction expressed as a fraction of the
+
+890
+00:43:29,028 --> 00:43:36,114
+original array before I I will go into
+
+891
+00:43:34,095 --> 00:43:37,194
+recursion if I were actually to write
+
+892
+00:43:37,014 --> 00:43:41,016
+this real application I wouldn't do it
+
+893
+00:43:38,094 --> 00:43:43,167
+based on a fraction I'd do it based on a
+
+894
+00:43:41,016 --> 00:43:46,050
+block size to say anything smaller than
+
+895
+00:43:44,067 --> 00:43:49,092
+a thousand elements or some number like
+
+896
+00:43:46,005 --> 00:43:51,066
+that but this code just happens to be
+
+897
+00:43:49,092 --> 00:43:53,097
+expressed this way but the thing to
+
+898
+00:43:52,011 --> 00:43:58,050
+notice that's interesting is you'll see
+
+899
+00:43:53,097 --> 00:43:59,160
+here if the fraction is 1
+
+900
+00:43:58,005 --> 00:44:02,070
+it basically says I won't split this at
+
+901
+00:44:00,006 --> 00:44:05,043
+all I'm just going to call a sequential
+
+902
+00:44:03,015 --> 00:44:08,079
+quicksort so this is a purely sequential
+
+903
+00:44:05,097 --> 00:44:11,166
+version of it and what it shows is if I
+
+904
+00:44:08,079 --> 00:44:14,127
+once I start - I'll be willing to sort
+
+905
+00:44:12,066 --> 00:44:17,067
+of split this up and do parallelism I
+
+906
+00:44:15,027 --> 00:44:21,030
+start making it run faster and faster
+
+907
+00:44:17,076 --> 00:44:24,105
+and faster I'll and then I get into this
+
+908
+00:44:21,057 --> 00:44:26,100
+trough and now if I start going finer
+
+909
+00:44:25,005 --> 00:44:29,096
+and finer grained then I'm running into
+
+910
+00:44:27,000 --> 00:44:32,067
+the problem where the thread overhead is
+
+911
+00:44:29,096 --> 00:44:33,135
+more than the advantage I'm getting by
+
+912
+00:44:32,067 --> 00:44:36,162
+doing the parallelism
+
+913
+00:44:34,035 --> 00:44:40,041
+and I'm faster to run that bought big
+
+914
+00:44:37,062 --> 00:44:43,143
+assort just using a sequential algorithm
+
+915
+00:44:40,041 --> 00:44:46,080
+rather than parallel but the good news
+
+916
+00:44:44,043 --> 00:44:48,117
+here is this is a pretty long trough
+
+917
+00:44:46,008 --> 00:44:51,096
+here so it means that if you're trying
+
+918
+00:44:49,017 --> 00:44:54,045
+to tune this program it's not that hard
+
+919
+00:44:52,068 --> 00:44:57,096
+you're not going to pay a huge penalty
+
+920
+00:44:54,045 --> 00:44:59,061
+if you don't know a parameter exactly so
+
+921
+00:44:57,096 --> 00:45:03,192
+as long as because this is a huge range
+
+922
+00:44:59,061 --> 00:45:11,096
+right 30 from a 32 to 4096 it's a factor
+
+923
+00:45:04,092 --> 00:45:13,095
+of of a lot to the fifth and due to the
+
+924
+00:45:11,096 --> 00:45:17,127
+twelfth since two to the seventh sector
+
+925
+00:45:14,022 --> 00:45:21,029
+128 see how I do my arithmetic in powers
+
+926
+00:45:18,027 --> 00:45:24,054
+of two anyways it's roughly at you know
+
+927
+00:45:21,092 --> 00:45:26,100
+128 so several orders of magnitude
+
+928
+00:45:24,054 --> 00:45:28,143
+decimal orders of magnitude over which
+
+929
+00:45:27,000 --> 00:45:31,041
+you get pretty comparable performance so
+
+930
+00:45:29,043 --> 00:45:33,060
+that means from a performance tuning
+
+931
+00:45:31,041 --> 00:45:35,073
+point of view it's not that hard to do
+
+932
+00:45:33,006 --> 00:45:39,018
+and you'll often see we're getting a
+
+933
+00:45:35,073 --> 00:45:41,082
+pretty decent speed up on our eight core
+
+934
+00:45:39,072 --> 00:45:45,143
+to a hyper-threaded machine we're
+
+935
+00:45:41,082 --> 00:45:47,139
+getting basically a 7x performance and
+
+936
+00:45:46,043 --> 00:45:50,139
+hyper-threading really isn't helping us
+
+937
+00:45:48,039 --> 00:45:52,107
+at all is part of the lesson here but if
+
+938
+00:45:51,039 --> 00:45:55,055
+you just think of it as a course and
+
+939
+00:45:53,007 --> 00:45:55,055
+that's pretty good
+
+940
+00:45:58,047 --> 00:46:04,140
+so there is an obvious place here where
+
+941
+00:46:02,019 --> 00:46:06,102
+there's a Nam Dolls law issue going on
+
+942
+00:46:05,004 --> 00:46:10,059
+if you think at that first top-level
+
+943
+00:46:07,002 --> 00:46:13,091
+split the first call to partition is
+
+944
+00:46:10,095 --> 00:46:16,098
+being done over the entire array by a
+
+945
+00:46:13,109 --> 00:46:19,740
+serial sequential process right so at
+
+946
+00:46:17,025 --> 00:46:21,102
+the very least that is not going
+
+947
+00:46:19,074 --> 00:46:22,083
+parallel at all there's going exactly
+
+948
+00:46:22,002 --> 00:46:27,045
+one thread is doing the initial
+
+949
+00:46:23,064 --> 00:46:28,140
+partition and then that splits into two
+
+950
+00:46:27,045 --> 00:46:31,424
+so at most you have two threads where
+
+951
+00:46:29,004 --> 00:46:33,473
+it's a parallelism and then the next
+
+952
+00:46:31,829 --> 00:46:35,670
+level down at most four and so you
+
+953
+00:46:33,869 --> 00:46:38,430
+really don't you have to get several
+
+954
+00:46:35,067 --> 00:46:39,138
+levels of recursion down before you're
+
+955
+00:46:38,043 --> 00:46:42,117
+really running on all the course that
+
+956
+00:46:40,038 --> 00:46:45,017
+you have available so you'd think that
+
+957
+00:46:43,017 --> 00:46:46,101
+that's limiting your speed up and it
+
+958
+00:46:45,359 --> 00:46:51,420
+does and that's part of the reason why
+
+959
+00:46:47,001 --> 00:46:54,065
+our best performance is a factor of
+
+960
+00:46:51,042 --> 00:47:00,141
+seven and not a factor of eight or more
+
+961
+00:46:54,065 --> 00:47:05,150
+so there's quite a bit of work as I
+
+962
+00:47:01,041 --> 00:47:08,076
+mentioned on how to speed up performance
+
+963
+00:47:06,005 --> 00:47:13,056
+including how to make quicksort go
+
+964
+00:47:08,076 --> 00:47:16,148
+faster so there's a vast body of
+
+965
+00:47:14,001 --> 00:47:17,048
+literature on parallel stories
+
+966
+00:47:19,001 --> 00:47:25,075
+so one thing I tried was to say okay
+
+967
+00:47:22,055 --> 00:47:28,139
+well let's try and do this partitioning
+
+968
+00:47:25,075 --> 00:47:31,127
+step that week the top couple levels
+
+969
+00:47:29,039 --> 00:47:34,100
+let's try and do a parallel version of
+
+970
+00:47:32,027 --> 00:47:37,055
+that and so the idea is you pick one
+
+971
+00:47:35,000 --> 00:47:40,088
+pivot element but now you fire in this
+
+972
+00:47:37,055 --> 00:47:44,113
+example for threads and each of those
+
+973
+00:47:40,088 --> 00:47:48,122
+four threads runs a partition step on on
+
+974
+00:47:45,013 --> 00:47:51,040
+1/4 of the range and it will generate
+
+975
+00:47:49,022 --> 00:47:55,109
+their own versions of left and right and
+
+976
+00:47:51,004 --> 00:48:00,223
+then you globally figure out how many
+
+977
+00:47:56,009 --> 00:48:03,011
+are in each of these sub ranges and then
+
+978
+00:48:00,619 --> 00:48:05,780
+you tell each thread okay now you copy
+
+979
+00:48:03,029 --> 00:48:09,125
+your part of it over to the relevant
+
+980
+00:48:05,078 --> 00:48:10,085
+section of the array but the good news
+
+981
+00:48:10,025 --> 00:48:14,048
+so there's some amount of
+
+982
+00:48:11,048 --> 00:48:17,054
+synchronization that goes on there but
+
+983
+00:48:14,048 --> 00:48:19,067
+you can imagine that this partitioning
+
+984
+00:48:17,054 --> 00:48:22,067
+step once when you're running it is
+
+985
+00:48:19,067 --> 00:48:23,153
+completely independent of across the
+
+986
+00:48:22,067 --> 00:48:27,128
+different threads so it's getting a
+
+987
+00:48:24,053 --> 00:48:29,138
+almost ideal speed-up so I implemented
+
+988
+00:48:28,028 --> 00:48:33,077
+this and tried and I couldn't make it
+
+989
+00:48:30,038 --> 00:48:36,071
+run faster than the original code and I
+
+990
+00:48:33,077 --> 00:48:42,109
+think the the problem with this was the
+
+991
+00:48:36,071 --> 00:48:45,970
+copying the cost of copying data here
+
+992
+00:48:43,009 --> 00:48:48,017
+was even though it's being done by
+
+993
+00:48:46,609 --> 00:48:50,660
+multiple threads and getting pretty good
+
+994
+00:48:48,089 --> 00:48:52,115
+performance out of the memory system
+
+995
+00:48:50,066 --> 00:48:55,091
+because you're doing sequential copying
+
+996
+00:48:53,015 --> 00:48:58,097
+all the cash issues are pretty good here
+
+997
+00:48:55,091 --> 00:49:00,119
+but that's just enough extra work that
+
+998
+00:48:58,097 --> 00:49:01,184
+has to be done for this parallel code
+
+999
+00:49:01,019 --> 00:49:04,090
+that doesn't have to be done the
+
+1000
+00:49:02,084 --> 00:49:06,176
+sequential code is totally in place
+
+1001
+00:49:04,009 --> 00:49:10,046
+meaning not using any additional storage
+
+1002
+00:49:07,076 --> 00:49:12,925
+not copying and so that's just enough of
+
+1003
+00:49:11,027 --> 00:49:15,080
+a penalty on the parallel part that it
+
+1004
+00:49:13,609 --> 00:49:18,350
+didn't really improve performance at all
+
+1005
+00:49:15,008 --> 00:49:20,072
+so that code is shown as part of the
+
+1006
+00:49:18,035 --> 00:49:23,039
+code on the course website but like I
+
+1007
+00:49:21,044 --> 00:49:25,103
+said I I banged on it quite a bit and
+
+1008
+00:49:23,075 --> 00:49:27,134
+tried to tune it and squeak it in
+
+1009
+00:49:26,003 --> 00:49:30,042
+various ways and could never make it so
+
+1010
+00:49:28,034 --> 00:49:33,803
+I got better overall performance
+
+1011
+00:49:30,042 --> 00:49:35,441
+out of this program and so that's again
+
+1012
+00:49:34,109 --> 00:49:37,160
+a lesson and that's one of the
+
+1013
+00:49:35,819 --> 00:49:40,844
+unfortunate lessons is you can spend a
+
+1014
+00:49:37,619 --> 00:49:44,250
+lot of time trying to make a program run
+
+1015
+00:49:41,069 --> 00:49:46,118
+faster and get absolutely nowhere and
+
+1016
+00:49:44,025 --> 00:49:48,054
+it's frustrating because you put in a
+
+1017
+00:49:46,559 --> 00:49:49,637
+lot of work and you know it's a pretty
+
+1018
+00:49:48,054 --> 00:49:51,593
+cool idea and you'd love to publish a
+
+1019
+00:49:50,339 --> 00:49:54,450
+paper about it or tell your friends
+
+1020
+00:49:52,079 --> 00:49:56,460
+about it and it just goes nowhere and it
+
+1021
+00:49:54,045 --> 00:49:58,089
+just sits there and there's nothing
+
+1022
+00:49:56,046 --> 00:50:01,065
+unfortunately there's not an accumulated
+
+1023
+00:49:58,089 --> 00:50:02,318
+repository of the bad ideas of computer
+
+1024
+00:50:01,065 --> 00:50:06,114
+science don't waste your time trying
+
+1025
+00:50:03,119 --> 00:50:12,780
+this that people can talk about so this
+
+1026
+00:50:07,014 --> 00:50:15,102
+is just a lesson to learn so anyways
+
+1027
+00:50:12,078 --> 00:50:17,127
+that was my experience with that again
+
+1028
+00:50:16,002 --> 00:50:21,051
+other people spend a lot more time this
+
+1029
+00:50:18,027 --> 00:50:23,366
+is one of the most common applications
+
+1030
+00:50:21,051 --> 00:50:27,410
+that people try to do parallel
+
+1031
+00:50:23,609 --> 00:50:30,480
+programming for so some of the lessons
+
+1032
+00:50:27,869 --> 00:50:31,980
+from this is you need a good strategy
+
+1033
+00:50:30,048 --> 00:50:34,095
+for how you're going to get parallelism
+
+1034
+00:50:31,098 --> 00:50:36,153
+out of your application and I showed you
+
+1035
+00:50:34,095 --> 00:50:39,141
+two basic versions one is partitioned
+
+1036
+00:50:37,053 --> 00:50:41,145
+into K parts they're more or less
+
+1037
+00:50:40,041 --> 00:50:44,046
+completely independent of each other or
+
+1038
+00:50:42,045 --> 00:50:46,050
+something like a divide and conquer
+
+1039
+00:50:44,046 --> 00:50:48,123
+strategy where you can keep splitting it
+
+1040
+00:50:46,005 --> 00:50:51,054
+but the two splits that you create out
+
+1041
+00:50:49,023 --> 00:50:55,074
+of that can go concurrently these other
+
+1042
+00:50:51,099 --> 00:50:56,438
+different types of parallelism too in
+
+1043
+00:50:55,074 --> 00:50:58,673
+general you want to make the inner loops
+
+1044
+00:50:57,329 --> 00:51:01,980
+you can't have any synchronization
+
+1045
+00:50:59,339 --> 00:51:05,010
+primitives in there it'll just run too
+
+1046
+00:51:01,098 --> 00:51:06,227
+slow I'm dolls law as I mentioned is
+
+1047
+00:51:05,001 --> 00:51:10,047
+always sort of lurking in the background
+
+1048
+00:51:07,109 --> 00:51:12,128
+of if you can only feed up a part of
+
+1049
+00:51:10,047 --> 00:51:14,186
+your program then the other part will
+
+1050
+00:51:12,299 --> 00:51:17,324
+become the bottleneck but the other
+
+1051
+00:51:14,609 --> 00:51:20,910
+thing is like I said you can do it
+
+1052
+00:51:17,549 --> 00:51:23,490
+you've got the tools you've learned with
+
+1053
+00:51:20,091 --> 00:51:24,120
+with P threads and your knowledge of
+
+1054
+00:51:23,049 --> 00:51:26,097
+programming and your understanding of
+
+1055
+00:51:25,002 --> 00:51:29,411
+cache memories and things like that
+
+1056
+00:51:26,097 --> 00:51:31,140
+you've got the tools you need to be an
+
+1057
+00:51:29,609 --> 00:51:36,180
+effective programmer of this kind
+
+1058
+00:51:32,004 --> 00:51:38,010
+say but you have to and there's nothing
+
+1059
+00:51:36,018 --> 00:51:41,837
+that beats sort of trial and error and
+
+1060
+00:51:38,046 --> 00:51:43,115
+testing and tuning experimenting if
+
+1061
+00:51:41,999 --> 00:51:45,035
+there's some parameters that need to be
+
+1062
+00:51:43,529 --> 00:51:47,190
+set then you want to run experiments
+
+1063
+00:51:45,359 --> 00:51:49,376
+that will sweep through the parameters
+
+1064
+00:51:47,019 --> 00:51:53,408
+to try and figure out what the settings
+
+1065
+00:51:49,529 --> 00:51:55,410
+should be so that's sort of a little bit
+
+1066
+00:51:53,579 --> 00:51:58,650
+about parallel programming let me just
+
+1067
+00:51:55,041 --> 00:52:01,160
+finish this lecture with a little bit of
+
+1068
+00:51:58,065 --> 00:52:03,144
+sort of classic issues about concurrency
+
+1069
+00:52:01,529 --> 00:52:08,534
+that that are critical when you're
+
+1070
+00:52:04,044 --> 00:52:09,051
+dealing with these systems based on what
+
+1071
+00:52:08,579 --> 00:52:12,960
+you call a shared memory model of
+
+1072
+00:52:10,014 --> 00:52:16,643
+computation so multi-core is an example
+
+1073
+00:52:12,096 --> 00:52:17,148
+of conceptually multi-threaded
+
+1074
+00:52:16,769 --> 00:52:20,700
+computation remember you're you're
+
+1075
+00:52:18,048 --> 00:52:24,114
+working within a single virtual address
+
+1076
+00:52:20,007 --> 00:52:27,326
+space and you have private stacks but
+
+1077
+00:52:25,014 --> 00:52:31,020
+the more global the heap memory is
+
+1078
+00:52:28,019 --> 00:52:33,050
+completely shared across threads and so
+
+1079
+00:52:31,002 --> 00:52:35,141
+that what you call the shared memory
+
+1080
+00:52:33,329 --> 00:52:38,378
+programming model and that's what we've
+
+1081
+00:52:35,339 --> 00:52:40,343
+really been looking at in this course so
+
+1082
+00:52:38,819 --> 00:52:42,890
+there's a certain interesting question
+
+1083
+00:52:40,739 --> 00:52:45,480
+about called memory consistency models
+
+1084
+00:52:42,089 --> 00:52:47,558
+and here I'll illustrate it with a very
+
+1085
+00:52:45,048 --> 00:52:50,927
+simple example imagine we have two
+
+1086
+00:52:48,359 --> 00:52:54,390
+global variables a and B and we have two
+
+1087
+00:52:51,359 --> 00:52:57,450
+different threads and so the first
+
+1088
+00:52:54,039 --> 00:52:59,073
+thread is going to write meaning assign
+
+1089
+00:52:57,045 --> 00:53:02,088
+a value to a and it's going to read
+
+1090
+00:52:59,073 --> 00:53:04,089
+meaning print the value of B and the
+
+1091
+00:53:02,088 --> 00:53:06,120
+other thread is going to do the opposite
+
+1092
+00:53:04,089 --> 00:53:08,768
+it's going to write assigned a value to
+
+1093
+00:53:07,002 --> 00:53:11,073
+be in prison the value of a and so now
+
+1094
+00:53:09,569 --> 00:53:15,960
+the question is what are the possible
+
+1095
+00:53:11,091 --> 00:53:17,780
+outputs for this program and so there's
+
+1096
+00:53:15,096 --> 00:53:19,163
+a model that sort of the accepted
+
+1097
+00:53:18,599 --> 00:53:23,720
+standard called sequential consistency
+
+1098
+00:53:20,063 --> 00:53:28,262
+which means that these events can occur
+
+1099
+00:53:23,072 --> 00:53:30,165
+well that these that within a single
+
+1100
+00:53:28,829 --> 00:53:34,470
+thread things have to occur in the
+
+1101
+00:53:31,065 --> 00:53:37,116
+sequential order of that thread but
+
+1102
+00:53:34,047 --> 00:53:40,122
+across threads whether write a a write B
+
+1103
+00:53:38,016 --> 00:53:43,091
+occurs first is completely arbitrary and
+
+1104
+00:53:41,022 --> 00:53:45,029
+similarly whether writing of B occurs
+
+1105
+00:53:43,091 --> 00:53:50,138
+between
+
+1106
+00:53:45,092 --> 00:53:53,731
+these two actions are before is also
+
+1107
+00:53:51,038 --> 00:53:56,467
+arbitrary so what what it means is you
+
+1108
+00:53:54,559 --> 00:54:00,583
+can take two different threads and you
+
+1109
+00:53:56,809 --> 00:54:04,837
+can interleave their their events in any
+
+1110
+00:54:00,799 --> 00:54:08,150
+way but you should be able to pull out
+
+1111
+00:54:05,089 --> 00:54:10,400
+of that interleaving the sequential
+
+1112
+00:54:08,015 --> 00:54:13,444
+order of either of both of the two
+
+1113
+00:54:10,004 --> 00:54:15,913
+threads so when you do that you end up
+
+1114
+00:54:13,579 --> 00:54:18,740
+you can enumerate an example like this
+
+1115
+00:54:16,309 --> 00:54:20,317
+all the possibilities you can say well
+
+1116
+00:54:18,074 --> 00:54:21,883
+look it first is either going to be
+
+1117
+00:54:21,109 --> 00:54:26,540
+right a or right view
+
+1118
+00:54:22,549 --> 00:54:29,750
+let's pick right a so now the next event
+
+1119
+00:54:26,054 --> 00:54:34,142
+will be either a read of B or write of B
+
+1120
+00:54:29,075 --> 00:54:38,114
+and then if I if I do write a write read
+
+1121
+00:54:35,042 --> 00:54:41,048
+B so I've completed this thread and so
+
+1122
+00:54:39,014 --> 00:54:44,743
+now the only possibility is to write to
+
+1123
+00:54:41,048 --> 00:54:46,076
+B and read a and so forth you work out
+
+1124
+00:54:44,869 --> 00:54:49,915
+all the possible things you get six
+
+1125
+00:54:46,076 --> 00:54:51,164
+different event ordering and then what
+
+1126
+00:54:50,329 --> 00:54:56,750
+will be printed is well first of all
+
+1127
+00:54:52,064 --> 00:54:58,243
+whether you print before a will depend
+
+1128
+00:54:56,075 --> 00:54:59,171
+on the relative ordering of those two
+
+1129
+00:54:58,819 --> 00:55:04,760
+threads so that's shown them showing the
+
+1130
+00:55:00,071 --> 00:55:07,680
+B value in blue and the red value in red
+
+1131
+00:55:04,076 --> 00:55:11,102
+the I'm sorry the a value in red and
+
+1132
+00:55:08,319 --> 00:55:13,940
+you'll get these different possibilities
+
+1133
+00:55:12,002 --> 00:55:16,081
+these are all the six possible outputs
+
+1134
+00:55:13,094 --> 00:55:20,233
+of this program but you'll see that
+
+1135
+00:55:16,099 --> 00:55:26,210
+there are two two other outputs one
+
+1136
+00:55:21,079 --> 00:55:28,970
+could imagine that won't arise one is to
+
+1137
+00:55:26,021 --> 00:55:31,930
+print one hundred and one in other words
+
+1138
+00:55:28,097 --> 00:55:34,100
+to have them both print the original
+
+1139
+00:55:32,119 --> 00:55:38,450
+values of these two variables and that's
+
+1140
+00:55:35,000 --> 00:55:43,022
+impossible because I have to have done
+
+1141
+00:55:38,045 --> 00:55:44,072
+at least one right before I can reach
+
+1142
+00:55:43,022 --> 00:55:48,023
+either of these two print statements
+
+1143
+00:55:44,072 --> 00:55:51,151
+right so it's not possible for these to
+
+1144
+00:55:48,023 --> 00:55:54,031
+still be in their original values when I
+
+1145
+00:55:51,799 --> 00:55:59,360
+hit these print statements
+
+1146
+00:55:55,003 --> 00:56:02,015
+and whichever order I hit these two so
+
+1147
+00:55:59,036 --> 00:56:03,101
+those two are impossible so that's the
+
+1148
+00:56:02,015 --> 00:56:08,050
+idea of sequential consistency that
+
+1149
+00:56:04,001 --> 00:56:12,008
+there's some a very large number but of
+
+1150
+00:56:08,005 --> 00:56:14,012
+possible outputs of a program but in any
+
+1151
+00:56:12,008 --> 00:56:19,037
+case they can't violate the ordering
+
+1152
+00:56:15,002 --> 00:56:21,086
+implied by the individual threads so
+
+1153
+00:56:19,037 --> 00:56:25,058
+you'd say okay that seems like pretty
+
+1154
+00:56:22,004 --> 00:56:27,011
+obvious thing but actually if you think
+
+1155
+00:56:25,058 --> 00:56:29,114
+from a hardware perspective it's not
+
+1156
+00:56:27,011 --> 00:56:34,013
+that trivial to make that happen so let
+
+1157
+00:56:30,014 --> 00:56:36,101
+me just throw a show you a scenario of
+
+1158
+00:56:34,013 --> 00:56:40,058
+multi-core hardware that would violate
+
+1159
+00:56:37,001 --> 00:56:42,080
+sequential consistency assume that each
+
+1160
+00:56:40,058 --> 00:56:49,115
+of our threads has its own private cache
+
+1161
+00:56:42,008 --> 00:56:52,055
+and so if I execute this statement what
+
+1162
+00:56:50,015 --> 00:56:56,048
+I'll do is I will grab a copy of a from
+
+1163
+00:56:53,027 --> 00:56:58,115
+the main memory and bring it into my
+
+1164
+00:56:56,048 --> 00:57:03,101
+cache and I will assign this new value
+
+1165
+00:56:59,015 --> 00:57:08,083
+to it and similarly thread two will grab
+
+1166
+00:57:04,001 --> 00:57:13,100
+a copy of it of B and an update that and
+
+1167
+00:57:08,083 --> 00:57:16,112
+now if I do my two print statements if
+
+1168
+00:57:14,000 --> 00:57:19,082
+thread two picks up the value from the
+
+1169
+00:57:17,012 --> 00:57:22,064
+memory not knowing that thread one as a
+
+1170
+00:57:19,082 --> 00:57:24,161
+modified copy of that value then it
+
+1171
+00:57:22,064 --> 00:57:27,131
+would naturally print one and similarly
+
+1172
+00:57:25,061 --> 00:57:29,147
+if if thread one picked up a copy of B
+
+1173
+00:57:28,031 --> 00:57:34,078
+from main memory it would print 100 so
+
+1174
+00:57:30,047 --> 00:57:37,070
+we'd see exactly this unallowable
+
+1175
+00:57:34,078 --> 00:57:39,089
+execution and the reason is because each
+
+1176
+00:57:37,007 --> 00:57:42,032
+of these threads have their own private
+
+1177
+00:57:39,089 --> 00:57:45,161
+copies of these variables and they're
+
+1178
+00:57:42,095 --> 00:57:47,141
+not properly synchronized but you could
+
+1179
+00:57:46,061 --> 00:57:49,109
+see in a hardware scenario it would be
+
+1180
+00:57:48,041 --> 00:57:53,057
+easy to build this hardware and make
+
+1181
+00:57:50,009 --> 00:57:56,081
+that mistake so how does it work in a in
+
+1182
+00:57:53,057 --> 00:57:59,065
+a multi-core processor well they have a
+
+1183
+00:57:56,081 --> 00:58:01,127
+trick they call it Snoopy caches and
+
+1184
+00:57:59,065 --> 00:58:05,078
+it's a little bit like the readers
+
+1185
+00:58:02,027 --> 00:58:07,100
+writers of synchronization that you're
+
+1186
+00:58:05,078 --> 00:58:09,131
+working on for your proxy
+
+1187
+00:58:08,000 --> 00:58:12,032
+that you want to make it so that if
+
+1188
+00:58:10,031 --> 00:58:14,093
+everyone's just reading some shared
+
+1189
+00:58:12,032 --> 00:58:17,126
+value they should be able to get copies
+
+1190
+00:58:14,093 --> 00:58:20,032
+into their own caches to optimize the
+
+1191
+00:58:18,026 --> 00:58:22,118
+performance of it but if one of them
+
+1192
+00:58:20,869 --> 00:58:26,390
+wants to write to it it needs to get an
+
+1193
+00:58:23,018 --> 00:58:29,093
+exclusive copy of it and lock out any
+
+1194
+00:58:26,039 --> 00:58:33,098
+other thread from accessing that either
+
+1195
+00:58:29,093 --> 00:58:40,252
+to read it or to write it from long
+
+1196
+00:58:33,098 --> 00:58:42,113
+enough to make the update and so they
+
+1197
+00:58:41,089 --> 00:58:46,460
+they have a protocol where they tag
+
+1198
+00:58:43,013 --> 00:58:49,016
+actually and these tags are at the level
+
+1199
+00:58:46,046 --> 00:58:52,049
+of cache lines typically so the tagged
+
+1200
+00:58:49,016 --> 00:58:54,945
+cache line in main memory with its state
+
+1201
+00:58:52,049 --> 00:59:00,053
+and the typical state would be invalid
+
+1202
+00:58:55,089 --> 00:59:04,430
+it's shared or its exclusive so shared
+
+1203
+00:59:00,053 --> 00:59:06,100
+means that there can be copies of it but
+
+1204
+00:59:04,043 --> 00:59:12,044
+they can only be read only copy an
+
+1205
+00:59:07,000 --> 00:59:16,052
+exclusive meaning that it's exclusively
+
+1206
+00:59:12,053 --> 00:59:17,602
+available to a single thread so this is
+
+1207
+00:59:16,052 --> 00:59:20,078
+built into them the hardware of a
+
+1208
+00:59:18,079 --> 00:59:23,900
+multi-core processor so what will happen
+
+1209
+00:59:20,078 --> 00:59:25,151
+then is in order to do a write to a
+
+1210
+00:59:23,009 --> 00:59:29,108
+thread one will acquire an exclusive
+
+1211
+00:59:26,051 --> 00:59:32,078
+copy of this element and that actually
+
+1212
+00:59:30,089 --> 00:59:36,558
+tagging happens down here at the main
+
+1213
+00:59:32,078 --> 00:59:42,367
+memory and in the cache both and
+
+1214
+00:59:37,359 --> 00:59:45,430
+similarly if if thread two wants a to
+
+1215
+00:59:43,069 --> 00:59:50,210
+write to B it must get an exclusive copy
+
+1216
+00:59:46,069 --> 00:59:54,050
+of that and then when the read occurs
+
+1217
+00:59:50,021 --> 00:59:56,078
+what happens is actually this cache miss
+
+1218
+00:59:54,005 --> 00:59:59,051
+will send out a signal on a bus to
+
+1219
+00:59:56,078 --> 01:00:02,156
+shared communication medium saying I
+
+1220
+00:59:59,051 --> 01:00:06,055
+want to read a and instead of the main
+
+1221
+01:00:03,056 --> 01:00:09,152
+memory responding to it actually it will
+
+1222
+01:00:06,091 --> 01:00:13,097
+that result will be supplied by the
+
+1223
+01:00:10,052 --> 01:00:15,361
+other cache and it will convert the
+
+1224
+01:00:13,097 --> 01:00:19,966
+state of this element to being a shared
+
+1225
+01:00:15,829 --> 01:00:21,500
+element locally but you'll see that the
+
+1226
+01:00:20,839 --> 01:00:23,660
+main memory
+
+1227
+01:00:21,005 --> 01:00:25,016
+it isn't updated yet it goes through the
+
+1228
+01:00:23,066 --> 01:00:27,080
+whole right-back protocol you've already
+
+1229
+01:00:25,061 --> 01:00:28,148
+seen but and sometimes it will update
+
+1230
+01:00:27,008 --> 01:00:30,014
+that there's different implementations
+
+1231
+01:00:29,048 --> 01:00:33,095
+but this is why it's called a Snoopy
+
+1232
+01:00:31,004 --> 01:00:37,040
+cache is that it basically thread 2 is
+
+1233
+01:00:33,095 --> 01:00:38,189
+is peeking into or getting it access to
+
+1234
+01:00:37,076 --> 01:00:45,110
+information that's available in thread
+
+1235
+01:00:39,089 --> 01:00:49,103
+ones cache and so now thread 2 will
+
+1236
+01:00:46,001 --> 01:00:52,064
+correctly get a copy of a that's in the
+
+1237
+01:00:50,003 --> 01:00:55,025
+shared state and the same goes would be
+
+1238
+01:00:52,073 --> 01:00:57,104
+it will snip over and thread two well
+
+1239
+01:00:55,025 --> 01:01:01,051
+one will get a readable copy these are
+
+1240
+01:00:58,004 --> 01:01:04,073
+now all marked as shared state and so if
+
+1241
+01:01:01,051 --> 01:01:07,070
+if either of them want to write they'd
+
+1242
+01:01:04,073 --> 01:01:09,104
+have to now basically get exclusive
+
+1243
+01:01:07,007 --> 01:01:14,042
+access to it and that would have to then
+
+1244
+01:01:10,004 --> 01:01:16,082
+disable the copy and the other in the
+
+1245
+01:01:15,005 --> 01:01:19,013
+other locations so you can imagine this
+
+1246
+01:01:16,082 --> 01:01:20,087
+protocol being non-trivial actually to
+
+1247
+01:01:19,013 --> 01:01:23,027
+get right and to implement it gets way
+
+1248
+01:01:21,032 --> 01:01:27,089
+more complicated than this with all the
+
+1249
+01:01:23,027 --> 01:01:31,109
+variations on it so but it's become the
+
+1250
+01:01:27,089 --> 01:01:32,156
+norm in multi-core hardware design but
+
+1251
+01:01:32,009 --> 01:01:36,028
+it's actually part of the factor that
+
+1252
+01:01:33,056 --> 01:01:38,147
+limits the court count on a processor
+
+1253
+01:01:36,028 --> 01:01:40,127
+because just the hardware involved in
+
+1254
+01:01:39,047 --> 01:01:43,102
+keeping the consistency across the
+
+1255
+01:01:41,027 --> 01:01:47,029
+caches is non-trivial it has to work
+
+1256
+01:01:44,002 --> 01:01:51,002
+very fast we're talking at the cash rate
+
+1257
+01:01:47,047 --> 01:01:52,073
+access speeds so there's not a lot of
+
+1258
+01:01:51,002 --> 01:01:54,059
+time involved in there so actually
+
+1259
+01:01:52,073 --> 01:01:57,134
+implementing this stuff making it run
+
+1260
+01:01:54,059 --> 01:02:00,113
+making it scale across say eight cores
+
+1261
+01:01:58,034 --> 01:02:03,083
+10 cores 16 cores is not not a trivial
+
+1262
+01:02:01,013 --> 01:02:06,035
+time but that goes on in the background
+
+1263
+01:02:03,083 --> 01:02:10,091
+and so you can for most systems nowadays
+
+1264
+01:02:06,035 --> 01:02:13,049
+you can assume that there's some memory
+
+1265
+01:02:11,063 --> 01:02:14,132
+consistency model that you can program
+
+1266
+01:02:13,049 --> 01:02:18,104
+to that's supported by the hardware of
+
+1267
+01:02:15,032 --> 01:02:21,035
+the system and that this serial
+
+1268
+01:02:19,004 --> 01:02:24,035
+serializability that's referred to as a
+
+1269
+01:02:21,035 --> 01:02:25,082
+third of the the easiest to understand
+
+1270
+01:02:24,035 --> 01:02:27,704
+these others are a little bit more
+
+1271
+01:02:25,082 --> 01:02:31,281
+nuanced
+
+1272
+01:02:28,019 --> 01:02:34,980
+look if that fell off the bottom here
+
+1273
+01:02:32,019 --> 01:02:34,980
+anything tonight
+
+1274
+01:02:36,069 --> 01:02:38,640
+thank you
+
+1275
+01:02:41,079 --> 01:02:51,147
+that's it okay so just to wrap that up
+
+1276
+01:02:46,023 --> 01:02:54,042
+then it gives you a flavor of and you
+
+1277
+01:02:52,047 --> 01:02:56,396
+can see that getting programs to run
+
+1278
+01:02:54,042 --> 01:02:58,050
+fast through multi-threading is not not
+
+1279
+01:02:56,819 --> 01:03:00,750
+easy you often have to rewrite your
+
+1280
+01:02:59,022 --> 01:03:01,029
+application you have to think about the
+
+1281
+01:03:00,075 --> 01:03:03,164
+algorithm you have to worry about
+
+1282
+01:03:01,092 --> 01:03:07,098
+debugging it as you've already
+
+1283
+01:03:03,839 --> 01:03:10,650
+discovered at both the the shell lab in
+
+1284
+01:03:07,098 --> 01:03:11,196
+the proxy lab that concurrency where you
+
+1285
+01:03:10,065 --> 01:03:16,074
+can't predict the order of events makes
+
+1286
+01:03:12,096 --> 01:03:19,715
+it much more difficult to debug code so
+
+1287
+01:03:16,074 --> 01:03:21,126
+all these factors come in and you have
+
+1288
+01:03:20,579 --> 01:03:23,654
+to have some understanding of the
+
+1289
+01:03:22,026 --> 01:03:26,088
+underlying mechanisms that are used and
+
+1290
+01:03:24,329 --> 01:03:28,920
+what their performance implications are
+
+1291
+01:03:26,088 --> 01:03:32,169
+so in particular let me just observe
+
+1292
+01:03:28,092 --> 01:03:38,094
+here that if I'm like doing
+
+1293
+01:03:33,069 --> 01:03:39,938
+synchronization across threads like you
+
+1294
+01:03:38,094 --> 01:03:42,983
+saw that original one where they are
+
+1295
+01:03:40,559 --> 01:03:46,260
+fighting over this global variable P sum
+
+1296
+01:03:43,829 --> 01:03:49,950
+or whatever it was called you can
+
+1297
+01:03:46,026 --> 01:03:51,365
+imagine these the caches in this battle
+
+1298
+01:03:49,095 --> 01:03:56,121
+with each other to try and get exclusive
+
+1299
+01:03:51,599 --> 01:04:02,160
+access to this single memory of value
+
+1300
+01:03:57,021 --> 01:04:04,930
+and because each one is running as fast
+
+1301
+01:04:02,016 --> 01:04:09,089
+as it possibly can but each one requires
+
+1302
+01:04:05,119 --> 01:04:13,121
+getting exclusive copy writing to it and
+
+1303
+01:04:09,089 --> 01:04:14,115
+releasing it so that locking mechanism
+
+1304
+01:04:13,319 --> 01:04:18,410
+is flying back and forth between these
+
+1305
+01:04:15,015 --> 01:04:24,021
+caches and it's really not very fast so
+
+1306
+01:04:18,041 --> 01:04:26,930
+that the kind of thing is why of and
+
+1307
+01:04:24,021 --> 01:04:31,370
+also as an application programmer you're
+
+1308
+01:04:27,299 --> 01:04:34,650
+making calls semaphore call bounces you
+
+1309
+01:04:31,559 --> 01:04:37,583
+up into the OS kernel which is a cost
+
+1310
+01:04:34,065 --> 01:04:40,104
+involved so this thing has all the bad
+
+1311
+01:04:37,799 --> 01:04:42,880
+of all the things that make programs not
+
+1312
+01:04:41,004 --> 01:04:46,793
+run the way you really like them to so
+
+1313
+01:04:43,609 --> 01:04:48,680
+that's one of the challenges in parallel
+
+1314
+01:04:46,829 --> 01:04:51,210
+programming is how do you actually make
+
+1315
+01:04:49,319 --> 01:04:54,760
+use of the parallelism that's there
+
+1316
+01:04:51,021 --> 01:04:56,059
+without getting bogged down by the
+
+1317
+01:04:54,076 --> 01:04:59,685
+cost of the various mechanisms of
+
+1318
+01:04:56,059 --> 01:05:01,078
+control huh so anyways this is part of
+
+1319
+01:05:00,369 --> 01:05:04,300
+what you have to appreciate and
+
+1320
+01:05:01,078 --> 01:05:06,124
+understand as a programmer is how these
+
+1321
+01:05:04,003 --> 01:05:08,097
+things work at a level deep enough that
+
+1322
+01:05:07,024 --> 01:05:12,025
+you'll have some sense of what makes
+
+1323
+01:05:09,024 --> 01:05:15,070
+programs run faster or slower where the
+
+1324
+01:05:12,025 --> 01:05:17,634
+mistakes could lie so that's just a
+
+1325
+01:05:15,007 --> 01:05:21,063
+little little flavor of a much bigger
+
+1326
+01:05:17,859 --> 01:05:22,260
+topic so that's it for today
+

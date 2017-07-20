@@ -1,6 +1,6 @@
 # ICS-translation-project
 
-*ICS-CMU* 公开课中文翻译字幕制作计划。
+*ICS-CMU* 公开课翻译字幕制作计划。
 
 # 说明
 
@@ -9,13 +9,13 @@
 
 # 翻译源
 
-我们采用的翻译视频源是 *Intro to Computer Systems, Fall, 2015.*
+我们采用的翻译视频源是： *Intro to Computer Systems, Fall, 2015.*
 
 ## 课程主页
 
 - [CMU课程主页](http://www.cs.cmu.edu/~./213/index.html)
 
-## 视频转载
+## 转载源
 
 - [YouTube](https://www.youtube.com/playlist?list=PLbY-cFJNzq7z_tQGq-rxtq_n2QQDf5vnM)
 
@@ -23,24 +23,73 @@
 
 # 翻译进度
 
-1. finished
-2. working
-3. unplanned
+## 翻译状态
 
-- Lesson-01-Overview
-- Lesson-02-Bits-ints Part1
-- Lesson-03-Bits-ints Part2
-- Lesson-04-Floating Point
-- Lesson-05-Machine-Level-Programming-Basic
+- *[finished]*
+翻译已完成
 
+- *[translating]*
+翻译制作中
+
+- *[waiting]*
+翻译等待接手
+
+## 课程列表
+
+- lesson-01: Overview *[waiting]*
+- lesson-02: Bits ints Part1 *[waiting]*
+- lesson-03: Bits ints Part2 *[waiting]*
+- lesson-04: Floating Point *[waiting]*
+- lesson-05: Machine Level Programming I Basics *[waiting]*
+- lesson-06: Machine Level Programming II Control *[waiting]*
+- lesson-07: Machine Level Programming III Procedures *[waiting]*
+- lesson-08: Machine Level Programming IV Data *[waiting]*
+- lesson-09: Machine Level Programming V Advanced Topics *[waiting]*
+- lesson-10: Program Optimization *[waiting]*
+- lesson-11: The Memory Hierarchy *[waiting]*
+- lesson-12: Cache Memories *[waiting]*
+- lesson-13: Linking *[waiting]*
+- lesson-14: ECF  Exceptions & Processes *[waiting]*
+- lesson-15: ECF  Signals and Nonlocal Jumps *[waiting]*
+- lesson-16: System Level I O *[waiting]*
+- lesson-17: Virtual Memory  Concepts *[waiting]*
+- lesson-18: Virtual Memory  Systems *[waiting]*
+- lesson-19: Dynamic Memory Allocation  Basic Concepts *[waiting]*
+- lesson-20: Dynamic Memory Allocation  Advanced Concepts *[waiting]*
+- lesson-21: Network Programmin Part 1 *[waiting]*
+- lesson-22: Network Programming Part II *[waiting]*
+- lesson-23: Concurrent Programming *[waiting]*
+- lesson-24: Synchronization  Basics *[waiting]*
+- lesson-25: Synchronization  Advanced *[waiting]*
+- lesson-26: Thread Level Parallelism *[waiting]*
+- lesson-27: Future of Computing *[waiting]*
+ 
 # 翻译须知
+
+## 翻译流程
+
+请使用 GitHub 进行大部分的翻译工作。
+
+- *fork/clone* 下载到本地
+- *pull request* 合并翻译文本
+- *issue* 反映问题
+
+请先在**课程列表**处打好标签，再进行翻译/校对：
+```
+- 课程号: 课程名 [翻译状态] [翻译人/审校人]
+```
+注意添加**[翻译状态]**、**[翻译人/审校人]**标签。
 
 ## 目录结构
 
 ```
-source/lesson[01-27]/
+auto-srt/lesson-[01-27]/<en.srt/ch.srt>
+translated-srt/
 README.md
 ```
+- `auto-srt`下存放**YouTube自动生成字幕**。
+- `translated-srt`下存放**翻译校对后字幕**。
+
 ## 字幕格式
 
 英/中字幕均采用`SRT`格式。SRT（Subripper）是最简单的文本字幕格式，扩展名为.srt，其组成为：一行字幕序号，一行时间代码，一行字幕数据。
@@ -56,15 +105,7 @@ README.md
 
 ## 推荐工具
 
-`.SRT`为纯文本字幕格式，任何**文本编辑器**都可以轻松编辑。
-
-## 翻译流程
-
-请使用 GitHub 进行大部分的翻译工作。
-
-- *pull request* 合并翻译文本
-- *issue* 反映问题
-- *etc*
+`SRT`为纯文本字幕格式，任何**文本编辑器**都可以轻松编辑。
 
 # 版权相关
 

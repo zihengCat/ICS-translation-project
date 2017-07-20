@@ -1,0 +1,4848 @@
+1
+00:00:00,003 --> 00:00:12,098
+good afternoon everybody welcome good to
+
+2
+00:00:05,879 --> 00:00:16,560
+see you so today we're going to study a
+
+3
+00:00:12,098 --> 00:00:17,181
+arcane area of computer systems known as
+
+4
+00:00:16,056 --> 00:00:21,075
+floating point which is the way that
+
+5
+00:00:18,081 --> 00:00:25,085
+computer systems represent the real
+
+6
+00:00:21,075 --> 00:00:28,172
+numbers so you're all familiar with
+
+7
+00:00:26,021 --> 00:00:34,032
+decimal decimals you know something like
+
+8
+00:00:29,072 --> 00:00:36,146
+3.14 and there's a similar a similar
+
+9
+00:00:34,032 --> 00:00:42,096
+idea with with binary numbers okay so uh
+
+10
+00:00:37,046 --> 00:00:47,087
+so what what does a fractional binary
+
+11
+00:00:42,096 --> 00:00:51,150
+number like 1 0 1 1 point 1 0 1
+
+12
+00:00:47,087 --> 00:00:55,161
+represent and how does that work well it
+
+13
+00:00:52,005 --> 00:00:59,048
+works just like the decimal fractional
+
+14
+00:00:56,061 --> 00:00:59,093
+decimal numbers that you use to
+
+15
+00:01:04,005 --> 00:01:09,006
+so you have a in this case that they
+
+16
+00:01:06,078 --> 00:01:13,131
+it's a binary point and to the left of
+
+17
+00:01:09,006 --> 00:01:16,032
+the binary point you have bit position
+
+18
+00:01:14,031 --> 00:01:22,068
+to representing powers of 2 so 2 to the
+
+19
+00:01:16,086 --> 00:01:27,102
+0 2 to the 1 2 to the 2 so 1/2
+
+20
+00:01:22,068 --> 00:01:31,146
+I'm sorry 1 2 4 and so on and to the
+
+21
+00:01:28,002 --> 00:01:37,601
+right of the binary point you have 2 to
+
+22
+00:01:32,046 --> 00:01:41,046
+the minus 1 1/2 2 to the minus 2 1 4 2
+
+23
+00:01:37,619 --> 00:01:45,660
+to the minus 3 1 a and so on and so we
+
+24
+00:01:41,046 --> 00:01:49,050
+can we can represent any fractional
+
+25
+00:01:45,066 --> 00:01:54,110
+binary number using using this notation
+
+26
+00:01:49,005 --> 00:01:59,264
+where we sum each the bit at position K
+
+27
+00:01:55,001 --> 00:02:02,001
+times 2 to the K ok ok so it's really it
+
+28
+00:01:59,759 --> 00:02:09,090
+really works exactly the same way as as
+
+29
+00:02:02,001 --> 00:02:13,005
+with base 10 just just with base 2 so
+
+30
+00:02:09,009 --> 00:02:15,093
+let's look at some of these some of
+
+31
+00:02:13,014 --> 00:02:22,058
+these values so 5 and 3/4 we would
+
+32
+00:02:15,093 --> 00:02:30,131
+represent as 1 0 1 point 1 1 so this
+
+33
+00:02:22,058 --> 00:02:31,997
+this is before plus 1 is 5 plus 1/2 plus
+
+34
+00:02:31,031 --> 00:02:37,110
+1/4
+
+35
+00:02:32,519 --> 00:02:40,850
+okay so 2/4 plus 1/4 is 3/4 so 5 and 3/4
+
+36
+00:02:38,001 --> 00:02:48,080
+ok so that's pretty simple
+
+37
+00:02:40,085 --> 00:02:55,110
+2 and 7/8 is 1 zero point 1 1 1 so that
+
+38
+00:02:48,089 --> 00:03:02,118
+1 0 is 2 of course and then point 1 1 1
+
+39
+00:02:56,001 --> 00:03:10,034
+is 1/2 so 4 eighths plus 1/4 is two
+
+40
+00:03:03,018 --> 00:03:10,043
+eighths plus 1/8 okay so seven eight
+
+41
+00:03:11,022 --> 00:03:22,077
+and 1 7/16 would be one point zero 1 1 1
+
+42
+00:03:20,007 --> 00:03:28,065
+so the one to the left of the binary
+
+43
+00:03:22,077 --> 00:03:41,136
+point is 1 and then we have 1/4 plus 1/8
+
+44
+00:03:29,028 --> 00:03:46,047
+plus 1/16 so one 1/4 is 4 16 1/8 is to
+
+45
+00:03:42,036 --> 00:03:50,091
+16 and 1/16 so you add those after you
+
+46
+00:03:46,047 --> 00:03:53,088
+get 7/16 okay now notice that for some
+
+47
+00:03:50,091 --> 00:03:58,176
+of these numbers we this bit this bit
+
+48
+00:03:53,088 --> 00:04:04,122
+pattern 101.1 1 if we shift it to the
+
+49
+00:03:59,076 --> 00:04:06,153
+right to get 1 0.111 we've divided by 2
+
+50
+00:04:05,022 --> 00:04:11,031
+right so we've taken 5 and 3/4 and
+
+51
+00:04:07,053 --> 00:04:12,144
+divided it by 2 and it it works the
+
+52
+00:04:11,031 --> 00:04:15,063
+other way too if you shift to the left
+
+53
+00:04:13,044 --> 00:04:19,056
+you multiply if you shift to the left by
+
+54
+00:04:15,063 --> 00:04:24,102
+1 you multiply by 1 and these numbers
+
+55
+00:04:19,056 --> 00:04:26,064
+that are all ones to the right of the of
+
+56
+00:04:25,002 --> 00:04:29,094
+the binary point are these are numbers
+
+57
+00:04:27,036 --> 00:04:35,043
+that are just slightly less than than
+
+58
+00:04:29,094 --> 00:04:38,097
+one okay and so we'll well we want to
+
+59
+00:04:35,043 --> 00:04:40,122
+represent those will often will
+
+60
+00:04:38,097 --> 00:04:45,101
+sometimes refer to those numbers of that
+
+61
+00:04:41,022 --> 00:04:48,084
+form as 1 minus epsilon and epsilon just
+
+62
+00:04:46,001 --> 00:04:50,064
+depends on how many bits you have to the
+
+63
+00:04:48,084 --> 00:04:53,091
+right of the binary point so epsilon
+
+64
+00:04:50,064 --> 00:04:55,110
+gets smaller the more the more of those
+
+65
+00:04:53,091 --> 00:04:57,129
+bits you have there it gets closer to 1
+
+66
+00:04:56,001 --> 00:05:02,006
+and epsilon gets smaller the more of
+
+67
+00:04:58,029 --> 00:05:06,102
+those fits you have now there's a
+
+68
+00:05:02,006 --> 00:05:08,064
+there's limitations in this kind of
+
+69
+00:05:07,002 --> 00:05:11,651
+representation so first of all we can
+
+70
+00:05:09,018 --> 00:05:14,037
+only represent rational numbers of the
+
+71
+00:05:11,669 --> 00:05:15,810
+form X divided by 2 2 to the K we can
+
+72
+00:05:14,037 --> 00:05:20,046
+only represent numbers of that's form
+
+73
+00:05:15,081 --> 00:05:22,083
+exactly other numbers have to get have
+
+74
+00:05:20,046 --> 00:05:23,054
+repeating bit representations that can't
+
+75
+00:05:22,083 --> 00:05:25,127
+be represented
+
+76
+00:05:24,026 --> 00:05:29,081
+the finite number of debts that we have
+
+77
+00:05:26,027 --> 00:05:32,042
+in a computer system so for example
+
+78
+00:05:29,081 --> 00:05:36,116
+things like a 1/3 is that is this
+
+79
+00:05:32,042 --> 00:05:40,061
+repeating representation 1/5 and 1/10
+
+80
+00:05:37,016 --> 00:05:42,107
+there are other examples of that now the
+
+81
+00:05:40,061 --> 00:05:46,073
+other problem we have is that we can
+
+82
+00:05:43,007 --> 00:05:48,056
+only there's only so many bits to the
+
+83
+00:05:46,073 --> 00:05:52,091
+left and the right of the the binary
+
+84
+00:05:48,056 --> 00:05:56,111
+point so we're kind of if we put if we
+
+85
+00:05:52,091 --> 00:05:58,136
+move the binary point to the left then
+
+86
+00:05:57,011 --> 00:06:03,023
+we don't have as many we can't represent
+
+87
+00:05:59,036 --> 00:06:04,130
+as many large numbers we can only
+
+88
+00:06:03,023 --> 00:06:06,077
+represent small numbers but we have more
+
+89
+00:06:05,003 --> 00:06:08,066
+precision to the right of the binary
+
+90
+00:06:06,077 --> 00:06:10,085
+point so we can represent more
+
+91
+00:06:08,093 --> 00:06:13,108
+fractional values just the range of
+
+92
+00:06:11,057 --> 00:06:15,065
+those values will be much smaller
+
+93
+00:06:14,008 --> 00:06:19,025
+similarly if we move the binary point to
+
+94
+00:06:16,037 --> 00:06:21,125
+the right we'll have a larger range of
+
+95
+00:06:19,025 --> 00:06:25,025
+values but we won't build a represent as
+
+96
+00:06:22,025 --> 00:06:27,040
+many fractions okay so there's this
+
+97
+00:06:25,025 --> 00:06:32,038
+there's this kind of trade-off and
+
+98
+00:06:27,004 --> 00:06:34,013
+floating point is a representation to
+
+99
+00:06:32,038 --> 00:06:38,042
+that to try that that enables us to move
+
+100
+00:06:35,003 --> 00:06:41,018
+that basically to move that binary point
+
+101
+00:06:38,078 --> 00:06:44,144
+to represent sort of as wide a range as
+
+102
+00:06:41,045 --> 00:06:47,063
+possible with as much precision given
+
+103
+00:06:45,044 --> 00:06:49,073
+the number of bits the finite number of
+
+104
+00:06:47,063 --> 00:06:51,110
+bits that we have to work with so the
+
+105
+00:06:49,073 --> 00:06:53,168
+the float and floating point is this
+
+106
+00:06:52,001 --> 00:06:59,030
+sort of shifting binary point right this
+
+107
+00:06:54,068 --> 00:07:02,069
+floating this floating binary point now
+
+108
+00:06:59,039 --> 00:07:06,058
+up until 1985
+
+109
+00:07:02,069 --> 00:07:08,162
+floating point was just a disaster and
+
+110
+00:07:06,058 --> 00:07:13,100
+every computer manufacturer had their
+
+111
+00:07:09,062 --> 00:07:15,062
+own representation you couldn't and it
+
+112
+00:07:14,000 --> 00:07:18,062
+was just terrible because you couldn't
+
+113
+00:07:15,062 --> 00:07:19,118
+predict what would happen what would
+
+114
+00:07:18,062 --> 00:07:21,161
+happen if you moved your program from
+
+115
+00:07:20,018 --> 00:07:23,102
+one machine to another the behavior
+
+116
+00:07:22,061 --> 00:07:25,070
+would be different the rounding would be
+
+117
+00:07:24,002 --> 00:07:30,041
+different it was a very difficult
+
+118
+00:07:26,051 --> 00:07:32,150
+situation and people really computer
+
+119
+00:07:30,041 --> 00:07:34,047
+scientists in particular really disliked
+
+120
+00:07:33,005 --> 00:07:40,074
+floating point
+
+121
+00:07:35,001 --> 00:07:44,004
+in in 18 1985 I Triple E which is the
+
+122
+00:07:41,019 --> 00:07:47,055
+professional association for electrical
+
+123
+00:07:44,031 --> 00:07:51,072
+engineers introduced a and it's also a
+
+124
+00:07:47,055 --> 00:07:53,097
+very important standards body they
+
+125
+00:07:51,072 --> 00:07:54,165
+introduced a standard floating-point
+
+126
+00:07:53,097 --> 00:07:57,165
+representation called I Triple E
+
+127
+00:07:55,065 --> 00:08:00,084
+floating point which was then adopted by
+
+128
+00:07:58,065 --> 00:08:01,113
+all computer manufacturers so now the
+
+129
+00:08:00,084 --> 00:08:03,138
+situation is much better
+
+130
+00:08:02,013 --> 00:08:06,072
+everybody everybody supports the same
+
+131
+00:08:04,038 --> 00:08:07,113
+kind of floating point representation
+
+132
+00:08:06,072 --> 00:08:17,123
+which is what we're going to learn about
+
+133
+00:08:08,013 --> 00:08:22,098
+today so the floating point has the form
+
+134
+00:08:18,023 --> 00:08:24,111
+it represents numbers in a like a
+
+135
+00:08:22,098 --> 00:08:27,137
+scientific notation it represents
+
+136
+00:08:25,011 --> 00:08:34,076
+numbers of the form minus 1 to the s
+
+137
+00:08:28,037 --> 00:08:41,046
+where s is assigned it times a
+
+138
+00:08:34,076 --> 00:08:45,141
+significant M ok times 2 to some
+
+139
+00:08:42,027 --> 00:08:49,110
+exponent e ok so all of the numbers that
+
+140
+00:08:46,041 --> 00:08:52,137
+we can represent in floating point have
+
+141
+00:08:50,001 --> 00:08:55,083
+to be represented in this form so the
+
+142
+00:08:53,037 --> 00:08:59,043
+sign bit s determines whether the number
+
+143
+00:08:55,092 --> 00:09:02,094
+is negative or positive obviously the
+
+144
+00:08:59,097 --> 00:09:04,122
+significant m and sometimes sometimes
+
+145
+00:09:02,094 --> 00:09:07,101
+called the mantissa where the M comes
+
+146
+00:09:05,022 --> 00:09:10,098
+from the significant M normally is a
+
+147
+00:09:08,064 --> 00:09:13,152
+fractional value in the range between
+
+148
+00:09:10,098 --> 00:09:15,192
+between 1 & 2 and we'll see we'll see
+
+149
+00:09:14,052 --> 00:09:18,096
+why that is in a second and then the
+
+150
+00:09:16,092 --> 00:09:22,140
+exponent e weights the value by some
+
+151
+00:09:18,096 --> 00:09:25,149
+power of - okay so this is encoded in in
+
+152
+00:09:23,004 --> 00:09:28,077
+either 32 bits or 64 bits in the
+
+153
+00:09:26,049 --> 00:09:31,083
+following way the the sign bit s is the
+
+154
+00:09:29,013 --> 00:09:35,064
+most significant bit and then this is
+
+155
+00:09:31,083 --> 00:09:37,130
+followed by some number of by it by some
+
+156
+00:09:35,064 --> 00:09:43,083
+number of bits called the exp field
+
+157
+00:09:38,003 --> 00:09:46,005
+which encodes the exponent e of but it's
+
+158
+00:09:43,083 --> 00:09:48,342
+not identical to e it encodes e and
+
+159
+00:09:46,005 --> 00:09:50,334
+we'll see how that works and then
+
+160
+00:09:49,089 --> 00:09:53,133
+the frack and then and then that's
+
+161
+00:09:50,829 --> 00:09:57,873
+followed the remaining bits are the the
+
+162
+00:09:53,529 --> 00:10:04,530
+frack field which encodes them but isn't
+
+163
+00:09:58,269 --> 00:10:06,610
+identical to em now we I Triple E
+
+164
+00:10:04,629 --> 00:10:08,724
+floating point has provides two
+
+165
+00:10:06,061 --> 00:10:11,098
+different kinds of floating-point their
+
+166
+00:10:09,579 --> 00:10:14,430
+single precision 32 bits and so-called
+
+167
+00:10:11,098 --> 00:10:18,193
+double precision which is 64 bits
+
+168
+00:10:14,043 --> 00:10:21,067
+there's this funky Intel extended
+
+169
+00:10:19,093 --> 00:10:23,112
+precision which is non-standard and we
+
+170
+00:10:21,067 --> 00:10:27,096
+won't talk about it anymore
+
+171
+00:10:24,012 --> 00:10:29,481
+and so in the single precision 32 bits
+
+172
+00:10:27,699 --> 00:10:33,040
+you have one sign bit there's always a
+
+173
+00:10:29,589 --> 00:10:35,920
+sign bit you have eight exp bits and you
+
+174
+00:10:33,004 --> 00:10:41,067
+have 23 frack bits in double precision
+
+175
+00:10:35,092 --> 00:10:44,181
+you have 11 the XP bits and 52 fragments
+
+176
+00:10:41,067 --> 00:10:48,716
+now there's a number of different kinds
+
+177
+00:10:45,009 --> 00:10:51,084
+of floating-point representations the
+
+178
+00:10:49,319 --> 00:10:53,230
+sort of the default and sort of the
+
+179
+00:10:51,759 --> 00:10:57,100
+common representation is called
+
+180
+00:10:53,023 --> 00:11:01,087
+normalized so called normalized values
+
+181
+00:10:57,001 --> 00:11:05,420
+and normalized values are all the values
+
+182
+00:11:01,087 --> 00:11:08,092
+where the exp field is not equal to 0
+
+183
+00:11:05,519 --> 00:11:12,160
+and not equal not equal to all zeros and
+
+184
+00:11:09,037 --> 00:11:15,486
+not equal to all ones okay so everything
+
+185
+00:11:12,016 --> 00:11:19,755
+all zeros and all ones are special kinds
+
+186
+00:11:15,819 --> 00:11:23,862
+of numbers we'll look at a second so the
+
+187
+00:11:19,899 --> 00:11:28,120
+exponent this exponent e remember our
+
+188
+00:11:24,249 --> 00:11:31,251
+numbers are minus 1 to the power s times
+
+189
+00:11:28,012 --> 00:11:36,521
+M times 2 raised to the power e the
+
+190
+00:11:31,449 --> 00:11:43,494
+exponent E is encoded as this biased
+
+191
+00:11:36,629 --> 00:11:47,655
+value which is the called exp so the X
+
+192
+00:11:43,899 --> 00:11:51,942
+the exponent e is exp minus some bias
+
+193
+00:11:47,889 --> 00:11:54,900
+and exp is the value capital exp is the
+
+194
+00:11:52,329 --> 00:11:57,336
+value of the exp bits the bits in the
+
+195
+00:11:54,999 --> 00:12:01,870
+exp field treat it as a positive number
+
+196
+00:11:57,399 --> 00:12:02,830
+ok so capital exp is just you just look
+
+197
+00:12:01,087 --> 00:12:07,108
+at it as an unsigned
+
+198
+00:12:02,083 --> 00:12:09,162
+and seven bit in case of single
+
+199
+00:12:08,008 --> 00:12:16,012
+precision seven bit number
+
+200
+00:12:10,062 --> 00:12:18,145
+okay now the bias is 2 to the power k
+
+201
+00:12:16,048 --> 00:12:21,100
+minus 1 minus 1 where K is the number of
+
+202
+00:12:19,045 --> 00:12:27,088
+exponent bits okay so for single
+
+203
+00:12:22,000 --> 00:12:31,036
+precision we have 8 exponent bits so 2
+
+204
+00:12:27,088 --> 00:12:38,095
+to the 8th 2 to the 8 minus 1 is 7 so 2
+
+205
+00:12:31,036 --> 00:12:41,113
+to the seventh is 128 minus 1 is 127
+
+206
+00:12:39,058 --> 00:12:44,065
+okay so the bias for single precision is
+
+207
+00:12:42,013 --> 00:12:52,018
+127 and similarly for double precision
+
+208
+00:12:45,028 --> 00:12:54,085
+it's a thousand 23 okay so you just you
+
+209
+00:12:52,018 --> 00:12:59,022
+just have to memorize this this formula
+
+210
+00:12:54,085 --> 00:13:01,093
+the exponent e is the exp field
+
+211
+00:12:59,022 --> 00:13:06,046
+interpret it as an unsigned number minus
+
+212
+00:13:01,093 --> 00:13:08,116
+the the bias now this is a this is kind
+
+213
+00:13:06,046 --> 00:13:10,120
+of a strange thing the first time you
+
+214
+00:13:09,016 --> 00:13:14,110
+encounter floating-point it it seems
+
+215
+00:13:11,002 --> 00:13:15,100
+kind of odd right so why not I mean
+
+216
+00:13:15,001 --> 00:13:17,065
+we've already learned about two's
+
+217
+00:13:16,018 --> 00:13:19,027
+complement that's a perfectly fine way
+
+218
+00:13:17,074 --> 00:13:22,087
+to represent positive and negative
+
+219
+00:13:20,008 --> 00:13:26,065
+numbers okay and we have exponents that
+
+220
+00:13:22,087 --> 00:13:28,143
+are negative and positive right so why
+
+221
+00:13:26,065 --> 00:13:32,146
+not just use the exp field to represent
+
+222
+00:13:29,043 --> 00:13:34,117
+or why not just use two's complement in
+
+223
+00:13:33,046 --> 00:13:37,090
+the exp field to represent those
+
+224
+00:13:35,017 --> 00:13:40,105
+positive and negative exponents right so
+
+225
+00:13:37,009 --> 00:13:46,012
+it turns out that the reason that they
+
+226
+00:13:41,005 --> 00:13:48,019
+do this is that and if you think if I
+
+227
+00:13:46,093 --> 00:13:51,154
+think about this and we'll come back to
+
+228
+00:13:48,019 --> 00:13:55,065
+it but if we if we encode the the
+
+229
+00:13:52,054 --> 00:13:58,105
+exponent e using this bias
+
+230
+00:13:55,065 --> 00:14:03,108
+representation the smallest negative
+
+231
+00:13:59,005 --> 00:14:06,103
+exponent is represented by all zeros
+
+232
+00:14:04,008 --> 00:14:13,104
+okay and the largest exponent is
+
+233
+00:14:07,003 --> 00:14:14,004
+represented by 0 1 1 1 1
+
+234
+00:14:14,209 --> 00:14:21,690
+so the the smallest the swamp the number
+
+235
+00:14:19,011 --> 00:14:24,018
+with the smallest exponent if we were
+
+236
+00:14:21,069 --> 00:14:26,468
+just to compare the bits using it just
+
+237
+00:14:24,018 --> 00:14:28,116
+some kind of unsigned representation
+
+238
+00:14:27,089 --> 00:14:31,175
+just comparing the bits treating it as
+
+239
+00:14:29,016 --> 00:14:33,099
+an unsigned number by using this is this
+
+240
+00:14:31,949 --> 00:14:36,956
+biased representation we can just
+
+241
+00:14:33,099 --> 00:14:38,106
+compare two floating point numbers just
+
+242
+00:14:37,649 --> 00:14:40,685
+as unsigned we can treat the whole
+
+243
+00:14:39,006 --> 00:14:44,035
+floating point number as an unsigned
+
+244
+00:14:41,009 --> 00:14:51,540
+integer and compare two numbers and get
+
+245
+00:14:44,089 --> 00:14:54,092
+get a true comparison so the exponent
+
+246
+00:14:51,054 --> 00:14:58,093
+uses this this sort of biasing encoding
+
+247
+00:14:54,389 --> 00:15:03,360
+and then the significance is encoded
+
+248
+00:14:58,579 --> 00:15:06,647
+with an implied one so and this is where
+
+249
+00:15:03,036 --> 00:15:08,091
+the this is where the normalized in the
+
+250
+00:15:07,259 --> 00:15:11,250
+normalized representation comes from
+
+251
+00:15:08,091 --> 00:15:14,175
+that we're always going to represent our
+
+252
+00:15:11,025 --> 00:15:17,091
+numbers so M we're always going to
+
+253
+00:15:15,075 --> 00:15:18,174
+normalize m no matter what the number we
+
+254
+00:15:17,091 --> 00:15:22,390
+want to represent we're always going to
+
+255
+00:15:19,074 --> 00:15:25,116
+normalize m as one point something and
+
+256
+00:15:23,209 --> 00:15:28,560
+then we adjust the exponent accordingly
+
+257
+00:15:26,016 --> 00:15:31,685
+right so if if the value we want to
+
+258
+00:15:28,056 --> 00:15:34,104
+represent is one zero zero point zero
+
+259
+00:15:31,829 --> 00:15:40,841
+one we're going to shift it over and
+
+260
+00:15:35,004 --> 00:15:43,041
+it'll be one point zero zero okay and
+
+261
+00:15:40,949 --> 00:15:49,037
+then we'll adjust the exponent to
+
+262
+00:15:43,041 --> 00:15:50,112
+represent that shift okay so the V bits
+
+263
+00:15:49,829 --> 00:15:55,841
+in the frac field
+
+264
+00:15:51,012 --> 00:15:57,911
+xxxxX are all of the numbers to the
+
+265
+00:15:55,949 --> 00:16:01,680
+right of the binary point right so
+
+266
+00:15:58,019 --> 00:16:03,032
+there's always this implied one but we
+
+267
+00:16:01,068 --> 00:16:04,101
+don't even encode it we just throw it
+
+268
+00:16:03,149 --> 00:16:06,540
+away because it's always there all right
+
+269
+00:16:05,001 --> 00:16:10,062
+so this is a little trick just to get
+
+270
+00:16:06,054 --> 00:16:16,403
+one more bit for free okay so the the
+
+271
+00:16:10,062 --> 00:16:18,087
+xxx bits in the fraks field are all all
+
+272
+00:16:16,889 --> 00:16:20,915
+of all the bits to the right of the
+
+273
+00:16:18,087 --> 00:16:24,116
+binary point after one point the one
+
+274
+00:16:21,149 --> 00:16:27,050
+point and this is the so this is the
+
+275
+00:16:24,899 --> 00:16:28,870
+smallest fractal is all
+
+276
+00:16:27,005 --> 00:16:35,063
+Zero's which corresponds to a
+
+277
+00:16:28,087 --> 00:16:38,168
+significant of 1.0 and a fractal of all
+
+278
+00:16:35,063 --> 00:16:42,202
+ones corresponds to two minus Epsilon so
+
+279
+00:16:39,068 --> 00:16:49,094
+that's one swing one long-run 1 1 and so
+
+280
+00:16:42,769 --> 00:16:52,730
+on so let's look at let's look at an
+
+281
+00:16:49,094 --> 00:16:57,161
+example so let's look at how we would
+
+282
+00:16:52,073 --> 00:17:01,157
+encode 15 to 13 our favorite number in
+
+283
+00:16:58,061 --> 00:17:04,030
+two's complement and floating-point so
+
+284
+00:17:02,057 --> 00:17:09,113
+the if we represent that so it's an
+
+285
+00:17:04,579 --> 00:17:13,000
+integer and we represent it using these
+
+286
+00:17:10,013 --> 00:17:16,079
+fifths take my word for it correspond to
+
+287
+00:17:13,000 --> 00:17:20,439
+the integer 213 so now we want to
+
+288
+00:17:16,079 --> 00:17:23,147
+convert it we want to normalize it by
+
+289
+00:17:20,439 --> 00:17:27,466
+expressing it as one point 1 1 0 and so
+
+290
+00:17:24,047 --> 00:17:29,051
+on times 2 to the 13th ok saying the
+
+291
+00:17:27,709 --> 00:17:31,730
+same number we just normalized it so
+
+292
+00:17:29,087 --> 00:17:33,094
+that there's there's always this leading
+
+293
+00:17:31,073 --> 00:17:33,094
+1
+
+294
+00:17:35,088 --> 00:17:46,156
+so the significant m is 1 point 1 1 0 1
+
+295
+00:17:44,077 --> 00:17:49,108
+1 and so on the frack field is
+
+296
+00:17:47,056 --> 00:17:53,065
+everything to the right of the binary
+
+297
+00:17:50,008 --> 00:17:56,047
+point so we just we throw this we throw
+
+298
+00:17:53,065 --> 00:17:58,069
+this one away and we just take the the
+
+299
+00:17:56,047 --> 00:18:01,069
+values to the right of the binary point
+
+300
+00:17:59,005 --> 00:18:03,100
+and then we Pat it out with zeros to to
+
+301
+00:18:01,069 --> 00:18:07,132
+get the 23 bits that we need for single
+
+302
+00:18:04,000 --> 00:18:13,048
+precision okay so now we've got our
+
+303
+00:18:08,032 --> 00:18:17,119
+frack sealed the exponent so in this
+
+304
+00:18:13,048 --> 00:18:21,085
+case a YZ we're multiplying by 2 to the
+
+305
+00:18:18,019 --> 00:18:26,091
+13 so E is 13 so we want to represent
+
+306
+00:18:21,085 --> 00:18:33,151
+the value 13 using this biased encoding
+
+307
+00:18:26,091 --> 00:18:37,105
+so the bias is 127 and so the exponent
+
+308
+00:18:34,051 --> 00:18:41,119
+the value that the value of the exp
+
+309
+00:18:38,005 --> 00:18:51,007
+field should be 140 because if we take
+
+310
+00:18:42,019 --> 00:18:53,113
+if we take 140 minus 127 we get 13 okay
+
+311
+00:18:51,007 --> 00:19:00,010
+so 140 is represented using these eight
+
+312
+00:18:54,013 --> 00:19:01,072
+bits and that becomes our exp field okay
+
+313
+00:19:00,001 --> 00:19:03,052
+so the resulting floating-point number
+
+314
+00:19:01,072 --> 00:19:06,169
+and of course it's a positive number so
+
+315
+00:19:03,061 --> 00:19:08,143
+the sign bill is zero so the resulting
+
+316
+00:19:07,069 --> 00:19:11,113
+floating point number has these eight
+
+317
+00:19:09,043 --> 00:19:16,087
+the eight bits and exp field that we
+
+318
+00:19:12,013 --> 00:19:20,035
+computed by subtracting 140 by
+
+319
+00:19:16,087 --> 00:19:22,096
+subtracting 127 from 140 and then the
+
+320
+00:19:20,035 --> 00:19:25,087
+frack field are these bits that we that
+
+321
+00:19:23,077 --> 00:19:33,138
+we got here by just taking everything to
+
+322
+00:19:25,087 --> 00:19:33,138
+the right of the binary point so this
+
+323
+00:19:35,007 --> 00:19:40,023
+so let's look at this exponent just a
+
+324
+00:19:37,005 --> 00:19:42,104
+little bit more because I think can be a
+
+325
+00:19:40,086 --> 00:19:42,149
+little confusing
+
+326
+00:19:46,017 --> 00:20:00,112
+so so in our example if we want to look
+
+327
+00:19:55,006 --> 00:20:06,100
+at the range of exp so what's the
+
+328
+00:20:01,012 --> 00:20:11,026
+smallest value of exp what's the
+
+329
+00:20:07,054 --> 00:20:12,139
+smallest value of the XP the way no no
+
+330
+00:20:11,026 --> 00:20:16,087
+don't don't confuse the encoding with
+
+331
+00:20:13,039 --> 00:20:18,076
+the value of represents exp is is just
+
+332
+00:20:16,087 --> 00:20:24,099
+the encoding so what's what's the
+
+333
+00:20:18,076 --> 00:20:24,099
+smallest value of the XP 0 that's right
+
+334
+00:20:25,005 --> 00:20:33,072
+okay and the largest value is is what
+
+335
+00:20:29,005 --> 00:20:41,038
+remember it's what's the largest value
+
+336
+00:20:34,017 --> 00:20:45,100
+yep well the largest value would be
+
+337
+00:20:41,083 --> 00:20:47,095
+remember it can't be all ones right so
+
+338
+00:20:46,000 --> 00:20:52,021
+the largest value would be 2 to the 8th
+
+339
+00:20:47,095 --> 00:20:56,172
+minus 1 so okay so the largest value
+
+340
+00:20:52,021 --> 00:21:04,080
+would be 0 1 1 1 1 0 followed by 7 ones
+
+341
+00:20:57,072 --> 00:21:04,080
+ok so that's a 2 to the 8th minus 1 is
+
+342
+00:21:05,097 --> 00:21:08,136
+255 good
+
+343
+00:21:12,049 --> 00:21:17,141
+okay so then what's the range then of
+
+344
+00:21:15,005 --> 00:21:25,013
+the of e which is the actual value that
+
+345
+00:21:18,041 --> 00:21:27,104
+we want to encode okay remember use this
+
+346
+00:21:25,013 --> 00:21:31,054
+we have this definition so we have the
+
+347
+00:21:28,004 --> 00:21:34,004
+range of values for exp we have our bias
+
+348
+00:21:31,054 --> 00:21:35,060
+so what are the range of values for it
+
+349
+00:21:34,004 --> 00:21:39,011
+for e this is the actual exponents that
+
+350
+00:21:36,014 --> 00:21:47,057
+we're we're encoding so what's the
+
+351
+00:21:39,011 --> 00:21:51,023
+smallest exponent minus 127 good right
+
+352
+00:21:47,057 --> 00:21:53,126
+because that's zero is our smallest exp
+
+353
+00:21:51,023 --> 00:21:58,100
+minus the bias which is 127 okay so the
+
+354
+00:21:54,026 --> 00:22:08,105
+smallest value of e is is it's 127 and
+
+355
+00:21:59,000 --> 00:22:13,096
+the the largest value of e is so if we
+
+356
+00:22:09,005 --> 00:22:22,039
+take the largest value of exp that's 255
+
+357
+00:22:13,096 --> 00:22:21,139
+minus 127 128
+
+358
+00:22:24,034 --> 00:22:31,087
+okay so the the numbers that we can
+
+359
+00:22:28,006 --> 00:22:33,082
+represent using this bias notation will
+
+360
+00:22:31,087 --> 00:22:36,112
+have the smallest exponent will be 2 to
+
+361
+00:22:33,082 --> 00:22:40,161
+the minus 127 and the largest exponent
+
+362
+00:22:37,012 --> 00:22:45,076
+will be 2 to the raised to the power 128
+
+363
+00:22:41,061 --> 00:22:48,067
+okay so do you see you see what's going
+
+364
+00:22:45,076 --> 00:22:50,092
+on here so we have we have a range of
+
+365
+00:22:48,067 --> 00:22:53,110
+values for e here's the largest value
+
+366
+00:22:50,092 --> 00:22:55,105
+here's the smallest value here's 0 right
+
+367
+00:22:54,001 --> 00:22:57,010
+in the middle these are the values we
+
+368
+00:22:56,005 --> 00:23:01,012
+want to represent this biasing is like a
+
+369
+00:22:58,000 --> 00:23:05,002
+shift we've just now we're shifting up
+
+370
+00:23:01,075 --> 00:23:12,076
+by 127 so that now the smallest exponent
+
+371
+00:23:05,002 --> 00:23:14,100
+is represented by 0 okay any questions
+
+372
+00:23:12,076 --> 00:23:14,100
+about that
+
+373
+00:23:22,037 --> 00:23:30,466
+now these normalized these normalized
+
+374
+00:23:26,789 --> 00:23:34,140
+values always have this this implied one
+
+375
+00:23:30,799 --> 00:23:36,120
+okay which which when we get clipped
+
+376
+00:23:34,014 --> 00:23:39,069
+when we want to represent numbers closer
+
+377
+00:23:36,012 --> 00:23:41,018
+to zero that limits us right
+
+378
+00:23:39,069 --> 00:23:43,101
+so there's another type of
+
+379
+00:23:41,072 --> 00:23:47,088
+floating-point number called the de norm
+
+380
+00:23:44,001 --> 00:23:50,390
+de normalized value which which is
+
+381
+00:23:47,088 --> 00:23:53,157
+characterized by an exp field of all
+
+382
+00:23:50,399 --> 00:23:57,487
+zeros and in a normal in a denormalized
+
+383
+00:23:54,057 --> 00:24:03,059
+number or d norm there's no implied one
+
+384
+00:23:58,279 --> 00:24:05,366
+okay so the the significant m is
+
+385
+00:24:03,059 --> 00:24:09,488
+represented exactly is encoded
+
+386
+00:24:06,149 --> 00:24:12,212
+identically in the in the frac field so
+
+387
+00:24:10,019 --> 00:24:15,070
+there's no implied one and all of the
+
+388
+00:24:12,779 --> 00:24:19,783
+numbers are the form zero point
+
+389
+00:24:15,529 --> 00:24:19,594
+something something something after them
+
+390
+00:24:20,021 --> 00:24:26,870
+in the exponent value e instead of
+
+391
+00:24:23,061 --> 00:24:29,990
+remember for de norms we subtracted bias
+
+392
+00:24:27,059 --> 00:24:34,860
+from exp for d norms we subtract the
+
+393
+00:24:30,539 --> 00:24:37,620
+bias from one okay now you would just
+
+394
+00:24:34,086 --> 00:24:39,125
+use the the definition we use for
+
+395
+00:24:37,062 --> 00:24:42,221
+normalized numbers that would be the exp
+
+396
+00:24:39,899 --> 00:24:48,440
+would be zero so we don't do that
+
+397
+00:24:42,779 --> 00:24:51,090
+instead we Yi is 1 minus the bias and
+
+398
+00:24:48,044 --> 00:24:52,098
+then the significant is coded with an
+
+399
+00:24:51,009 --> 00:24:59,051
+implied leading zero instead of a
+
+400
+00:24:52,098 --> 00:25:02,647
+leading one like I like I mentioned so
+
+401
+00:24:59,051 --> 00:25:06,096
+so when exp is zero and also I mean we
+
+402
+00:25:03,529 --> 00:25:08,850
+think about it if if we only had
+
+403
+00:25:06,096 --> 00:25:09,147
+denormalized numbers we wouldn't be able
+
+404
+00:25:08,085 --> 00:25:14,094
+to represent zero right because there's
+
+405
+00:25:10,047 --> 00:25:16,496
+there'd always be a 1 in there so the D
+
+406
+00:25:14,094 --> 00:25:17,103
+norms allow us to represent zero and
+
+407
+00:25:16,919 --> 00:25:22,980
+they only allow us to represent values
+
+408
+00:25:18,084 --> 00:25:25,149
+that are very close to zero so when the
+
+409
+00:25:22,098 --> 00:25:27,257
+exponent is zero and the exp field is
+
+410
+00:25:26,049 --> 00:25:29,130
+zero and the frac field is zero then
+
+411
+00:25:28,139 --> 00:25:33,330
+this is the zero value
+
+412
+00:25:30,003 --> 00:25:35,762
+and so this is nice because all zeroes
+
+413
+00:25:33,033 --> 00:25:38,097
+represents zero which is you know sort
+
+414
+00:25:36,059 --> 00:25:41,610
+of what what you want now there is a
+
+415
+00:25:38,097 --> 00:25:46,170
+sort of weird thing though that if you
+
+416
+00:25:41,061 --> 00:25:50,067
+have a sign bit is one and then your
+
+417
+00:25:47,007 --> 00:25:52,023
+your frakkin and an exp or zero then you
+
+418
+00:25:51,021 --> 00:25:53,870
+have negative zero so you have this kind
+
+419
+00:25:52,086 --> 00:25:57,149
+of odd situation where there's a
+
+420
+00:25:54,059 --> 00:25:58,490
+positive and negative zero okay
+
+421
+00:25:59,036 --> 00:26:04,074
+and other values if the XP is zero and
+
+422
+00:26:02,079 --> 00:26:07,086
+you have a non zero frack then those are
+
+423
+00:26:04,074 --> 00:26:12,078
+the equally spaced numbers that are
+
+424
+00:26:07,086 --> 00:26:16,095
+closest to zero now there's a couple of
+
+425
+00:26:13,014 --> 00:26:21,015
+other special values when exp is is all
+
+426
+00:26:17,076 --> 00:26:24,114
+one and frack is all zeros this
+
+427
+00:26:21,024 --> 00:26:28,107
+represents the value infinity so this is
+
+428
+00:26:25,014 --> 00:26:30,075
+a value that that we get when is some
+
+429
+00:26:29,007 --> 00:26:34,008
+kind of addition or multiplication and
+
+430
+00:26:30,075 --> 00:26:35,504
+we overflow so in floating point always
+
+431
+00:26:34,008 --> 00:26:37,083
+overflows to the special value called
+
+432
+00:26:36,179 --> 00:26:39,900
+infinity the positive or negative
+
+433
+00:26:37,083 --> 00:26:40,179
+infinity so it's different from two's
+
+434
+00:26:39,009 --> 00:26:45,024
+complement rightward you sort of
+
+435
+00:26:41,079 --> 00:26:47,082
+overflowed and in this modular way back
+
+436
+00:26:46,005 --> 00:26:50,037
+just back it around into the range of
+
+437
+00:26:48,009 --> 00:26:52,035
+numbers in in floating point we just
+
+438
+00:26:50,037 --> 00:26:53,130
+overflow to the sticky value called
+
+439
+00:26:52,035 --> 00:27:00,036
+infinity and then then everything we do
+
+440
+00:26:54,003 --> 00:27:10,004
+on that remains infinity so for example
+
+441
+00:27:00,045 --> 00:27:13,074
+if we did a if we did 1 divided by 0 or
+
+442
+00:27:10,004 --> 00:27:16,163
+we or minus 1 divided by minus 0 we get
+
+443
+00:27:13,074 --> 00:27:17,169
+positive infinity if we divide one by a
+
+444
+00:27:16,559 --> 00:27:22,320
+zero negative zero we get negative
+
+445
+00:27:18,069 --> 00:27:25,095
+infinity the fourth the fourth kind of
+
+446
+00:27:22,032 --> 00:27:28,053
+special case special number is the case
+
+447
+00:27:25,095 --> 00:27:31,119
+where the exponent again is all once but
+
+448
+00:27:28,053 --> 00:27:34,077
+the frac is is nonzero in a non zero
+
+449
+00:27:32,019 --> 00:27:37,077
+value and this represents what's called
+
+450
+00:27:34,077 --> 00:27:39,236
+not a number so this is this is this
+
+451
+00:27:37,077 --> 00:27:41,121
+this lift handles cases with where
+
+452
+00:27:39,929 --> 00:27:44,130
+there's no there's no answer there's no
+
+453
+00:27:42,021 --> 00:27:45,057
+feasible answer for example if we
+
+454
+00:27:44,013 --> 00:27:50,021
+you know try to take the square root of
+
+455
+00:27:45,057 --> 00:27:50,093
+-1 what we'll get back is not a number
+
+456
+00:27:54,038 --> 00:28:01,065
+so 2 I think it's helpful to to
+
+457
+00:27:58,047 --> 00:28:04,053
+visualize these the number line now so
+
+458
+00:28:01,065 --> 00:28:06,144
+the we have positive zero negative zero
+
+459
+00:28:05,007 --> 00:28:10,020
+sort of right next to each other and
+
+460
+00:28:07,044 --> 00:28:13,119
+then to the right of that are the
+
+461
+00:28:10,002 --> 00:28:17,060
+positive D norms and then those then
+
+462
+00:28:14,019 --> 00:28:20,106
+those sort of transition into the
+
+463
+00:28:17,078 --> 00:28:23,157
+normalized numbers and then you have
+
+464
+00:28:21,006 --> 00:28:28,020
+infinity positive infinity they have a
+
+465
+00:28:24,057 --> 00:28:31,155
+similar similar situation on the for the
+
+466
+00:28:28,002 --> 00:28:39,093
+negative numbers and then negative and
+
+467
+00:28:32,055 --> 00:28:41,079
+positive nodded numbers so I think the
+
+468
+00:28:40,011 --> 00:28:44,058
+you know he's probably you've probably
+
+469
+00:28:41,079 --> 00:28:46,080
+discovered now that a really good way to
+
+470
+00:28:44,058 --> 00:28:48,099
+try to understand these American
+
+471
+00:28:46,089 --> 00:28:50,094
+coatings it's just to do examples with
+
+472
+00:28:48,099 --> 00:28:52,101
+only a few numbers bits you know if you
+
+473
+00:28:51,039 --> 00:28:55,116
+want to understand like for example in
+
+474
+00:28:53,001 --> 00:28:58,005
+tooth if you want to understand T min
+
+475
+00:28:56,016 --> 00:29:02,073
+and T Max and and how they relate to
+
+476
+00:28:58,041 --> 00:29:04,044
+each other just do a three bit two's
+
+477
+00:29:02,073 --> 00:29:05,115
+complement system you know imagine just
+
+478
+00:29:04,044 --> 00:29:07,116
+have a system with two's complement of
+
+479
+00:29:06,015 --> 00:29:09,071
+three bits and then you can just
+
+480
+00:29:08,016 --> 00:29:12,069
+enumerate all those all the
+
+481
+00:29:09,071 --> 00:29:14,115
+possibilities and you can see and then
+
+482
+00:29:12,069 --> 00:29:17,112
+you see where you know the T min is
+
+483
+00:29:15,015 --> 00:29:20,058
+actually one greater than T max you know
+
+484
+00:29:18,012 --> 00:29:25,068
+so if you add one to t max it actually
+
+485
+00:29:20,058 --> 00:29:27,147
+overflows into T min maybe a similar
+
+486
+00:29:25,068 --> 00:29:29,145
+thing for floating-point it's I would
+
+487
+00:29:28,047 --> 00:29:33,063
+really encourage you to do this just try
+
+488
+00:29:30,045 --> 00:29:35,097
+some simple examples with a sort of
+
+489
+00:29:33,063 --> 00:29:38,067
+tyent with a small number of exp and
+
+490
+00:29:35,097 --> 00:29:41,151
+frac bits so in this case we're going to
+
+491
+00:29:39,003 --> 00:29:45,078
+look at a floating-point system based on
+
+492
+00:29:42,051 --> 00:29:49,095
+I Triple E that has for exp bits and
+
+493
+00:29:45,078 --> 00:29:51,147
+three frac bits as always the sign bit
+
+494
+00:29:49,095 --> 00:29:54,121
+it's the most significant bit followed
+
+495
+00:29:52,047 --> 00:29:57,049
+by exp followed by frac
+
+496
+00:29:55,021 --> 00:29:59,026
+okay so this is this is identical to I
+
+497
+00:29:57,067 --> 00:30:04,078
+Triple E floating point except for the
+
+498
+00:29:59,026 --> 00:30:06,064
+size of that exp in fractions so it's
+
+499
+00:30:04,078 --> 00:30:10,159
+actually small enough that we can now
+
+500
+00:30:06,064 --> 00:30:13,159
+just enumerate these values and and now
+
+501
+00:30:11,059 --> 00:30:19,110
+you can I you can start to see why these
+
+502
+00:30:14,059 --> 00:30:23,104
+weird definitions for the exponent in
+
+503
+00:30:20,001 --> 00:30:28,030
+Donora and normalized numbers so let's
+
+504
+00:30:24,004 --> 00:30:30,040
+just look at so what we've done here
+
+505
+00:30:28,039 --> 00:30:33,100
+we've just with a signed bit of zero
+
+506
+00:30:30,004 --> 00:30:35,098
+we've we've just enumerated all of the
+
+507
+00:30:34,000 --> 00:30:39,019
+two to the seventh possibilities
+
+508
+00:30:36,034 --> 00:30:42,040
+possible combinations of exp and frac
+
+509
+00:30:39,019 --> 00:30:44,101
+fields starting with zero okay so when
+
+510
+00:30:42,094 --> 00:30:47,181
+when exp is all zeros
+
+511
+00:30:45,001 --> 00:30:53,086
+that's a D norm right by definition and
+
+512
+00:30:48,081 --> 00:31:01,123
+then we have the three frac bits or all
+
+513
+00:30:53,086 --> 00:31:07,108
+zero okay so remember the exp is all
+
+514
+00:31:02,023 --> 00:31:11,029
+zeros right so the four D norms the the
+
+515
+00:31:08,008 --> 00:31:14,074
+exponent value is 1 minus the bias our
+
+516
+00:31:11,029 --> 00:31:16,105
+bias here is seven okay so one minus
+
+517
+00:31:14,074 --> 00:31:19,147
+seven gives us a value for the exponent
+
+518
+00:31:17,005 --> 00:31:25,069
+of minus six so we're going to take the
+
+519
+00:31:20,047 --> 00:31:30,103
+frac the bits in the in the in the frac
+
+520
+00:31:25,069 --> 00:31:35,107
+field times so M is zero
+
+521
+00:31:31,003 --> 00:31:39,022
+so M in this case is zero times 2 to the
+
+522
+00:31:36,007 --> 00:31:41,053
+minus 6 gives us zero okay so this this
+
+523
+00:31:39,022 --> 00:31:42,031
+is our reference state representation of
+
+524
+00:31:41,053 --> 00:31:44,062
+zero and like I said it's really it's
+
+525
+00:31:43,012 --> 00:31:47,020
+nice that it actually is if we just
+
+526
+00:31:45,043 --> 00:31:50,098
+treated this as an unsigned integer we
+
+527
+00:31:47,092 --> 00:31:52,177
+just it would be zero okay so that's
+
+528
+00:31:50,098 --> 00:31:55,117
+kind of pleasing now let's look at the
+
+529
+00:31:53,077 --> 00:31:57,111
+very next number right the X exp is
+
+530
+00:31:56,017 --> 00:32:00,042
+still zero and we've just bumped up
+
+531
+00:31:58,011 --> 00:32:03,106
+track by one
+
+532
+00:32:00,042 --> 00:32:06,090
+okay so again it's it's a one minus the
+
+533
+00:32:04,006 --> 00:32:13,008
+bias which is minus six
+
+534
+00:32:06,009 --> 00:32:19,024
+and now this this frack field represents
+
+535
+00:32:13,026 --> 00:32:25,038
+this is 1/2 1/4 1/8 so it represents so
+
+536
+00:32:20,005 --> 00:32:28,096
+this is a value of amaz it is 1/8 so 1/8
+
+537
+00:32:25,038 --> 00:32:30,094
+times 2 to the minus 6 which is 1 64th
+
+538
+00:32:28,096 --> 00:32:31,168
+equals 1 over 512
+
+539
+00:32:30,094 --> 00:32:33,139
+so in this floating point system the
+
+540
+00:32:32,068 --> 00:32:36,151
+smallest nonzero number we can represent
+
+541
+00:32:34,039 --> 00:32:42,060
+is the denormalized representation of 1
+
+542
+00:32:37,051 --> 00:32:42,060
+over 512 the next smallest number is 0
+
+543
+00:32:43,074 --> 00:32:50,088
+okay now let's look at so let's take
+
+544
+00:32:47,002 --> 00:32:54,016
+let's bump this up by 1 so now we get a
+
+545
+00:32:50,088 --> 00:33:00,091
+we get a frac sealed of 0 1 0 so this
+
+546
+00:32:54,034 --> 00:33:04,057
+represents 1/4 so e/m is 1/4 that
+
+547
+00:33:01,018 --> 00:33:09,111
+significant is 1/4 times 2 to the minus
+
+548
+00:33:04,057 --> 00:33:14,086
+6 so 2 8 times 1 64 is 2 to the 5 12
+
+549
+00:33:10,011 --> 00:33:17,046
+okay so the the numbers were just invite
+
+550
+00:33:14,086 --> 00:33:19,165
+by incrementing this by incrementing
+
+551
+00:33:17,046 --> 00:33:26,047
+armored-car significant we're increasing
+
+552
+00:33:20,065 --> 00:33:28,120
+the numbers by 1 over 512 now the
+
+553
+00:33:26,047 --> 00:33:32,053
+largest d norm in this number system is
+
+554
+00:33:29,002 --> 00:33:38,067
+the case where the frack field is all
+
+555
+00:33:32,053 --> 00:33:44,116
+ones and so this encodes 1/2 plus 1/4
+
+556
+00:33:38,085 --> 00:33:49,132
+plus 1/8 which is 7/8 and then our value
+
+557
+00:33:45,016 --> 00:33:56,062
+is 7/8 times 2 to the minus 6 or 1 over
+
+558
+00:33:50,032 --> 00:33:59,041
+64 and that equals 7 512 so this 7 over
+
+559
+00:33:56,062 --> 00:34:02,065
+512 is the largest denormalized number
+
+560
+00:33:59,041 --> 00:34:04,083
+we can represent in this system and now
+
+561
+00:34:02,065 --> 00:34:08,161
+if we if we bump our number up by one
+
+562
+00:34:04,083 --> 00:34:14,112
+the the frac field resets to zero and
+
+563
+00:34:09,061 --> 00:34:14,112
+now the EXP field goes from zero to one
+
+564
+00:34:16,002 --> 00:34:21,100
+now because the EXP field is non-0 this
+
+565
+00:34:19,869 --> 00:34:25,450
+this is no longer a denormalized number
+
+566
+00:34:22,000 --> 00:34:30,019
+it's a normalized number okay so now
+
+567
+00:34:25,045 --> 00:34:33,914
+we're changing the definition of e from
+
+568
+00:34:30,019 --> 00:34:41,076
+1 minus the bias to exp minus the bias
+
+569
+00:34:34,319 --> 00:34:46,810
+so what's what's exp in this case 1
+
+570
+00:34:41,076 --> 00:34:50,076
+minus 7 the bias is minus 6 so lo and
+
+571
+00:34:46,081 --> 00:34:54,154
+behold it's the same it's the same it's
+
+572
+00:34:50,076 --> 00:34:57,130
+the same exponent as the previous
+
+573
+00:34:55,054 --> 00:34:59,119
+denormalized number so this is this is
+
+574
+00:34:58,003 --> 00:35:01,096
+actually very clever by the I Triple E
+
+575
+00:35:00,019 --> 00:35:04,021
+folks because you get the spirit you get
+
+576
+00:35:02,023 --> 00:35:07,066
+this nice smooth transition from de
+
+577
+00:35:04,021 --> 00:35:12,043
+norms to norms to normalize so you can
+
+578
+00:35:07,066 --> 00:35:19,123
+see that our our exponent e is minus 6
+
+579
+00:35:12,043 --> 00:35:24,722
+still and now our because we're taking 1
+
+580
+00:35:20,023 --> 00:35:28,051
+minus the bias 7 and our signature
+
+581
+00:35:25,109 --> 00:35:31,182
+significant now remember this is a
+
+582
+00:35:28,051 --> 00:35:36,094
+normalized number because the exp field
+
+583
+00:35:31,839 --> 00:35:39,160
+is nonzero just this the a fraction of
+
+584
+00:35:36,094 --> 00:35:42,142
+all zeros represents a significant of
+
+585
+00:35:39,016 --> 00:35:46,185
+one point zero zero zero okay so this
+
+586
+00:35:43,042 --> 00:35:49,138
+this normalized number this the smallest
+
+587
+00:35:46,329 --> 00:35:53,354
+normalized number represents is one
+
+588
+00:35:50,038 --> 00:35:56,094
+point zero zero zero which is 8 8 times
+
+589
+00:35:53,579 --> 00:36:00,880
+2 to the minus 6 which is 1 over 64
+
+590
+00:35:56,094 --> 00:36:02,101
+which gives us 8 over 512 so if we've
+
+591
+00:36:00,088 --> 00:36:07,126
+made this nice smooth transition from 7
+
+592
+00:36:03,001 --> 00:36:11,055
+over 5 12 to 8 over 512 and I'll do one
+
+593
+00:36:08,026 --> 00:36:15,064
+more I don't want to be so if we bump if
+
+594
+00:36:11,055 --> 00:36:18,354
+we bump keeping the exp field at 1 if we
+
+595
+00:36:15,064 --> 00:36:24,099
+bump our fracks deals from 0 to 1 now
+
+596
+00:36:18,849 --> 00:36:28,180
+this represents the the significant of 1
+
+597
+00:36:24,099 --> 00:36:32,162
+point 0
+
+598
+00:36:28,018 --> 00:36:38,024
+one point zero zero one which is eight
+
+599
+00:36:33,062 --> 00:36:42,125
+eight plus one eight so that's nine
+
+600
+00:36:38,078 --> 00:36:44,147
+eight times and then the value is nine
+
+601
+00:36:43,025 --> 00:36:47,084
+eight times 2 to the minus six once 1
+
+602
+00:36:45,047 --> 00:36:50,059
+over 64 which is equal to 9 over 512
+
+603
+00:36:47,084 --> 00:36:49,159
+okay
+
+604
+00:36:51,095 --> 00:36:54,444
+any questions about that
+
+605
+00:36:58,073 --> 00:37:06,962
+question back here okay the question is
+
+606
+00:37:05,339 --> 00:37:10,340
+why is why do you choose to bias that to
+
+607
+00:37:07,619 --> 00:37:13,050
+be 2 to the K minus 1 minus 1 well go
+
+608
+00:37:10,349 --> 00:37:16,410
+back to my my singer diagram here so
+
+609
+00:37:13,005 --> 00:37:19,089
+this is the range of the XP fields that
+
+610
+00:37:16,041 --> 00:37:21,057
+you want to this is the range of e that
+
+611
+00:37:19,089 --> 00:37:25,173
+you want to represent with 0 in the
+
+612
+00:37:21,057 --> 00:37:29,124
+middle okay and so you want to bias it
+
+613
+00:37:26,073 --> 00:37:34,202
+so that this is halfway 0 the smallest
+
+614
+00:37:30,024 --> 00:37:37,123
+exponent is halfway to 0 so you want the
+
+615
+00:37:34,859 --> 00:37:39,960
+bias to shift it up so it's the smallest
+
+616
+00:37:37,339 --> 00:37:42,180
+the smallest encoded the smallest value
+
+617
+00:37:39,096 --> 00:37:43,745
+of exp corresponds to the smallest
+
+618
+00:37:42,018 --> 00:37:46,092
+exponent right so 2 to the K minus 1
+
+619
+00:37:44,609 --> 00:37:49,320
+minus 1 is just giving you it's giving
+
+620
+00:37:46,092 --> 00:37:50,021
+you a value that's halfway between the
+
+621
+00:37:49,032 --> 00:37:55,043
+smallest exponent and the largest
+
+622
+00:37:50,849 --> 00:37:55,430
+exponent okay
+
+623
+00:37:56,017 --> 00:38:08,059
+that's good any other questions okay if
+
+624
+00:38:05,047 --> 00:38:10,054
+we take a like a little smaller six bit
+
+625
+00:38:08,059 --> 00:38:13,060
+format same thing as we did before just
+
+626
+00:38:10,054 --> 00:38:17,059
+different numbers of bits and exp and
+
+627
+00:38:13,069 --> 00:38:20,161
+frac and then we plot these on the
+
+628
+00:38:18,004 --> 00:38:24,013
+number line you can see that you can see
+
+629
+00:38:21,061 --> 00:38:25,129
+that the values are very dense around
+
+630
+00:38:24,013 --> 00:38:28,081
+zero so they're very spaced very closely
+
+631
+00:38:26,029 --> 00:38:34,033
+together and then every time you
+
+632
+00:38:28,081 --> 00:38:38,089
+increase the exponent by one the numbers
+
+633
+00:38:34,069 --> 00:38:41,106
+are spaced twice twice as far apart as
+
+634
+00:38:39,061 --> 00:38:44,067
+the previous the number the numbers that
+
+635
+00:38:42,006 --> 00:38:47,065
+are represented by the previous exponent
+
+636
+00:38:45,021 --> 00:38:54,040
+so you can see like in this little
+
+637
+00:38:47,065 --> 00:38:56,071
+example you see these these values here
+
+638
+00:38:54,004 --> 00:38:58,039
+are all equally spaced now these these
+
+639
+00:38:57,025 --> 00:39:00,040
+four values are equally spaced and
+
+640
+00:38:58,075 --> 00:39:02,170
+they're right next to each other and
+
+641
+00:39:00,004 --> 00:39:05,077
+then you see this jump in the spacing
+
+642
+00:39:03,007 --> 00:39:11,038
+that represents an increase in the exp
+
+643
+00:39:06,013 --> 00:39:16,021
+field by one and then it and then that
+
+644
+00:39:12,001 --> 00:39:18,097
+spacing doubles as we go out and you can
+
+645
+00:39:16,093 --> 00:39:21,145
+see it you can see it even better here
+
+646
+00:39:18,097 --> 00:39:25,102
+this if we if we zoom in these blue
+
+647
+00:39:22,045 --> 00:39:30,130
+values are the are these blue values or
+
+648
+00:39:26,047 --> 00:39:32,092
+D norms and then we have the the next
+
+649
+00:39:31,003 --> 00:39:35,011
+set of normalized values where the frack
+
+650
+00:39:32,092 --> 00:39:35,167
+field is one they're spaced the same
+
+651
+00:39:35,038 --> 00:39:41,047
+right we saw this when we kept
+
+652
+00:39:36,067 --> 00:39:43,123
+increasing by by one over 512 and then
+
+653
+00:39:41,047 --> 00:39:46,110
+we increase the the exponent by one and
+
+654
+00:39:44,023 --> 00:39:46,110
+the spacing doubles
+
+655
+00:39:50,046 --> 00:39:54,070
+okay so this like I mentioned this this
+
+656
+00:39:53,026 --> 00:39:58,033
+encoding has some some pretty nice
+
+657
+00:39:54,007 --> 00:40:00,061
+properties the the floating point zero
+
+658
+00:39:58,033 --> 00:40:07,062
+zero zero is encoded as integers here
+
+659
+00:40:01,024 --> 00:40:13,072
+which is nice and with the exception of
+
+660
+00:40:07,062 --> 00:40:15,070
+not a number with the exception of not a
+
+661
+00:40:13,072 --> 00:40:16,168
+number you can compare any
+
+662
+00:40:15,007 --> 00:40:19,081
+floating-point numbers including
+
+663
+00:40:17,068 --> 00:40:22,156
+infinity by just treating it as doing an
+
+664
+00:40:20,044 --> 00:40:25,137
+unsigned comparison so that's that's
+
+665
+00:40:23,056 --> 00:40:25,137
+really nice too
+
+666
+00:40:30,369 --> 00:40:36,230
+now if you when you add and multiply
+
+667
+00:40:33,089 --> 00:40:37,278
+floating point numbers right we're
+
+668
+00:40:36,023 --> 00:40:42,025
+dealing with a limited set of bits here
+
+669
+00:40:38,079 --> 00:40:44,240
+so if we take if we take two numbers
+
+670
+00:40:42,025 --> 00:40:45,053
+encoded as floating-point and we add
+
+671
+00:40:44,024 --> 00:40:47,039
+them together there's there's no
+
+672
+00:40:45,053 --> 00:40:49,094
+guarantee that we'll be able to fit all
+
+673
+00:40:47,039 --> 00:40:53,042
+those bits in the bits we have available
+
+674
+00:40:49,094 --> 00:40:54,223
+to us the there's no guarantee that
+
+675
+00:40:53,042 --> 00:40:58,097
+we'll be able to fit the bits and the
+
+676
+00:40:55,069 --> 00:41:03,410
+result so what so what we do in this
+
+677
+00:40:58,097 --> 00:41:03,496
+case is you can imagine the model you
+
+678
+00:41:03,041 --> 00:41:06,064
+want to have with floating point
+
+679
+00:41:04,369 --> 00:41:10,393
+operations addition to multiplication is
+
+680
+00:41:06,064 --> 00:41:12,283
+that you you add or multiply you do the
+
+681
+00:41:10,609 --> 00:41:14,611
+addition or multiplication and you
+
+682
+00:41:12,859 --> 00:41:16,730
+compute the exact result you just assume
+
+683
+00:41:14,809 --> 00:41:19,813
+that you have an infinite amount of
+
+684
+00:41:16,073 --> 00:41:21,098
+number of bits and then you round use
+
+685
+00:41:19,849 --> 00:41:24,980
+the technique called rounding to get it
+
+686
+00:41:21,098 --> 00:41:27,967
+to fit into the of the available bits
+
+687
+00:41:24,098 --> 00:41:30,170
+okay so the effect is like you're doing
+
+688
+00:41:28,849 --> 00:41:34,520
+say X plus y is getting the precise
+
+689
+00:41:31,007 --> 00:41:35,886
+value of x plus y at an infinite number
+
+690
+00:41:34,052 --> 00:41:39,901
+of bits and then rounding into the
+
+691
+00:41:36,579 --> 00:41:44,540
+available bits so let's look at this
+
+692
+00:41:40,369 --> 00:41:46,910
+this idea of rounding it this can be
+
+693
+00:41:44,054 --> 00:41:48,883
+confusing the first time you see it it
+
+694
+00:41:46,091 --> 00:41:52,127
+requires you need to think about it
+
+695
+00:41:49,369 --> 00:41:54,418
+carefully to get it right now in I
+
+696
+00:41:53,027 --> 00:41:56,090
+Triple E there's four different kinds of
+
+697
+00:41:54,859 --> 00:42:00,020
+rounding there's round towards zero
+
+698
+00:41:56,009 --> 00:42:03,418
+round down route or round to minus
+
+699
+00:42:00,002 --> 00:42:06,601
+infinity round up to which is rounding
+
+700
+00:42:04,309 --> 00:42:08,180
+it to positive infinity and then the
+
+701
+00:42:06,619 --> 00:42:09,530
+default case which is the only one
+
+702
+00:42:08,018 --> 00:42:14,045
+really we're really going to consider
+
+703
+00:42:09,053 --> 00:42:16,057
+which is round to the nearest even and
+
+704
+00:42:14,045 --> 00:42:19,714
+this is what I Triple E does by default
+
+705
+00:42:16,093 --> 00:42:21,772
+you can you can if you go into assembly
+
+706
+00:42:20,119 --> 00:42:24,142
+language you can change the rounding but
+
+707
+00:42:22,609 --> 00:42:29,620
+we're not going to consider it any more
+
+708
+00:42:24,349 --> 00:42:34,540
+yes question the
+
+709
+00:42:29,062 --> 00:42:36,123
+I'm sorry there is right because there's
+
+710
+00:42:34,054 --> 00:42:38,131
+one so the question is there a distinct
+
+711
+00:42:37,023 --> 00:42:41,074
+negative infinity and a distinct
+
+712
+00:42:39,031 --> 00:42:43,096
+positive infinity and there is they have
+
+713
+00:42:41,074 --> 00:42:44,158
+the exact same bit representation except
+
+714
+00:42:43,096 --> 00:42:47,194
+the most significant bit for negative
+
+715
+00:42:45,058 --> 00:42:57,121
+infinity is one and for positive
+
+716
+00:42:48,094 --> 00:42:59,170
+infinity at zero yes question white is
+
+717
+00:42:58,021 --> 00:43:02,023
+nearest even oh I'll show you
+
+718
+00:43:00,007 --> 00:43:06,049
+let me go over the others the question
+
+719
+00:43:02,041 --> 00:43:08,119
+was about nearest even yes greater than
+
+720
+00:43:07,012 --> 00:43:11,098
+big well that was me that was the
+
+721
+00:43:09,019 --> 00:43:14,065
+exception right today that's right so so
+
+722
+00:43:11,098 --> 00:43:19,114
+aside from infinity you can't do that
+
+723
+00:43:14,065 --> 00:43:20,158
+comparison positive infinity works right
+
+724
+00:43:20,014 --> 00:43:24,055
+but not negative so you're right that's
+
+725
+00:43:21,058 --> 00:43:26,061
+good point all right so let's look at
+
+726
+00:43:24,055 --> 00:43:28,147
+these rounding modes and I'll explain
+
+727
+00:43:26,061 --> 00:43:30,124
+live at the neuro Steven works but let's
+
+728
+00:43:29,047 --> 00:43:33,055
+look at so rounding towards zero what
+
+729
+00:43:31,024 --> 00:43:36,090
+we're going to do we'll use dollars so
+
+730
+00:43:33,055 --> 00:43:36,090
+we want to round to the nearest dollar
+
+731
+00:43:37,006 --> 00:43:43,015
+towards zero just anything less than you
+
+732
+00:43:40,063 --> 00:43:44,155
+just around you just round towards zero
+
+733
+00:43:43,015 --> 00:43:47,020
+so dollar forty would go to one a dollar
+
+734
+00:43:45,055 --> 00:43:49,137
+sixty would go down to one a dollar
+
+735
+00:43:47,065 --> 00:43:52,162
+fifty to one to fifty would go to two
+
+736
+00:43:50,037 --> 00:43:55,110
+negative 150 you round toward zero so
+
+737
+00:43:53,062 --> 00:44:00,075
+that would be negative negative one
+
+738
+00:43:56,001 --> 00:44:00,066
+round down towards negative infinity
+
+739
+00:44:01,098 --> 00:44:06,160
+it's similar the only difference is that
+
+740
+00:44:04,045 --> 00:44:09,048
+for negative one point negative a dollar
+
+741
+00:44:07,006 --> 00:44:11,079
+fifty you'd round towards negative
+
+742
+00:44:09,075 --> 00:44:16,174
+infinity which would be minus two
+
+743
+00:44:12,033 --> 00:44:22,096
+rounding up is the is symmetric to round
+
+744
+00:44:17,074 --> 00:44:25,135
+down the interesting case is round to
+
+745
+00:44:22,096 --> 00:44:27,175
+nearest even interesting because it's
+
+746
+00:44:26,035 --> 00:44:33,040
+what I Triple E floating point actually
+
+747
+00:44:28,075 --> 00:44:35,152
+uses so the idea here if you if you have
+
+748
+00:44:33,004 --> 00:44:38,041
+a value that's less than half then you
+
+749
+00:44:36,052 --> 00:44:40,135
+round down if you have a value that's
+
+750
+00:44:38,077 --> 00:44:42,154
+more than halfway between two dollar
+
+751
+00:44:41,035 --> 00:44:45,121
+amounts you round up
+
+752
+00:44:43,054 --> 00:44:49,060
+the route that nearest even part comes
+
+753
+00:44:46,021 --> 00:44:52,048
+when you have something that's exactly
+
+754
+00:44:49,006 --> 00:44:55,084
+halfway then what you do is you round
+
+755
+00:44:52,048 --> 00:44:58,147
+towards the nearest even number okay so
+
+756
+00:44:56,038 --> 00:45:02,056
+in in this example a dollar forty
+
+757
+00:44:59,047 --> 00:45:05,053
+because it's less than it's less than
+
+758
+00:45:02,056 --> 00:45:06,145
+half rounds down to one dollar a dollar
+
+759
+00:45:05,053 --> 00:45:10,141
+sixty is greater than half so we round
+
+760
+00:45:07,045 --> 00:45:14,113
+up to two dollars a dollar fifty right
+
+761
+00:45:11,041 --> 00:45:17,047
+in the middle we round round up to the
+
+762
+00:45:15,013 --> 00:45:21,021
+nearest even knock dollar amount which
+
+763
+00:45:17,047 --> 00:45:24,106
+is two dollars two dollars and fifty
+
+764
+00:45:21,093 --> 00:45:25,165
+cents we round down to the nearest even
+
+765
+00:45:25,006 --> 00:45:30,031
+right if we round it up it would be
+
+766
+00:45:26,065 --> 00:45:34,087
+three which is a odd number and - a
+
+767
+00:45:30,031 --> 00:45:38,119
+dollar fifty we round - we round down to
+
+768
+00:45:34,087 --> 00:45:41,184
+minus - two dollars so the reason we do
+
+769
+00:45:39,019 --> 00:45:46,075
+this the reason they chose this is that
+
+770
+00:45:42,084 --> 00:45:49,084
+statistically if you would imagine if
+
+771
+00:45:46,075 --> 00:45:51,076
+you have a uniform distribution of sort
+
+772
+00:45:49,084 --> 00:45:52,156
+of numbers they're going to round up or
+
+773
+00:45:51,085 --> 00:45:54,123
+down about 50 percent of the time so
+
+774
+00:45:53,056 --> 00:45:56,122
+there won't be a statistical bias
+
+775
+00:45:55,023 --> 00:45:59,092
+rounding up or down one way or the other
+
+776
+00:45:57,022 --> 00:46:06,043
+okay so that's the that's the reason
+
+777
+00:45:59,092 --> 00:46:08,098
+they did that now you can apply this you
+
+778
+00:46:06,043 --> 00:46:12,049
+can do this rounding to any to any any
+
+779
+00:46:09,052 --> 00:46:14,128
+any value so in the last example we did
+
+780
+00:46:12,049 --> 00:46:16,078
+it to the nearest dollar but let's
+
+781
+00:46:15,028 --> 00:46:19,065
+suppose we wanted to round to the
+
+782
+00:46:16,078 --> 00:46:22,141
+nearest hundredth using round two even
+
+783
+00:46:19,065 --> 00:46:28,096
+the default round - even mode so we want
+
+784
+00:46:23,041 --> 00:46:31,120
+to round to the nearest hundredth is the
+
+785
+00:46:28,096 --> 00:46:35,101
+second position this first do we have
+
+786
+00:46:32,002 --> 00:46:39,030
+tenths and hundredths so if we have a
+
+787
+00:46:36,001 --> 00:46:43,096
+value seven point eight nine for $9.99
+
+788
+00:46:39,048 --> 00:46:49,063
+that's less than halfway halfway would
+
+789
+00:46:43,096 --> 00:46:52,189
+be halfway would be any number that had
+
+790
+00:46:49,063 --> 00:46:54,151
+a five followed by all zeros so for 999
+
+791
+00:46:53,089 --> 00:46:59,097
+is less than that
+
+792
+00:46:55,051 --> 00:47:03,133
+so we would just round down to 7.89
+
+793
+00:47:00,069 --> 00:47:05,071
+even though 9 is odd the only the only
+
+794
+00:47:04,033 --> 00:47:08,110
+time we're going to apply round 2 even
+
+795
+00:47:05,089 --> 00:47:10,132
+is when we're exactly halfway okay our
+
+796
+00:47:09,001 --> 00:47:13,087
+next the next example seven point eight
+
+797
+00:47:11,032 --> 00:47:19,071
+nine five zero zero one that's greater
+
+798
+00:47:13,096 --> 00:47:21,097
+than halfway right if this if this was a
+
+799
+00:47:19,359 --> 00:47:25,390
+zero it would be exactly halfway so we
+
+800
+00:47:22,006 --> 00:47:26,074
+round up to seven point nine okay now
+
+801
+00:47:25,039 --> 00:47:28,116
+here's the interesting case where we
+
+802
+00:47:26,074 --> 00:47:30,169
+have seven point eight nine five
+
+803
+00:47:29,016 --> 00:47:34,078
+followed by all zeroes that's exactly
+
+804
+00:47:31,069 --> 00:47:40,105
+halfway so now we now we apply the round
+
+805
+00:47:34,078 --> 00:47:42,097
+to nearest even rule eight nine is the
+
+806
+00:47:41,005 --> 00:47:45,097
+negative an odd number so that doesn't
+
+807
+00:47:42,097 --> 00:47:50,146
+work so we round up and we do that
+
+808
+00:47:45,097 --> 00:47:54,132
+basically by adding adding a 5 here so 5
+
+809
+00:47:51,046 --> 00:48:01,060
++ 5 is 10 and then that carries over God
+
+810
+00:47:55,032 --> 00:48:04,114
+to the next position and 9 + 1 is 0 9 +
+
+811
+00:48:01,006 --> 00:48:07,006
+1 is 10 so that carries over and so 8 +
+
+812
+00:48:05,014 --> 00:48:15,027
+8 + 1 is 9 so the result is set of
+
+813
+00:48:07,006 --> 00:48:16,105
+rounds ero okay is that clear you see
+
+814
+00:48:15,027 --> 00:48:18,121
+it's a very mechanical way when you
+
+815
+00:48:17,059 --> 00:48:21,060
+round up it's always it's a very
+
+816
+00:48:19,021 --> 00:48:24,078
+mechanical like that you always just add
+
+817
+00:48:21,006 --> 00:48:26,074
+the half way number in this case 5 and
+
+818
+00:48:24,078 --> 00:48:28,084
+then just just propagate it out just do
+
+819
+00:48:27,028 --> 00:48:31,072
+the addition and that will give you the
+
+820
+00:48:28,084 --> 00:48:34,098
+nearest the nearest that will round you
+
+821
+00:48:31,072 --> 00:48:37,096
+up to the nearest hundredth in this case
+
+822
+00:48:34,098 --> 00:48:39,184
+okay now the last case seven point eight
+
+823
+00:48:37,096 --> 00:48:41,122
+eight five followed by all zeroes that's
+
+824
+00:48:40,084 --> 00:48:48,145
+that's another number that's halfway
+
+825
+00:48:42,022 --> 00:48:52,113
+between between two numbers rounded to
+
+826
+00:48:49,045 --> 00:48:56,050
+the nearest hundredth so in this case
+
+827
+00:48:53,013 --> 00:48:59,032
+eight is even so we just we round down
+
+828
+00:48:56,095 --> 00:49:01,141
+and to round down we just truncate just
+
+829
+00:48:59,032 --> 00:49:05,068
+throw these bits these these digits away
+
+830
+00:49:02,041 --> 00:49:08,085
+and we get seven point eight eight so
+
+831
+00:49:05,068 --> 00:49:08,085
+there any questions about this
+
+832
+00:49:10,229 --> 00:49:28,278
+question back here yep yep that's the
+
+833
+00:49:25,869 --> 00:49:33,880
+question was if numbers that have the
+
+834
+00:49:28,719 --> 00:49:35,650
+same exp field will will those numbers
+
+835
+00:49:33,088 --> 00:49:47,487
+be equally spaced on the number line and
+
+836
+00:49:35,065 --> 00:49:50,113
+the answer is yes yes question all right
+
+837
+00:49:48,279 --> 00:49:54,430
+and things done thank you in the last
+
+838
+00:49:51,013 --> 00:49:58,018
+example deltas why'd you run it would
+
+839
+00:49:54,043 --> 00:49:59,140
+round up yeah the only the half way
+
+840
+00:49:58,063 --> 00:50:00,141
+values are always in this case because
+
+841
+00:50:00,004 --> 00:50:03,082
+it's base 10
+
+842
+00:50:01,041 --> 00:50:05,940
+the the half way number in base 10 is 5
+
+843
+00:50:04,018 --> 00:50:07,947
+and then so it's always the half way
+
+844
+00:50:06,309 --> 00:50:13,326
+number in this case 5 followed by all
+
+845
+00:50:08,109 --> 00:50:16,180
+zeros you always have that the half way
+
+846
+00:50:13,479 --> 00:50:22,518
+if a value is halfway between like 200
+
+847
+00:50:16,018 --> 00:50:24,927
+it'll always have that that form all
+
+848
+00:50:22,869 --> 00:50:26,942
+right now we can do the same thing with
+
+849
+00:50:25,089 --> 00:50:33,132
+with binary fractional numbers as well
+
+850
+00:50:27,599 --> 00:50:37,690
+now a binary number is is even if it if
+
+851
+00:50:33,519 --> 00:50:39,528
+the least significant digit is 0 ok we
+
+852
+00:50:37,069 --> 00:50:43,668
+only have two digits right so odd is 1
+
+853
+00:50:39,609 --> 00:50:48,657
+and 0 is even ok and the halfway so the
+
+854
+00:50:44,289 --> 00:50:52,356
+halfway value is going to be a 1
+
+855
+00:50:49,089 --> 00:50:55,930
+followed by all zeros ok that represents
+
+856
+00:50:52,959 --> 00:50:58,044
+exactly halfway ok so it's very it's
+
+857
+00:50:55,093 --> 00:51:01,182
+analogous analogous to the base 10
+
+858
+00:50:58,809 --> 00:51:03,851
+example except where the halfway value
+
+859
+00:51:02,019 --> 00:51:06,102
+is going to be 1 followed by all zeros
+
+860
+00:51:04,229 --> 00:51:11,232
+so let's look let's look at some
+
+861
+00:51:06,849 --> 00:51:14,895
+examples so suppose we have we want to
+
+862
+00:51:11,529 --> 00:51:19,150
+represent two and three thirty-seconds
+
+863
+00:51:15,309 --> 00:51:20,660
+and suppose we only have four bits to do
+
+864
+00:51:19,015 --> 00:51:23,404
+that in
+
+865
+00:51:20,066 --> 00:51:30,475
+okay well to represent that exactly we
+
+866
+00:51:23,539 --> 00:51:37,430
+need seven bits and so we have to round
+
+867
+00:51:31,069 --> 00:51:40,670
+okay so let's look at so we're going to
+
+868
+00:51:37,043 --> 00:51:43,088
+round to this two bits right at the
+
+869
+00:51:40,067 --> 00:51:46,115
+binary point and so let's look at all
+
+870
+00:51:43,088 --> 00:51:50,017
+the bits that follow that so since it
+
+871
+00:51:47,015 --> 00:51:53,090
+starts with zero this is going to be
+
+872
+00:51:50,809 --> 00:51:56,857
+less than halfway so since it's less
+
+873
+00:51:53,009 --> 00:52:02,398
+than halfway we just truncate just chop
+
+874
+00:51:57,289 --> 00:52:06,170
+those out and the result is 10.00 now
+
+875
+00:52:03,289 --> 00:52:08,343
+our next example is one zero point zero
+
+876
+00:52:06,017 --> 00:52:12,068
+zero one one zero so if we look at these
+
+877
+00:52:08,829 --> 00:52:16,480
+the bits to the right of these to the
+
+878
+00:52:12,068 --> 00:52:18,757
+right of the the bit we're rounding to
+
+879
+00:52:16,048 --> 00:52:21,071
+since it starts with one and it's not
+
+880
+00:52:19,369 --> 00:52:27,890
+followed by all zeros that's greater
+
+881
+00:52:21,071 --> 00:52:29,230
+than half okay so for the in this case
+
+882
+00:52:27,089 --> 00:52:33,167
+we have to round up and so the way we do
+
+883
+00:52:29,869 --> 00:52:37,640
+that is we take we take one and we add
+
+884
+00:52:34,067 --> 00:52:40,486
+it to this leftmost one right here and
+
+885
+00:52:37,064 --> 00:52:45,065
+just do the addition and the result is
+
+886
+00:52:41,089 --> 00:52:49,190
+one zero point zero one now let's look
+
+887
+00:52:45,065 --> 00:52:51,068
+at two to the seven eight this is
+
+888
+00:52:49,019 --> 00:52:54,108
+represented as one zero point one one
+
+889
+00:52:51,095 --> 00:52:56,102
+one zero zero
+
+890
+00:52:54,279 --> 00:53:01,282
+now here's that here's that half way
+
+891
+00:52:57,002 --> 00:53:04,016
+marker that we were looking for it's a 1
+
+892
+00:53:01,309 --> 00:53:06,980
+followed by all zeros so this is exactly
+
+893
+00:53:04,016 --> 00:53:12,095
+half way so now we have to round to the
+
+894
+00:53:06,098 --> 00:53:13,957
+nearest even number now that if we can't
+
+895
+00:53:12,095 --> 00:53:17,096
+just truncate because then it would be
+
+896
+00:53:14,839 --> 00:53:21,220
+an odd number right we would end 10.11
+
+897
+00:53:17,096 --> 00:53:25,124
+is an odd number so we have to round up
+
+898
+00:53:21,022 --> 00:53:30,044
+and we do that by adding we do that by
+
+899
+00:53:26,024 --> 00:53:32,623
+adding a 1 right here to this less
+
+900
+00:53:30,044 --> 00:53:33,053
+leftmost red bit we add one to that and
+
+901
+00:53:32,839 --> 00:53:40,580
+then just do the addition
+
+902
+00:53:34,034 --> 00:53:43,106
+and we end up with 11.00 which is three
+
+903
+00:53:40,058 --> 00:53:47,066
+so the nearest the nearest value to two
+
+904
+00:53:44,006 --> 00:53:51,011
+to the seventh eighth the nearest
+
+905
+00:53:47,066 --> 00:53:53,150
+rounded value is three okay our last
+
+906
+00:53:51,056 --> 00:53:56,120
+example two to the five A's
+
+907
+00:53:54,005 --> 00:54:01,010
+we have the same halfway marker again
+
+908
+00:53:57,002 --> 00:54:05,068
+one zero zero but in this case the the
+
+909
+00:54:02,000 --> 00:54:08,027
+hundreds bit are the one fourth bit is
+
+910
+00:54:05,086 --> 00:54:08,180
+zero so that's even so we can just
+
+911
+00:54:08,027 --> 00:54:15,083
+truncate we just throw those bits away
+
+912
+00:54:09,008 --> 00:54:19,102
+and the result is simply 10.10 that
+
+913
+00:54:15,083 --> 00:54:21,176
+makes sense so it's very mechanical and
+
+914
+00:54:20,074 --> 00:54:24,173
+mainly you just need to be able to
+
+915
+00:54:22,076 --> 00:54:26,171
+recognize that halfway marker and then
+
+916
+00:54:25,073 --> 00:54:28,076
+figure out if you need to round up or
+
+917
+00:54:27,071 --> 00:54:30,083
+down if you're going to round down just
+
+918
+00:54:29,003 --> 00:54:34,010
+truncate you're going to round up add a
+
+919
+00:54:30,083 --> 00:54:40,088
+one and just propagate it to get your
+
+920
+00:54:34,001 --> 00:54:42,089
+result okay now we won't spend much time
+
+921
+00:54:41,033 --> 00:54:48,044
+I just want to mention a few things
+
+922
+00:54:42,098 --> 00:54:50,117
+about multiplication in addition so if
+
+923
+00:54:48,044 --> 00:54:53,069
+we if we multiply two numbers so we have
+
+924
+00:54:51,017 --> 00:54:58,051
+different mantises significance and
+
+925
+00:54:53,069 --> 00:54:57,151
+exponents and suppose that the result is
+
+926
+00:54:59,008 --> 00:55:07,010
+M times two to the e the sign bit will
+
+927
+00:55:03,023 --> 00:55:11,092
+be the XOR of the two sign bits of the
+
+928
+00:55:07,028 --> 00:55:15,053
+two operands the significant M will be
+
+929
+00:55:11,092 --> 00:55:16,189
+the multiplying m1 times m2 and the
+
+930
+00:55:15,053 --> 00:55:20,137
+exponents are added right because
+
+931
+00:55:17,089 --> 00:55:24,188
+they're just by the rules of exponents
+
+932
+00:55:21,037 --> 00:55:27,104
+so if M is if M is greater than 2 and
+
+933
+00:55:25,088 --> 00:55:30,110
+this is a normalized number we have to
+
+934
+00:55:28,004 --> 00:55:33,023
+we have to we have to shift it and we
+
+935
+00:55:31,001 --> 00:55:34,010
+have to put it in the range between 1
+
+936
+00:55:33,023 --> 00:55:38,048
+and 2 by shifting to the right and
+
+937
+00:55:35,000 --> 00:55:43,000
+incrementing the exponent if he's out of
+
+938
+00:55:38,048 --> 00:55:46,061
+range then we overflow 2 to infinity and
+
+939
+00:55:43,000 --> 00:55:49,043
+then if if M has too many bits we have
+
+940
+00:55:46,061 --> 00:55:55,145
+to use round 2 even to fit it into the
+
+941
+00:55:49,043 --> 00:55:58,070
+available of fragments okay addition so
+
+942
+00:55:56,045 --> 00:56:01,103
+suppose we're trying to add two floating
+
+943
+00:55:58,007 --> 00:56:02,105
+point numbers conceptually what you do
+
+944
+00:56:02,003 --> 00:56:05,051
+is think of think of those numbers as
+
+945
+00:56:03,068 --> 00:56:08,144
+fractional binary numbers you want to
+
+946
+00:56:05,051 --> 00:56:10,058
+line up the binary points line up the
+
+947
+00:56:09,044 --> 00:56:15,131
+binary points then do the addition and
+
+948
+00:56:11,021 --> 00:56:20,024
+then a and then do the addition and that
+
+949
+00:56:16,031 --> 00:56:22,043
+if and then normalize the number so that
+
+950
+00:56:20,024 --> 00:56:29,045
+the normalized the significance of it's
+
+951
+00:56:22,043 --> 00:56:32,111
+between 1 & 2 and either do that by
+
+952
+00:56:29,045 --> 00:56:35,060
+shifting shifting right or left if he's
+
+953
+00:56:33,011 --> 00:56:39,011
+too big then you overflow and then you
+
+954
+00:56:35,006 --> 00:56:42,011
+round the the bits and M to fit into the
+
+955
+00:56:39,011 --> 00:56:45,092
+available for X field now remember when
+
+956
+00:56:43,001 --> 00:56:47,069
+we the first day of class we we talked
+
+957
+00:56:45,092 --> 00:56:49,178
+about we call these great realities that
+
+958
+00:56:47,078 --> 00:56:53,132
+intz aren't really integers and floats
+
+959
+00:56:50,078 --> 00:56:56,086
+aren't really reals so the and just as
+
+960
+00:56:54,032 --> 00:56:58,121
+just as just as we saw when we looked at
+
+961
+00:56:56,086 --> 00:57:01,160
+two's complement representation of
+
+962
+00:56:59,021 --> 00:57:04,076
+integers it's not exactly they're not
+
+963
+00:57:02,006 --> 00:57:05,093
+exact exactly like real integers and
+
+964
+00:57:04,076 --> 00:57:07,082
+operations on them aren't exactly like
+
+965
+00:57:06,047 --> 00:57:10,049
+real integers but they follow very
+
+966
+00:57:08,036 --> 00:57:13,121
+predictable mathematical properties okay
+
+967
+00:57:10,049 --> 00:57:15,116
+that are similar to integers but not
+
+968
+00:57:14,021 --> 00:57:20,026
+quite so the same thing holds for
+
+969
+00:57:16,016 --> 00:57:22,067
+floating-point numbers they follow very
+
+970
+00:57:20,071 --> 00:57:23,144
+predictable
+
+971
+00:57:22,067 --> 00:57:25,154
+they have very predictable mathematical
+
+972
+00:57:24,044 --> 00:57:30,110
+properties but there's somewhat
+
+973
+00:57:26,054 --> 00:57:35,081
+different from the reals and the the big
+
+974
+00:57:31,001 --> 00:57:39,008
+thing is is that the big big thing with
+
+975
+00:57:35,081 --> 00:57:41,120
+addition is that it doesn't associate ok
+
+976
+00:57:39,008 --> 00:57:45,047
+it's it's commutative but it's not
+
+977
+00:57:42,002 --> 00:57:47,084
+associative and this usually happens
+
+978
+00:57:46,019 --> 00:57:51,020
+when you have who you're dealing with
+
+979
+00:57:48,002 --> 00:57:54,056
+numbers that have very large dynamic
+
+980
+00:57:51,002 --> 00:57:56,090
+ranges so a big if you're trying to add
+
+981
+00:57:54,056 --> 00:57:58,064
+and subtract really big numbers with
+
+982
+00:57:57,008 --> 00:58:01,105
+it really little numbers you run into
+
+983
+00:57:59,036 --> 00:58:05,039
+this this problem with non associativity
+
+984
+00:58:02,005 --> 00:58:10,058
+so the the example was if we take three
+
+985
+00:58:05,066 --> 00:58:12,122
+point one four plus two to the tenth two
+
+986
+00:58:10,058 --> 00:58:15,064
+to the tensest so there's so much larger
+
+987
+00:58:13,022 --> 00:58:18,029
+than three point one four that when we
+
+988
+00:58:16,018 --> 00:58:20,093
+the bits that would be two to the tenth
+
+989
+00:58:18,092 --> 00:58:21,149
+plus three the point one four the the
+
+990
+00:58:20,093 --> 00:58:22,100
+bits that represent the three point one
+
+991
+00:58:22,049 --> 00:58:24,098
+four
+
+992
+00:58:23,000 --> 00:58:27,023
+you know there's bits way out here that
+
+993
+00:58:24,098 --> 00:58:27,155
+represent there's one bit out here that
+
+994
+00:58:27,023 --> 00:58:29,107
+represents two to the tenth and then
+
+995
+00:58:28,055 --> 00:58:32,117
+there's a few bits here they represent
+
+996
+00:58:30,007 --> 00:58:35,033
+three point one four and there's just
+
+997
+00:58:33,017 --> 00:58:37,019
+not enough we don't have enough bits to
+
+998
+00:58:35,033 --> 00:58:39,116
+represent all those so we have the three
+
+999
+00:58:37,037 --> 00:58:42,112
+point one four goes goes away so adding
+
+1000
+00:58:40,016 --> 00:58:45,110
+a big number to a little number
+
+1001
+00:58:43,012 --> 00:58:47,069
+essentially gives the big number and
+
+1002
+00:58:46,001 --> 00:58:51,056
+then if you said you subtract that big
+
+1003
+00:58:47,069 --> 00:58:54,074
+number you get zero now if we change the
+
+1004
+00:58:51,065 --> 00:58:56,081
+the associate of the Association if we
+
+1005
+00:58:54,074 --> 00:58:58,163
+take this big number and subtract it
+
+1006
+00:58:56,081 --> 00:59:01,082
+from itself we get zero and then so the
+
+1007
+00:58:59,063 --> 00:59:06,104
+result will be instead of zeros before
+
+1008
+00:59:01,082 --> 00:59:08,090
+we get three point one four so other
+
+1009
+00:59:07,004 --> 00:59:11,090
+than that you you have all of the things
+
+1010
+00:59:09,062 --> 00:59:13,130
+that you would normally expect closed
+
+1011
+00:59:11,009 --> 00:59:17,096
+under addition it's commutative there's
+
+1012
+00:59:14,003 --> 00:59:20,096
+a additive identity of zero except for
+
+1013
+00:59:18,077 --> 00:59:22,148
+infinities and Nan's there's there's an
+
+1014
+00:59:21,023 --> 00:59:24,107
+additive inverse that you can take for
+
+1015
+00:59:23,048 --> 00:59:26,105
+any number there's there's an inverse
+
+1016
+00:59:25,007 --> 00:59:31,033
+that will give you zero when you add it
+
+1017
+00:59:27,005 --> 00:59:31,033
+together and you get monotonicity
+
+1018
+00:59:31,072 --> 00:59:35,140
+monotonicity between between values
+
+1019
+00:59:34,049 --> 00:59:40,097
+except of course for infinities and ends
+
+1020
+00:59:36,004 --> 00:59:43,088
+now multiplication has some it's similar
+
+1021
+00:59:40,097 --> 00:59:46,184
+you get it's closed generally under
+
+1022
+00:59:44,024 --> 00:59:49,079
+multiplication it's commutative but it's
+
+1023
+00:59:47,084 --> 00:59:52,175
+not associative and it doesn't
+
+1024
+00:59:49,079 --> 00:59:55,118
+distribute over addition and it's the
+
+1025
+00:59:53,075 --> 01:00:01,109
+same so here you can see we're taking
+
+1026
+00:59:56,018 --> 01:00:04,087
+two to xx x - 2 xx x - 2 xx and that
+
+1027
+01:00:02,009 --> 01:00:04,087
+gives infinity
+
+1028
+01:00:05,091 --> 01:00:12,114
+but if we if we reassociate and we take
+
+1029
+01:00:09,072 --> 01:00:15,941
+I'm sorry to to the 20 times 2 to the
+
+1030
+01:00:13,014 --> 01:00:18,096
+20th times 2 to the minus 20th well this
+
+1031
+01:00:16,589 --> 01:00:20,612
+first multiplication is infinity and
+
+1032
+01:00:18,096 --> 01:00:21,195
+anything anything you do with infinity
+
+1033
+01:00:20,819 --> 01:00:27,020
+is just infinity so the result is
+
+1034
+01:00:22,095 --> 01:00:30,116
+infinity however if we associate and
+
+1035
+01:00:27,002 --> 01:00:35,094
+multiply to xx times 2 to the minus 20th
+
+1036
+01:00:31,016 --> 01:00:39,155
+that gives us 1 and then x 2 to the 20th
+
+1037
+01:00:35,094 --> 01:00:42,099
+until we get 2 to the 20th so the big
+
+1038
+01:00:39,299 --> 01:00:45,990
+takeaway point here is that a floating
+
+1039
+01:00:42,099 --> 01:00:52,198
+point floating point is an associative
+
+1040
+01:00:45,099 --> 01:00:52,198
+ok now is that a problem
+
+1041
+01:00:53,299 --> 01:01:00,302
+it's something you have to be aware of
+
+1042
+01:00:55,044 --> 01:01:01,101
+and but generally I mean I I've done a
+
+1043
+01:01:00,329 --> 01:01:04,355
+lot of scientific computing in
+
+1044
+01:01:02,001 --> 01:01:06,320
+particular modeling earthquake ground
+
+1045
+01:01:04,589 --> 01:01:08,591
+motion in Southern California so
+
+1046
+01:01:06,329 --> 01:01:10,980
+basically we would we would build models
+
+1047
+01:01:08,609 --> 01:01:13,628
+of Southern California in the computer
+
+1048
+01:01:10,098 --> 01:01:14,145
+and then we would shake them and then we
+
+1049
+01:01:13,799 --> 01:01:19,799
+would see how the ground moves in like
+
+1050
+01:01:15,045 --> 01:01:21,138
+Los Angeles and those that that's
+
+1051
+01:01:19,799 --> 01:01:24,480
+shaking we used a numerical method
+
+1052
+01:01:22,038 --> 01:01:25,967
+called finite elements and it was all
+
+1053
+01:01:24,048 --> 01:01:28,116
+used all floating points single
+
+1054
+01:01:26,309 --> 01:01:31,710
+precision floating point numbers and we
+
+1055
+01:01:29,016 --> 01:01:33,042
+never ran into a problem this with this
+
+1056
+01:01:31,071 --> 01:01:34,940
+associativity right we would do we would
+
+1057
+01:01:33,042 --> 01:01:36,431
+do operations in different orders we
+
+1058
+01:01:35,579 --> 01:01:38,250
+couldn't always guarantee that we would
+
+1059
+01:01:36,809 --> 01:01:39,863
+do the operations in the exact same
+
+1060
+01:01:38,025 --> 01:01:42,123
+order but we never ran into a problem
+
+1061
+01:01:40,349 --> 01:01:45,367
+with this because nature and generally
+
+1062
+01:01:43,023 --> 01:01:49,026
+in general is kind of smooth right that
+
+1063
+01:01:45,529 --> 01:01:50,910
+if you look at the you know if one part
+
+1064
+01:01:49,026 --> 01:01:52,101
+of the ground is shaking like this and
+
+1065
+01:01:50,091 --> 01:01:53,145
+you look at the next part it might be
+
+1066
+01:01:53,001 --> 01:01:56,570
+shaking a little more or a little less
+
+1067
+01:01:54,045 --> 01:01:59,384
+but you're not going to have like huge
+
+1068
+01:01:56,579 --> 01:02:01,586
+differences and so we never ran into
+
+1069
+01:01:59,789 --> 01:02:03,863
+those kind of problems but in some so if
+
+1070
+01:02:02,279 --> 01:02:06,332
+generally if you if you're simulating
+
+1071
+01:02:04,529 --> 01:02:09,930
+natural phenomena you don't often see
+
+1072
+01:02:06,809 --> 01:02:12,812
+these kind of huge dynamic ranges but
+
+1073
+01:02:09,093 --> 01:02:13,098
+other times you know if it's not non
+
+1074
+01:02:12,839 --> 01:02:17,700
+natural financial maybe financial
+
+1075
+01:02:14,043 --> 01:02:19,062
+systems they use floating point then you
+
+1076
+01:02:17,007 --> 01:02:20,058
+might see this larger dynamic
+
+1077
+01:02:19,062 --> 01:02:24,063
+the numbers and it might might become a
+
+1078
+01:02:21,021 --> 01:02:25,107
+problem so as a programmer you just
+
+1079
+01:02:24,063 --> 01:02:27,066
+generally have to be aware of this you
+
+1080
+01:02:26,007 --> 01:02:29,079
+have to have a good sense for the
+
+1081
+01:02:27,066 --> 01:02:30,075
+dynamic range of your numbers and you
+
+1082
+01:02:29,079 --> 01:02:32,115
+have to keep in mind that if you if you
+
+1083
+01:02:31,056 --> 01:02:35,111
+reassociate or change the order of
+
+1084
+01:02:33,015 --> 01:02:39,020
+things you may not get exactly the same
+
+1085
+01:02:36,011 --> 01:02:39,065
+exactly the same answer
+
+1086
+01:02:41,051 --> 01:02:48,114
+okay so C gives us two different kinds
+
+1087
+01:02:45,009 --> 01:02:51,011
+of floating points so they the float is
+
+1088
+01:02:49,014 --> 01:02:53,043
+the I Triple E single precision and
+
+1089
+01:02:51,029 --> 01:02:56,052
+double is the I Triple E double
+
+1090
+01:02:53,043 --> 01:03:00,081
+precision now you remember when we did
+
+1091
+01:02:56,052 --> 01:03:02,130
+casting between intz and unsigned values
+
+1092
+01:03:00,081 --> 01:03:04,107
+back and forth the cast never changed
+
+1093
+01:03:03,003 --> 01:03:06,081
+the bit representation it just changed
+
+1094
+01:03:05,007 --> 01:03:12,053
+the way that in fact it never even
+
+1095
+01:03:07,008 --> 01:03:14,100
+changed the the the what the how the ALU
+
+1096
+01:03:12,053 --> 01:03:16,104
+manipulated those bits it's really just
+
+1097
+01:03:15,000 --> 01:03:19,092
+a how we're interpreting and how we're
+
+1098
+01:03:17,004 --> 01:03:23,043
+viewing those those values however when
+
+1099
+01:03:19,092 --> 01:03:25,092
+you do cast between floats and intz and
+
+1100
+01:03:23,043 --> 01:03:28,050
+doubles the bit representation changes
+
+1101
+01:03:25,092 --> 01:03:30,174
+right so a cast here has a dramatic
+
+1102
+01:03:28,005 --> 01:03:35,091
+effect on the actual bits themselves now
+
+1103
+01:03:31,074 --> 01:03:38,133
+if we go from a double or a float to an
+
+1104
+01:03:36,036 --> 01:03:40,080
+int it's going to it's just going to
+
+1105
+01:03:39,033 --> 01:03:47,118
+it's going to truncate the fractional
+
+1106
+01:03:40,008 --> 01:03:51,054
+part and give us the give us the the
+
+1107
+01:03:48,018 --> 01:03:58,074
+integer part and then and then round to
+
+1108
+01:03:52,026 --> 01:04:00,090
+fit oh actually no there won't be okay
+
+1109
+01:03:58,074 --> 01:04:03,083
+so think about this how many there were
+
+1110
+01:04:00,009 --> 01:04:03,083
+she said 23
+
+1111
+01:04:05,032 --> 01:04:13,099
+23 frack bits and float and I forget
+
+1112
+01:04:12,043 --> 01:04:18,046
+exactly how many in doubles anybody
+
+1113
+01:04:13,099 --> 01:04:22,114
+remember it doesn't matter it's um it's
+
+1114
+01:04:18,046 --> 01:04:26,083
+some number well no it doesn't matter
+
+1115
+01:04:23,014 --> 01:04:29,113
+looks so for a float if we if we cast a
+
+1116
+01:04:26,083 --> 01:04:33,129
+float to an int we're casting 23
+
+1117
+01:04:30,013 --> 01:04:40,087
+something that we can represent with 23
+
+1118
+01:04:34,029 --> 01:04:43,030
+at most 23 frack bits into a 32 bit int
+
+1119
+01:04:40,087 --> 01:04:45,183
+so we won't we'll never lose so we won't
+
+1120
+01:04:43,039 --> 01:04:46,083
+we'll never need to do any rounding
+
+1121
+01:04:50,048 --> 01:05:02,081
+but double-precision has 52 bits okay so
+
+1122
+01:05:00,029 --> 01:05:05,075
+they're there we may not be able to fit
+
+1123
+01:05:02,081 --> 01:05:09,092
+the the represented integer into the
+
+1124
+01:05:05,075 --> 01:05:11,167
+into the end so they'll they'll have to
+
+1125
+01:05:09,092 --> 01:05:11,167
+be some rounding
+
+1126
+01:05:39,043 --> 01:05:42,120
+sorry PowerPoint crashed
+
+1127
+01:06:15,004 --> 01:06:26,066
+okay right now if we cast if we cast
+
+1128
+01:06:21,008 --> 01:06:27,080
+from an int to a double there's will
+
+1129
+01:06:26,066 --> 01:06:33,098
+have will have enough debt so we won't
+
+1130
+01:06:28,052 --> 01:06:36,094
+lose anything right the 32 bits will fit
+
+1131
+01:06:33,098 --> 01:06:39,176
+in the double precision frac field and
+
+1132
+01:06:36,094 --> 01:06:41,180
+but int to float has there's more
+
+1133
+01:06:40,076 --> 01:06:43,118
+there's more bits than an int that then
+
+1134
+01:06:42,008 --> 01:06:45,065
+there are in the frac field will float
+
+1135
+01:06:44,018 --> 01:06:48,077
+so we'll have to do some rounding right
+
+1136
+01:06:46,037 --> 01:06:50,075
+so the so casting works the same way as
+
+1137
+01:06:48,077 --> 01:06:53,102
+any other operation you can think of it
+
+1138
+01:06:50,075 --> 01:06:54,173
+as just taking the assume you have an
+
+1139
+01:06:54,002 --> 01:06:57,080
+infinite number of bits get the exact
+
+1140
+01:06:55,073 --> 01:07:02,099
+result and then round it to fit into the
+
+1141
+01:06:57,008 --> 01:07:06,086
+available disk all right so let's the
+
+1142
+01:07:02,099 --> 01:07:09,191
+final thing I want to do today is sort
+
+1143
+01:07:07,058 --> 01:07:12,116
+of test your understanding do solve some
+
+1144
+01:07:10,091 --> 01:07:14,129
+puzzles to test test to understanding of
+
+1145
+01:07:13,016 --> 01:07:18,077
+these properties of floating-point
+
+1146
+01:07:15,029 --> 01:07:20,120
+numbers so imagine that we have three
+
+1147
+01:07:18,077 --> 01:07:23,171
+values acts as an int F is a float and D
+
+1148
+01:07:21,002 --> 01:07:31,067
+is a double and then we're evaluating
+
+1149
+01:07:24,071 --> 01:07:36,133
+the CC expressions so X is X equal to
+
+1150
+01:07:31,085 --> 01:07:36,133
+int float X yeah
+
+1151
+01:07:41,018 --> 01:07:46,957
+how you can edit out the you can edit
+
+1152
+01:07:44,043 --> 01:07:46,732
+out that other stuff
+
+1153
+01:07:52,017 --> 01:08:02,089
+all right so what do you think if we so
+
+1154
+01:07:58,087 --> 01:08:04,096
+if we take X which is an int cast it to
+
+1155
+01:08:02,089 --> 01:08:08,121
+a float and then cast that back to an
+
+1156
+01:08:05,077 --> 01:08:10,084
+int will that always be equal to X no
+
+1157
+01:08:09,021 --> 01:08:14,092
+make as we lose some bits right we don't
+
+1158
+01:08:11,047 --> 01:08:17,070
+have enough breakfast in float what
+
+1159
+01:08:14,092 --> 01:08:20,721
+about if we take X cast it to a double
+
+1160
+01:08:17,007 --> 01:08:26,646
+and then cast it back to ant well we
+
+1161
+01:08:21,549 --> 01:08:30,330
+always get equivalent value yeah because
+
+1162
+01:08:27,339 --> 01:08:33,700
+we have enough practice and in double
+
+1163
+01:08:30,033 --> 01:08:35,047
+now what if we take a float F cast it to
+
+1164
+01:08:33,007 --> 01:08:36,034
+a double and then cast it back to a
+
+1165
+01:08:35,047 --> 01:08:41,089
+float well that always equal the
+
+1166
+01:08:36,097 --> 01:08:43,656
+original F yeah what about the converse
+
+1167
+01:08:41,089 --> 01:08:45,121
+though what if we take the double D cast
+
+1168
+01:08:44,529 --> 01:08:51,310
+it to a float can cast it back to a
+
+1169
+01:08:46,021 --> 01:08:54,043
+double no how about this how about if we
+
+1170
+01:08:51,031 --> 01:08:57,046
+take F negate it and then negate that
+
+1171
+01:08:54,043 --> 01:08:58,662
+again will that always equal F yeah
+
+1172
+01:08:57,046 --> 01:09:04,123
+because we're just toggling a bit right
+
+1173
+01:08:59,049 --> 01:09:09,400
+soon okay how about two over three equal
+
+1174
+01:09:05,023 --> 01:09:14,592
+two over three point oh no because 2
+
+1175
+01:09:09,004 --> 01:09:18,040
+over 3 is 0 and 2 over 3.0 is a is a
+
+1176
+01:09:14,799 --> 01:09:21,822
+floating point value 2/3 the floating
+
+1177
+01:09:18,076 --> 01:09:25,595
+point representation of 2/3 okay how
+
+1178
+01:09:22,029 --> 01:09:26,054
+about if if the double D is less than 0
+
+1179
+01:09:26,058 --> 01:09:34,123
+does that imply that D times 2 is also
+
+1180
+01:09:30,052 --> 01:09:37,114
+less than 0 yeah even if no matter what
+
+1181
+01:09:35,023 --> 01:09:40,108
+even if even if 2 times D overflows it
+
+1182
+01:09:38,014 --> 01:09:46,050
+will overflow to negative infinity which
+
+1183
+01:09:41,008 --> 01:09:50,044
+is less than which is less than 0
+
+1184
+01:09:46,005 --> 01:09:52,048
+okay how about does the double D greater
+
+1185
+01:09:50,044 --> 01:09:55,075
+than F imply that minus F is greater
+
+1186
+01:09:52,093 --> 01:09:56,101
+than minus D yeah that's that
+
+1187
+01:09:55,075 --> 01:09:59,214
+monotonicity right and again it's just
+
+1188
+01:09:57,073 --> 01:10:01,962
+yes
+
+1189
+01:09:59,889 --> 01:10:05,130
+- with people euros and float that both
+
+1190
+01:10:02,619 --> 01:10:05,130
+are double
+
+1191
+01:10:07,019 --> 01:10:12,097
+oh that's a good question I think it'd
+
+1192
+01:10:08,066 --> 01:10:15,125
+be explode I think if we if you put
+
+1193
+01:10:12,097 --> 01:10:17,108
+there's an annotation in situ to give it
+
+1194
+01:10:16,025 --> 01:10:21,089
+a double but actually I'd have to check
+
+1195
+01:10:18,008 --> 01:10:24,071
+that out that's enough yeah that's a
+
+1196
+01:10:21,089 --> 01:10:27,116
+good question I don't know we'd have to
+
+1197
+01:10:24,071 --> 01:10:36,170
+check off to go and look in the in the
+
+1198
+01:10:28,016 --> 01:10:39,032
+see guide how about it is d squared the
+
+1199
+01:10:37,007 --> 01:10:44,099
+double d squared always greater than or
+
+1200
+01:10:39,032 --> 01:10:49,034
+equal to zero yes and how about the D
+
+1201
+01:10:45,062 --> 01:10:55,121
+plus F minus D always equal F now
+
+1202
+01:10:49,034 --> 01:10:58,073
+because of lack of associativity okay so
+
+1203
+01:10:56,021 --> 01:11:02,063
+that was that was that was fun right the
+
+1204
+01:10:58,073 --> 01:11:03,137
+floating points always fun so anyway
+
+1205
+01:11:02,063 --> 01:11:06,080
+that the big thing is just to realize
+
+1206
+01:11:04,037 --> 01:11:09,068
+that floats aren't exactly really reals
+
+1207
+01:11:06,008 --> 01:11:12,092
+but they have very predictable property
+
+1208
+01:11:09,068 --> 01:11:15,121
+and that they're not associative or
+
+1209
+01:11:13,064 --> 01:11:17,137
+commutative they're not associative and
+
+1210
+01:11:16,021 --> 01:11:20,072
+so you have to be careful about that
+
+1211
+01:11:18,037 --> 01:11:23,104
+all right we'll have a good weekend
+
+1212
+01:11:20,072 --> 01:11:23,104
+we'll see you on Tuesday
+

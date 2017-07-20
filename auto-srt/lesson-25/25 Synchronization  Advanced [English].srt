@@ -1,0 +1,6104 @@
+1
+00:00:00,003 --> 00:00:05,016
+hey well good afternoon everybody
+
+2
+00:00:01,029 --> 00:00:09,063
+welcome good to see you and welcome to
+
+3
+00:00:05,016 --> 00:00:10,915
+our viewers on video as well okay so
+
+4
+00:00:09,063 --> 00:00:13,140
+today we're going to look at some
+
+5
+00:00:11,059 --> 00:00:17,132
+additional issues around the problem of
+
+6
+00:00:14,004 --> 00:00:19,095
+synchronizing threaded programs first
+
+7
+00:00:17,789 --> 00:00:22,890
+though let's review from last time a few
+
+8
+00:00:20,031 --> 00:00:27,160
+of the concepts so recall that a
+
+9
+00:00:22,089 --> 00:00:29,378
+semaphore is a non non- global
+
+10
+00:00:27,439 --> 00:00:34,530
+synchronization variables manipulated by
+
+11
+00:00:30,179 --> 00:00:38,910
+DMV operations and the P operation takes
+
+12
+00:00:34,053 --> 00:00:40,152
+as an argument a semaphore if the
+
+13
+00:00:38,091 --> 00:00:45,105
+semaphore values non zero it decrements
+
+14
+00:00:41,052 --> 00:00:49,086
+the semaphore and then continues if the
+
+15
+00:00:46,005 --> 00:00:53,354
+if the semaphore value is zero then it
+
+16
+00:00:49,086 --> 00:00:55,142
+blocks waiting for that that semaphore
+
+17
+00:00:53,399 --> 00:00:59,408
+value to be incremented by a V operation
+
+18
+00:00:56,042 --> 00:01:00,048
+after the V operation increments after
+
+19
+00:00:59,489 --> 00:01:04,860
+some of the operation increments the
+
+20
+00:01:01,002 --> 00:01:06,011
+semaphore the P operation continues by
+
+21
+00:01:04,086 --> 00:01:10,134
+decrementing asking and returning
+
+22
+00:01:06,092 --> 00:01:15,093
+control to the caller the D operation
+
+23
+00:01:11,034 --> 00:01:18,099
+never blocks it it first it increments
+
+24
+00:01:16,002 --> 00:01:21,006
+the semaphore value s and then it looks
+
+25
+00:01:18,099 --> 00:01:22,134
+in the queue of four to see if there's
+
+26
+00:01:21,042 --> 00:01:26,093
+any processes that are blocked waiting
+
+27
+00:01:23,034 --> 00:01:30,059
+for that some before to be nonzero if
+
+28
+00:01:26,093 --> 00:01:33,138
+there are then it selects one of those
+
+29
+00:01:30,059 --> 00:01:38,121
+using some unspecified criteria and then
+
+30
+00:01:34,038 --> 00:01:41,121
+it restarts that it restarts that thread
+
+31
+00:01:39,021 --> 00:01:47,079
+that's or that P operation that's
+
+32
+00:01:42,021 --> 00:01:50,180
+waiting waiting on the semaphore okay
+
+33
+00:01:47,079 --> 00:01:52,167
+and then this the semantics of the the P
+
+34
+00:01:50,369 --> 00:01:56,750
+and V ensure that semaphore values are
+
+35
+00:01:53,067 --> 00:02:00,096
+always greater than equal to zero now
+
+36
+00:01:56,075 --> 00:02:03,093
+the first thing we saw how to protect
+
+37
+00:02:00,096 --> 00:02:05,127
+shared variables by by using a semaphore
+
+38
+00:02:03,093 --> 00:02:08,732
+called the mutex that guarantees
+
+39
+00:02:06,027 --> 00:02:12,058
+mutually exclusive access to the
+
+40
+00:02:09,569 --> 00:02:15,370
+critical sections that are updating that
+
+41
+00:02:12,058 --> 00:02:17,116
+those variables or data structures and
+
+42
+00:02:15,037 --> 00:02:20,104
+and the way that we do this is very
+
+43
+00:02:18,016 --> 00:02:23,080
+simple we initialize the mutex to one
+
+44
+00:02:21,004 --> 00:02:28,078
+and then surround the critical section
+
+45
+00:02:23,008 --> 00:02:30,043
+with a P and a V now there's a there's
+
+46
+00:02:28,078 --> 00:02:31,171
+other ways that we can so here here's an
+
+47
+00:02:31,015 --> 00:02:35,107
+example where we're using semaphore is
+
+48
+00:02:32,071 --> 00:02:37,159
+to provide mutual exclusion but we can
+
+49
+00:02:36,007 --> 00:02:41,050
+also use some of our semaphores to
+
+50
+00:02:38,059 --> 00:02:43,150
+coordinate access to shared data
+
+51
+00:02:41,005 --> 00:02:46,033
+structures in different ways and so the
+
+52
+00:02:44,005 --> 00:02:48,040
+idea here before we were using that the
+
+53
+00:02:46,078 --> 00:02:50,083
+semaphore just to protect the access to
+
+54
+00:02:48,085 --> 00:02:52,140
+a shared variable but we can also
+
+55
+00:02:50,083 --> 00:02:56,092
+coordinate access in different ways by
+
+56
+00:02:53,004 --> 00:02:58,042
+keeping and this in this in these in
+
+57
+00:02:56,092 --> 00:02:59,167
+these kind of scenarios we're using the
+
+58
+00:02:58,078 --> 00:03:02,170
+semaphore to keep track of State to
+
+59
+00:03:00,067 --> 00:03:05,140
+count to count things to keep track of
+
+60
+00:03:03,007 --> 00:03:07,084
+State and to notify other other threads
+
+61
+00:03:06,004 --> 00:03:12,082
+of changes in state okay so it's a very
+
+62
+00:03:08,047 --> 00:03:14,089
+different usage model and two classic
+
+63
+00:03:13,018 --> 00:03:16,072
+examples that we're going to look at are
+
+64
+00:03:14,089 --> 00:03:18,115
+the producer consumer problem and the
+
+65
+00:03:16,072 --> 00:03:21,139
+readers writers problem so let's look at
+
+66
+00:03:19,015 --> 00:03:24,073
+producer consumer first so the idea in
+
+67
+00:03:22,039 --> 00:03:27,112
+the producer consumer problem is that
+
+68
+00:03:24,073 --> 00:03:31,081
+you have a shared resource in the form
+
+69
+00:03:28,012 --> 00:03:34,021
+of a buffer the buffer has a bounded
+
+70
+00:03:31,081 --> 00:03:38,173
+size so it consists of n slots and each
+
+71
+00:03:35,002 --> 00:03:43,971
+slot can hold an item okay the there's a
+
+72
+00:03:39,073 --> 00:03:46,092
+producer thread which produces items and
+
+73
+00:03:43,989 --> 00:03:50,590
+then inserts them into the buffer and
+
+74
+00:03:46,092 --> 00:03:52,161
+there's a consumer thread that retrieves
+
+75
+00:03:50,059 --> 00:03:55,093
+removes items from the buffer and then
+
+76
+00:03:52,989 --> 00:03:59,200
+consumes them by acting on them and so
+
+77
+00:03:55,093 --> 00:04:00,142
+processing on them in some way so the
+
+78
+00:03:59,002 --> 00:04:04,069
+the synchronization variable the
+
+79
+00:04:01,042 --> 00:04:06,531
+synchronization pattern is that the
+
+80
+00:04:04,087 --> 00:04:08,122
+producer waits for an empty slot right
+
+81
+00:04:06,909 --> 00:04:11,928
+so if there's if the buffer is full the
+
+82
+00:04:09,022 --> 00:04:15,101
+producer can't insert an item into the
+
+83
+00:04:12,099 --> 00:04:18,430
+buffer so it waits for an empty slot and
+
+84
+00:04:15,299 --> 00:04:21,160
+then when it finds an empty slot when an
+
+85
+00:04:18,043 --> 00:04:23,044
+empty slot becomes available it inserts
+
+86
+00:04:21,016 --> 00:04:25,069
+the item into the buffer and then it
+
+87
+00:04:23,053 --> 00:04:30,121
+notifies the consumer that there's now a
+
+88
+00:04:25,069 --> 00:04:33,106
+new item in the in the in the buffer the
+
+89
+00:04:31,021 --> 00:04:37,021
+consumer of course that has to wait for
+
+90
+00:04:34,006 --> 00:04:40,018
+an item to show up in the buffer
+
+91
+00:04:37,021 --> 00:04:42,040
+otherwise I mean it can't remove an item
+
+92
+00:04:40,018 --> 00:04:45,085
+from an empty buffer so it has to wait
+
+93
+00:04:42,004 --> 00:04:47,029
+for for an item to be available in the
+
+94
+00:04:45,085 --> 00:04:50,184
+buffer and when an item becomes
+
+95
+00:04:47,065 --> 00:04:53,116
+available it removes it from the buffer
+
+96
+00:04:50,949 --> 00:04:58,840
+and then notifies the the producer that
+
+97
+00:04:54,016 --> 00:05:00,034
+there's now an available slot okay so
+
+98
+00:04:58,084 --> 00:05:02,115
+this actually this very simple pattern
+
+99
+00:05:00,034 --> 00:05:06,082
+is actually really really useful and
+
+100
+00:05:03,015 --> 00:05:09,016
+shows up in a lot of applications so for
+
+101
+00:05:06,082 --> 00:05:10,090
+example a multimedia application in a
+
+102
+00:05:09,025 --> 00:05:14,106
+multimedia application the producer
+
+103
+00:05:10,009 --> 00:05:18,022
+might be producing say MPEG MPEG frames
+
+104
+00:05:15,006 --> 00:05:21,058
+in it in a video and the consumer would
+
+105
+00:05:19,003 --> 00:05:24,452
+be consuming those those MPEG frames and
+
+106
+00:05:21,058 --> 00:05:26,577
+then painting the screen appropriately
+
+107
+00:05:24,479 --> 00:05:30,550
+another important application is in
+
+108
+00:05:27,099 --> 00:05:32,260
+graphical user interfaces so graphical
+
+109
+00:05:30,055 --> 00:05:33,109
+user interfaces are typically
+
+110
+00:05:32,026 --> 00:05:39,124
+implemented using this producer-consumer
+
+111
+00:05:34,009 --> 00:05:44,071
+model where the mouse clicks motions and
+
+112
+00:05:40,024 --> 00:05:47,073
+the in the of the mouse keyboard clicks
+
+113
+00:05:44,071 --> 00:05:48,112
+those are all recorded as events they're
+
+114
+00:05:47,289 --> 00:05:52,210
+detected by the system recorded as
+
+115
+00:05:49,012 --> 00:05:55,341
+events and placed into a some kind of a
+
+116
+00:05:52,021 --> 00:05:57,040
+queue and then various other parts of
+
+117
+00:05:55,449 --> 00:05:59,620
+the system retrieve items from the queue
+
+118
+00:05:57,004 --> 00:06:01,102
+and and react to them so for example the
+
+119
+00:05:59,062 --> 00:06:03,086
+graphic system will retrieve events like
+
+120
+00:06:02,038 --> 00:06:07,537
+Mouse events
+
+121
+00:06:03,086 --> 00:06:08,575
+and mouse movements mouse clicks and it
+
+122
+00:06:07,879 --> 00:06:11,870
+will paint the screen accordingly right
+
+123
+00:06:09,349 --> 00:06:15,710
+a little it'll it'll reflect it will
+
+124
+00:06:11,087 --> 00:06:17,416
+repaint the screen so that the to show
+
+125
+00:06:15,071 --> 00:06:19,087
+you that the cursor is moving right or
+
+126
+00:06:18,199 --> 00:06:24,208
+if you change the focus it'll it'll
+
+127
+00:06:19,087 --> 00:06:25,186
+repaint it so it's a very very common
+
+128
+00:06:25,099 --> 00:06:28,430
+model and as we'll see later
+
+129
+00:06:26,086 --> 00:06:29,093
+multi-threaded we can build
+
+130
+00:06:28,043 --> 00:06:34,106
+multi-threaded concurrent servers using
+
+131
+00:06:30,056 --> 00:06:36,134
+this this model so let's see how we
+
+132
+00:06:35,006 --> 00:06:41,021
+would implement producer/consumer on an
+
+133
+00:06:37,034 --> 00:06:43,061
+n-element buffer so this the
+
+134
+00:06:41,021 --> 00:06:45,760
+implementation requires the mutex to
+
+135
+00:06:43,061 --> 00:06:47,740
+Garrety mutually exclusive access to the
+
+136
+00:06:45,949 --> 00:06:50,983
+resource of course and then it requires
+
+137
+00:06:48,289 --> 00:06:55,330
+then two other semaphores counting
+
+138
+00:06:51,289 --> 00:06:58,310
+semaphores slots is a semaphore that
+
+139
+00:06:55,699 --> 00:07:00,771
+counts the available slots in the buffer
+
+140
+00:06:58,031 --> 00:07:02,290
+an item is count to the available items
+
+141
+00:07:01,419 --> 00:07:05,900
+okay
+
+142
+00:07:02,569 --> 00:07:11,578
+and we've can implement it with this
+
+143
+00:07:05,009 --> 00:07:15,056
+this package called s bus so ESPA the s
+
+144
+00:07:12,469 --> 00:07:18,517
+buff package defines a type called s
+
+145
+00:07:16,037 --> 00:07:21,556
+buff underscore t that packages up all
+
+146
+00:07:18,949 --> 00:07:24,830
+of the data structures that are needed
+
+147
+00:07:21,889 --> 00:07:27,380
+to implement the shared buffer so
+
+148
+00:07:24,083 --> 00:07:28,100
+there's a pointer to the the buffer
+
+149
+00:07:27,038 --> 00:07:31,357
+which we were going to implement as an
+
+150
+00:07:29,000 --> 00:07:36,259
+array and and we'll implement our
+
+151
+00:07:31,699 --> 00:07:38,870
+circular buffer on this array the
+
+152
+00:07:36,259 --> 00:07:41,090
+maximum number of slots and so the size
+
+153
+00:07:38,087 --> 00:07:43,696
+of the buffer and then two pointers
+
+154
+00:07:41,009 --> 00:07:47,036
+front and rear to keep track of the the
+
+155
+00:07:44,479 --> 00:07:48,620
+front and rear of the of the buffer so
+
+156
+00:07:47,036 --> 00:07:51,595
+to keep track of the first and last
+
+157
+00:07:48,062 --> 00:07:53,144
+items in the buffer and then the three
+
+158
+00:07:51,919 --> 00:07:57,590
+semaphores the mutex and in the two
+
+159
+00:07:54,044 --> 00:07:59,263
+counting semaphores and then the package
+
+160
+00:07:57,059 --> 00:08:04,127
+consists of these four public functions
+
+161
+00:07:59,659 --> 00:08:07,684
+s bus a knit which creates the is called
+
+162
+00:08:05,027 --> 00:08:10,100
+once to create the buffer and initialize
+
+163
+00:08:07,909 --> 00:08:12,928
+everything allocate the space and
+
+164
+00:08:11,000 --> 00:08:16,068
+initialize things and then d in it which
+
+165
+00:08:13,099 --> 00:08:19,680
+which frees up the space and then
+
+166
+00:08:16,068 --> 00:08:21,072
+a function to insert an item into the
+
+167
+00:08:19,068 --> 00:08:24,099
+queue and a function to remove an item
+
+168
+00:08:22,008 --> 00:08:27,107
+from a queue and return that item so in
+
+169
+00:08:24,099 --> 00:08:27,107
+this case items are just
+
+170
+00:08:30,409 --> 00:08:40,950
+so to create the to initialize the this
+
+171
+00:08:37,459 --> 00:08:45,930
+buffer with n slots we first allocate
+
+172
+00:08:40,095 --> 00:08:48,180
+the space for the buffer and MN we set
+
+173
+00:08:45,093 --> 00:08:54,114
+the we set the size to be the value and
+
+174
+00:08:49,008 --> 00:08:57,037
+that was passed in we indicate the empty
+
+175
+00:08:55,014 --> 00:09:00,045
+buffer by setting front-and-rear to be 0
+
+176
+00:08:57,829 --> 00:09:04,620
+okay and so whenever front and rear are
+
+177
+00:09:00,045 --> 00:09:06,374
+0 that's we have an empty buffer and
+
+178
+00:09:04,062 --> 00:09:09,099
+then we initialize the 3 semaphore so
+
+179
+00:09:06,779 --> 00:09:13,853
+the mutex like all meu Texas is
+
+180
+00:09:09,099 --> 00:09:14,172
+initialized to 1 the slot semaphore
+
+181
+00:09:14,519 --> 00:09:19,760
+which keeps track of the number of
+
+182
+00:09:15,072 --> 00:09:23,126
+available slots is initialized to N and
+
+183
+00:09:19,076 --> 00:09:26,130
+the item semaphore is initialized to 0
+
+184
+00:09:24,026 --> 00:09:30,057
+ok and D in that is really simple it
+
+185
+00:09:27,003 --> 00:09:34,042
+just frees up the the heap space that we
+
+186
+00:09:30,057 --> 00:09:36,105
+allocated ok so now let's look at how we
+
+187
+00:09:34,339 --> 00:09:39,620
+insert an item into the buffer so we
+
+188
+00:09:37,005 --> 00:09:44,079
+call we want to insert this integer item
+
+189
+00:09:39,062 --> 00:09:48,126
+into this buffer pointed at by SP so
+
+190
+00:09:44,079 --> 00:09:51,138
+first the thread waits for an available
+
+191
+00:09:49,026 --> 00:09:56,042
+slot ok by doing a P on the slot
+
+192
+00:09:52,038 --> 00:10:00,111
+semaphore right so P will block until
+
+193
+00:09:56,042 --> 00:10:04,107
+slots is greater than or equal to 1 okay
+
+194
+00:10:01,011 --> 00:10:08,064
+once there's an available slot then it
+
+195
+00:10:05,007 --> 00:10:14,216
+it then it's going to it's going to
+
+196
+00:10:08,064 --> 00:10:15,069
+update the rear of the of the buffer ok
+
+197
+00:10:14,279 --> 00:10:17,790
+so we're going to put this item on to
+
+198
+00:10:15,069 --> 00:10:19,208
+the rear of the buffer and so it needs
+
+199
+00:10:17,079 --> 00:10:22,988
+to protect that access to that shared
+
+200
+00:10:19,829 --> 00:10:26,300
+buffer with the mutex then it does the
+
+201
+00:10:23,699 --> 00:10:29,756
+bike bike by doing a pee on the mutex
+
+202
+00:10:26,003 --> 00:10:32,222
+updating updating our rear pointer okay
+
+203
+00:10:30,269 --> 00:10:36,120
+so we pre incremented so we increment
+
+204
+00:10:32,519 --> 00:10:39,270
+the rear pointer and then take take the
+
+205
+00:10:36,012 --> 00:10:42,018
+mod of that n/2
+
+206
+00:10:39,027 --> 00:10:46,086
+to compute the index that we're going to
+
+207
+00:10:42,018 --> 00:10:49,020
+insert the item into okay then we do a V
+
+208
+00:10:46,086 --> 00:10:52,164
+on the mutex okay so that other other
+
+209
+00:10:49,038 --> 00:10:56,103
+threads can can update that that shared
+
+210
+00:10:53,064 --> 00:10:59,142
+data structure and then we do a V on the
+
+211
+00:10:57,003 --> 00:11:02,034
+number of items to notify any consumers
+
+212
+00:11:00,042 --> 00:11:05,115
+that there's now an item in the in the
+
+213
+00:11:02,034 --> 00:11:07,038
+buffer so this this V is kind of
+
+214
+00:11:06,015 --> 00:11:08,112
+interesting you think it's kind of like
+
+215
+00:11:07,038 --> 00:11:12,135
+a signal right so you're sort of
+
+216
+00:11:09,012 --> 00:11:18,021
+signaling consumers that now some of
+
+217
+00:11:13,035 --> 00:11:20,109
+that has occurred in the system now to
+
+218
+00:11:18,021 --> 00:11:23,067
+remove an item it's it's symmetric but
+
+219
+00:11:21,009 --> 00:11:25,044
+instead of instead of operating on the
+
+220
+00:11:23,067 --> 00:11:27,141
+slots that before it operates on the
+
+221
+00:11:25,044 --> 00:11:32,066
+items semaphore so to remove an item a
+
+222
+00:11:28,041 --> 00:11:34,125
+consumer first does a P on the items
+
+223
+00:11:32,066 --> 00:11:36,072
+semaphore so this now is waiting for an
+
+224
+00:11:35,025 --> 00:11:37,113
+available item it's waiting for the
+
+225
+00:11:36,072 --> 00:11:42,108
+semaphore to be greater than equal to
+
+226
+00:11:38,013 --> 00:11:47,021
+one when that happens then the P the P
+
+227
+00:11:43,008 --> 00:11:51,015
+returns and then we do we do the update
+
+228
+00:11:47,021 --> 00:11:56,058
+protected by a mutex by pre-incrementing
+
+229
+00:11:51,078 --> 00:12:00,120
+front taking the mod n and then reading
+
+230
+00:11:56,058 --> 00:12:03,104
+that value and returning it and placing
+
+231
+00:12:01,002 --> 00:12:08,007
+it into this local local variable item
+
+232
+00:12:04,004 --> 00:12:10,083
+then we release the mutex and then we do
+
+233
+00:12:08,025 --> 00:12:12,072
+a V on the number of slots which which
+
+234
+00:12:10,083 --> 00:12:13,110
+is an announcement to the to any
+
+235
+00:12:12,072 --> 00:12:17,117
+producers that there's now a new
+
+236
+00:12:14,001 --> 00:12:18,008
+available slot okay
+
+237
+00:12:19,006 --> 00:12:25,105
+any questions about that so it's a
+
+238
+00:12:24,097 --> 00:12:27,109
+little more subtle
+
+239
+00:12:26,005 --> 00:12:30,067
+this looks really simple but like all
+
+240
+00:12:28,009 --> 00:12:35,041
+concurrency problems it's actually very
+
+241
+00:12:30,067 --> 00:12:36,136
+subtle so you can have potential you can
+
+242
+00:12:35,041 --> 00:12:39,139
+have many producers and many many
+
+243
+00:12:37,036 --> 00:12:44,038
+consumers all operating on the same you
+
+244
+00:12:40,039 --> 00:12:48,127
+know the same the same shared buffer so
+
+245
+00:12:44,038 --> 00:12:53,047
+this so what would happen if if we had
+
+246
+00:12:49,027 --> 00:12:55,051
+to two consumers did a Appy on this item
+
+247
+00:12:53,047 --> 00:12:57,055
+semaphore at the exact same time say
+
+248
+00:12:55,051 --> 00:12:59,128
+we're running on two cores and and we
+
+249
+00:12:58,027 --> 00:13:04,084
+have two threads and they each each
+
+250
+00:13:00,028 --> 00:13:08,077
+execute that P at the same time on that
+
+251
+00:13:04,084 --> 00:13:10,087
+that same that same item semaphore okay
+
+252
+00:13:08,077 --> 00:13:11,143
+so even even though they access it at
+
+253
+00:13:10,087 --> 00:13:13,174
+the same time the kernel will make sure
+
+254
+00:13:12,043 --> 00:13:17,050
+that one of them will execute first okay
+
+255
+00:13:14,074 --> 00:13:20,146
+so the kernel will serialize those P
+
+256
+00:13:17,005 --> 00:13:23,062
+operations and if there's no telling
+
+257
+00:13:21,046 --> 00:13:28,060
+which one gets it first but whoever acts
+
+258
+00:13:24,007 --> 00:13:32,064
+whoever runs there P first will will
+
+259
+00:13:28,006 --> 00:13:34,012
+decrement this this item semaphore and
+
+260
+00:13:32,064 --> 00:13:38,161
+then when the next when the next thread
+
+261
+00:13:35,002 --> 00:13:41,011
+executes it's P items will either be
+
+262
+00:13:39,061 --> 00:13:43,099
+zero or nonzero okay as a result so
+
+263
+00:13:42,001 --> 00:13:46,030
+somebody wins there's kind of a ton of
+
+264
+00:13:43,099 --> 00:13:47,113
+like a controlled race and somebody wins
+
+265
+00:13:46,039 --> 00:13:50,116
+the race always wins the race because
+
+266
+00:13:48,013 --> 00:13:53,026
+the kernel is serializing these P
+
+267
+00:13:51,016 --> 00:13:56,073
+operations and it's executing them
+
+268
+00:13:53,026 --> 00:13:56,073
+atomically okay
+
+269
+00:13:57,056 --> 00:14:03,144
+okay now the the there's a
+
+270
+00:14:02,003 --> 00:14:06,027
+generalization of the mutual exclusion
+
+271
+00:14:04,044 --> 00:14:09,045
+problem called the reader writer problem
+
+272
+00:14:06,054 --> 00:14:14,067
+so with with the mutual mutual exclusion
+
+273
+00:14:09,054 --> 00:14:17,151
+problem we were guaranteeing each thread
+
+274
+00:14:14,067 --> 00:14:19,071
+mutually exclusive access to to its
+
+275
+00:14:18,051 --> 00:14:22,089
+critical section that's updating a
+
+276
+00:14:20,007 --> 00:14:24,069
+particular resource or accessing a
+
+277
+00:14:22,089 --> 00:14:25,167
+particular resource and we did this the
+
+278
+00:14:24,069 --> 00:14:29,112
+exact same way whether that access was a
+
+279
+00:14:26,067 --> 00:14:33,099
+read or write okay but that's that's
+
+280
+00:14:30,012 --> 00:14:36,069
+overly conservative in this case because
+
+281
+00:14:33,099 --> 00:14:37,110
+we could if all we were doing if we had
+
+282
+00:14:36,069 --> 00:14:40,143
+multiple threads that were just reading
+
+283
+00:14:38,001 --> 00:14:43,005
+the resource there would be no reason to
+
+284
+00:14:41,043 --> 00:14:45,111
+do P's and DS on that resource or if
+
+285
+00:14:43,005 --> 00:14:47,100
+we're not changing if we're not changing
+
+286
+00:14:46,011 --> 00:14:51,105
+the resource we're just reading it and
+
+287
+00:14:48,045 --> 00:14:53,067
+there's nobody else writing it then then
+
+288
+00:14:52,005 --> 00:14:56,028
+there's no need to protect write so it
+
+289
+00:14:53,067 --> 00:14:58,094
+for readers we can have as many readers
+
+290
+00:14:56,028 --> 00:15:01,062
+as we want all at the same time reading
+
+291
+00:14:58,094 --> 00:15:04,158
+reading the the resource the variable or
+
+292
+00:15:01,062 --> 00:15:08,087
+set of variables and there's no need for
+
+293
+00:15:05,058 --> 00:15:11,079
+any kind of synchronization at all okay
+
+294
+00:15:08,087 --> 00:15:12,153
+so the producer consumer is sort of a
+
+295
+00:15:11,079 --> 00:15:15,096
+generalization of that mutual exclusion
+
+296
+00:15:13,053 --> 00:15:17,151
+problem which enforces mutual exclusion
+
+297
+00:15:15,096 --> 00:15:20,169
+only when it's absolutely necessary okay
+
+298
+00:15:18,051 --> 00:15:23,076
+so there can be is there there can be as
+
+299
+00:15:21,069 --> 00:15:25,122
+many readers reading the resource but
+
+300
+00:15:23,076 --> 00:15:27,117
+when a writer wants to write then it it
+
+301
+00:15:26,022 --> 00:15:31,031
+has to have mutual exclusive access to
+
+302
+00:15:28,017 --> 00:15:31,112
+the resource okay
+
+303
+00:15:33,067 --> 00:15:39,068
+so this is the kind of thing this is
+
+304
+00:15:36,032 --> 00:15:41,096
+also a very useful pattern you have in
+
+305
+00:15:39,077 --> 00:15:43,088
+an online airline reservation system you
+
+306
+00:15:41,096 --> 00:15:45,137
+have multiple clients accessing a shared
+
+307
+00:15:43,088 --> 00:15:48,089
+database okay so as long as those
+
+308
+00:15:46,037 --> 00:15:50,132
+clients are reading the database you can
+
+309
+00:15:48,098 --> 00:15:51,185
+have they can all be reading at the same
+
+310
+00:15:51,032 --> 00:15:54,035
+time but as soon as somebody wants to
+
+311
+00:15:52,085 --> 00:15:56,113
+make a reservation and update the
+
+312
+00:15:54,035 --> 00:16:00,134
+database then that update has to happen
+
+313
+00:15:57,013 --> 00:16:02,021
+mutually exclusive way you know if you
+
+314
+00:16:01,034 --> 00:16:05,081
+had also if you had like any kind of
+
+315
+00:16:02,093 --> 00:16:08,186
+shared data structure like a cache in a
+
+316
+00:16:05,081 --> 00:16:11,135
+in a concurrent proxy like that you're
+
+317
+00:16:09,086 --> 00:16:14,180
+going to be writing soon or if you
+
+318
+00:16:12,035 --> 00:16:17,101
+haven't already started that cache is
+
+319
+00:16:15,008 --> 00:16:19,067
+being shared by multiple threads and
+
+320
+00:16:18,001 --> 00:16:23,018
+multiple threads may be reading that
+
+321
+00:16:20,039 --> 00:16:24,131
+cache but when something when you when
+
+322
+00:16:23,018 --> 00:16:28,070
+you get a new page and you want to cache
+
+323
+00:16:25,031 --> 00:16:30,038
+it then that that that constitutes a
+
+324
+00:16:28,007 --> 00:16:33,098
+right and that right needs to happen in
+
+325
+00:16:30,038 --> 00:16:40,055
+a mutually exclusive way now the initial
+
+326
+00:16:34,061 --> 00:16:44,099
+research the researchers that that posed
+
+327
+00:16:40,055 --> 00:16:47,108
+this readers writers problems in define
+
+328
+00:16:44,099 --> 00:16:50,120
+sort of several classes of reader writer
+
+329
+00:16:48,008 --> 00:16:53,102
+problems the first reader writer readers
+
+330
+00:16:51,002 --> 00:16:57,095
+writers problems is an implementation
+
+331
+00:16:54,002 --> 00:17:00,041
+that favors readers right so the idea is
+
+332
+00:16:58,013 --> 00:17:05,078
+that no reader should be kept waiting
+
+333
+00:17:00,041 --> 00:17:08,093
+right unless an a writer already has a P
+
+334
+00:17:05,078 --> 00:17:13,150
+as has sort of acquired the lock on that
+
+335
+00:17:08,093 --> 00:17:17,232
+of the mutex on that on that resource so
+
+336
+00:17:14,005 --> 00:17:20,704
+in this case you know say there's a
+
+337
+00:17:18,069 --> 00:17:24,350
+writer waiting to get to acquire the
+
+338
+00:17:21,199 --> 00:17:26,150
+mutex and another reader comes in then
+
+339
+00:17:24,035 --> 00:17:28,073
+in this implementation that reader would
+
+340
+00:17:26,015 --> 00:17:33,029
+get priority over the writer and it
+
+341
+00:17:28,073 --> 00:17:34,127
+would be able to to read the to at to do
+
+342
+00:17:33,029 --> 00:17:38,054
+its read and the writer would have to
+
+343
+00:17:35,027 --> 00:17:40,076
+wait and so a court now if multiple
+
+344
+00:17:38,054 --> 00:17:42,057
+readers keep coming in then this could
+
+345
+00:17:40,076 --> 00:17:44,465
+starve out the writer right
+
+346
+00:17:42,084 --> 00:17:46,110
+so a writer could be starved sort of
+
+347
+00:17:45,149 --> 00:17:50,225
+indefinitely waiting for all these
+
+348
+00:17:47,001 --> 00:17:54,830
+readers to finish and it's just based on
+
+349
+00:17:50,909 --> 00:17:56,940
+you know based based on how the
+
+350
+00:17:54,929 --> 00:17:58,016
+operating system decides to schedule
+
+351
+00:17:56,094 --> 00:18:01,161
+these these various reader reader
+
+352
+00:17:58,799 --> 00:18:04,350
+threads the the writer could be could be
+
+353
+00:18:02,061 --> 00:18:05,210
+starved out so that's what that's what
+
+354
+00:18:04,035 --> 00:18:07,724
+we mean by when we say that it's a
+
+355
+00:18:05,759 --> 00:18:12,720
+Drewes readers now the second readers
+
+356
+00:18:08,039 --> 00:18:14,610
+various problem is the sort of the the
+
+357
+00:18:12,072 --> 00:18:16,119
+opposite of that so it favors writers
+
+358
+00:18:14,061 --> 00:18:19,730
+right so any once a writer is ready to
+
+359
+00:18:17,019 --> 00:18:22,868
+to write then it gets priority over any
+
+360
+00:18:20,279 --> 00:18:26,306
+waiting readers so in in this case if we
+
+361
+00:18:23,039 --> 00:18:28,073
+have if we have multiple writers that
+
+362
+00:18:26,549 --> 00:18:33,560
+want to write they could starve out
+
+363
+00:18:28,379 --> 00:18:36,990
+readers now there's there's other
+
+364
+00:18:33,659 --> 00:18:38,730
+variants that sort of deal with this
+
+365
+00:18:36,099 --> 00:18:40,358
+starvation issue this potential
+
+366
+00:18:38,073 --> 00:18:43,772
+starvation issue but we won't look at
+
+367
+00:18:41,249 --> 00:18:46,950
+them here so the let's look at the
+
+368
+00:18:44,429 --> 00:18:51,473
+solution to the first readers writers
+
+369
+00:18:46,095 --> 00:18:53,097
+problem so write initially a thread is
+
+370
+00:18:51,869 --> 00:18:59,610
+either a reader in this sort of
+
+371
+00:18:53,097 --> 00:19:00,111
+simplification or it's a writer if we
+
+372
+00:18:59,061 --> 00:19:04,840
+look at the writers this is pretty
+
+373
+00:19:01,011 --> 00:19:05,290
+simple it's just the writers are just
+
+374
+00:19:06,529 --> 00:19:13,532
+doing a peon this semaphore so this this
+
+375
+00:19:09,899 --> 00:19:15,935
+the semaphore W is the sort of serves as
+
+376
+00:19:13,559 --> 00:19:18,641
+like a mutex that protects the resource
+
+377
+00:19:16,259 --> 00:19:24,240
+for writers so it ensures that there's
+
+378
+00:19:19,379 --> 00:19:27,720
+at most one writer at any time executing
+
+379
+00:19:24,024 --> 00:19:30,122
+its critical section and it does that by
+
+380
+00:19:27,072 --> 00:19:35,411
+just this this variation this familiar P
+
+381
+00:19:31,022 --> 00:19:38,831
+followed follows I of V can read errs
+
+382
+00:19:36,059 --> 00:19:42,092
+are a little more interesting so with
+
+383
+00:19:39,029 --> 00:19:44,190
+with the reader we have the shared this
+
+384
+00:19:42,389 --> 00:19:45,690
+global variable called read count which
+
+385
+00:19:44,019 --> 00:19:49,348
+is going to keep track of the number of
+
+386
+00:19:45,069 --> 00:19:52,508
+readers that are waiting to to read the
+
+387
+00:19:49,519 --> 00:19:54,608
+to read the resource and there's a mutex
+
+388
+00:19:53,129 --> 00:19:56,740
+semaphore mutex that protect protects
+
+389
+00:19:55,409 --> 00:19:59,380
+the accesses the
+
+390
+00:19:56,074 --> 00:20:02,095
+updates to read count okay the reads and
+
+391
+00:19:59,038 --> 00:20:05,089
+the rights to up to read count and then
+
+392
+00:20:02,095 --> 00:20:08,134
+there's this w semaphore which as we saw
+
+393
+00:20:05,089 --> 00:20:11,137
+here is used to protect the critical
+
+394
+00:20:09,034 --> 00:20:17,047
+section in the writer and initially both
+
+395
+00:20:12,037 --> 00:20:19,048
+of these are set to one so the reader in
+
+396
+00:20:17,047 --> 00:20:22,051
+this infinite loop in each iteration of
+
+397
+00:20:19,048 --> 00:20:23,145
+this infinite loop it is going to
+
+398
+00:20:22,051 --> 00:20:28,051
+increment read count so it protects that
+
+399
+00:20:24,045 --> 00:20:32,107
+that access by by doing a P on the new
+
+400
+00:20:28,051 --> 00:20:36,097
+text which is associated with recount so
+
+401
+00:20:33,007 --> 00:20:39,034
+only one only one reader can can be so
+
+402
+00:20:36,097 --> 00:20:41,163
+this this region between the P and the V
+
+403
+00:20:39,034 --> 00:20:45,112
+constitutes the critical section
+
+404
+00:20:42,063 --> 00:20:51,097
+corresponding to read count so after the
+
+405
+00:20:46,012 --> 00:20:53,451
+P completes then it then we increment
+
+406
+00:20:51,097 --> 00:20:55,153
+the read count so now there's an
+
+407
+00:20:53,559 --> 00:20:57,940
+additional reader and so we can have
+
+408
+00:20:56,053 --> 00:20:59,098
+potentially arbitrary number of these
+
+409
+00:20:57,094 --> 00:21:01,105
+reader threads right so this we're
+
+410
+00:20:59,098 --> 00:21:04,162
+indicating that there's there's there's
+
+411
+00:21:02,005 --> 00:21:07,036
+a new reader now and if read count is
+
+412
+00:21:05,062 --> 00:21:08,161
+one that that means we're the first
+
+413
+00:21:07,036 --> 00:21:13,060
+reader okay so this is sort of the first
+
+414
+00:21:09,061 --> 00:21:17,158
+reader into the this implicit queue of
+
+415
+00:21:13,006 --> 00:21:21,058
+waiting readers so if read count is one
+
+416
+00:21:18,058 --> 00:21:26,907
+if we're the first reader then we do a P
+
+417
+00:21:22,012 --> 00:21:31,024
+on W okay which now will lock out any
+
+418
+00:21:27,429 --> 00:21:34,000
+any any future writers now if there's
+
+419
+00:21:31,024 --> 00:21:35,107
+already a writer that's done it's P of W
+
+420
+00:21:34,000 --> 00:21:39,076
+then this will block waiting for that
+
+421
+00:21:36,007 --> 00:21:42,034
+writer to finish okay but if there's no
+
+422
+00:21:39,076 --> 00:21:44,134
+writer in inside of its critical
+
+423
+00:21:42,034 --> 00:21:49,063
+critical section then this P will just
+
+424
+00:21:45,034 --> 00:21:53,082
+decrement the semaphore W from 1 to 0
+
+425
+00:21:49,063 --> 00:21:55,072
+and then lock out any subsequent writers
+
+426
+00:21:53,082 --> 00:21:58,941
+okay after so now after it's done this
+
+427
+00:21:56,053 --> 00:22:02,086
+increment and read of the read count
+
+428
+00:21:59,679 --> 00:22:05,380
+variable then it releases the mutex so
+
+429
+00:22:02,086 --> 00:22:07,086
+that other readers can can access
+
+430
+00:22:05,038 --> 00:22:07,086
+recount
+
+431
+00:22:09,009 --> 00:22:17,570
+okay now but it's still holding it's
+
+432
+00:22:15,035 --> 00:22:18,041
+it's it's it's holding so this is this
+
+433
+00:22:17,057 --> 00:22:21,016
+is kind of interesting right it's it's
+
+434
+00:22:18,095 --> 00:22:23,704
+it's holding the semaphore that that
+
+435
+00:22:21,529 --> 00:22:27,830
+locks out the writers but it's not
+
+436
+00:22:24,559 --> 00:22:32,210
+holding the any-any mutex right so the
+
+437
+00:22:27,083 --> 00:22:35,062
+reader now can just can just read it can
+
+438
+00:22:32,021 --> 00:22:38,108
+do its read and other readers that are
+
+439
+00:22:35,809 --> 00:22:42,080
+in the same the same section of the code
+
+440
+00:22:39,008 --> 00:22:46,477
+can also do their reads right so so
+
+441
+00:22:42,008 --> 00:22:49,009
+we're not so we're allowing multiple
+
+442
+00:22:46,549 --> 00:22:53,620
+readers now inside this critical section
+
+443
+00:22:49,009 --> 00:22:55,468
+but but no writers okay so everything so
+
+444
+00:22:54,259 --> 00:22:58,370
+everything works looks like it works
+
+445
+00:22:55,549 --> 00:23:00,500
+good now after after we read now the
+
+446
+00:22:58,037 --> 00:23:01,836
+number of readers now is going to be we
+
+447
+00:23:00,005 --> 00:23:05,027
+want to decrement the number of readers
+
+448
+00:23:02,169 --> 00:23:09,175
+so we acquire the mutex on on read count
+
+449
+00:23:05,072 --> 00:23:10,861
+we decrement read count and then we
+
+450
+00:23:09,769 --> 00:23:13,843
+check to see if we're the last reader
+
+451
+00:23:11,509 --> 00:23:18,200
+okay so if there's no more readers in
+
+452
+00:23:14,509 --> 00:23:19,597
+other words if read count is zero then
+
+453
+00:23:18,002 --> 00:23:22,471
+with now we can release the mutex for
+
+454
+00:23:20,389 --> 00:23:26,404
+the writer so that any now writers can
+
+455
+00:23:22,669 --> 00:23:30,950
+can access that resource and after we
+
+456
+00:23:26,539 --> 00:23:33,110
+release that the writers of the writers
+
+457
+00:23:30,095 --> 00:23:34,524
+mutex then we release the mutex for read
+
+458
+00:23:33,011 --> 00:23:35,280
+count
+
+459
+00:23:36,026 --> 00:23:44,120
+so many questions about about this so an
+
+460
+00:23:43,032 --> 00:23:47,891
+interesting for you to think about just
+
+461
+00:23:45,002 --> 00:23:51,026
+you have any spare time is how you might
+
+462
+00:23:48,179 --> 00:23:54,750
+how you might write a version of this
+
+463
+00:23:51,044 --> 00:24:05,127
+readers writers problem that favors
+
+464
+00:23:54,075 --> 00:24:07,754
+writers instead of readers yes oh no
+
+465
+00:24:06,027 --> 00:24:11,566
+okay so the question is a mutex allows
+
+466
+00:24:08,429 --> 00:24:13,517
+for multiple readers the fact that we
+
+467
+00:24:11,809 --> 00:24:17,610
+know the fact that we're releasing this
+
+468
+00:24:14,309 --> 00:24:19,370
+mutex here that this mutex is only only
+
+469
+00:24:17,061 --> 00:24:21,075
+protecting access to read count so we
+
+470
+00:24:19,919 --> 00:24:24,932
+acquire it here and we release it here
+
+471
+00:24:21,075 --> 00:24:28,077
+after we've after we've accessed read
+
+472
+00:24:25,049 --> 00:24:30,086
+count okay but we're not protecting the
+
+473
+00:24:28,077 --> 00:24:35,100
+critical section of the reader with any
+
+474
+00:24:30,419 --> 00:24:38,070
+with any mutex except for we're we're
+
+475
+00:24:36,000 --> 00:24:42,002
+keeping writers out by if we're the
+
+476
+00:24:38,007 --> 00:24:44,013
+first one in if we're the first reader
+
+477
+00:24:42,002 --> 00:24:45,009
+you can add just like this implicit
+
+478
+00:24:44,013 --> 00:24:50,109
+queue of readers that we're keeping
+
+479
+00:24:45,072 --> 00:24:53,088
+track of with read count okay so if
+
+480
+00:24:51,009 --> 00:24:57,009
+we're the first ones in meaning we're
+
+481
+00:24:53,088 --> 00:24:58,637
+the first reader then we we acquire this
+
+482
+00:24:57,009 --> 00:25:01,708
+the p on the writers mutex now if
+
+483
+00:24:59,429 --> 00:25:05,190
+there's of course if there's a writer
+
+484
+00:25:01,789 --> 00:25:08,825
+inside this critical section then this P
+
+485
+00:25:05,019 --> 00:25:12,108
+will wait until the writer releases okay
+
+486
+00:25:09,149 --> 00:25:17,250
+but once once we've acquired this this
+
+487
+00:25:13,008 --> 00:25:19,337
+this mutex W then we're block we're
+
+488
+00:25:17,025 --> 00:25:21,111
+locking out any writers okay because
+
+489
+00:25:19,409 --> 00:25:23,970
+they'll any writer that that arrives
+
+490
+00:25:22,011 --> 00:25:28,064
+we'll do a P and it will block right
+
+491
+00:25:23,097 --> 00:25:30,132
+here on waiting for that W to be nonzero
+
+492
+00:25:28,064 --> 00:25:32,139
+okay so so we're just we're blocking out
+
+493
+00:25:31,032 --> 00:25:38,084
+any writers but then we're allowing any
+
+494
+00:25:33,039 --> 00:25:38,084
+readers to just to access the resource
+
+495
+00:25:39,021 --> 00:25:43,116
+okay okay good
+
+496
+00:25:44,062 --> 00:25:52,144
+yes question question is blocking slow
+
+497
+00:25:50,074 --> 00:25:54,109
+it can be depends well first of all
+
+498
+00:25:53,044 --> 00:25:56,523
+you're making a call into the kernel so
+
+499
+00:25:55,009 --> 00:25:58,051
+it's a system call so you're crossing
+
+500
+00:25:56,919 --> 00:26:01,150
+that boundary and there's always
+
+501
+00:25:58,051 --> 00:26:04,057
+overhead associated with that and then
+
+502
+00:26:01,015 --> 00:26:06,034
+blocking you're blocked until you know
+
+503
+00:26:04,057 --> 00:26:07,150
+it can be sort of an arbitrary amount of
+
+504
+00:26:06,034 --> 00:26:10,863
+time right until someone doesn't some
+
+505
+00:26:08,005 --> 00:26:14,029
+thread does a V so yeah it can't be slow
+
+506
+00:26:11,169 --> 00:26:17,193
+right it just it just depends you can't
+
+507
+00:26:14,074 --> 00:26:18,163
+it's really hard to bound the time that
+
+508
+00:26:17,409 --> 00:26:21,423
+you're going to be blocked now if you
+
+509
+00:26:19,063 --> 00:26:22,147
+write the program correctly eventually
+
+510
+00:26:21,549 --> 00:26:28,584
+you'll be unblocked you know eventually
+
+511
+00:26:23,047 --> 00:26:29,976
+some thread will execute a V but when
+
+512
+00:26:28,899 --> 00:26:32,230
+we're sort of assuming that the kernel
+
+513
+00:26:30,399 --> 00:26:34,440
+does some kind of when it implements its
+
+514
+00:26:32,023 --> 00:26:39,049
+V it does some kind of fair scheduling
+
+515
+00:26:34,809 --> 00:26:41,440
+that so I blocked a block P won't be in
+
+516
+00:26:39,049 --> 00:26:42,738
+its queue for forever right that the
+
+517
+00:26:41,044 --> 00:26:45,070
+kernel does some kind of something
+
+518
+00:26:43,179 --> 00:26:50,204
+that's fair so it did guarantees that a
+
+519
+00:26:45,007 --> 00:26:49,736
+P won't remain blocked indefinitely
+
+520
+00:26:54,041 --> 00:27:04,136
+any other questions okay so we can kind
+
+521
+00:27:01,061 --> 00:27:09,083
+of put all of this together and and use
+
+522
+00:27:05,036 --> 00:27:12,355
+the use our producer-consumer model to
+
+523
+00:27:09,083 --> 00:27:14,132
+implement a pre threaded concurrent echo
+
+524
+00:27:12,679 --> 00:27:17,960
+server now so far when we when we've
+
+525
+00:27:15,032 --> 00:27:19,094
+used threads to in all our examples of
+
+526
+00:27:17,096 --> 00:27:20,183
+using threads and processes for servers
+
+527
+00:27:19,094 --> 00:27:22,190
+we created a new thread or process
+
+528
+00:27:21,083 --> 00:27:27,170
+whenever a new connection request
+
+529
+00:27:23,009 --> 00:27:29,078
+arrived and then when when and then that
+
+530
+00:27:28,007 --> 00:27:32,021
+that thread interacted with the client
+
+531
+00:27:30,059 --> 00:27:34,076
+and then whenever whenever that
+
+532
+00:27:32,084 --> 00:27:36,553
+interaction was finished it closed the
+
+533
+00:27:34,076 --> 00:27:40,076
+connection and exited and killed the
+
+534
+00:27:37,309 --> 00:27:44,030
+thread or process now that's that's okay
+
+535
+00:27:40,076 --> 00:27:46,159
+but it's it's inefficient because we're
+
+536
+00:27:44,003 --> 00:27:51,095
+this creating and killing threads
+
+537
+00:27:47,059 --> 00:27:54,095
+introduces overhead so a another way to
+
+538
+00:27:51,095 --> 00:27:56,934
+do this is to pretreat the threads or
+
+539
+00:27:54,095 --> 00:28:01,103
+processes ahead of time create a pool of
+
+540
+00:27:57,789 --> 00:28:04,520
+threads where each thread so we create a
+
+541
+00:28:02,075 --> 00:28:06,122
+pool of these worker threads where each
+
+542
+00:28:04,052 --> 00:28:10,103
+of these water threads interacts with
+
+543
+00:28:07,022 --> 00:28:13,034
+can interact with a client okay so
+
+544
+00:28:11,003 --> 00:28:15,044
+instead of sort of creating processes
+
+545
+00:28:13,034 --> 00:28:18,097
+and threads on on-demand we create a
+
+546
+00:28:15,044 --> 00:28:21,083
+what we call a set of pre threaded or
+
+547
+00:28:18,097 --> 00:28:25,115
+pre threaded threads or pre forked
+
+548
+00:28:21,083 --> 00:28:28,145
+processes that do the work so the idea
+
+549
+00:28:26,015 --> 00:28:31,112
+is that we have this master thread in
+
+550
+00:28:29,045 --> 00:28:35,524
+our server that's waiting for connection
+
+551
+00:28:32,012 --> 00:28:39,020
+requests from clients by repeated calls
+
+552
+00:28:35,929 --> 00:28:41,620
+to accept and then when it when this
+
+553
+00:28:39,002 --> 00:28:44,033
+thread receives the connection request
+
+554
+00:28:41,062 --> 00:28:46,097
+from the client the accept the accept
+
+555
+00:28:44,051 --> 00:28:49,115
+call the accept function returns the
+
+556
+00:28:46,097 --> 00:28:51,190
+connected file descriptor ok associated
+
+557
+00:28:50,015 --> 00:28:56,914
+with the connection to the client and
+
+558
+00:28:52,009 --> 00:28:57,107
+then it inserts that descriptor into a
+
+559
+00:28:57,049 --> 00:29:02,630
+into a buffer ok now remember
+
+560
+00:28:58,088 --> 00:29:04,151
+descriptors are just small integers that
+
+561
+00:29:02,063 --> 00:29:06,070
+index the descriptor table and so they
+
+562
+00:29:05,051 --> 00:29:09,060
+can be passed around
+
+563
+00:29:07,033 --> 00:29:12,069
+from thread to thread because all the
+
+564
+00:29:09,519 --> 00:29:17,541
+threads are sharing the same the same
+
+565
+00:29:12,069 --> 00:29:21,111
+set that same descriptor table right so
+
+566
+00:29:17,739 --> 00:29:24,753
+the master thread puts the repeatedly
+
+567
+00:29:22,011 --> 00:29:26,086
+accepts connection requests and inserts
+
+568
+00:29:24,879 --> 00:29:30,940
+the corresponding connected file
+
+569
+00:29:26,086 --> 00:29:34,095
+descriptor into the buffer now each
+
+570
+00:29:30,094 --> 00:29:37,083
+worker thread waits for the so in this
+
+571
+00:29:34,869 --> 00:29:39,900
+case the items are descriptors so the
+
+572
+00:29:37,929 --> 00:29:43,080
+worker threads they're all waiting on
+
+573
+00:29:40,179 --> 00:29:45,276
+this for items to appear in this buffer
+
+574
+00:29:43,008 --> 00:29:51,597
+okay and when an item appears one of the
+
+575
+00:29:46,149 --> 00:29:54,183
+threads will remove that item and then
+
+576
+00:29:51,669 --> 00:29:56,730
+use that descriptor to interact with the
+
+577
+00:29:54,489 --> 00:29:58,840
+with the client over the connected file
+
+578
+00:29:57,279 --> 00:30:00,730
+descriptor associated with the
+
+579
+00:29:58,084 --> 00:30:04,023
+connection that exists between the
+
+580
+00:30:00,073 --> 00:30:07,272
+client and the server okay so now we
+
+581
+00:30:04,779 --> 00:30:09,220
+have we have the concurrency comes in
+
+582
+00:30:07,929 --> 00:30:11,013
+the form of these multiple worker
+
+583
+00:30:09,022 --> 00:30:13,821
+threads interacting with with multiple
+
+584
+00:30:11,769 --> 00:30:18,600
+clients and then when a worker thread
+
+585
+00:30:14,019 --> 00:30:21,033
+finishes servicing a particular client
+
+586
+00:30:18,006 --> 00:30:23,795
+then it just goes and it checks for the
+
+587
+00:30:21,159 --> 00:30:27,195
+next file descriptor in the buffer okay
+
+588
+00:30:24,389 --> 00:30:30,405
+so this is much more efficient than our
+
+589
+00:30:27,519 --> 00:30:31,593
+previous model where for each new client
+
+590
+00:30:30,549 --> 00:30:33,555
+we had to create a thread or a process
+
+591
+00:30:32,259 --> 00:30:35,470
+and then destroy that thread or process
+
+592
+00:30:34,149 --> 00:30:40,173
+once we were finished
+
+593
+00:30:35,047 --> 00:30:41,098
+okay so we're sort of re-advertise that
+
+594
+00:30:40,389 --> 00:30:43,452
+we had to go through to create these
+
+595
+00:30:41,098 --> 00:30:47,427
+worker threads by leaving them running
+
+596
+00:30:44,019 --> 00:30:50,021
+and then replacing the destruction or
+
+597
+00:30:48,309 --> 00:30:54,345
+the killing of that thread with
+
+598
+00:30:50,039 --> 00:30:58,041
+replacing it with just a simple as
+
+599
+00:30:54,669 --> 00:31:01,790
+simple and very fast operation of
+
+600
+00:30:58,059 --> 00:31:04,530
+removing an item from the buffer okay
+
+601
+00:31:01,079 --> 00:31:07,092
+okay so let's see how we would we would
+
+602
+00:31:04,053 --> 00:31:09,057
+implement this and like like all of
+
+603
+00:31:07,092 --> 00:31:10,185
+these server examples it's surprisingly
+
+604
+00:31:09,057 --> 00:31:14,064
+simple right this is a fully functioning
+
+605
+00:31:11,085 --> 00:31:20,127
+a real server but we can do it in one
+
+606
+00:31:14,064 --> 00:31:22,110
+one page one page of code so for this
+
+607
+00:31:21,027 --> 00:31:25,056
+preet we're going to use threads for our
+
+608
+00:31:23,001 --> 00:31:27,015
+concurrent server and we're going to use
+
+609
+00:31:25,056 --> 00:31:30,075
+the s buff package so we're going to
+
+610
+00:31:27,024 --> 00:31:37,109
+create this this shared buffer global
+
+611
+00:31:30,075 --> 00:31:39,117
+variable called s buff and we have a
+
+612
+00:31:38,009 --> 00:31:42,012
+listening descriptor and connected
+
+613
+00:31:40,017 --> 00:31:44,040
+descriptor and we have the client length
+
+614
+00:31:42,039 --> 00:31:46,095
+and client adder that will be used in
+
+615
+00:31:44,004 --> 00:31:49,092
+the accept call and we have the thread
+
+616
+00:31:46,095 --> 00:31:51,170
+ID that will be used in the when we
+
+617
+00:31:50,028 --> 00:31:56,052
+create that when we create this thread
+
+618
+00:31:52,007 --> 00:31:57,075
+so now that we start by we're going to
+
+619
+00:31:56,052 --> 00:31:59,127
+in this program we're going to pass in
+
+620
+00:31:58,038 --> 00:32:02,106
+the port number so the server is going
+
+621
+00:32:00,027 --> 00:32:05,076
+to be listening on some port so we
+
+622
+00:32:03,006 --> 00:32:11,007
+passed that port number in as the first
+
+623
+00:32:05,076 --> 00:32:14,133
+argument so we call open listened FD on
+
+624
+00:32:11,007 --> 00:32:17,009
+our V of one an open listen FD creates a
+
+625
+00:32:15,033 --> 00:32:19,092
+listening descriptor and returns it
+
+626
+00:32:17,027 --> 00:32:23,052
+returns the value of that descriptor and
+
+627
+00:32:19,092 --> 00:32:27,141
+listen FD and then we call s buffin it
+
+628
+00:32:23,052 --> 00:32:32,099
+to to initialize our shared buffer with
+
+629
+00:32:28,041 --> 00:32:35,139
+with s buff sized file descriptors and
+
+630
+00:32:32,099 --> 00:32:38,106
+then we create a collection of n threads
+
+631
+00:32:36,039 --> 00:32:40,137
+worker threads on each of which will
+
+632
+00:32:39,006 --> 00:32:46,071
+execute the the thread routine which
+
+633
+00:32:41,037 --> 00:32:47,118
+we've called thread and no argument so
+
+634
+00:32:46,071 --> 00:32:50,132
+once we create these all of these
+
+635
+00:32:48,018 --> 00:32:58,037
+threads then we go in this infinite loop
+
+636
+00:32:51,032 --> 00:32:58,037
+where we call accept
+
+637
+00:32:58,759 --> 00:33:03,778
+on this listening descriptor so on that
+
+638
+00:33:02,179 --> 00:33:06,320
+acceptable block until a connection
+
+639
+00:33:03,949 --> 00:33:07,951
+request arrives and when it does the
+
+640
+00:33:06,032 --> 00:33:10,171
+accept returns with a connected file
+
+641
+00:33:08,149 --> 00:33:14,200
+descriptor that can be used to to
+
+642
+00:33:10,459 --> 00:33:16,477
+interact with the client and once we get
+
+643
+00:33:14,659 --> 00:33:19,660
+that connected file descriptor then we
+
+644
+00:33:16,639 --> 00:33:22,672
+just that simply insert it we insert
+
+645
+00:33:19,759 --> 00:33:24,835
+that that connected file descriptor into
+
+646
+00:33:22,969 --> 00:33:26,977
+our shared buffer and then wait for the
+
+647
+00:33:25,519 --> 00:33:29,614
+connection request the next connection
+
+648
+00:33:27,769 --> 00:33:31,831
+request so our servers very efficient
+
+649
+00:33:30,469 --> 00:33:34,492
+right we're just doing an accept and
+
+650
+00:33:32,389 --> 00:33:36,448
+then a very fast insert into the buffer
+
+651
+00:33:34,699 --> 00:33:37,705
+okay and then we're going to let the
+
+652
+00:33:36,979 --> 00:33:40,940
+worker threads do all the work
+
+653
+00:33:38,299 --> 00:33:47,308
+associated with those with that with
+
+654
+00:33:40,094 --> 00:33:50,923
+with that that queue of descriptors now
+
+655
+00:33:47,389 --> 00:33:52,456
+the thread routine first detaches okay
+
+656
+00:33:51,769 --> 00:33:55,780
+so this is a case where we don't want to
+
+657
+00:33:53,059 --> 00:33:59,101
+run joinable because we're never going
+
+658
+00:33:55,879 --> 00:34:01,948
+to to join we're never going to wait for
+
+659
+00:33:59,479 --> 00:34:06,513
+these threads or have any any reason to
+
+660
+00:34:02,569 --> 00:34:09,740
+kill them from the main thread so this
+
+661
+00:34:06,819 --> 00:34:11,824
+so now this worker thread and in this
+
+662
+00:34:09,074 --> 00:34:13,079
+infinite loop each iteration it removes
+
+663
+00:34:11,869 --> 00:34:15,916
+an item from the buffer so it blocks
+
+664
+00:34:14,024 --> 00:34:18,663
+until there's an item that it can code
+
+665
+00:34:16,339 --> 00:34:24,346
+that it can remove from the buffer and
+
+666
+00:34:18,879 --> 00:34:28,220
+it sets it to this local variable con ft
+
+667
+00:34:25,039 --> 00:34:31,062
+and then it calls a helper sort of this
+
+668
+00:34:28,022 --> 00:34:33,050
+this is like the helper function that
+
+669
+00:34:31,269 --> 00:34:35,240
+implements the logic for this this
+
+670
+00:34:33,005 --> 00:34:38,364
+particular server and this is this in
+
+671
+00:34:35,024 --> 00:34:41,045
+this case it's an echo server so this
+
+672
+00:34:38,859 --> 00:34:42,901
+this echo count routine will interact
+
+673
+00:34:41,045 --> 00:34:45,274
+with the client echoing whatever the
+
+674
+00:34:43,279 --> 00:34:48,316
+client sends us until the client closes
+
+675
+00:34:45,679 --> 00:34:51,190
+the connection and then when it so
+
+676
+00:34:48,649 --> 00:34:55,723
+whenever the client is finished then
+
+677
+00:34:51,019 --> 00:34:58,115
+then we close the we close the our end
+
+678
+00:34:56,389 --> 00:35:01,670
+of the connection and go back and get
+
+679
+00:34:59,015 --> 00:35:03,484
+the next item out of the buffer
+
+680
+00:35:01,067 --> 00:35:04,145
+and I should point out that echo count
+
+681
+00:35:03,619 --> 00:35:07,640
+is just a placeholder this could be
+
+682
+00:35:05,045 --> 00:35:09,098
+anything this could be the logic for a
+
+683
+00:35:07,064 --> 00:35:19,067
+web server for any kind of web service
+
+684
+00:35:09,098 --> 00:35:23,467
+or any kind of service now the to
+
+685
+00:35:19,067 --> 00:35:29,071
+initialize this echo count function we
+
+686
+00:35:24,349 --> 00:35:34,670
+need to we need to initialize the mutex
+
+687
+00:35:29,071 --> 00:35:36,122
+so we're so this echo count function is
+
+688
+00:35:34,067 --> 00:35:39,095
+going to have it has a defines a global
+
+689
+00:35:37,022 --> 00:35:41,341
+variable called byte count so this in
+
+690
+00:35:39,095 --> 00:35:42,514
+this echo server we're going to keep
+
+691
+00:35:41,539 --> 00:35:45,544
+track of the number of bytes that we've
+
+692
+00:35:43,369 --> 00:35:48,230
+received from all the clients that we're
+
+693
+00:35:45,589 --> 00:35:50,480
+interacting with okay so there's a
+
+694
+00:35:48,023 --> 00:35:52,067
+global variable called byte count which
+
+695
+00:35:50,048 --> 00:35:54,847
+is shared by all the threads and we're
+
+696
+00:35:52,067 --> 00:35:57,101
+going to update this this byte count
+
+697
+00:35:55,279 --> 00:36:00,740
+variable every time we receive something
+
+698
+00:35:58,001 --> 00:36:03,100
+every time we receive data from from the
+
+699
+00:36:00,074 --> 00:36:07,091
+client and we're going to use mutex to
+
+700
+00:36:03,109 --> 00:36:10,177
+protect the accesses to byte count okay
+
+701
+00:36:07,091 --> 00:36:13,094
+so we're going to initially have to
+
+702
+00:36:10,789 --> 00:36:18,862
+initialize we have to call a function
+
+703
+00:36:14,021 --> 00:36:22,330
+that initializes that initializes this
+
+704
+00:36:19,519 --> 00:36:27,140
+by first initializing the mutex and then
+
+705
+00:36:22,519 --> 00:36:30,400
+setting byte count to zero and then
+
+706
+00:36:27,014 --> 00:36:30,040
+within echo count itself
+
+707
+00:36:34,097 --> 00:36:40,149
+there's some we've already seen sub
+
+708
+00:36:38,009 --> 00:36:42,081
+we've already seen a way to initialize a
+
+709
+00:36:41,049 --> 00:36:45,054
+package you know if we have some kind of
+
+710
+00:36:43,062 --> 00:36:47,063
+package of library functions that are
+
+711
+00:36:45,054 --> 00:36:49,076
+going to be used by multiple threads
+
+712
+00:36:47,072 --> 00:36:52,083
+there several ways to actually
+
+713
+00:36:49,076 --> 00:36:55,133
+initialize this package so one way is to
+
+714
+00:36:52,083 --> 00:36:58,166
+explicitly call have the the main thread
+
+715
+00:36:56,033 --> 00:37:02,046
+call this initialization function once
+
+716
+00:36:59,066 --> 00:37:04,119
+okay so we've seen that with like the S
+
+717
+00:37:02,046 --> 00:37:09,129
+buff package right the main thread has
+
+718
+00:37:05,019 --> 00:37:13,068
+to call the main thread calls s buffin
+
+719
+00:37:10,029 --> 00:37:15,096
+at once okay before any of the peer
+
+720
+00:37:13,068 --> 00:37:18,156
+threads executes and the worker threads
+
+721
+00:37:15,096 --> 00:37:21,111
+executes but there's another way we can
+
+722
+00:37:19,056 --> 00:37:23,079
+do this too we can have the the worker
+
+723
+00:37:22,011 --> 00:37:27,012
+threads actually call the initialization
+
+724
+00:37:23,079 --> 00:37:31,086
+function and we can use this technique
+
+725
+00:37:27,012 --> 00:37:36,048
+provided by by P threads where we define
+
+726
+00:37:32,049 --> 00:37:38,145
+a static variable so this is a static
+
+727
+00:37:36,048 --> 00:37:40,134
+local variable but you recall that this
+
+728
+00:37:39,045 --> 00:37:45,087
+is actually treated like a global
+
+729
+00:37:41,034 --> 00:37:49,053
+variable so it every thread has access
+
+730
+00:37:45,087 --> 00:37:52,119
+to this variable okay but but its scope
+
+731
+00:37:49,053 --> 00:37:55,056
+is limited to to the disco de cocao
+
+732
+00:37:53,019 --> 00:37:59,082
+function so no other no other function
+
+733
+00:37:55,056 --> 00:38:01,131
+connect can access this variable but
+
+734
+00:37:59,082 --> 00:38:05,160
+each each thread that executes this
+
+735
+00:38:02,031 --> 00:38:08,034
+thread routine has access to it and and
+
+736
+00:38:06,006 --> 00:38:11,022
+in this context it's treated like a
+
+737
+00:38:08,061 --> 00:38:13,125
+global right so if one thread updates
+
+738
+00:38:11,076 --> 00:38:17,145
+the value every other every thread sees
+
+739
+00:38:14,025 --> 00:38:22,068
+that same value okay so so we can use
+
+740
+00:38:18,045 --> 00:38:25,092
+this this mechanism from P threads but
+
+741
+00:38:22,068 --> 00:38:28,110
+so we can create this this this variable
+
+742
+00:38:25,092 --> 00:38:30,177
+of type P thread once T and initialize
+
+743
+00:38:29,001 --> 00:38:34,094
+it to this special P threads value which
+
+744
+00:38:31,077 --> 00:38:37,131
+is sort of like the P threads
+
+745
+00:38:35,003 --> 00:38:39,084
+uninitialized value so this is a value
+
+746
+00:38:38,031 --> 00:38:43,035
+that P threads knows about that
+
+747
+00:38:39,084 --> 00:38:43,166
+indicates that that this variable wants
+
+748
+00:38:43,035 --> 00:38:49,127
+hasn't done
+
+749
+00:38:44,066 --> 00:38:52,735
+initialized and then and then we call
+
+750
+00:38:50,027 --> 00:38:55,121
+the pthread once function passing at
+
+751
+00:38:53,329 --> 00:38:58,329
+this this variable that we the address
+
+752
+00:38:56,021 --> 00:39:00,850
+of this variable created that we created
+
+753
+00:38:58,329 --> 00:39:05,390
+and the address of the function to call
+
+754
+00:39:01,039 --> 00:39:09,670
+to initialize whatever it is we want to
+
+755
+00:39:05,039 --> 00:39:09,067
+initialize in this case the echo count
+
+756
+00:39:09,849 --> 00:39:16,948
+the the echo count variable and so what
+
+757
+00:39:15,109 --> 00:39:20,240
+this does every thread will call P
+
+758
+00:39:17,839 --> 00:39:25,220
+thread once but only one thread will
+
+759
+00:39:20,024 --> 00:39:29,093
+actually call the the initialization
+
+760
+00:39:25,022 --> 00:39:32,027
+function only the very first thread that
+
+761
+00:39:29,093 --> 00:39:34,139
+executes speech read once will will call
+
+762
+00:39:32,027 --> 00:39:37,091
+it the other threads this this P thread
+
+763
+00:39:35,039 --> 00:39:44,248
+wants call will be like a no op yes
+
+764
+00:39:37,091 --> 00:39:51,240
+question well that's the other option so
+
+765
+00:39:44,599 --> 00:39:55,130
+so the advantage of this is that you can
+
+766
+00:39:52,059 --> 00:39:56,107
+you I guess the advantage is I I don't
+
+767
+00:39:55,013 --> 00:40:01,013
+know that it's just another way you can
+
+768
+00:39:56,539 --> 00:40:02,545
+do it you I guess it avoids it avoids
+
+769
+00:40:01,013 --> 00:40:05,722
+having to do it in the master thread
+
+770
+00:40:02,599 --> 00:40:07,190
+that you can you can make your you can
+
+771
+00:40:05,839 --> 00:40:08,866
+make this package sort of self-contained
+
+772
+00:40:07,019 --> 00:40:11,047
+right that you're not you're not really
+
+773
+00:40:09,109 --> 00:40:13,730
+counting on the master doing anything
+
+774
+00:40:11,047 --> 00:40:14,686
+but yeah that's that's the other way we
+
+775
+00:40:13,073 --> 00:40:17,922
+could have done it so I just wanted to
+
+776
+00:40:15,109 --> 00:40:23,210
+show you this this this other technique
+
+777
+00:40:18,579 --> 00:40:24,676
+okay so once we once we initialize once
+
+778
+00:40:23,021 --> 00:40:30,028
+we once some thread calls an ED echo
+
+779
+00:40:25,549 --> 00:40:33,440
+count then we initialize the reo package
+
+780
+00:40:30,091 --> 00:40:35,770
+for all of our accesses on this
+
+781
+00:40:33,044 --> 00:40:39,077
+connected descriptor and then we
+
+782
+00:40:36,589 --> 00:40:46,050
+repeatedly read a line of text from the
+
+783
+00:40:39,077 --> 00:40:47,166
+client okay and then in
+
+784
+00:40:46,005 --> 00:40:50,061
+in a protected way we increment bite
+
+785
+00:40:48,066 --> 00:40:52,158
+count with the number of bytes that we
+
+786
+00:40:50,061 --> 00:40:54,156
+received from the client which is
+
+787
+00:40:53,058 --> 00:40:57,132
+returned by this Rio read line b
+
+788
+00:40:55,056 --> 00:41:00,105
+function and then we print a little
+
+789
+00:40:58,032 --> 00:41:03,119
+message just to sort of keep track so we
+
+790
+00:41:01,005 --> 00:41:07,014
+can see keep track of our running total
+
+791
+00:41:04,019 --> 00:41:08,070
+and then we release the mutex on this on
+
+792
+00:41:07,014 --> 00:41:11,076
+the byte count the global byte count
+
+793
+00:41:08,007 --> 00:41:12,035
+variable and then we echo that line back
+
+794
+00:41:11,076 --> 00:41:16,097
+to the client
+
+795
+00:41:12,098 --> 00:41:24,156
+okay so any questions about that
+
+796
+00:41:16,097 --> 00:41:30,099
+yes question the line cleared it to do
+
+797
+00:41:25,056 --> 00:41:32,063
+first connect okay the question is the
+
+798
+00:41:30,099 --> 00:41:35,124
+line that declares the static variable
+
+799
+00:41:33,026 --> 00:41:41,079
+once will it only be executed the first
+
+800
+00:41:36,024 --> 00:41:44,058
+time a thread executes that statement no
+
+801
+00:41:41,079 --> 00:41:45,150
+it's so the answer is no every every
+
+802
+00:41:44,058 --> 00:41:50,076
+thread will define this variable and
+
+803
+00:41:46,005 --> 00:41:54,030
+assign it this to this this this P
+
+804
+00:41:50,076 --> 00:41:57,120
+thread wants value okay what will only
+
+805
+00:41:54,075 --> 00:42:01,083
+happen once is the call to a net echo
+
+806
+00:41:58,002 --> 00:42:05,070
+count okay so the first thread that
+
+807
+00:42:02,055 --> 00:42:08,148
+executes this P thread once call will
+
+808
+00:42:05,088 --> 00:42:10,116
+actually call an ED echo count every
+
+809
+00:42:09,048 --> 00:42:14,135
+other thread every subsequent thread
+
+810
+00:42:11,016 --> 00:42:15,035
+will not call it I'll be like a no op
+
+811
+00:42:17,066 --> 00:42:21,775
+yeah uses the ones it's just an opaque
+
+812
+00:42:23,084 --> 00:42:32,091
+the declaration won't be be setting the
+
+813
+00:42:28,002 --> 00:42:36,009
+flag everything is because often it yeah
+
+814
+00:42:33,054 --> 00:42:38,055
+somehow it will but somehow the peachoid
+
+815
+00:42:36,072 --> 00:42:41,169
+wants is keeping track that it's it's
+
+816
+00:42:38,064 --> 00:42:46,146
+executed okay so I I'm really not sure
+
+817
+00:42:42,069 --> 00:42:49,158
+how how its implemented okay so somehow
+
+818
+00:42:47,046 --> 00:42:52,089
+pthread wants yeah I guess every you
+
+819
+00:42:50,058 --> 00:42:55,059
+know this I mean this is just the C
+
+820
+00:42:52,089 --> 00:42:57,177
+declaration right so there's no the P
+
+821
+00:42:55,059 --> 00:43:03,090
+threads has no control over declarations
+
+822
+00:42:58,077 --> 00:43:05,124
+right so every thread will get it every
+
+823
+00:43:03,009 --> 00:43:08,094
+thread will sort of update this static
+
+824
+00:43:06,024 --> 00:43:15,120
+variable and you're right if the first
+
+825
+00:43:09,075 --> 00:43:18,174
+thread the second thread would would
+
+826
+00:43:16,002 --> 00:43:23,013
+overwrite this value again but somehow
+
+827
+00:43:19,074 --> 00:43:25,101
+Pete's read once can keeps track of that
+
+828
+00:43:23,031 --> 00:43:28,092
+okay in a in some way that I I'm not
+
+829
+00:43:26,001 --> 00:43:32,084
+sure about how that works but this is
+
+830
+00:43:28,092 --> 00:43:31,184
+this is the way you get that behavior
+
+831
+00:43:36,018 --> 00:43:40,089
+in others there's some other issues
+
+832
+00:43:38,049 --> 00:43:42,338
+around synchronizing threads sort of
+
+833
+00:43:40,089 --> 00:43:45,177
+correctness issues that we have to be
+
+834
+00:43:42,779 --> 00:43:47,831
+aware of and so I hope you I hope you're
+
+835
+00:43:46,077 --> 00:43:49,586
+sort of getting the sense that the
+
+836
+00:43:48,299 --> 00:43:52,304
+threaded programming is is kind of a
+
+837
+00:43:50,279 --> 00:43:54,660
+tricky business right and so one issue
+
+838
+00:43:52,799 --> 00:43:58,710
+that we always have to be aware of is is
+
+839
+00:43:54,066 --> 00:44:02,151
+is this idea called thread safety so in
+
+840
+00:43:58,071 --> 00:44:04,146
+general a thread routine can only should
+
+841
+00:44:03,051 --> 00:44:06,830
+only call functions that are that are
+
+842
+00:44:05,046 --> 00:44:10,047
+thread safe that have this property
+
+843
+00:44:07,289 --> 00:44:13,345
+called thread safety okay and a function
+
+844
+00:44:10,047 --> 00:44:16,119
+is thread safe it's and only if that
+
+845
+00:44:13,849 --> 00:44:20,970
+function can be invoked by multiple
+
+846
+00:44:17,019 --> 00:44:25,448
+threads at the same time okay so if we
+
+847
+00:44:20,097 --> 00:44:26,163
+have a function f its thread safe if and
+
+848
+00:44:25,619 --> 00:44:32,626
+only if its execution can be interleaved
+
+849
+00:44:27,063 --> 00:44:32,752
+by multiple threads okay
+
+850
+00:44:33,068 --> 00:44:39,110
+and so we can identify a four different
+
+851
+00:44:36,081 --> 00:44:42,147
+classes of thread unsafe functions so
+
+852
+00:44:40,001 --> 00:44:47,006
+one class is the functions that failed
+
+853
+00:44:43,047 --> 00:44:49,050
+to protect shared variables with mutexes
+
+854
+00:44:47,015 --> 00:44:51,021
+okay so we've already seen that with bad
+
+855
+00:44:49,005 --> 00:44:53,091
+count that was an example of a threat
+
+856
+00:44:51,075 --> 00:44:58,077
+unsafe that main routine was an example
+
+857
+00:44:54,036 --> 00:44:59,133
+of an unsafe thread function now the
+
+858
+00:44:58,077 --> 00:45:02,082
+thread function was an example of an
+
+859
+00:45:00,033 --> 00:45:04,128
+unsafe thread function because it didn't
+
+860
+00:45:02,082 --> 00:45:08,145
+protect the act of the update of the
+
+861
+00:45:05,028 --> 00:45:11,034
+count variable another class of
+
+862
+00:45:09,045 --> 00:45:13,077
+functions that that our thread unsafe is
+
+863
+00:45:11,088 --> 00:45:16,179
+are those functions that keep track of
+
+864
+00:45:13,077 --> 00:45:19,164
+State across multiple indications so if
+
+865
+00:45:17,079 --> 00:45:22,140
+they're storing State in some global
+
+866
+00:45:20,064 --> 00:45:25,067
+global variable private or public global
+
+867
+00:45:23,004 --> 00:45:28,067
+variable the net that's thread unsafe
+
+868
+00:45:25,094 --> 00:45:33,096
+because multiple threads will be
+
+869
+00:45:29,003 --> 00:45:36,009
+accessing that state another way another
+
+870
+00:45:34,014 --> 00:45:37,068
+kind of thread unsafe function or
+
+871
+00:45:36,009 --> 00:45:40,068
+functions that return a pointer to a
+
+872
+00:45:37,068 --> 00:45:41,103
+static variable so there's there's
+
+873
+00:45:40,068 --> 00:45:43,131
+there's a number of functions in the
+
+874
+00:45:42,003 --> 00:45:46,011
+standard c library that were written
+
+875
+00:45:44,031 --> 00:45:51,123
+before threads or even on anybody's
+
+876
+00:45:46,083 --> 00:45:54,086
+radar and so so an example is the C time
+
+877
+00:45:52,023 --> 00:45:58,086
+function which takes as an argument a
+
+878
+00:45:55,013 --> 00:46:01,071
+time struck two binary time struct and
+
+879
+00:45:58,086 --> 00:46:04,095
+returns a pointer to a string date and
+
+880
+00:46:01,071 --> 00:46:07,092
+time string but the address in that
+
+881
+00:46:05,076 --> 00:46:09,141
+pointer is always the same right so the
+
+882
+00:46:07,092 --> 00:46:12,129
+this function is defining some kind of
+
+883
+00:46:10,041 --> 00:46:15,116
+static variable and it's always returned
+
+884
+00:46:13,029 --> 00:46:19,101
+and then it's it it's converting the
+
+885
+00:46:16,016 --> 00:46:21,081
+binary time struct into into a string
+
+886
+00:46:20,001 --> 00:46:23,064
+that's always at the same location and
+
+887
+00:46:21,081 --> 00:46:25,125
+it's returning the address of that
+
+888
+00:46:23,064 --> 00:46:28,089
+string so every invocation returns the
+
+889
+00:46:26,025 --> 00:46:32,100
+exact same address but with different
+
+890
+00:46:28,089 --> 00:46:33,183
+content at that address okay and this
+
+891
+00:46:33,000 --> 00:46:36,087
+you know they just they didn't realize
+
+892
+00:46:34,083 --> 00:46:37,137
+that this was a bad thing to do for
+
+893
+00:46:36,087 --> 00:46:39,184
+threaded programs because nobody was
+
+894
+00:46:38,037 --> 00:46:43,055
+writing threaded programs at the time
+
+895
+00:46:40,084 --> 00:46:44,162
+and then obviously any function that
+
+896
+00:46:43,055 --> 00:46:47,153
+calls and unthread unsafe function is
+
+897
+00:46:45,062 --> 00:46:50,063
+threat unsafe okay so let's look at
+
+898
+00:46:48,053 --> 00:46:52,127
+these these different classes of
+
+899
+00:46:50,063 --> 00:46:55,064
+functions okay so the class one
+
+900
+00:46:53,027 --> 00:46:58,028
+functions failed to protect shared
+
+901
+00:46:55,064 --> 00:47:00,086
+variables and so the fix as we've seen
+
+902
+00:46:58,028 --> 00:47:03,032
+is to use T and V to guarantee mutually
+
+903
+00:47:00,086 --> 00:47:04,151
+exclusive access and thereby protect the
+
+904
+00:47:03,032 --> 00:47:08,057
+accesses to the variable so we saw this
+
+905
+00:47:05,051 --> 00:47:09,134
+with that good count program and then
+
+906
+00:47:08,057 --> 00:47:10,136
+the the problem is and also as we saw
+
+907
+00:47:10,034 --> 00:47:13,088
+with good count is that the
+
+908
+00:47:11,036 --> 00:47:16,061
+synchronization operations can be slow
+
+909
+00:47:13,088 --> 00:47:19,135
+so if they're in a tight inner loop it
+
+910
+00:47:16,061 --> 00:47:19,135
+can it can really slow your program down
+
+911
+00:47:20,038 --> 00:47:25,043
+okay the class 2 thread on safe
+
+912
+00:47:23,051 --> 00:47:28,067
+functions rely on some kind of
+
+913
+00:47:25,088 --> 00:47:30,170
+persistent state across invocations of
+
+914
+00:47:28,067 --> 00:47:36,086
+that function ok so the classic example
+
+915
+00:47:31,007 --> 00:47:39,104
+is the Lipsy rand function whose and
+
+916
+00:47:36,086 --> 00:47:45,098
+this the and implementation of which is
+
+917
+00:47:40,067 --> 00:47:49,108
+I took from the K in our book so this
+
+918
+00:47:45,098 --> 00:47:52,151
+this R and this is a pseudo
+
+919
+00:47:50,008 --> 00:47:56,084
+pseudo-random number generator a pseudo
+
+920
+00:47:53,051 --> 00:47:58,058
+random in the sense that if you give it
+
+921
+00:47:56,084 --> 00:48:01,163
+the same key it will return the same
+
+922
+00:47:58,058 --> 00:48:04,064
+sequence of values ok so this is kind of
+
+923
+00:48:02,063 --> 00:48:06,149
+nice because it allows when you're
+
+924
+00:48:04,064 --> 00:48:08,093
+testing it allows repeatability so every
+
+925
+00:48:07,049 --> 00:48:10,100
+time you call it if you call it with the
+
+926
+00:48:08,093 --> 00:48:12,158
+same seed you can you're guaranteed
+
+927
+00:48:11,000 --> 00:48:18,065
+you'll get the same result and the way
+
+928
+00:48:13,058 --> 00:48:23,060
+this is implemented is that there's at
+
+929
+00:48:18,065 --> 00:48:25,112
+the seed if there's there's a seed
+
+930
+00:48:23,006 --> 00:48:27,008
+variable called next which is used in
+
+931
+00:48:26,012 --> 00:48:30,014
+each iteration of the random number
+
+932
+00:48:27,008 --> 00:48:33,101
+generator and it's it's defined as a
+
+933
+00:48:30,014 --> 00:48:36,055
+global private so static makes it
+
+934
+00:48:34,073 --> 00:48:39,086
+private so it's not accessible to
+
+935
+00:48:36,055 --> 00:48:41,111
+programs that are calling the rand
+
+936
+00:48:39,086 --> 00:48:43,094
+function but it's it's used by the rand
+
+937
+00:48:42,011 --> 00:48:48,083
+function and so this variable is
+
+938
+00:48:44,066 --> 00:48:50,069
+initialized to 1 there's a function
+
+939
+00:48:48,083 --> 00:48:52,159
+called s Rand which allows the user to
+
+940
+00:48:50,096 --> 00:48:55,153
+set the seed value so that
+
+941
+00:48:53,059 --> 00:48:58,078
+the default speed value is one but if
+
+942
+00:48:56,053 --> 00:49:00,100
+the user calls s ran they can pass in a
+
+943
+00:48:58,078 --> 00:49:03,157
+seed which will be then which will be
+
+944
+00:49:01,000 --> 00:49:09,075
+which is just assigned to this this next
+
+945
+00:49:04,057 --> 00:49:12,151
+variable and then each iteration of Rand
+
+946
+00:49:09,075 --> 00:49:15,127
+does an operation on the seed so it
+
+947
+00:49:13,051 --> 00:49:17,143
+takes that the next value that's going
+
+948
+00:49:16,027 --> 00:49:20,029
+to be used is the is a property of the
+
+949
+00:49:18,043 --> 00:49:22,138
+previous value the function of the
+
+950
+00:49:20,029 --> 00:49:25,048
+previous value and then it returns a
+
+951
+00:49:23,038 --> 00:49:28,114
+pseudo-random number that's a function
+
+952
+00:49:25,048 --> 00:49:30,055
+of that next value okay so it's relying
+
+953
+00:49:29,014 --> 00:49:34,087
+on this each iteration each time you
+
+954
+00:49:31,018 --> 00:49:37,021
+call Rand you're relying on the this
+
+955
+00:49:34,087 --> 00:49:39,126
+next value that was computed by the
+
+956
+00:49:37,021 --> 00:49:42,076
+previous time that you call three and
+
+957
+00:49:40,026 --> 00:49:44,074
+okay now this is perfectly fine and
+
+958
+00:49:42,076 --> 00:49:48,091
+there's no problem with this in a
+
+959
+00:49:44,074 --> 00:49:51,088
+non-threaded situation but what happens
+
+960
+00:49:48,091 --> 00:49:55,174
+it's multiple threads now so suppose you
+
+961
+00:49:51,088 --> 00:49:58,093
+have multiple threads and and they're
+
+962
+00:49:56,074 --> 00:50:01,171
+each calling this rand function sort of
+
+963
+00:49:58,093 --> 00:50:05,110
+interleaving calls to two Rand okay be
+
+964
+00:50:02,071 --> 00:50:10,114
+the fact that that Rand is relying on
+
+965
+00:50:06,001 --> 00:50:12,076
+this previous state if multiple threads
+
+966
+00:50:11,014 --> 00:50:15,015
+are calling Rand it's going to break the
+
+967
+00:50:12,085 --> 00:50:17,140
+pseudo-random property so each thread
+
+968
+00:50:15,024 --> 00:50:20,047
+that the the random numbers that each
+
+969
+00:50:18,004 --> 00:50:23,065
+thread gets back are not only a function
+
+970
+00:50:20,047 --> 00:50:25,048
+of the previous the seed from the
+
+971
+00:50:24,001 --> 00:50:29,059
+previous time that thread called the
+
+972
+00:50:25,048 --> 00:50:30,136
+function but also also a function of the
+
+973
+00:50:29,059 --> 00:50:35,116
+other threads that are calling it right
+
+974
+00:50:31,036 --> 00:50:37,102
+so so if a particular thread calls this
+
+975
+00:50:36,016 --> 00:50:40,021
+random number generator multiple times
+
+976
+00:50:38,002 --> 00:50:42,034
+it potentially won't see the same
+
+977
+00:50:40,066 --> 00:50:43,144
+sequence of pseudo-random numbers
+
+978
+00:50:42,034 --> 00:50:47,091
+because other threads will be jumping in
+
+979
+00:50:44,044 --> 00:50:52,108
+okay and
+
+980
+00:50:47,091 --> 00:50:54,136
+okay so if it's not it's not incorrect
+
+981
+00:50:53,008 --> 00:50:56,014
+and that the program will fail but if
+
+982
+00:50:55,036 --> 00:50:59,098
+the program is counting on the
+
+983
+00:50:56,068 --> 00:51:04,147
+pseudo-random property then it creates a
+
+984
+00:50:59,098 --> 00:51:09,189
+problem okay so the the solution to this
+
+985
+00:51:05,047 --> 00:51:13,102
+is to rewrite Rand and require it to
+
+986
+00:51:10,089 --> 00:51:16,123
+require the caller to keep track of this
+
+987
+00:51:14,002 --> 00:51:19,093
+next variable okay so each caller will
+
+988
+00:51:17,023 --> 00:51:22,030
+keep its own local copy of next and it
+
+989
+00:51:19,093 --> 00:51:23,170
+will pass in a pointer to R and R and
+
+990
+00:51:22,093 --> 00:51:26,095
+we'll compute that value so now this
+
+991
+00:51:24,007 --> 00:51:28,090
+will be updating state in the calling
+
+992
+00:51:27,013 --> 00:51:32,044
+the calling thread but this is local
+
+993
+00:51:29,053 --> 00:51:33,109
+state on the on that thread stack okay
+
+994
+00:51:32,044 --> 00:51:41,044
+so every thread will have its own copy
+
+995
+00:51:34,009 --> 00:51:42,103
+of of next so we but we have to create a
+
+996
+00:51:41,044 --> 00:51:45,091
+new function and what we'll call it
+
+997
+00:51:43,003 --> 00:51:47,068
+underscore R the stands for reentrant
+
+998
+00:51:45,091 --> 00:51:50,140
+which is a property we'll look at in
+
+999
+00:51:47,068 --> 00:51:52,072
+just a second but it's more work for the
+
+1000
+00:51:51,004 --> 00:51:55,072
+programmer because now the programmer
+
+1001
+00:51:52,072 --> 00:51:59,073
+has to maintain this this sort of this
+
+1002
+00:51:56,008 --> 00:51:59,073
+next value okay
+
+1003
+00:52:00,085 --> 00:52:07,117
+okay another way that threads that
+
+1004
+00:52:03,067 --> 00:52:08,164
+functions are unsafe is this this is are
+
+1005
+00:52:08,017 --> 00:52:12,109
+these functions that always retain a
+
+1006
+00:52:09,064 --> 00:52:15,088
+return a pointer to some global to the
+
+1007
+00:52:13,009 --> 00:52:18,028
+same global variable or typically it's a
+
+1008
+00:52:15,088 --> 00:52:20,152
+static variable but they always return
+
+1009
+00:52:18,028 --> 00:52:25,054
+the same value each time the same
+
+1010
+00:52:21,052 --> 00:52:26,113
+address okay so you can see this is
+
+1011
+00:52:25,054 --> 00:52:28,132
+similar to that race that we encountered
+
+1012
+00:52:27,013 --> 00:52:30,094
+before where we're passing the address
+
+1013
+00:52:29,032 --> 00:52:34,120
+of a connected file descriptor to a
+
+1014
+00:52:30,094 --> 00:52:36,172
+worker thread okay so now we're creating
+
+1015
+00:52:35,002 --> 00:52:39,061
+a race so let's say one thread let's say
+
+1016
+00:52:37,072 --> 00:52:43,138
+one thread calls this function so for
+
+1017
+00:52:39,079 --> 00:52:46,087
+example C time takes this this time
+
+1018
+00:52:44,038 --> 00:52:48,130
+struct as an argument okay which can
+
+1019
+00:52:47,059 --> 00:52:49,153
+correspond to an arbitrary time it could
+
+1020
+00:52:49,003 --> 00:52:51,091
+be the current time or just some
+
+1021
+00:52:50,053 --> 00:52:56,131
+arbitrary time that the caller
+
+1022
+00:52:52,018 --> 00:52:58,105
+constructed and it returns a pointer to
+
+1023
+00:52:57,031 --> 00:53:01,060
+a charge star so it just returns a
+
+1024
+00:52:59,005 --> 00:53:04,030
+pointer to a string that represents the
+
+1025
+00:53:01,006 --> 00:53:07,105
+date and the time its own ASCII ASCII
+
+1026
+00:53:04,003 --> 00:53:13,060
+string that that represents the date and
+
+1027
+00:53:08,059 --> 00:53:17,110
+time but it's always it's always
+
+1028
+00:53:13,087 --> 00:53:21,094
+returning a pointer to the same the same
+
+1029
+00:53:18,001 --> 00:53:25,018
+location in memory okay so you can see
+
+1030
+00:53:22,057 --> 00:53:28,123
+the problem if thread a calls the C time
+
+1031
+00:53:25,027 --> 00:53:33,028
+function with one with one time struck
+
+1032
+00:53:29,023 --> 00:53:34,111
+it gets back a pointer to the to the
+
+1033
+00:53:33,037 --> 00:53:37,132
+character string corresponding to that
+
+1034
+00:53:35,011 --> 00:53:41,053
+time struct but now let's say before the
+
+1035
+00:53:38,032 --> 00:53:44,071
+four thread a can use that read that
+
+1036
+00:53:41,053 --> 00:53:47,059
+that string another thread call C time
+
+1037
+00:53:44,071 --> 00:53:51,100
+and that instance of C time will
+
+1038
+00:53:48,013 --> 00:53:54,058
+overwrite that the copy of the time
+
+1039
+00:53:52,000 --> 00:53:57,046
+string for that that thread a is
+
+1040
+00:53:54,058 --> 00:53:59,065
+computed so when thread a finally gets a
+
+1041
+00:53:57,046 --> 00:54:02,140
+chance to access that time string its
+
+1042
+00:54:00,028 --> 00:54:05,107
+accessing thread B's time string and not
+
+1043
+00:54:03,004 --> 00:54:07,693
+three days time string
+
+1044
+00:54:05,359 --> 00:54:09,433
+okay and it just depends if thread a can
+
+1045
+00:54:08,089 --> 00:54:12,160
+get to that and read that variable
+
+1046
+00:54:10,099 --> 00:54:16,141
+before thread B over writes it then
+
+1047
+00:54:12,799 --> 00:54:18,841
+everything's fine otherwise thread a is
+
+1048
+00:54:16,519 --> 00:54:21,547
+accessing the wrong time string okay so
+
+1049
+00:54:19,219 --> 00:54:24,680
+there's there's a couple of ways to fix
+
+1050
+00:54:21,799 --> 00:54:27,920
+this like we could rewrite the the
+
+1051
+00:54:24,068 --> 00:54:32,727
+function the C time function to take as
+
+1052
+00:54:27,092 --> 00:54:32,511
+add another argument that passes in the
+
+1053
+00:54:33,007 --> 00:54:38,146
+the location the address of the time
+
+1054
+00:54:36,859 --> 00:54:40,924
+string so we could require that the
+
+1055
+00:54:38,839 --> 00:54:42,931
+caller to allocate space for the time
+
+1056
+00:54:41,509 --> 00:54:46,588
+string and passing the address to the C
+
+1057
+00:54:43,759 --> 00:54:49,807
+time function okay but this has this
+
+1058
+00:54:47,299 --> 00:54:55,190
+says this would require us to change all
+
+1059
+00:54:50,239 --> 00:54:56,287
+the instances where we call C time but
+
+1060
+00:54:55,019 --> 00:54:58,091
+we'd also have to change the
+
+1061
+00:54:56,719 --> 00:55:02,776
+implementation of C time in the live in
+
+1062
+00:54:58,091 --> 00:55:06,280
+the Lipsy in the library right and so we
+
+1063
+00:55:03,289 --> 00:55:09,292
+can't we don't have access to Lib C
+
+1064
+00:55:07,099 --> 00:55:11,137
+source on our system right so that
+
+1065
+00:55:09,319 --> 00:55:12,394
+that's just not a feasible thing plus it
+
+1066
+00:55:11,479 --> 00:55:15,680
+would break every other program that
+
+1067
+00:55:13,069 --> 00:55:17,170
+called C time right so we just can't do
+
+1068
+00:55:15,068 --> 00:55:20,347
+that
+
+1069
+00:55:17,017 --> 00:55:23,114
+the another of a better option is to
+
+1070
+00:55:20,959 --> 00:55:27,046
+create a new function of our own okay
+
+1071
+00:55:24,014 --> 00:55:29,090
+called C time underscore TTS for thread
+
+1072
+00:55:27,829 --> 00:55:34,834
+safe so we'll create our own sort of
+
+1073
+00:55:29,009 --> 00:55:36,118
+wrapper function for the C time and
+
+1074
+00:55:35,329 --> 00:55:41,397
+we'll use a technique called lock and
+
+1075
+00:55:37,009 --> 00:55:46,012
+copy to to provide thread safe access to
+
+1076
+00:55:42,009 --> 00:55:47,690
+2c time so the way it works is it will
+
+1077
+00:55:46,039 --> 00:55:51,890
+write this new function C time
+
+1078
+00:55:47,069 --> 00:55:54,116
+underscore TS which just like c time
+
+1079
+00:55:51,089 --> 00:55:57,118
+takes this a pointer to this time struct
+
+1080
+00:55:55,016 --> 00:56:01,915
+but then it adds the second argument
+
+1081
+00:55:58,018 --> 00:56:04,557
+which is a pointer to the threat of
+
+1082
+00:56:02,059 --> 00:56:08,630
+threads private copy of the time string
+
+1083
+00:56:04,719 --> 00:56:12,650
+okay so the caller allocates the space
+
+1084
+00:56:08,063 --> 00:56:15,702
+and passes the pointer to this to that
+
+1085
+00:56:12,065 --> 00:56:18,071
+to that string
+
+1086
+00:56:16,269 --> 00:56:21,328
+and then within si time we have a local
+
+1087
+00:56:19,025 --> 00:56:23,117
+variable called shared the shared
+
+1088
+00:56:21,859 --> 00:56:26,960
+pointer okay so this is going to point
+
+1089
+00:56:24,017 --> 00:56:29,376
+to that that that shared global data
+
+1090
+00:56:26,096 --> 00:56:32,425
+structure that C time is is accessing
+
+1091
+00:56:29,529 --> 00:56:35,420
+and so first we do the lock
+
+1092
+00:56:33,289 --> 00:56:39,346
+that's the lock part of lock and copy by
+
+1093
+00:56:35,042 --> 00:56:43,441
+acquiring a mutex and then we call C
+
+1094
+00:56:39,859 --> 00:56:43,951
+time so only one thread at a time we'll
+
+1095
+00:56:43,819 --> 00:56:46,760
+have this mutex
+
+1096
+00:56:44,779 --> 00:56:48,808
+so whatever thread so once once we
+
+1097
+00:56:46,076 --> 00:56:51,092
+return from T we know that we're the
+
+1098
+00:56:49,069 --> 00:56:55,147
+only thread in this in this critical
+
+1099
+00:56:51,092 --> 00:56:58,124
+section so we call C time the normal lit
+
+1100
+00:56:55,849 --> 00:57:02,926
+CC time function which returns a pointer
+
+1101
+00:56:59,024 --> 00:57:05,893
+to this to the same location and then we
+
+1102
+00:57:03,619 --> 00:57:10,642
+do the copy part we copy that that
+
+1103
+00:57:06,109 --> 00:57:15,470
+string to the private string that was
+
+1104
+00:57:10,849 --> 00:57:17,210
+passed in just into our function once
+
+1105
+00:57:15,047 --> 00:57:18,143
+we've done the copy then we can release
+
+1106
+00:57:17,021 --> 00:57:25,570
+the new text and then we return a
+
+1107
+00:57:19,043 --> 00:57:30,118
+pointer we return private P back to the
+
+1108
+00:57:25,759 --> 00:57:33,500
+caller okay so and we don't we don't
+
+1109
+00:57:31,018 --> 00:57:33,877
+this is just more of a convenience to
+
+1110
+00:57:33,005 --> 00:57:36,020
+the caller
+
+1111
+00:57:34,039 --> 00:57:38,450
+because programs that are using C time
+
+1112
+00:57:36,065 --> 00:57:41,674
+are expecting to get that pointer back
+
+1113
+00:57:38,045 --> 00:57:43,097
+okay so by using lock and copy we have
+
+1114
+00:57:42,259 --> 00:57:45,295
+to we have to make changes we have to
+
+1115
+00:57:43,097 --> 00:57:49,100
+write this new function but it's fairly
+
+1116
+00:57:45,619 --> 00:57:51,661
+simple and then we have to make changes
+
+1117
+00:57:50,000 --> 00:57:54,289
+every place in our program where we call
+
+1118
+00:57:52,039 --> 00:57:57,061
+C time we have to update those two calls
+
+1119
+00:57:54,289 --> 00:58:03,410
+to see time underscore TS and create
+
+1120
+00:57:57,259 --> 00:58:05,950
+this create this local string array okay
+
+1121
+00:58:03,041 --> 00:58:05,095
+yes
+
+1122
+00:58:07,095 --> 00:58:12,254
+why-why-why time like the variables out
+
+1123
+00:58:10,749 --> 00:58:12,785
+of consciousness
+
+1124
+00:58:13,031 --> 00:58:15,088
+right
+
+1125
+00:58:20,001 --> 00:58:23,008
+well typically these functions are
+
+1126
+00:58:22,024 --> 00:58:26,080
+returning pointers to some data
+
+1127
+00:58:23,071 --> 00:58:27,163
+structure and so they're they're sort of
+
+1128
+00:58:26,008 --> 00:58:31,066
+updating the data structure and then
+
+1129
+00:58:28,063 --> 00:58:34,066
+returning a pointer to it so it wouldn't
+
+1130
+00:58:32,038 --> 00:58:37,056
+make I don't know how I guess it could
+
+1131
+00:58:34,093 --> 00:58:44,125
+return it struct and would always return
+
+1132
+00:58:37,056 --> 00:58:46,057
+now now I can't think of any I can't
+
+1133
+00:58:45,025 --> 00:58:48,028
+think of any reason why they would
+
+1134
+00:58:46,057 --> 00:58:50,064
+return anything but a pointer because
+
+1135
+00:58:48,055 --> 00:58:53,059
+they're they're typically updating some
+
+1136
+00:58:50,064 --> 00:58:55,158
+some data structure and then returning a
+
+1137
+00:58:53,095 --> 00:58:55,158
+pointer to it
+
+1138
+00:59:01,041 --> 00:59:09,108
+if they were returning if they were
+
+1139
+00:59:06,036 --> 00:59:13,068
+returning scalars those scalars would
+
+1140
+00:59:10,008 --> 00:59:15,009
+always be returned in EAX or RA X all
+
+1141
+00:59:13,068 --> 00:59:16,155
+right so actually that would be okay all
+
+1142
+00:59:15,018 --> 00:59:20,022
+right it would just be it's the pointer
+
+1143
+00:59:17,055 --> 00:59:22,092
+that causes the problem because it's
+
+1144
+00:59:20,058 --> 00:59:24,072
+always returning that value in EI x but
+
+1145
+00:59:22,092 --> 00:59:26,136
+it's always returning the same value in
+
+1146
+00:59:24,072 --> 00:59:31,130
+EAX always pointing to the same the same
+
+1147
+00:59:27,036 --> 00:59:31,130
+data structure okay good
+
+1148
+00:59:33,069 --> 00:59:39,138
+okay now one dub one potentially
+
+1149
+00:59:38,004 --> 00:59:44,393
+significant disadvantage of lock and
+
+1150
+00:59:40,038 --> 00:59:47,067
+copy is that this this copy might not
+
+1151
+00:59:44,789 --> 00:59:51,815
+always be as simple as just doing like a
+
+1152
+00:59:47,067 --> 00:59:52,976
+stir copy if if it's a complex DIF if
+
+1153
+00:59:52,049 --> 00:59:55,530
+the function that you're calling is
+
+1154
+00:59:53,579 --> 00:59:57,626
+computing some complex data structure
+
+1155
+00:59:55,053 --> 00:59:59,060
+like a nested you know a struct which
+
+1156
+00:59:58,049 --> 01:00:03,240
+contain structs and pointers to arrays
+
+1157
+01:00:00,023 --> 01:00:05,028
+then this copy can get can get quite
+
+1158
+01:00:03,024 --> 01:00:08,903
+complicated right it would require what
+
+1159
+01:00:05,073 --> 01:00:10,922
+we call a deep copy so that can be that
+
+1160
+01:00:09,119 --> 01:00:13,260
+can be very difficult to but in this
+
+1161
+01:00:11,579 --> 01:00:15,150
+case it's simple we're just we're just
+
+1162
+01:00:13,026 --> 01:00:18,095
+doing a we're just copying one string to
+
+1163
+01:00:15,015 --> 01:00:21,404
+another okay and then finally the the
+
+1164
+01:00:18,095 --> 01:00:23,178
+fourth class of thread unsafe functions
+
+1165
+01:00:21,539 --> 01:00:27,150
+are functions that call unsafe functions
+
+1166
+01:00:24,078 --> 01:00:29,357
+right so it's kind of obvious and then
+
+1167
+01:00:27,015 --> 01:00:31,047
+the obvious fix is to not call thread
+
+1168
+01:00:30,059 --> 01:00:33,113
+unsafe functions from within your
+
+1169
+01:00:31,047 --> 01:00:38,866
+function and then you can make it thread
+
+1170
+01:00:33,599 --> 01:00:41,640
+safe now there's a very interesting an
+
+1171
+01:00:39,289 --> 01:00:45,320
+important subclass of thread safe
+
+1172
+01:00:41,064 --> 01:00:48,763
+functions called reentered functions so
+
+1173
+01:00:45,599 --> 01:00:52,890
+a reentrant a function is reentrant if
+
+1174
+01:00:49,339 --> 01:00:56,450
+it contains no accesses to shared to
+
+1175
+01:00:52,089 --> 01:00:58,100
+shared variables okay so if all the if
+
+1176
+01:00:56,045 --> 01:01:02,384
+every variable that it accesses is
+
+1177
+01:00:59,000 --> 01:01:06,015
+contained on the is declared as a local
+
+1178
+01:01:02,789 --> 01:01:08,220
+variable and stored on the stack for
+
+1179
+01:01:06,015 --> 01:01:10,020
+that function okay that's called a
+
+1180
+01:01:08,022 --> 01:01:12,063
+reentrant function and because there's
+
+1181
+01:01:10,065 --> 01:01:15,014
+no accesses of any kind to shared
+
+1182
+01:01:12,063 --> 01:01:16,982
+variables there's no there's no
+
+1183
+01:01:15,599 --> 01:01:19,643
+synchronization required because every
+
+1184
+01:01:17,549 --> 01:01:23,597
+function is operating accessing its own
+
+1185
+01:01:20,039 --> 01:01:28,043
+local copy of all the variables and it's
+
+1186
+01:01:24,029 --> 01:01:31,170
+multiple threads execute two instances
+
+1187
+01:01:28,079 --> 01:01:33,720
+of a reentrant function it's okay each
+
+1188
+01:01:31,017 --> 01:01:35,094
+thread has its own separate stack so you
+
+1189
+01:01:33,072 --> 01:01:37,073
+don't need to worry about any kind of
+
+1190
+01:01:35,094 --> 01:01:39,102
+synchronization they can run
+
+1191
+01:01:37,073 --> 01:01:41,100
+independently so the reason we entering
+
+1192
+01:01:40,074 --> 01:01:43,162
+functions are so important is because
+
+1193
+01:01:42,000 --> 01:01:48,016
+it's expensive to do
+
+1194
+01:01:44,062 --> 01:01:49,084
+synchronization and so what you can
+
+1195
+01:01:48,016 --> 01:01:51,058
+avoid it completely with these reaction
+
+1196
+01:01:49,084 --> 01:01:57,118
+function reentrant functions so that
+
+1197
+01:01:51,058 --> 01:01:59,137
+they're efficient so is that as the
+
+1198
+01:01:58,018 --> 01:02:02,116
+diagram shows every reentrant function
+
+1199
+01:02:00,037 --> 01:02:07,078
+is thread safe but not every thread safe
+
+1200
+01:02:03,016 --> 01:02:09,109
+function is reentrant so we saw that
+
+1201
+01:02:07,078 --> 01:02:12,097
+before right when we have a function
+
+1202
+01:02:10,009 --> 01:02:14,065
+that accesses a shared variable we can
+
+1203
+01:02:12,097 --> 01:02:17,104
+make it thread safe by protecting it
+
+1204
+01:02:14,065 --> 01:02:19,120
+with a mutex okay but it's not real
+
+1205
+01:02:18,067 --> 01:02:27,154
+trend because it's actually it's
+
+1206
+01:02:20,002 --> 01:02:30,076
+accessing shared variables okay now on
+
+1207
+01:02:28,054 --> 01:02:32,071
+all the functions in the standard c
+
+1208
+01:02:30,094 --> 01:02:34,159
+library which are enumerated in the back
+
+1209
+01:02:32,071 --> 01:02:37,162
+of your k and r texture thread safe okay
+
+1210
+01:02:35,059 --> 01:02:40,117
+but not not necessarily reentrant and
+
+1211
+01:02:38,062 --> 01:02:42,118
+most most this calls our thread safe
+
+1212
+01:02:41,017 --> 01:02:45,025
+with just a with a few exceptions that
+
+1213
+01:02:43,018 --> 01:02:47,089
+I've listed here I don't I don't think I
+
+1214
+01:02:45,097 --> 01:02:49,123
+don't think this is complete but these
+
+1215
+01:02:47,089 --> 01:02:52,162
+are just examples of some notable ones
+
+1216
+01:02:50,023 --> 01:02:58,036
+and so for each each of these thread
+
+1217
+01:02:53,062 --> 01:03:01,063
+unsafe functions Linux provides a
+
+1218
+01:02:58,036 --> 01:03:03,133
+reentrant version which is denoted by
+
+1219
+01:03:01,063 --> 01:03:05,128
+underscore R and then that reentrant
+
+1220
+01:03:04,033 --> 01:03:10,105
+version has a different different set of
+
+1221
+01:03:06,028 --> 01:03:12,037
+parameters typically the only exception
+
+1222
+01:03:11,005 --> 01:03:16,086
+that I know about is I net n to a which
+
+1223
+01:03:13,018 --> 01:03:20,110
+is an episode of an obsolete Network
+
+1224
+01:03:16,086 --> 01:03:22,183
+protocol for converting sort of binary
+
+1225
+01:03:21,001 --> 01:03:27,067
+Network addresses to human readable
+
+1226
+01:03:23,083 --> 01:03:29,089
+ASCII addresses but this is this is
+
+1227
+01:03:27,076 --> 01:03:31,168
+often not deleted by by other calls so
+
+1228
+01:03:30,043 --> 01:03:34,099
+it's I guess they just never never
+
+1229
+01:03:32,068 --> 01:03:35,155
+bothered to create a reentrant version
+
+1230
+01:03:34,099 --> 01:03:39,171
+for it because there's there's other
+
+1231
+01:03:36,055 --> 01:03:40,071
+options alternatives to using that
+
+1232
+01:03:40,819 --> 01:03:46,170
+okay another so another thing we have to
+
+1233
+01:03:43,023 --> 01:03:48,066
+worry about is we've seen is races again
+
+1234
+01:03:46,017 --> 01:03:51,896
+this is the real Bugaboo in in threaded
+
+1235
+01:03:48,066 --> 01:03:54,072
+programs and it typically involves some
+
+1236
+01:03:52,049 --> 01:04:00,050
+kind of unexpected sharing so in this
+
+1237
+01:03:54,072 --> 01:04:02,169
+case we're revisit this this this
+
+1238
+01:04:00,059 --> 01:04:05,970
+incorrect threaded program that where we
+
+1239
+01:04:03,069 --> 01:04:09,123
+introduce introduced arrays by passing
+
+1240
+01:04:05,097 --> 01:04:10,946
+when we create the thread we we pass the
+
+1241
+01:04:10,023 --> 01:04:16,382
+argument to the thread which is like the
+
+1242
+01:04:11,819 --> 01:04:17,894
+local thread ID we pass an address of a
+
+1243
+01:04:16,589 --> 01:04:21,630
+variable that we have stored on the
+
+1244
+01:04:18,569 --> 01:04:30,210
+stack and it's getting the I that the
+
+1245
+01:04:21,063 --> 01:04:35,252
+the loop iterator and so we've seen that
+
+1246
+01:04:30,021 --> 01:04:38,630
+this causes this causes array so we in
+
+1247
+01:04:35,819 --> 01:04:39,893
+quickly we set initially is 0 then we
+
+1248
+01:04:38,819 --> 01:04:46,200
+create a new thread which is pure thread
+
+1249
+01:04:40,559 --> 01:04:47,656
+0 and then this thread dereferences the
+
+1250
+01:04:46,002 --> 01:04:53,141
+pointer to get its local copy of the
+
+1251
+01:04:48,529 --> 01:04:57,150
+this sort of local thread ID but now
+
+1252
+01:04:53,339 --> 01:05:01,361
+we've introduced the race between the
+
+1253
+01:04:57,015 --> 01:05:03,974
+increment of I and the dereferencing of
+
+1254
+01:05:01,559 --> 01:05:07,170
+the incrementing of I and the main
+
+1255
+01:05:04,109 --> 01:05:10,410
+thread and the dereferencing of I in the
+
+1256
+01:05:07,017 --> 01:05:12,069
+peer thread so if this dereferencing
+
+1257
+01:05:10,041 --> 01:05:15,075
+happens before I is incremented than
+
+1258
+01:05:12,069 --> 01:05:18,072
+we're good but if this dereferencing
+
+1259
+01:05:15,075 --> 01:05:21,150
+happens after we increment I so in other
+
+1260
+01:05:18,099 --> 01:05:24,116
+words that when I equal 1 then we get
+
+1261
+01:05:22,005 --> 01:05:28,024
+the wrong value in the peer thread for
+
+1262
+01:05:25,016 --> 01:05:28,375
+for my ID
+
+1263
+01:05:29,003 --> 01:05:33,072
+so you might wonder I think there was a
+
+1264
+01:05:31,047 --> 01:05:35,115
+question before about you know this
+
+1265
+01:05:33,099 --> 01:05:37,101
+seems that the odds of this happening
+
+1266
+01:05:36,015 --> 01:05:42,090
+seems so low why why are you even
+
+1267
+01:05:38,019 --> 01:05:44,082
+worrying about it so we actually create
+
+1268
+01:05:42,009 --> 01:05:47,046
+just to sort of test this out we wrote a
+
+1269
+01:05:44,082 --> 01:05:51,084
+program to see if we could see if we
+
+1270
+01:05:48,027 --> 01:05:54,054
+could actually could see this race in
+
+1271
+01:05:51,084 --> 01:05:55,170
+practice and that's why the great things
+
+1272
+01:05:54,054 --> 01:05:58,128
+about like 2:13 is that you can just try
+
+1273
+01:05:56,007 --> 01:06:02,078
+stuff out right so so we just tried it
+
+1274
+01:05:59,028 --> 01:06:05,100
+out so we wrote it we wrote a simple
+
+1275
+01:06:03,041 --> 01:06:09,042
+main thread that creates a hundred
+
+1276
+01:06:06,000 --> 01:06:11,004
+different threads each with and we
+
+1277
+01:06:09,051 --> 01:06:13,140
+passed the art as the argument we task
+
+1278
+01:06:11,004 --> 01:06:18,009
+the address of of this local variable I
+
+1279
+01:06:14,004 --> 01:06:21,057
+okay and then in each peer thread we
+
+1280
+01:06:18,009 --> 01:06:22,017
+detach the thread dereference and then
+
+1281
+01:06:21,093 --> 01:06:26,100
+we have a function that saves the value
+
+1282
+01:06:23,007 --> 01:06:31,103
+so where we're storing we're storing
+
+1283
+01:06:27,063 --> 01:06:36,063
+that value of I for future reference
+
+1284
+01:06:32,066 --> 01:06:38,085
+okay so now if there's no race each of
+
+1285
+01:06:36,063 --> 01:06:40,071
+the 100 threads would get a separate
+
+1286
+01:06:38,085 --> 01:06:43,089
+distinct thread ID right so each each
+
+1287
+01:06:41,043 --> 01:06:46,095
+value 0 through 99 if we made a
+
+1288
+01:06:44,025 --> 01:06:50,028
+histogram of it there would be exactly
+
+1289
+01:06:46,095 --> 01:06:52,137
+one instance of each of each value of I
+
+1290
+01:06:50,028 --> 01:06:56,055
+ok but if there was a race there would
+
+1291
+01:06:53,037 --> 01:06:58,041
+be for some values of I there would be
+
+1292
+01:06:56,055 --> 01:07:00,147
+multiple instances that were encountered
+
+1293
+01:06:58,041 --> 01:07:06,138
+in multiple threads ok so you can see if
+
+1294
+01:07:01,047 --> 01:07:08,145
+we go back here if if if we lose if the
+
+1295
+01:07:07,038 --> 01:07:12,104
+peer thread loses the race and I gets
+
+1296
+01:07:09,045 --> 01:07:12,104
+incremented before it can dereference
+
+1297
+01:07:14,018 --> 01:07:24,095
+now we've got peer thread 0 actually
+
+1298
+01:07:19,065 --> 01:07:24,068
+gets a an ID of 1 ok
+
+1299
+01:07:24,097 --> 01:07:29,098
+and then Pierre thread one if there's no
+
+1300
+01:07:28,057 --> 01:07:31,150
+race it'll-it'll get the correct value
+
+1301
+01:07:30,007 --> 01:07:37,072
+of one so now we've got two instances of
+
+1302
+01:07:32,005 --> 01:07:41,014
+one okay so let's look so this is the
+
+1303
+01:07:37,072 --> 01:07:42,148
+case so we've plotted the results for a
+
+1304
+01:07:41,059 --> 01:07:45,097
+case where there's no race so along the
+
+1305
+01:07:43,048 --> 01:07:49,051
+x-axis sorry this is too small the
+
+1306
+01:07:45,097 --> 01:07:51,184
+x-axis gives us all the 100 values of I
+
+1307
+01:07:49,051 --> 01:07:54,082
+0 through 99 and then the y-axis is the
+
+1308
+01:07:52,084 --> 01:07:57,163
+count so this is a hit we're doing a
+
+1309
+01:07:54,082 --> 01:08:01,150
+histogram of for these all the values 0
+
+1310
+01:07:58,063 --> 01:08:04,108
+through 99 so in this case every value
+
+1311
+01:08:02,005 --> 01:08:11,032
+has exactly one instance so no race
+
+1312
+01:08:05,008 --> 01:08:16,051
+there was no race in no races involved
+
+1313
+01:08:11,077 --> 01:08:18,100
+in all 99 are all 100 instances who run
+
+1314
+01:08:16,051 --> 01:08:20,092
+it on a single core laptop so now each
+
+1315
+01:08:19,000 --> 01:08:25,063
+thread is sort of taking its turn on a
+
+1316
+01:08:20,092 --> 01:08:27,160
+single core it happens a few times right
+
+1317
+01:08:25,063 --> 01:08:30,064
+so there's a few times where the one
+
+1318
+01:08:28,006 --> 01:08:36,019
+thread gets preempted and the other
+
+1319
+01:08:30,064 --> 01:08:38,128
+thread begins to run before it can so
+
+1320
+01:08:36,073 --> 01:08:41,077
+the peers 1 1 thread gets preempted
+
+1321
+01:08:39,028 --> 01:08:43,120
+before I can dereference the variable so
+
+1322
+01:08:41,077 --> 01:08:45,100
+it gets the wrong the wrong value but
+
+1323
+01:08:44,002 --> 01:08:51,058
+it's not very common it just it happened
+
+1324
+01:08:46,000 --> 01:08:54,003
+1 2 3 4 5 6 7 times but now if we run
+
+1325
+01:08:51,076 --> 01:08:56,095
+this program on a on a multi-core server
+
+1326
+01:08:54,003 --> 01:08:58,045
+you can see it happens a lot in fact it
+
+1327
+01:08:56,095 --> 01:09:00,099
+happens most of the time so it almost
+
+1328
+01:08:58,072 --> 01:09:05,109
+never we almost never get the correct
+
+1329
+01:09:01,035 --> 01:09:05,109
+the correct value for for my ID
+
+1330
+01:09:06,119 --> 01:09:09,218
+okay so this is just another example of
+
+1331
+01:09:08,069 --> 01:09:12,074
+some of the create the things I can just
+
+1332
+01:09:10,109 --> 01:09:14,174
+drive you crazy if you're not careful
+
+1333
+01:09:12,569 --> 01:09:18,623
+when you when you program is and threads
+
+1334
+01:09:14,759 --> 01:09:20,813
+with threads okay and as so as we saw
+
+1335
+01:09:19,109 --> 01:09:26,580
+the way to eliminate these kind of
+
+1336
+01:09:21,299 --> 01:09:30,395
+erases is to avoid this the sharing of
+
+1337
+01:09:26,058 --> 01:09:33,090
+state and in this case by allocating for
+
+1338
+01:09:31,259 --> 01:09:36,290
+each thread allocating a separate block
+
+1339
+01:09:33,009 --> 01:09:38,678
+in the in the heat that will hold the
+
+1340
+01:09:36,029 --> 01:09:42,081
+that will hold the the local ID for that
+
+1341
+01:09:39,569 --> 01:09:46,580
+thread and then passing a pointer to
+
+1342
+01:09:42,081 --> 01:09:48,370
+that that unique block of storage to the
+
+1343
+01:09:46,679 --> 01:09:48,721
+thread
+
+1344
+01:09:50,179 --> 01:09:55,770
+okay so if that if all of that isn't
+
+1345
+01:09:52,859 --> 01:09:58,868
+enough to worry about and by now you
+
+1346
+01:09:55,077 --> 01:10:00,113
+should be losing sleep at the very
+
+1347
+01:09:58,949 --> 01:10:03,840
+thought of writing a threaded program
+
+1348
+01:10:01,013 --> 01:10:09,812
+another thing to worry about is deadlock
+
+1349
+01:10:03,084 --> 01:10:11,130
+okay so here a program is deadlocked if
+
+1350
+01:10:09,929 --> 01:10:18,630
+it's waiting for some condition to occur
+
+1351
+01:10:12,003 --> 01:10:22,112
+that will never occur okay so let's say
+
+1352
+01:10:18,063 --> 01:10:24,078
+a typical scenario right T P is the
+
+1353
+01:10:22,409 --> 01:10:27,840
+potential the P operation is a potential
+
+1354
+01:10:24,078 --> 01:10:28,877
+problem because it blocks right and it's
+
+1355
+01:10:27,084 --> 01:10:33,173
+waiting for that semaphore that it's
+
+1356
+01:10:29,579 --> 01:10:35,760
+blocking on to become nonzero well it's
+
+1357
+01:10:33,929 --> 01:10:38,981
+it's not too hard to imagine scenarios
+
+1358
+01:10:35,076 --> 01:10:42,081
+where some there's some combination of
+
+1359
+01:10:39,449 --> 01:10:46,020
+P's of P operations that sort of block
+
+1360
+01:10:43,026 --> 01:10:47,255
+each other out okay and make it
+
+1361
+01:10:46,002 --> 01:10:50,073
+impossible for the condition they're
+
+1362
+01:10:47,489 --> 01:10:55,520
+waiting on to occur so for example let's
+
+1363
+01:10:50,073 --> 01:10:59,192
+say you've got two two threads that need
+
+1364
+01:10:55,052 --> 01:11:01,901
+two two threads one and two that need
+
+1365
+01:10:59,849 --> 01:11:04,290
+two different resources a and B in order
+
+1366
+01:11:02,369 --> 01:11:08,381
+to proceed so they have to acquire they
+
+1367
+01:11:04,029 --> 01:11:11,708
+have to do a PE on the mutex that on the
+
+1368
+01:11:08,489 --> 01:11:13,650
+mutex that that's associated with the
+
+1369
+01:11:11,969 --> 01:11:17,036
+new Texas that are associated with these
+
+1370
+01:11:13,065 --> 01:11:22,076
+two resources so let's say process one
+
+1371
+01:11:17,639 --> 01:11:26,400
+acquires a so it does a P on phase mutex
+
+1372
+01:11:22,076 --> 01:11:29,100
+that's one it's okay so it succeeds that
+
+1373
+01:11:26,004 --> 01:11:33,533
+it so it acquires that resource and then
+
+1374
+01:11:30,000 --> 01:11:38,073
+it gets preempted by thread to which
+
+1375
+01:11:33,929 --> 01:11:41,933
+acquires B first instead of acquiring a
+
+1376
+01:11:38,073 --> 01:11:44,121
+thread B for some reason acquires B so
+
+1377
+01:11:41,969 --> 01:11:48,540
+now thread a holds the lock on resource
+
+1378
+01:11:45,021 --> 01:11:53,780
+a and thread two holds the lock on
+
+1379
+01:11:48,054 --> 01:11:55,573
+resource B and so now let's say process
+
+1380
+01:11:53,969 --> 01:11:59,420
+thread two gets preempted so now and
+
+1381
+01:11:56,059 --> 01:12:02,670
+thread one runs and so now it's waiting
+
+1382
+01:11:59,042 --> 01:12:06,138
+it's trying to do two tries to acquire
+
+1383
+01:12:02,067 --> 01:12:10,112
+the the lock on resource b-but threat to
+
+1384
+01:12:07,038 --> 01:12:13,089
+our whole deadlock and at the same time
+
+1385
+01:12:11,012 --> 01:12:17,109
+thread to tries to acquire the lock on
+
+1386
+01:12:13,089 --> 01:12:20,091
+resource a but process one is holding
+
+1387
+01:12:18,009 --> 01:12:23,100
+that right so they're each so here's the
+
+1388
+01:12:21,009 --> 01:12:27,045
+case where thread a is waiting for this
+
+1389
+01:12:24,000 --> 01:12:30,039
+semaphore associated with B to become
+
+1390
+01:12:27,045 --> 01:12:32,100
+non zero so it's blocked in this P
+
+1391
+01:12:30,039 --> 01:12:36,123
+operation and at the same time thread
+
+1392
+01:12:33,000 --> 01:12:40,092
+two is blocked in the P operation for
+
+1393
+01:12:37,023 --> 01:12:44,027
+for for resource a neither of those
+
+1394
+01:12:40,092 --> 01:12:48,156
+semaphores will ever be released so
+
+1395
+01:12:44,063 --> 01:12:50,157
+thread one and two are deadlocked okay
+
+1396
+01:12:49,056 --> 01:12:53,124
+and it it happened because just there
+
+1397
+01:12:51,057 --> 01:12:56,100
+was this innocuous little bug in this
+
+1398
+01:12:54,024 --> 01:13:00,071
+case where one the threads acquired
+
+1399
+01:12:57,000 --> 01:13:00,071
+their resources in different orders
+
+1400
+01:13:04,086 --> 01:13:10,128
+so here's an example of a program that
+
+1401
+01:13:08,001 --> 01:13:13,002
+deadlocks and if you looked at this you
+
+1402
+01:13:11,028 --> 01:13:14,085
+know the fact that it's wrong and buggy
+
+1403
+01:13:13,011 --> 01:13:17,070
+doesn't jump out at you right so this is
+
+1404
+01:13:14,085 --> 01:13:19,179
+this kind of stuff is very subtle so
+
+1405
+01:13:17,007 --> 01:13:25,014
+here's here's a program we're going to
+
+1406
+01:13:20,079 --> 01:13:31,086
+create two threads we've got an array so
+
+1407
+01:13:26,004 --> 01:13:35,103
+and we have an array of mutexes an array
+
+1408
+01:13:31,086 --> 01:13:38,157
+of two mutexes so we create two threads
+
+1409
+01:13:36,039 --> 01:13:43,113
+and we pass each thread it's a local
+
+1410
+01:13:39,057 --> 01:13:45,105
+thread ID so of 0 & 1 and so here we're
+
+1411
+01:13:44,013 --> 01:13:49,029
+avoiding the race we're just casting
+
+1412
+01:13:46,005 --> 01:13:52,011
+this thread ID to be to a pointer okay
+
+1413
+01:13:49,029 --> 01:13:54,045
+which is a little strange but it's okay
+
+1414
+01:13:52,011 --> 01:14:03,036
+and then we're waiting for those threads
+
+1415
+01:13:54,045 --> 01:14:05,130
+to finish okay each thread is going to
+
+1416
+01:14:03,036 --> 01:14:09,081
+acquire to these two semaphores these
+
+1417
+01:14:06,003 --> 01:14:12,005
+two mutexes but it's going to do it in a
+
+1418
+01:14:09,081 --> 01:14:11,132
+different order
+
+1419
+01:14:14,219 --> 01:14:18,270
+okay so it's going to do it as a
+
+1420
+01:14:16,005 --> 01:14:20,654
+function it's going to take the ID so
+
+1421
+01:14:18,027 --> 01:14:24,033
+it's going to sew thread zero will first
+
+1422
+01:14:20,699 --> 01:14:28,020
+acquire a mutex 0 and then and then
+
+1423
+01:14:24,087 --> 01:14:33,093
+acquire mutex 1-0 so then it will
+
+1424
+01:14:28,002 --> 01:14:37,035
+acquire mutex 1 and thread 1 will first
+
+1425
+01:14:33,093 --> 01:14:42,135
+acquire you Tech's one and then acquire
+
+1426
+01:14:37,035 --> 01:14:44,109
+mutex 0 okay so if we were to draw that
+
+1427
+01:14:43,035 --> 01:14:46,044
+Dyke and then and then it will attempt
+
+1428
+01:14:45,009 --> 01:14:49,658
+to then it will increment count so this
+
+1429
+01:14:47,025 --> 01:14:52,080
+is totally bogus but it's just to
+
+1430
+01:14:49,739 --> 01:14:55,620
+illustrate that the problem so you can
+
+1431
+01:14:52,008 --> 01:14:57,026
+see thread 0 does a peon semaphore 0
+
+1432
+01:14:55,062 --> 01:15:00,101
+followed by a peon semaphore 1 and
+
+1433
+01:14:57,098 --> 01:15:05,160
+thread 1 does a peon semaphore 1
+
+1434
+01:15:01,001 --> 01:15:08,100
+followed by a peon semaphore 0 and so we
+
+1435
+01:15:06,006 --> 01:15:11,105
+can see this that this is a problem very
+
+1436
+01:15:09,000 --> 01:15:14,018
+clearly if we go back to our progress
+
+1437
+01:15:11,699 --> 01:15:14,180
+graphs
+
+1438
+01:15:15,093 --> 01:15:24,106
+so if you look at thread 0 it's doing a
+
+1439
+01:15:20,068 --> 01:15:26,161
+peon semaphore 1 and it followed a peon
+
+1440
+01:15:25,006 --> 01:15:32,014
+semaphore 1 followed by a V on semaphore
+
+1441
+01:15:27,061 --> 01:15:34,123
+1 and thread 1 is also is doing a peon
+
+1442
+01:15:32,086 --> 01:15:40,090
+semaphore 1 followed by a V on semaphore
+
+1443
+01:15:35,023 --> 01:15:44,101
+1 so if you take if you take the the
+
+1444
+01:15:40,009 --> 01:15:46,063
+intersection of these two regions you
+
+1445
+01:15:45,001 --> 01:15:49,009
+get the forbidden region for semaphore 1
+
+1446
+01:15:47,044 --> 01:15:53,068
+okay so this is the region that enforces
+
+1447
+01:15:49,081 --> 01:15:57,094
+mutual exclusion so on this on this the
+
+1448
+01:15:53,068 --> 01:15:59,149
+resource associated with semaphore 1 and
+
+1449
+01:15:57,094 --> 01:16:02,098
+if you do the same thing for semaphore 0
+
+1450
+01:16:00,049 --> 01:16:05,053
+so here in thread 1 we're acquiring
+
+1451
+01:16:03,034 --> 01:16:09,112
+semaphore 0 here and releasing it here
+
+1452
+01:16:05,089 --> 01:16:13,090
+and we're in thread 0 we're acquiring it
+
+1453
+01:16:10,012 --> 01:16:16,090
+here and releasing it here so if you
+
+1454
+01:16:13,009 --> 01:16:20,080
+take the intersection of those two you
+
+1455
+01:16:16,009 --> 01:16:23,055
+get this forbidden region for s0 ok now
+
+1456
+01:16:21,061 --> 01:16:23,136
+the problem
+
+1457
+01:16:26,009 --> 01:16:34,078
+is right is this region here this
+
+1458
+01:16:29,389 --> 01:16:36,472
+so-called deadlock region because by the
+
+1459
+01:16:34,159 --> 01:16:41,900
+rules of you know time can't go
+
+1460
+01:16:37,219 --> 01:16:45,050
+backwards art once the trajectory enters
+
+1461
+01:16:41,009 --> 01:16:47,998
+into the this deadlock region then it's
+
+1462
+01:16:45,005 --> 01:16:51,092
+doomed because there's no once it enters
+
+1463
+01:16:48,889 --> 01:16:54,400
+this once it enters this deadlock region
+
+1464
+01:16:51,092 --> 01:16:56,180
+there's nowhere for it to go eventually
+
+1465
+01:16:54,004 --> 01:17:00,008
+no matter how it progresses every
+
+1466
+01:16:57,008 --> 01:17:01,085
+trajectory will lead to to this point
+
+1467
+01:17:00,044 --> 01:17:05,125
+here where it's boxed in and can't and
+
+1468
+01:17:02,057 --> 01:17:05,125
+can no longer proceed
+
+1469
+01:17:10,007 --> 01:17:20,846
+so so and interestingly this is sort of
+
+1470
+01:17:16,098 --> 01:17:22,176
+this region Dec here on the on the the
+
+1471
+01:17:20,909 --> 01:17:26,550
+sort of the tail end of the of these two
+
+1472
+01:17:23,076 --> 01:17:27,665
+forbidden regions this represents states
+
+1473
+01:17:26,055 --> 01:17:30,126
+that can never be reached so these are
+
+1474
+01:17:28,349 --> 01:17:34,260
+unreachable states which may or may not
+
+1475
+01:17:31,026 --> 01:17:39,033
+be interesting and then what makes this
+
+1476
+01:17:34,026 --> 01:17:43,805
+so nasty is that it's non-deterministic
+
+1477
+01:17:39,096 --> 01:17:45,155
+right some programs some trajectories if
+
+1478
+01:17:44,039 --> 01:17:48,128
+they get lucky they'll skirt this
+
+1479
+01:17:46,019 --> 01:17:53,033
+deadlock region and then the program
+
+1480
+01:17:48,929 --> 01:17:58,650
+will run fine right there's okay so if
+
+1481
+01:17:53,159 --> 01:18:00,630
+if its trajectory maybe just by some you
+
+1482
+01:17:58,065 --> 01:18:02,070
+know just by some arbitrary scheduling
+
+1483
+01:18:00,063 --> 01:18:08,088
+decision made by the colonel the
+
+1484
+01:18:03,015 --> 01:18:12,084
+trajectory trajectory gets passed the
+
+1485
+01:18:08,088 --> 01:18:15,111
+deadlock region in this direction and
+
+1486
+01:18:12,084 --> 01:18:19,463
+then it will eventually run without any
+
+1487
+01:18:16,011 --> 01:18:22,310
+problem so it's just it's only if the
+
+1488
+01:18:20,219 --> 01:18:24,224
+trajectory lands it within the deadlock
+
+1489
+01:18:22,409 --> 01:18:25,420
+region then they were that we're in
+
+1490
+01:18:24,719 --> 01:18:27,788
+trouble
+
+1491
+01:18:25,519 --> 01:18:30,840
+so so this is the really nasty the
+
+1492
+01:18:28,409 --> 01:18:32,690
+really nasty part is that you may run
+
+1493
+01:18:30,084 --> 01:18:36,105
+your program for a million times and
+
+1494
+01:18:32,069 --> 01:18:39,038
+every trajectory every one of those
+
+1495
+01:18:37,005 --> 01:18:42,036
+million trajectories skirts the deadlock
+
+1496
+01:18:39,659 --> 01:18:45,900
+region okay but on the million and first
+
+1497
+01:18:42,036 --> 01:18:49,040
+time that you run it it it enters the
+
+1498
+01:18:45,009 --> 01:18:51,518
+deadlock region and then deadlocks okay
+
+1499
+01:18:49,004 --> 01:18:55,283
+so it's it's very it's a very tough
+
+1500
+01:18:52,409 --> 01:18:57,530
+problem to deal with now fortunately you
+
+1501
+01:18:55,679 --> 01:19:01,733
+it's easy to avoid
+
+1502
+01:18:57,053 --> 01:19:05,852
+if threads that are acquiring locks on
+
+1503
+01:19:02,219 --> 01:19:09,311
+on resources acquire all those locks in
+
+1504
+01:19:06,329 --> 01:19:12,368
+the same order okay so in our example if
+
+1505
+01:19:10,139 --> 01:19:15,300
+we rewrite this program so that each
+
+1506
+01:19:12,719 --> 01:19:17,770
+thread thread 0 and thread 1 acquire
+
+1507
+01:19:15,003 --> 01:19:21,003
+their locks in the same order so
+
+1508
+01:19:18,229 --> 01:19:23,266
+semaphore 0 first followed by semaphore
+
+1509
+01:19:21,003 --> 01:19:23,302
+1
+
+1510
+01:19:23,078 --> 01:19:29,687
+then if that happens and we you can see
+
+1511
+01:19:27,009 --> 01:19:36,072
+it eliminates the depth the potential
+
+1512
+01:19:30,389 --> 01:19:44,880
+deadlock region okay so now any
+
+1513
+01:19:37,053 --> 01:19:47,076
+trajectory that we take will will be
+
+1514
+01:19:44,088 --> 01:19:50,133
+fine because we've eliminated that that
+
+1515
+01:19:47,076 --> 01:19:52,205
+that deadlock region and the the order
+
+1516
+01:19:51,033 --> 01:19:55,058
+that we release the locks doesn't matter
+
+1517
+01:19:52,889 --> 01:20:02,460
+because that that sort of effects that
+
+1518
+01:19:55,058 --> 01:20:03,887
+the it affects this unreachable region
+
+1519
+01:20:02,046 --> 01:20:07,535
+you know the size and shape of this
+
+1520
+01:20:04,409 --> 01:20:10,710
+unreachable reasons region but it
+
+1521
+01:20:07,949 --> 01:20:11,954
+there's never the order that we release
+
+1522
+01:20:10,071 --> 01:20:17,142
+the locks it can never introduce a
+
+1523
+01:20:12,449 --> 01:20:24,120
+deadlock region okay so that's it for
+
+1524
+01:20:18,042 --> 01:20:26,061
+today hope you all have a very nice
+
+1525
+01:20:24,012 --> 01:20:29,071
+Thanksgiving holiday and we'll see you
+
+1526
+01:20:26,061 --> 01:20:28,630
+on Tuesday
+

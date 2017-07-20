@@ -1,0 +1,4092 @@
+1
+00:00:00,989 --> 00:00:06,960
+all right well good afternoon everybody
+
+2
+00:00:02,879 --> 00:00:10,820
+good to see you welcome welcome to all
+
+3
+00:00:06,096 --> 00:00:09,182
+those students watching on video as well
+
+4
+00:00:11,009 --> 00:00:17,618
+before we start we were talking about
+
+5
+00:00:14,219 --> 00:00:20,460
+joinable and detached threads and you
+
+6
+00:00:17,699 --> 00:00:22,980
+asked the question about why you would
+
+7
+00:00:20,046 --> 00:00:23,139
+ever want to have threads running and
+
+8
+00:00:22,098 --> 00:00:26,057
+non detached mode you know why you'd
+
+9
+00:00:24,039 --> 00:00:28,113
+ever run want to have them run enjoyable
+
+10
+00:00:26,939 --> 00:00:31,140
+and I didn't give you a very good answer
+
+11
+00:00:29,013 --> 00:00:34,017
+so I want to try to to answer that for
+
+12
+00:00:31,014 --> 00:00:38,753
+you better turns out there's an
+
+13
+00:00:34,053 --> 00:00:40,137
+important class of sort of parallel
+
+14
+00:00:38,879 --> 00:00:42,960
+programming there's an important
+
+15
+00:00:41,037 --> 00:00:46,080
+parallel programming model called fork
+
+16
+00:00:42,096 --> 00:00:51,695
+and join where program consists of a
+
+17
+00:00:46,008 --> 00:00:55,029
+series of phases in each things in each
+
+18
+00:00:52,559 --> 00:00:59,591
+phase you have a worker or a master
+
+19
+00:00:56,001 --> 00:01:07,002
+sorry and it creates a bunch of worker
+
+20
+00:00:59,879 --> 00:01:08,885
+threads and then each of those worker
+
+21
+00:01:07,011 --> 00:01:12,770
+threads sells some part of the problem
+
+22
+00:01:08,939 --> 00:01:14,340
+for that phase like so maybe you take
+
+23
+00:01:12,869 --> 00:01:17,400
+your data structure and you break it up
+
+24
+00:01:14,034 --> 00:01:19,050
+into chunks and then each thread updates
+
+25
+00:01:17,004 --> 00:01:23,097
+the its own chunk of that data structure
+
+26
+00:01:19,005 --> 00:01:25,062
+for whatever reason the master then has
+
+27
+00:01:24,033 --> 00:01:27,072
+to wait for the work of threads to
+
+28
+00:01:26,007 --> 00:01:31,014
+finish before it can go on to the next
+
+29
+00:01:27,072 --> 00:01:33,611
+phase so it it does enjoy so this is
+
+30
+00:01:31,014 --> 00:01:37,086
+called the fork and then it waits for
+
+31
+00:01:34,259 --> 00:01:41,490
+all the threads to finish by doing a
+
+32
+00:01:37,086 --> 00:01:43,705
+join ok so this is called this is called
+
+33
+00:01:41,049 --> 00:01:46,071
+the fork and this is called the join and
+
+34
+00:01:44,479 --> 00:01:49,571
+only when all of the threads have
+
+35
+00:01:46,071 --> 00:01:52,103
+finished can it go and do the next do
+
+36
+00:01:50,399 --> 00:01:53,030
+the next phase
+
+37
+00:01:54,042 --> 00:01:58,120
+okay so this this model is really
+
+38
+00:01:57,019 --> 00:02:03,028
+important in things like scientific
+
+39
+00:01:59,002 --> 00:02:05,053
+computing where you might you're
+
+40
+00:02:03,028 --> 00:02:08,367
+simulating some domain you're simulating
+
+41
+00:02:05,071 --> 00:02:10,138
+nature so you represent that at some
+
+42
+00:02:08,619 --> 00:02:14,470
+domain like maybe you're simulating how
+
+43
+00:02:11,038 --> 00:02:19,054
+heat flows over a plate you know metal
+
+44
+00:02:14,047 --> 00:02:22,048
+plate and so you might might have these
+
+45
+00:02:19,054 --> 00:02:24,103
+workers you might petition the domain
+
+46
+00:02:22,048 --> 00:02:27,082
+amongst a set of those workers and then
+
+47
+00:02:25,003 --> 00:02:30,067
+each one of these phases is a time step
+
+48
+00:02:27,082 --> 00:02:31,138
+and then so once once all the workers
+
+49
+00:02:30,067 --> 00:02:35,074
+have finished a time step then they can
+
+50
+00:02:32,038 --> 00:02:38,041
+advance to the next time step and so
+
+51
+00:02:36,037 --> 00:02:40,042
+sorry I don't know why I didn't think of
+
+52
+00:02:38,041 --> 00:02:46,129
+it that's a that's an important reason
+
+53
+00:02:40,087 --> 00:02:48,456
+why you don't this okay so we saw we've
+
+54
+00:02:47,029 --> 00:02:51,558
+seen the threaded threaded programs are
+
+55
+00:02:49,239 --> 00:02:56,470
+are nice because you think you can share
+
+56
+00:02:51,819 --> 00:02:59,410
+all the global variables but the sharing
+
+57
+00:02:56,047 --> 00:03:01,054
+can can have unintended consequences so
+
+58
+00:02:59,041 --> 00:03:05,370
+somehow we need a mechanism where we can
+
+59
+00:03:02,017 --> 00:03:09,031
+control how the flows of each individual
+
+60
+00:03:05,739 --> 00:03:11,920
+thread are interleaved so that bad
+
+61
+00:03:09,031 --> 00:03:14,044
+things don't happen when we share data
+
+62
+00:03:11,092 --> 00:03:15,148
+structures okay so this this process of
+
+63
+00:03:14,044 --> 00:03:18,153
+controlling the the interleaving is
+
+64
+00:03:16,048 --> 00:03:20,086
+called synchronization so we're going to
+
+65
+00:03:18,549 --> 00:03:23,110
+look at techniques that you can use to
+
+66
+00:03:20,086 --> 00:03:26,161
+write correct threaded programs by
+
+67
+00:03:23,011 --> 00:03:30,013
+properly synchronizing them now first
+
+68
+00:03:27,061 --> 00:03:31,126
+though we need to have a clear idea so
+
+69
+00:03:30,013 --> 00:03:33,088
+sharing is the issue right if we have
+
+70
+00:03:32,026 --> 00:03:36,091
+threads that aren't sharing any
+
+71
+00:03:33,088 --> 00:03:37,150
+resources then there's no problem right
+
+72
+00:03:36,091 --> 00:03:39,097
+that we saw this when we looked at it
+
+73
+00:03:38,005 --> 00:03:43,039
+processes there's no shared data
+
+74
+00:03:40,051 --> 00:03:45,055
+structures of processes so we processes
+
+75
+00:03:43,084 --> 00:03:47,119
+just run independently we don't really
+
+76
+00:03:45,091 --> 00:03:49,135
+care how they're interleaved note no
+
+77
+00:03:48,019 --> 00:03:53,056
+worries okay but as soon as they
+
+78
+00:03:50,035 --> 00:03:55,072
+introduced sharing then then we have to
+
+79
+00:03:53,056 --> 00:03:57,121
+be careful okay
+
+80
+00:03:55,072 --> 00:03:59,095
+so to understand how to synchronize
+
+81
+00:03:58,021 --> 00:04:03,058
+threads we first need to have a clear
+
+82
+00:03:59,095 --> 00:04:07,096
+idea of what we mean by sharing in in
+
+83
+00:04:03,058 --> 00:04:10,066
+threaded seed programs so the the answer
+
+84
+00:04:08,005 --> 00:04:13,042
+is not as simple as global variables are
+
+85
+00:04:10,066 --> 00:04:21,082
+shared and stacked variables are not
+
+86
+00:04:13,042 --> 00:04:23,116
+shared okay so with instead what we a
+
+87
+00:04:21,082 --> 00:04:26,098
+variable X is shared if and only if
+
+88
+00:04:24,016 --> 00:04:30,016
+multiple threads reference some instance
+
+89
+00:04:26,098 --> 00:04:32,101
+so that that variable X so if only one
+
+90
+00:04:30,016 --> 00:04:38,029
+thread is accessing a particular
+
+91
+00:04:33,001 --> 00:04:42,001
+variable then it's it's not shared okay
+
+92
+00:04:38,029 --> 00:04:44,068
+so in order to know exactly what we mean
+
+93
+00:04:42,001 --> 00:04:47,065
+by shared we need to answer three
+
+94
+00:04:44,068 --> 00:04:50,071
+questions okay first what is the memory
+
+95
+00:04:47,065 --> 00:04:52,152
+model for threads ok second power
+
+96
+00:04:50,098 --> 00:04:56,113
+instances of variables mapped to memory
+
+97
+00:04:53,052 --> 00:04:58,129
+and then and then third how many threads
+
+98
+00:04:57,013 --> 00:05:01,021
+might be referencing those the instances
+
+99
+00:04:59,029 --> 00:05:02,104
+of those variables okay so we'll look at
+
+100
+00:05:01,021 --> 00:05:04,068
+each of those now in turn each of those
+
+101
+00:05:03,004 --> 00:05:09,036
+three questions
+
+102
+00:05:04,068 --> 00:05:11,089
+okay so first is that the memory model
+
+103
+00:05:09,036 --> 00:05:13,123
+the conceptual model is a little bit
+
+104
+00:05:11,089 --> 00:05:14,116
+different from the operational model the
+
+105
+00:05:14,023 --> 00:05:18,049
+way it really works
+
+106
+00:05:15,016 --> 00:05:20,047
+okay so conceptually we have multiple
+
+107
+00:05:18,049 --> 00:05:22,105
+threads that run in the context of a
+
+108
+00:05:20,047 --> 00:05:25,050
+single process okay and some of that
+
+109
+00:05:23,005 --> 00:05:28,024
+context is shared and some of its not
+
+110
+00:05:25,077 --> 00:05:30,145
+shared so each thread has its own
+
+111
+00:05:28,024 --> 00:05:33,070
+separate thread ID stack stack pointer
+
+112
+00:05:31,045 --> 00:05:37,114
+program counter condition codes
+
+113
+00:05:33,007 --> 00:05:39,106
+general-purpose registers and then they
+
+114
+00:05:38,014 --> 00:05:42,085
+all share the remaining process context
+
+115
+00:05:40,069 --> 00:05:44,137
+with which data structures that the
+
+116
+00:05:42,085 --> 00:05:46,180
+kernel maintains for the threads the
+
+117
+00:05:45,037 --> 00:05:51,043
+virtual data structures to support the
+
+118
+00:05:47,008 --> 00:05:55,024
+virtual memory system open files install
+
+119
+00:05:51,097 --> 00:05:56,188
+signal handlers and so forth so that's
+
+120
+00:05:55,096 --> 00:05:58,135
+the conceptual model and if that were
+
+121
+00:05:57,088 --> 00:05:59,143
+that if that were really enforced it
+
+122
+00:05:59,035 --> 00:06:03,046
+would be nice it would make things
+
+123
+00:06:00,043 --> 00:06:05,136
+simpler for us but unfortunately in real
+
+124
+00:06:03,046 --> 00:06:08,138
+life this model is not strictly enforced
+
+125
+00:06:06,036 --> 00:06:10,091
+now although register values are really
+
+126
+00:06:09,038 --> 00:06:12,107
+right the colonel maintained separate
+
+127
+00:06:10,091 --> 00:06:15,095
+context for the all the registers so
+
+128
+00:06:13,007 --> 00:06:18,068
+that that part is good but since the
+
+129
+00:06:16,031 --> 00:06:21,038
+threads share the address space a thread
+
+130
+00:06:18,068 --> 00:06:23,135
+can access the memory the stack one
+
+131
+00:06:22,001 --> 00:06:24,092
+thread can access the stack of another
+
+132
+00:06:24,035 --> 00:06:26,063
+thread
+
+133
+00:06:24,092 --> 00:06:29,143
+okay so although conceptually these
+
+134
+00:06:26,063 --> 00:06:36,101
+stacks are separate and distinct and in
+
+135
+00:06:30,043 --> 00:06:38,078
+private they're really not and so this
+
+136
+00:06:37,001 --> 00:06:41,009
+can create some problems so here's an
+
+137
+00:06:38,078 --> 00:06:45,122
+example of that we'll come back to you
+
+138
+00:06:41,081 --> 00:06:48,113
+later of how this one thread can access
+
+139
+00:06:46,022 --> 00:06:50,063
+the stack of another thread so here
+
+140
+00:06:49,013 --> 00:06:55,061
+we're defining a global variable called
+
+141
+00:06:50,063 --> 00:06:58,106
+pointer which is the char star star and
+
+142
+00:06:55,061 --> 00:07:00,089
+then in the main routine on declaring a
+
+143
+00:06:59,006 --> 00:07:03,089
+local variable called messages which
+
+144
+00:07:00,089 --> 00:07:07,127
+contains it's a two element array which
+
+145
+00:07:03,089 --> 00:07:09,116
+contains a couple strings which these
+
+146
+00:07:08,027 --> 00:07:12,059
+will be printed out by by the threads
+
+147
+00:07:10,016 --> 00:07:15,020
+that we're going to create and then we
+
+148
+00:07:12,059 --> 00:07:17,093
+assign the global pointer to the vet to
+
+149
+00:07:15,002 --> 00:07:22,076
+the address of the array messages okay
+
+150
+00:07:17,093 --> 00:07:23,189
+so now pointer points to messages and
+
+151
+00:07:22,094 --> 00:07:28,139
+then we create in a loop we create two
+
+152
+00:07:24,089 --> 00:07:31,178
+threads each of which execute this
+
+153
+00:07:29,039 --> 00:07:37,103
+routine called thread and and we're
+
+154
+00:07:32,078 --> 00:07:39,080
+passing an argument so the t threads
+
+155
+00:07:38,003 --> 00:07:41,003
+will assign a thread ID but in this case
+
+156
+00:07:39,008 --> 00:07:42,080
+we're going to assign our own local
+
+157
+00:07:41,003 --> 00:07:46,046
+thread ID by passing this sweep index
+
+158
+00:07:43,052 --> 00:07:49,055
+okay so this is an example we talked
+
+159
+00:07:46,046 --> 00:07:50,129
+about this last time it's it's kind of
+
+160
+00:07:49,055 --> 00:07:53,138
+it's this is perfectly okay there's no
+
+161
+00:07:51,029 --> 00:07:56,084
+race but it's it's a little weird
+
+162
+00:07:54,038 --> 00:08:01,087
+because we're going to take this index I
+
+163
+00:07:56,084 --> 00:08:01,087
+and cast it to a generic pointer okay
+
+164
+00:08:03,003 --> 00:08:10,004
+and then after we create these threads
+
+165
+00:08:04,092 --> 00:08:12,147
+then we'll like that the main thread now
+
+166
+00:08:10,004 --> 00:08:15,063
+each the thread routine dereferences its
+
+167
+00:08:13,047 --> 00:08:19,071
+argument to get the local the local
+
+168
+00:08:15,099 --> 00:08:20,172
+thread ID and then it it declares a
+
+169
+00:08:19,071 --> 00:08:22,149
+static variable count that we're going
+
+170
+00:08:21,072 --> 00:08:24,123
+to use to count how many times this
+
+171
+00:08:23,049 --> 00:08:28,053
+thread routine is called inside of a
+
+172
+00:08:25,023 --> 00:08:32,046
+thread and then it just prints a simple
+
+173
+00:08:28,089 --> 00:08:36,238
+message from identifying that giving the
+
+174
+00:08:32,046 --> 00:08:41,124
+local thread ID and then the message
+
+175
+00:08:37,039 --> 00:08:45,510
+indexed by my ID so pointer points to
+
+176
+00:08:42,024 --> 00:08:49,077
+messages so thread zero will print hello
+
+177
+00:08:45,051 --> 00:08:52,116
+from foo and thread 1 will print hello
+
+178
+00:08:49,077 --> 00:08:56,165
+from bar and then and then we increment
+
+179
+00:08:53,016 --> 00:08:57,065
+the pre increment the counter variable
+
+180
+00:08:57,092 --> 00:09:05,100
+okay so although it doesn't you wouldn't
+
+181
+00:09:03,075 --> 00:09:07,131
+you would it looks like we're accessing
+
+182
+00:09:06,000 --> 00:09:10,026
+this global variable pointer but since
+
+183
+00:09:08,031 --> 00:09:13,047
+that was assigned to be the address of
+
+184
+00:09:10,026 --> 00:09:17,058
+the local variable on the main the main
+
+185
+00:09:13,047 --> 00:09:21,066
+thread stack we've got this these peer
+
+186
+00:09:17,058 --> 00:09:24,126
+threads accessing local variables on the
+
+187
+00:09:21,066 --> 00:09:26,079
+main thread stack okay so that I just
+
+188
+00:09:25,026 --> 00:09:28,119
+this is not it you never want to do this
+
+189
+00:09:26,079 --> 00:09:31,175
+it's a very bad practice but I it's the
+
+190
+00:09:29,019 --> 00:09:32,075
+kind of thing that can happen sometimes
+
+191
+00:09:32,009 --> 00:09:36,096
+by accident you know if you forget that
+
+192
+00:09:35,055 --> 00:09:40,119
+pointer actually was assigned to you
+
+193
+00:09:37,077 --> 00:09:43,080
+know some some stack address okay so
+
+194
+00:09:41,019 --> 00:09:46,035
+that so the second question that is how
+
+195
+00:09:44,007 --> 00:09:49,020
+do we map variable instances to memory
+
+196
+00:09:46,035 --> 00:09:50,121
+now we looked at this when we when we
+
+197
+00:09:49,002 --> 00:09:53,064
+studied linking but let's just review
+
+198
+00:09:51,021 --> 00:09:57,072
+this quickly again to make sure that
+
+199
+00:09:53,082 --> 00:09:58,167
+it's clear to you so global variables
+
+200
+00:09:57,072 --> 00:10:03,114
+are variables that are referenced
+
+201
+00:09:59,067 --> 00:10:05,151
+outside of the function and virtual
+
+202
+00:10:04,014 --> 00:10:08,022
+memory the linker when it does symbol
+
+203
+00:10:06,051 --> 00:10:10,062
+resolution make sure that there's
+
+204
+00:10:08,022 --> 00:10:11,100
+exactly one instance of every global
+
+205
+00:10:10,062 --> 00:10:17,073
+variable in virtue
+
+206
+00:10:12,000 --> 00:10:21,074
+memory now local variables are declared
+
+207
+00:10:17,073 --> 00:10:21,074
+on the stack inside of a function
+
+208
+00:10:22,034 --> 00:10:28,041
+without the static attribute and so in
+
+209
+00:10:26,064 --> 00:10:31,080
+this case each the stack for each thread
+
+210
+00:10:29,004 --> 00:10:33,092
+will contain one instance of that local
+
+211
+00:10:31,008 --> 00:10:33,020
+variable
+
+212
+00:10:36,062 --> 00:10:42,134
+now if variables are declared inside of
+
+213
+00:10:40,092 --> 00:10:44,184
+a function with the static attribute
+
+214
+00:10:43,034 --> 00:10:47,046
+then the scope of that variable is
+
+215
+00:10:45,084 --> 00:10:49,182
+limited to that function meaning no
+
+216
+00:10:47,046 --> 00:10:53,145
+other function can access it but that
+
+217
+00:10:50,082 --> 00:10:55,170
+static variable is stored along with all
+
+218
+00:10:54,045 --> 00:10:58,068
+the other local variables so there's any
+
+219
+00:10:56,007 --> 00:11:02,016
+static variable declared inside of the
+
+220
+00:10:58,068 --> 00:11:05,085
+function has exactly one instance in in
+
+221
+00:11:03,006 --> 00:11:07,089
+memory and if you were to have say
+
+222
+00:11:05,085 --> 00:11:09,093
+multiple functions that declared the
+
+223
+00:11:08,043 --> 00:11:12,090
+same a static variable with the same
+
+224
+00:11:09,093 --> 00:11:13,167
+name the compiler would would
+
+225
+00:11:12,009 --> 00:11:18,045
+disambiguate those somehow if it would
+
+226
+00:11:14,067 --> 00:11:22,145
+it would append some kind of unique it
+
+227
+00:11:19,026 --> 00:11:23,045
+would somehow make that name unique okay
+
+228
+00:11:23,066 --> 00:11:28,068
+okay so what recall how all these
+
+229
+00:11:26,004 --> 00:11:34,032
+different types of variable instances
+
+230
+00:11:28,068 --> 00:11:35,133
+are mapped into memory Kay pointer is a
+
+231
+00:11:34,032 --> 00:11:42,120
+global variable so there's one instance
+
+232
+00:11:36,033 --> 00:11:46,127
+of pointer in the address space and it's
+
+233
+00:11:43,002 --> 00:11:47,009
+stored in the in the data segment
+
+234
+00:11:49,087 --> 00:11:58,099
+I I and messages are examples of local
+
+235
+00:11:56,017 --> 00:12:02,080
+variables two main so there's one
+
+236
+00:11:58,099 --> 00:12:07,152
+instance of these on stored on the stack
+
+237
+00:12:02,008 --> 00:12:10,096
+of main stack and we'll denote those
+
+238
+00:12:08,052 --> 00:12:15,057
+with this notation we'll say variable I
+
+239
+00:12:11,068 --> 00:12:19,090
+I dot M means variable I is stored on
+
+240
+00:12:15,057 --> 00:12:25,096
+main stack and messages is stored on the
+
+241
+00:12:19,009 --> 00:12:27,040
+stack of name okay now my ID is a local
+
+242
+00:12:25,096 --> 00:12:30,124
+variable declared affined in this thread
+
+243
+00:12:28,021 --> 00:12:32,077
+routine and so there's actual sense
+
+244
+00:12:31,024 --> 00:12:34,063
+there's two of these threads there's
+
+245
+00:12:32,077 --> 00:12:37,171
+there's now there are in memory there's
+
+246
+00:12:34,063 --> 00:12:40,141
+there's two instances of my ID one one
+
+247
+00:12:38,071 --> 00:12:44,143
+for each stack okay associated with the
+
+248
+00:12:41,041 --> 00:12:48,127
+stack associated with each thread so my
+
+249
+00:12:45,043 --> 00:12:53,062
+ID t0 is stored on peer thread 0 stack
+
+250
+00:12:49,027 --> 00:12:59,098
+and my ID dot t1 is stored on peer
+
+251
+00:12:53,062 --> 00:13:03,651
+thread 1 stack ok and now this counter
+
+252
+00:12:59,098 --> 00:13:06,207
+variable the static counter variable has
+
+253
+00:13:04,209 --> 00:13:09,216
+just exactly one instance in in virtual
+
+254
+00:13:07,089 --> 00:13:11,890
+memory and it's in the data segment
+
+255
+00:13:09,279 --> 00:13:14,910
+along with other global variables like
+
+256
+00:13:11,089 --> 00:13:14,091
+like pointer
+
+257
+00:13:16,081 --> 00:13:22,093
+okay now so the question is which of
+
+258
+00:13:20,092 --> 00:13:28,093
+these variables are shared and which are
+
+259
+00:13:22,093 --> 00:13:31,099
+not okay and so we can remember what we
+
+260
+00:13:28,093 --> 00:13:34,120
+said is it's shared if it's more than
+
+261
+00:13:31,099 --> 00:13:40,120
+one thread is accessing an instance of
+
+262
+00:13:35,002 --> 00:13:43,020
+that variable okay so let's let's just
+
+263
+00:13:41,002 --> 00:13:45,010
+list all the different variables and
+
+264
+00:13:43,038 --> 00:13:47,104
+then let's look at each of these threads
+
+265
+00:13:46,000 --> 00:13:51,085
+and see if it's referenced by that
+
+266
+00:13:48,004 --> 00:13:56,071
+thread okay so what about what about
+
+267
+00:13:51,085 --> 00:14:00,154
+pointer right there's just it's
+
+268
+00:13:56,071 --> 00:14:03,153
+referenced by the main thread and what
+
+269
+00:14:01,054 --> 00:14:03,153
+about peer thread zero
+
+270
+00:14:06,086 --> 00:14:15,164
+yeah it's referenced by peer thread zero
+
+271
+00:14:09,044 --> 00:14:19,130
+right here right here and similarly for
+
+272
+00:14:16,064 --> 00:14:23,065
+peach red one okay so so pointer is
+
+273
+00:14:20,003 --> 00:14:23,038
+referenced by all three threads
+
+274
+00:14:24,007 --> 00:14:33,053
+now what about counts counts not
+
+275
+00:14:30,005 --> 00:14:38,081
+referenced by the main thread but it is
+
+276
+00:14:33,053 --> 00:14:42,122
+referenced by the two peer threads now
+
+277
+00:14:38,081 --> 00:14:46,166
+what about I in main that's referenced
+
+278
+00:14:43,022 --> 00:14:49,078
+by main of course but not by but not by
+
+279
+00:14:47,066 --> 00:14:51,122
+either of the two threads
+
+280
+00:14:49,078 --> 00:14:55,127
+now what about messages the messages
+
+281
+00:14:52,022 --> 00:15:00,065
+array okay so that's that's accessed by
+
+282
+00:14:56,027 --> 00:15:04,094
+my main and indirectly through pointer
+
+283
+00:15:00,065 --> 00:15:08,086
+it's referenced by each of these two
+
+284
+00:15:04,094 --> 00:15:13,127
+peer threads now what about my ID
+
+285
+00:15:08,086 --> 00:15:15,101
+defined in in peer thread zero okay so
+
+286
+00:15:14,027 --> 00:15:17,090
+that's referenced that's a local
+
+287
+00:15:16,001 --> 00:15:19,076
+variable so it's only referenced by peer
+
+288
+00:15:17,009 --> 00:15:20,054
+thread zero right it's not referenced by
+
+289
+00:15:19,076 --> 00:15:30,082
+either the other threads and similarly
+
+290
+00:15:21,035 --> 00:15:30,082
+for for my ID and in peer threaten one
+
+291
+00:15:32,029 --> 00:15:41,998
+okay so given given that definition then
+
+292
+00:15:36,939 --> 00:15:46,600
+which of these variables is shared so
+
+293
+00:15:42,259 --> 00:15:46,600
+it's really straightforward with yep
+
+294
+00:15:49,072 --> 00:15:55,072
+okay so the question is does count count
+
+295
+00:15:53,024 --> 00:15:58,093
+as a share variable and answer is yes
+
+296
+00:15:55,072 --> 00:16:01,154
+because because it's declared static
+
+297
+00:15:58,093 --> 00:16:06,116
+it's there's one instance of it in in in
+
+298
+00:16:02,054 --> 00:16:09,080
+virtual memory and each of the threads
+
+299
+00:16:07,016 --> 00:16:12,235
+references that instance okay so it's
+
+300
+00:16:09,008 --> 00:16:14,527
+it's shared it's really like a global
+
+301
+00:16:12,379 --> 00:16:19,730
+variable it's just a scope is limited to
+
+302
+00:16:15,319 --> 00:16:21,470
+the the it stores the same way a global
+
+303
+00:16:19,073 --> 00:16:23,162
+variable is but its scope is limited to
+
+304
+00:16:21,047 --> 00:16:26,206
+the function that is defined in okay so
+
+305
+00:16:24,062 --> 00:16:28,067
+to determine if each one of these is
+
+306
+00:16:26,629 --> 00:16:30,637
+whether which of these variables are
+
+307
+00:16:28,067 --> 00:16:33,098
+shared and which ones not we just we
+
+308
+00:16:30,709 --> 00:16:35,733
+just look go across and for any any
+
+309
+00:16:33,098 --> 00:16:38,827
+variable with its shared by more than
+
+310
+00:16:35,949 --> 00:16:46,300
+more than one thread then it's shared so
+
+311
+00:16:39,709 --> 00:16:51,715
+pointer shared so pointer is shared
+
+312
+00:16:46,003 --> 00:16:53,512
+count is not shared no no count this
+
+313
+00:16:51,769 --> 00:16:57,832
+year because it's it's referenced by
+
+314
+00:16:53,809 --> 00:16:59,860
+peer thread zero and peer thread one i's
+
+315
+00:16:58,399 --> 00:17:04,461
+not shared because it's only referenced
+
+316
+00:17:00,319 --> 00:17:04,326
+by by main so
+
+317
+00:17:07,042 --> 00:17:14,141
+messages access referenced by all three
+
+318
+00:17:10,037 --> 00:17:16,996
+threads so it's shared but my ID is is
+
+319
+00:17:15,041 --> 00:17:20,128
+not shared because it's only referenced
+
+320
+00:17:17,329 --> 00:17:25,100
+by exactly one thread okay so so pointer
+
+321
+00:17:21,028 --> 00:17:26,105
+count and messages are the shared
+
+322
+00:17:25,001 --> 00:17:32,096
+variables in this program and the others
+
+323
+00:17:27,005 --> 00:17:36,032
+are run share yes would let the second
+
+324
+00:17:33,005 --> 00:17:39,092
+process and over it so if you declared
+
+325
+00:17:36,032 --> 00:17:41,051
+my ideas static with the second process
+
+326
+00:17:39,092 --> 00:17:43,981
+of overridden it yeah that would be a
+
+327
+00:17:41,051 --> 00:17:47,117
+race okay so that would we just depend
+
+328
+00:17:44,809 --> 00:17:49,280
+on which which thread executed first so
+
+329
+00:17:48,017 --> 00:17:51,276
+you would really wouldn't want to do
+
+330
+00:17:49,028 --> 00:17:51,177
+that
+
+331
+00:17:54,064 --> 00:18:01,069
+okay so so we have a very clear notion
+
+332
+00:17:58,025 --> 00:18:01,114
+now of what we mean by sharing
+
+333
+00:18:07,369 --> 00:18:12,448
+so these being able to share variables
+
+334
+00:18:10,035 --> 00:18:15,072
+like this in this ways it's very handy
+
+335
+00:18:13,159 --> 00:18:19,860
+but you can run into some really nasty
+
+336
+00:18:15,072 --> 00:18:24,121
+problems that are very surprising so let
+
+337
+00:18:19,086 --> 00:18:26,495
+me show you an example this is a program
+
+338
+00:18:24,769 --> 00:18:28,980
+called dad count so obviously there's
+
+339
+00:18:27,269 --> 00:18:32,306
+something wrong with this I'm giving you
+
+340
+00:18:28,098 --> 00:18:35,120
+a little clue but what we want to do is
+
+341
+00:18:32,639 --> 00:18:39,480
+we want to create we want to create a
+
+342
+00:18:36,002 --> 00:18:42,191
+bunch of threads or a number of threads
+
+343
+00:18:39,048 --> 00:18:44,627
+and each of those threads will increment
+
+344
+00:18:42,389 --> 00:18:47,476
+a global variable called count some
+
+345
+00:18:45,059 --> 00:18:53,070
+number of times the same number of times
+
+346
+00:18:48,259 --> 00:18:56,288
+so so we pass them the number of
+
+347
+00:18:53,007 --> 00:18:57,986
+iterations as the first argument and
+
+348
+00:18:56,549 --> 00:19:01,625
+here's our well here's our global
+
+349
+00:18:58,049 --> 00:19:04,145
+globally shared variable and you
+
+350
+00:19:02,309 --> 00:19:07,364
+remember what volatile means anybody
+
+351
+00:19:05,009 --> 00:19:09,600
+remember what that means so what is
+
+352
+00:19:07,859 --> 00:19:13,190
+volatile what is volatile tell the
+
+353
+00:19:09,006 --> 00:19:12,065
+compiler yes
+
+354
+00:19:15,018 --> 00:19:26,977
+opportunity here
+
+355
+00:19:17,059 --> 00:19:28,820
+you can't access it actually you you're
+
+356
+00:19:27,139 --> 00:19:31,730
+on in the right direction actually tell
+
+357
+00:19:28,082 --> 00:19:34,097
+it tells the compiler never to put that
+
+358
+00:19:31,073 --> 00:19:36,472
+variable in a register okay so it always
+
+359
+00:19:34,097 --> 00:19:39,136
+it will always read that value from
+
+360
+00:19:37,129 --> 00:19:42,490
+memory or store it to memory and you do
+
+361
+00:19:40,009 --> 00:19:48,076
+that because of exactly the kind of
+
+362
+00:19:42,049 --> 00:19:51,095
+possibility that you mentioned so so in
+
+363
+00:19:48,679 --> 00:19:54,470
+this in this case we have we create two
+
+364
+00:19:51,095 --> 00:19:57,394
+threads but with two distinct calls to
+
+365
+00:19:54,047 --> 00:20:01,073
+two pthread create each of these threads
+
+366
+00:19:58,249 --> 00:20:05,330
+will will run the the thread routine
+
+367
+00:20:01,073 --> 00:20:06,122
+called thread and it will pass and as an
+
+368
+00:20:05,033 --> 00:20:09,071
+argument the address of the number of
+
+369
+00:20:07,022 --> 00:20:12,691
+iterations that it should that it should
+
+370
+00:20:09,071 --> 00:20:13,990
+iterate now remember when we were
+
+371
+00:20:12,889 --> 00:20:16,894
+looking when we were passing connected
+
+372
+00:20:14,629 --> 00:20:20,683
+file descriptors if if we pass an
+
+373
+00:20:17,389 --> 00:20:22,450
+address that was a race okay but in this
+
+374
+00:20:21,169 --> 00:20:25,100
+case there's no race this is fine it's
+
+375
+00:20:22,999 --> 00:20:27,350
+fine just to pass the address of number
+
+376
+00:20:25,001 --> 00:20:29,062
+of iterations so why is it okay in this
+
+377
+00:20:27,035 --> 00:20:32,036
+case but it wasn't okay when we were
+
+378
+00:20:29,071 --> 00:20:34,120
+passing the connected file descriptor
+
+379
+00:20:32,036 --> 00:20:36,735
+that we got from accepting to our thread
+
+380
+00:20:34,759 --> 00:20:36,762
+routine
+
+381
+00:20:51,049 --> 00:20:55,488
+exactly because the thread doesn't
+
+382
+00:20:53,409 --> 00:20:57,471
+modify the value and that the problem we
+
+383
+00:20:55,929 --> 00:20:59,952
+had before was that our main thread was
+
+384
+00:20:58,029 --> 00:21:02,115
+modifying that connected to script on on
+
+385
+00:21:00,159 --> 00:21:04,170
+the next call to accept but here it's
+
+386
+00:21:02,889 --> 00:21:07,600
+just the read only variable so we're
+
+387
+00:21:04,269 --> 00:21:09,490
+okay but you see the how tricky the
+
+388
+00:21:07,006 --> 00:21:11,017
+reasoning can get right there's you
+
+389
+00:21:09,049 --> 00:21:13,051
+can't do pattern matching to determine
+
+390
+00:21:11,071 --> 00:21:15,100
+whether you've got races or not races
+
+391
+00:21:13,069 --> 00:21:20,086
+and so you can't just say well it's
+
+392
+00:21:16,000 --> 00:21:23,799
+always bad to pass the address of some
+
+393
+00:21:20,086 --> 00:21:24,405
+variable to a to a thread routine okay
+
+394
+00:21:23,799 --> 00:21:27,837
+because it's not it just depends on the
+
+395
+00:21:25,179 --> 00:21:30,490
+context okay so in this case we're
+
+396
+00:21:28,179 --> 00:21:34,254
+passing the number of iterations and to
+
+397
+00:21:30,049 --> 00:21:36,055
+each thread and then we're waiting for
+
+398
+00:21:34,929 --> 00:21:38,740
+each of those threads to finish so this
+
+399
+00:21:37,009 --> 00:21:42,037
+is an examine other-- example of why you
+
+400
+00:21:38,074 --> 00:21:45,172
+need why you might want to have a non
+
+401
+00:21:42,037 --> 00:21:48,846
+detached thread because you can't we
+
+402
+00:21:46,072 --> 00:21:50,098
+want when we check when we check the
+
+403
+00:21:49,179 --> 00:21:52,690
+value of count we have to make sure that
+
+404
+00:21:50,098 --> 00:21:53,133
+every thread is finished before we check
+
+405
+00:21:52,069 --> 00:21:55,908
+whether we got the right value or not
+
+406
+00:21:54,033 --> 00:21:59,035
+okay so we wait for each thread to
+
+407
+00:21:56,529 --> 00:22:01,530
+finish and now since we've created two
+
+408
+00:21:59,035 --> 00:22:04,120
+threads each of which is incrementing
+
+409
+00:22:01,539 --> 00:22:07,210
+count Editors time we expect count to be
+
+410
+00:22:05,002 --> 00:22:09,067
+equal to two times and ITER's and if
+
+411
+00:22:07,021 --> 00:22:13,120
+it's not we print my favorite error
+
+412
+00:22:09,085 --> 00:22:17,113
+message otherwise we with the value of
+
+413
+00:22:14,002 --> 00:22:20,101
+count otherwise we print okay also with
+
+414
+00:22:18,013 --> 00:22:23,086
+the value of count okay so now what's
+
+415
+00:22:21,019 --> 00:22:30,138
+going on in the thread routine very
+
+416
+00:22:23,086 --> 00:22:31,275
+simple it dereferences the the argument
+
+417
+00:22:30,309 --> 00:22:35,380
+that was passed in and stores it in the
+
+418
+00:22:32,049 --> 00:22:38,085
+local copy of editors and then it loops
+
+419
+00:22:35,038 --> 00:22:42,073
+senators time and can increments count
+
+420
+00:22:38,409 --> 00:22:46,457
+each time so and then returns so this is
+
+421
+00:22:42,073 --> 00:22:48,732
+very innocuous what could go wrong and
+
+422
+00:22:46,889 --> 00:22:51,010
+since this is threading since this is
+
+423
+00:22:49,389 --> 00:22:52,392
+concurrent concurrent programming
+
+424
+00:22:51,001 --> 00:22:55,650
+especially since this threaded
+
+425
+00:22:52,419 --> 00:22:57,420
+programming what there's the odd lots of
+
+426
+00:22:55,659 --> 00:22:59,610
+subtle things can go wrong so it turns
+
+427
+00:22:57,429 --> 00:23:04,516
+out this program has a really
+
+428
+00:22:59,061 --> 00:23:04,750
+this bug okay because when we run it
+
+429
+00:23:05,057 --> 00:23:12,075
+when we run it on a Linux box sometimes
+
+430
+00:23:09,035 --> 00:23:14,097
+if we call it with an argument of 10,000
+
+431
+00:23:12,075 --> 00:23:18,254
+sometimes we get the correct answer
+
+432
+00:23:14,097 --> 00:23:20,192
+two times 10,000 or 20,000 then the next
+
+433
+00:23:18,929 --> 00:23:27,660
+time we run it we get some weird number
+
+434
+00:23:21,092 --> 00:23:31,104
+13,000 51 completely wrong and so what
+
+435
+00:23:27,066 --> 00:23:33,165
+what the heck is going on here okay
+
+436
+00:23:32,004 --> 00:23:38,085
+so to understand that we have to look at
+
+437
+00:23:34,065 --> 00:23:41,097
+the assembly language for this counter
+
+438
+00:23:38,085 --> 00:23:43,140
+loop so that we want to we we need to
+
+439
+00:23:41,097 --> 00:23:47,121
+look at the December language for this
+
+440
+00:23:44,004 --> 00:23:49,076
+counter loop in the thread routine so
+
+441
+00:23:48,021 --> 00:23:52,083
+we'll break it up into three chunks that
+
+442
+00:23:50,012 --> 00:23:56,013
+the the first chunk is sort of getting
+
+443
+00:23:52,083 --> 00:23:57,147
+ready for the loop we'll call that the
+
+444
+00:23:56,022 --> 00:24:06,089
+head and we'll denote we'll denote it as
+
+445
+00:23:58,047 --> 00:24:08,109
+H of I for thread I and then we'll we'll
+
+446
+00:24:06,089 --> 00:24:10,125
+we'll isolate on these three
+
+447
+00:24:09,009 --> 00:24:14,061
+instructions that are directly related
+
+448
+00:24:11,025 --> 00:24:17,060
+to incrementing count okay so you see
+
+449
+00:24:14,061 --> 00:24:19,122
+the first instruction moves it loads the
+
+450
+00:24:17,006 --> 00:24:23,091
+global of the value in global variable
+
+451
+00:24:20,022 --> 00:24:30,601
+count into register Rd X so we'll denote
+
+452
+00:24:24,045 --> 00:24:33,141
+that as L of I next it increments RDX
+
+453
+00:24:30,799 --> 00:24:39,090
+we'll denote that U of I for update so
+
+454
+00:24:34,041 --> 00:24:41,930
+it updates RDX and then it stores the
+
+455
+00:24:39,009 --> 00:24:42,848
+value the updated value of RDX into
+
+456
+00:24:42,299 --> 00:24:46,260
+count
+
+457
+00:24:42,929 --> 00:24:52,070
+okay so into the location associated
+
+458
+00:24:46,026 --> 00:24:51,107
+with the local global variable count and
+
+459
+00:24:52,081 --> 00:24:56,176
+and then the rest of the the rest of
+
+460
+00:24:54,091 --> 00:24:59,179
+this loop is getting ready for the to do
+
+461
+00:24:57,076 --> 00:25:01,150
+the next iteration it's not directly
+
+462
+00:25:00,079 --> 00:25:03,112
+related to incrementing count so we'll
+
+463
+00:25:02,005 --> 00:25:07,077
+just sort of group this all together and
+
+464
+00:25:04,012 --> 00:25:08,013
+refer to it as T of I for Tail
+
+465
+00:25:12,068 --> 00:25:20,112
+now let's look at let's look at how this
+
+466
+00:25:18,054 --> 00:25:23,058
+how these two threads might be might be
+
+467
+00:25:21,012 --> 00:25:26,034
+executed and remember in general we
+
+468
+00:25:23,094 --> 00:25:27,156
+can't assume that there's any specific
+
+469
+00:25:26,034 --> 00:25:29,130
+interleaving so any interleaving of
+
+470
+00:25:28,056 --> 00:25:34,128
+these two threads is possible no matter
+
+471
+00:25:30,003 --> 00:25:37,026
+how remote it might seem so let's look
+
+472
+00:25:35,028 --> 00:25:39,030
+at one example let's say we're executing
+
+473
+00:25:37,053 --> 00:25:45,108
+on a single core so we're only going to
+
+474
+00:25:39,003 --> 00:25:47,055
+do one instruction at a time and in this
+
+475
+00:25:46,008 --> 00:25:48,060
+column will show which thread is
+
+476
+00:25:47,082 --> 00:25:52,146
+executing
+
+477
+00:25:48,006 --> 00:25:54,048
+so either thread 1 or thread 2 and then
+
+478
+00:25:53,046 --> 00:26:00,128
+we'll denote which instruction in that
+
+479
+00:25:55,002 --> 00:26:04,002
+thread is executing either H Lu S or T
+
+480
+00:26:01,028 --> 00:26:08,100
+and then this column shows the value of
+
+481
+00:26:04,002 --> 00:26:10,086
+RDX for thread number 1 and this column
+
+482
+00:26:09,000 --> 00:26:13,017
+shows the value of RDX for thread number
+
+483
+00:26:10,086 --> 00:26:14,151
+2 right and since that the kernel keeps
+
+484
+00:26:13,017 --> 00:26:17,049
+separate copies of all the
+
+485
+00:26:15,051 --> 00:26:22,065
+general-purpose registers the for each
+
+486
+00:26:17,049 --> 00:26:23,097
+each thread these can be different okay
+
+487
+00:26:22,065 --> 00:26:29,127
+and then this last column shows the
+
+488
+00:26:23,097 --> 00:26:31,149
+value of count in memory so let's start
+
+489
+00:26:30,027 --> 00:26:36,102
+executing so initially count is equal to
+
+490
+00:26:32,049 --> 00:26:38,148
+0 and thread one gets the kernel
+
+491
+00:26:37,002 --> 00:26:42,038
+schedules thread thread 1 so it executes
+
+492
+00:26:39,048 --> 00:26:44,115
+say ch1 that has no impact on on count
+
+493
+00:26:42,038 --> 00:26:50,094
+then thread 1 loads the value of count
+
+494
+00:26:45,015 --> 00:26:53,037
+into its copy of RDX updates it so now
+
+495
+00:26:50,094 --> 00:26:55,116
+our DX is equal to 1 and then stores
+
+496
+00:26:53,037 --> 00:26:58,068
+that value in RDX
+
+497
+00:26:56,016 --> 00:27:02,061
+back to count so now count is equal to 1
+
+498
+00:26:58,068 --> 00:27:05,073
+now at this point the kernel decides to
+
+499
+00:27:02,061 --> 00:27:08,070
+schedule thread - so thread 2 begins
+
+500
+00:27:05,073 --> 00:27:13,080
+executing and when it begins executing
+
+501
+00:27:08,007 --> 00:27:20,022
+value of count is 1 so it executes H of
+
+502
+00:27:13,008 --> 00:27:23,022
+I then it loads count into the art into
+
+503
+00:27:20,085 --> 00:27:24,140
+thread 2's copy of RDX so now our DX
+
+504
+00:27:23,094 --> 00:27:27,182
+equals 1
+
+505
+00:27:25,004 --> 00:27:32,012
+updates it now it's equal to 2 and then
+
+506
+00:27:28,082 --> 00:27:37,100
+stores that's valued back to count the
+
+507
+00:27:33,002 --> 00:27:40,049
+kernel then decides oh and then and then
+
+508
+00:27:38,000 --> 00:27:42,098
+it finishes executing the tail
+
+509
+00:27:40,067 --> 00:27:45,092
+instruction and let's say we're just
+
+510
+00:27:42,098 --> 00:27:47,141
+doing one iteration of this and then at
+
+511
+00:27:45,092 --> 00:27:49,145
+this point the kernel decides to
+
+512
+00:27:48,041 --> 00:27:53,045
+schedule thread one since thread 2 is
+
+513
+00:27:50,045 --> 00:27:54,086
+finished so thread 1 1 executes the
+
+514
+00:27:53,045 --> 00:27:57,119
+remaining statement that it has to
+
+515
+00:27:54,086 --> 00:28:01,100
+execute and at this point both threads
+
+516
+00:27:58,019 --> 00:28:04,043
+are finished and count is equal to 2
+
+517
+00:28:02,000 --> 00:28:09,029
+which is the value we would expect ok so
+
+518
+00:28:04,043 --> 00:28:10,091
+this so this is ok and notice how so
+
+519
+00:28:09,029 --> 00:28:12,058
+this is actually this is an interleague
+
+520
+00:28:10,091 --> 00:28:18,182
+that works ok we get the correct value
+
+521
+00:28:12,058 --> 00:28:20,129
+and notice how I did a group the 3
+
+522
+00:28:19,082 --> 00:28:24,128
+instructions that are actually involved
+
+523
+00:28:21,029 --> 00:28:26,096
+and updating count together and we'll
+
+524
+00:28:25,028 --> 00:28:28,070
+call that we'll call those 3
+
+525
+00:28:26,096 --> 00:28:30,119
+instructions a critical section and I've
+
+526
+00:28:28,007 --> 00:28:34,013
+color-coded them so you can easily keep
+
+527
+00:28:31,019 --> 00:28:36,056
+track of them all right let's look now
+
+528
+00:28:34,076 --> 00:28:39,119
+let's look at another another
+
+529
+00:28:36,056 --> 00:28:41,138
+interleaving which is feasible right but
+
+530
+00:28:40,019 --> 00:28:47,042
+in this case it results in the wrong
+
+531
+00:28:42,038 --> 00:28:51,137
+value ok so here we start with thread 1
+
+532
+00:28:47,042 --> 00:28:55,124
+again it loads it's the value of count
+
+533
+00:28:52,037 --> 00:28:59,090
+into its copy of RDX updates it but then
+
+534
+00:28:56,024 --> 00:29:03,029
+before I can store it the kernel decides
+
+535
+00:28:59,009 --> 00:29:07,022
+to schedule thread - so thread 2 begins
+
+536
+00:29:03,029 --> 00:29:11,050
+X executing it loads count into its copy
+
+537
+00:29:08,003 --> 00:29:16,091
+of RDX - and notice count is still 0
+
+538
+00:29:11,005 --> 00:29:20,054
+right it's it's 1 in the value of it in
+
+539
+00:29:16,091 --> 00:29:22,094
+thread 1 in a RDX the copy of RDX and
+
+540
+00:29:20,099 --> 00:29:27,164
+thread 1 but it hasn't been updated in
+
+541
+00:29:23,021 --> 00:29:31,076
+memory so when when when thread 2 loads
+
+542
+00:29:28,064 --> 00:29:34,148
+its value of count now it's copy and RDX
+
+543
+00:29:31,076 --> 00:29:37,097
+is 0 now at this point the kernel
+
+544
+00:29:35,048 --> 00:29:38,124
+reschedules thread 1 to execute so
+
+545
+00:29:37,097 --> 00:29:43,186
+thread 1 does it
+
+546
+00:29:39,024 --> 00:29:47,028
+or of its copy of RDX into count and
+
+547
+00:29:44,059 --> 00:29:50,400
+then finishes executing it's the tale
+
+548
+00:29:47,028 --> 00:29:52,089
+instruction the colonel reschedule
+
+549
+00:29:50,004 --> 00:29:57,090
+thread to which picks up where it left
+
+550
+00:29:52,089 --> 00:30:02,136
+off it updates its copy of of count
+
+551
+00:29:58,026 --> 00:30:06,695
+so now RDX goes from 0 to 1 and then it
+
+552
+00:30:03,036 --> 00:30:08,103
+stores that value into count so all
+
+553
+00:30:06,929 --> 00:30:11,520
+we've done is we've overwritten count
+
+554
+00:30:09,003 --> 00:30:14,022
+out of value 1 and we've overwritten it
+
+555
+00:30:11,052 --> 00:30:16,077
+with a value of 1 so when we finish
+
+556
+00:30:14,022 --> 00:30:22,089
+execution of these two threads count has
+
+557
+00:30:16,077 --> 00:30:23,151
+the wrong value okay in the then the
+
+558
+00:30:22,089 --> 00:30:25,140
+general like the general thing to notice
+
+559
+00:30:24,051 --> 00:30:28,116
+is you see how these critical sections
+
+560
+00:30:26,004 --> 00:30:32,079
+have been interleaved right in this in
+
+561
+00:30:29,016 --> 00:30:35,040
+this case this is the first the critical
+
+562
+00:30:33,015 --> 00:30:39,021
+section for thread 1 executed before the
+
+563
+00:30:35,004 --> 00:30:40,913
+critical section for thread 2 ok but in
+
+564
+00:30:39,075 --> 00:30:43,148
+this case the two critical sections
+
+565
+00:30:41,309 --> 00:30:44,480
+interleaved okay
+
+566
+00:30:45,064 --> 00:30:49,066
+so let's see another example of that so
+
+567
+00:30:48,064 --> 00:30:53,110
+here you can see that these are
+
+568
+00:30:49,084 --> 00:31:02,543
+interleaved so trite suggests it might
+
+569
+00:30:54,001 --> 00:31:03,200
+be a problem yes so I'm excusing
+
+570
+00:31:10,039 --> 00:31:24,077
+well no okay so the question is would I
+
+571
+00:31:14,169 --> 00:31:29,380
+or count count if we okay it is to find
+
+572
+00:31:24,077 --> 00:31:32,976
+this volatile it didn't I yeah so that
+
+573
+00:31:29,038 --> 00:31:35,587
+that's why I mean there's actually and
+
+574
+00:31:33,669 --> 00:31:38,210
+the compiler could have compiled this
+
+575
+00:31:35,929 --> 00:31:39,770
+code in different ways right there is
+
+576
+00:31:38,021 --> 00:31:42,050
+actually an increment instruction that
+
+577
+00:31:39,077 --> 00:31:45,083
+will increment it a variable in memory
+
+578
+00:31:42,005 --> 00:31:47,018
+so you could have done the compiler
+
+579
+00:31:45,083 --> 00:31:48,152
+could have generated this this three
+
+580
+00:31:47,063 --> 00:31:49,159
+instruction sequence is one instruction
+
+581
+00:31:49,052 --> 00:31:53,087
+and then we wouldn't have this problem
+
+582
+00:31:50,059 --> 00:31:57,097
+but the problem is that it's it's it's
+
+583
+00:31:53,087 --> 00:31:59,126
+loading into a register then
+
+584
+00:31:57,097 --> 00:32:04,186
+incrementing and then saving so that the
+
+585
+00:32:00,026 --> 00:32:07,028
+problem comes about because we can this
+
+586
+00:32:05,059 --> 00:32:09,980
+this thread can be interrupted before it
+
+587
+00:32:07,046 --> 00:32:14,101
+finishes this three-step sequence this
+
+588
+00:32:09,098 --> 00:32:14,101
+load modify store sequence yes
+
+589
+00:32:16,004 --> 00:32:19,004
+north
+
+590
+00:32:20,029 --> 00:32:25,052
+it would quit yet so it that's right
+
+591
+00:32:23,018 --> 00:32:26,060
+yeah I guess I wasn't clear it it
+
+592
+00:32:25,052 --> 00:32:28,139
+prevents it from being stored
+
+593
+00:32:26,006 --> 00:32:31,097
+permanently in a register right so it it
+
+594
+00:32:29,039 --> 00:32:33,098
+if it it may have to be loaded into a
+
+595
+00:32:32,051 --> 00:32:36,134
+register but then it'll be written back
+
+596
+00:32:33,098 --> 00:32:37,106
+okay whereas the the compiler would have
+
+597
+00:32:37,034 --> 00:32:41,045
+the option like we've seen it with local
+
+598
+00:32:38,078 --> 00:32:42,176
+variables right the compiler just it
+
+599
+00:32:41,045 --> 00:32:44,123
+never allocates tax base it just keeps
+
+600
+00:32:43,076 --> 00:32:46,117
+that local variable in a register all
+
+601
+00:32:45,023 --> 00:32:49,034
+the time okay so this preventive also
+
+602
+00:32:47,017 --> 00:32:56,024
+attributed prevents the compiler from
+
+603
+00:32:49,034 --> 00:32:56,041
+doing that okay so let's look at another
+
+604
+00:32:56,024 --> 00:33:01,031
+example
+
+605
+00:32:57,004 --> 00:33:05,057
+so here thread one starts it loads it
+
+606
+00:33:01,094 --> 00:33:07,193
+loads count into RDX then thread two
+
+607
+00:33:05,057 --> 00:33:13,064
+starts and it loads account which is
+
+608
+00:33:08,093 --> 00:33:15,131
+still 0 into RDX 2 updates it and then
+
+609
+00:33:13,064 --> 00:33:19,120
+stores it so now count equal to 1 when
+
+610
+00:33:16,031 --> 00:33:24,038
+thread 1 resumes it updates its value of
+
+611
+00:33:20,002 --> 00:33:27,011
+count and RDX and stores that back to
+
+612
+00:33:25,001 --> 00:33:33,023
+count and so again we have we have the
+
+613
+00:33:27,029 --> 00:33:34,061
+same problem okay so the the problem
+
+614
+00:33:33,023 --> 00:33:37,070
+here is that we're interleaving these
+
+615
+00:33:34,061 --> 00:33:40,100
+these critical sections and you can
+
+616
+00:33:37,007 --> 00:33:42,011
+understand why this is bad with a nice
+
+617
+00:33:41,000 --> 00:33:45,004
+sort of graphical technique called a
+
+618
+00:33:42,074 --> 00:33:44,140
+progress graph
+
+619
+00:33:47,004 --> 00:33:54,012
+so in a progress graph if we have four n
+
+620
+00:33:53,004 --> 00:34:00,009
+threads it's an N dimensional Cartesian
+
+621
+00:33:55,002 --> 00:34:03,006
+grid that characterizes the execution
+
+622
+00:34:00,045 --> 00:34:06,057
+state space of a concurrent threaded
+
+623
+00:34:03,024 --> 00:34:09,443
+program so in this case each here we
+
+624
+00:34:06,057 --> 00:34:14,126
+have two threads so it's a it's a it's a
+
+625
+00:34:09,659 --> 00:34:16,685
+2d coordinate system so each each axis
+
+626
+00:34:14,639 --> 00:34:19,667
+represents the progress the execution
+
+627
+00:34:16,919 --> 00:34:23,015
+progress of some thread so the x axis
+
+628
+00:34:19,919 --> 00:34:27,720
+here is thread one and the y axis
+
+629
+00:34:23,879 --> 00:34:30,450
+corresponds to thread two and then each
+
+630
+00:34:27,072 --> 00:34:32,151
+one of these edges corresponds to the
+
+631
+00:34:30,045 --> 00:34:35,121
+execution of an instruction okay so we
+
+632
+00:34:33,051 --> 00:34:39,170
+start out in the initial state and then
+
+633
+00:34:36,021 --> 00:34:41,108
+the first thing we execute is h1 so
+
+634
+00:34:39,629 --> 00:34:45,570
+that's represented by this this arc here
+
+635
+00:34:42,008 --> 00:34:48,024
+so this this position this point right
+
+636
+00:34:45,057 --> 00:34:51,102
+here represents the state where we've
+
+637
+00:34:48,024 --> 00:34:54,057
+executed H we finished executing h1 in
+
+638
+00:34:52,002 --> 00:34:57,078
+thread 1 but we haven't yet executed any
+
+639
+00:34:54,057 --> 00:34:58,134
+instructions in thread 2 ok so in
+
+640
+00:34:57,078 --> 00:35:01,167
+general each one of these points
+
+641
+00:34:59,034 --> 00:35:05,097
+represents sort of the current progress
+
+642
+00:35:02,067 --> 00:35:07,071
+of the program or the execution state so
+
+643
+00:35:05,097 --> 00:35:10,125
+for example this this state right here
+
+644
+00:35:07,071 --> 00:35:14,097
+represents the state where thread 1 has
+
+645
+00:35:11,025 --> 00:35:18,083
+completed a completed l1 and thread 2 is
+
+646
+00:35:14,097 --> 00:35:17,183
+completed s2
+
+647
+00:35:21,002 --> 00:35:27,009
+and now the execution of a program is
+
+648
+00:35:25,023 --> 00:35:30,069
+modeled as the transition from one state
+
+649
+00:35:27,027 --> 00:35:33,056
+to the other and there's some so from
+
+650
+00:35:30,069 --> 00:35:37,718
+from this and there's constraints on how
+
+651
+00:35:33,299 --> 00:35:42,302
+on on how these these states can advance
+
+652
+00:35:38,339 --> 00:35:44,490
+so from this state l1s to yeah obviously
+
+653
+00:35:42,599 --> 00:35:46,680
+time can't go backwards right so we
+
+654
+00:35:44,049 --> 00:35:48,848
+can't we can't go backwards like in this
+
+655
+00:35:46,068 --> 00:35:51,437
+direction to the left and we can't go
+
+656
+00:35:49,289 --> 00:35:55,530
+down okay so we can only go to the right
+
+657
+00:35:52,049 --> 00:35:58,140
+and up and since we're assuming that
+
+658
+00:35:55,053 --> 00:35:59,151
+each instruction executes there's only
+
+659
+00:35:58,014 --> 00:36:02,183
+one instruction executing at a time we
+
+660
+00:36:00,051 --> 00:36:05,360
+can't go diagonally that would be two
+
+661
+00:36:02,309 --> 00:36:10,740
+instructions right so from l1 s to the
+
+662
+00:36:05,819 --> 00:36:13,823
+next execution state is either here ifs
+
+663
+00:36:10,074 --> 00:36:17,393
+thread one execute or here if threaded
+
+664
+00:36:13,859 --> 00:36:19,880
+thread to execute okay so you can put
+
+665
+00:36:18,059 --> 00:36:23,087
+all these together to form a trajectory
+
+666
+00:36:19,088 --> 00:36:26,267
+which characterizes one execution of the
+
+667
+00:36:23,339 --> 00:36:29,010
+program right and any feasible set of
+
+668
+00:36:27,059 --> 00:36:34,520
+transitions from one state to the next
+
+669
+00:36:29,001 --> 00:36:44,088
+corresponds to a feasible trajectory so
+
+670
+00:36:34,052 --> 00:36:49,148
+so for example H 1 L 1 u 1 H 2 L 2 s 1 T
+
+671
+00:36:44,088 --> 00:36:54,096
+1 u 2 u 2 s 2 and T 2
+
+672
+00:36:50,048 --> 00:36:58,095
+that's a feasible that's a feasible
+
+673
+00:36:55,068 --> 00:37:01,217
+trajectory and it's one possible it
+
+674
+00:36:58,095 --> 00:37:04,173
+represents one possible execution or so
+
+675
+00:37:01,829 --> 00:37:08,150
+one set of interleavings for this
+
+676
+00:37:05,073 --> 00:37:07,115
+program
+
+677
+00:37:09,349 --> 00:37:15,371
+now these lb these three these three
+
+678
+00:37:12,027 --> 00:37:18,042
+instructions Lu and s that operate that
+
+679
+00:37:15,569 --> 00:37:22,430
+manipulate count form what we call a
+
+680
+00:37:18,042 --> 00:37:22,043
+critical section with respect to count
+
+681
+00:37:24,005 --> 00:37:31,026
+and the idea is that instructions inside
+
+682
+00:37:28,859 --> 00:37:33,750
+these critical sections would be
+
+683
+00:37:31,026 --> 00:37:38,028
+computed with respect to the same global
+
+684
+00:37:33,075 --> 00:37:40,116
+variable shouldn't be interleaved so we
+
+685
+00:37:38,028 --> 00:37:42,090
+can capture this geometrically by taking
+
+686
+00:37:41,016 --> 00:37:46,041
+the intersection of these critical
+
+687
+00:37:42,009 --> 00:37:50,045
+sections to form what we call an unsafe
+
+688
+00:37:46,041 --> 00:37:55,056
+region so in this and unsafe region is
+
+689
+00:37:51,026 --> 00:37:57,365
+is the points within an unsafe region
+
+690
+00:37:55,056 --> 00:38:00,060
+are those those points in an execution
+
+691
+00:37:57,599 --> 00:38:03,990
+where the critical sections are being or
+
+692
+00:38:00,096 --> 00:38:05,124
+interleaved okay so for this particular
+
+693
+00:38:03,099 --> 00:38:08,121
+example there's four points within the
+
+694
+00:38:06,024 --> 00:38:10,089
+unsafe region and if a trajectory ever
+
+695
+00:38:09,021 --> 00:38:12,048
+touches one of those points then we've
+
+696
+00:38:10,089 --> 00:38:16,268
+interleaved critical section and we're
+
+697
+00:38:12,048 --> 00:38:18,072
+going to get the wrong answer okay so
+
+698
+00:38:17,069 --> 00:38:21,680
+the idea is to try to stay out of these
+
+699
+00:38:18,072 --> 00:38:20,168
+unsafe regions
+
+700
+00:38:23,048 --> 00:38:29,144
+and if we do we say that that trajectory
+
+701
+00:38:26,009 --> 00:38:33,014
+is safe so here's an example of a
+
+702
+00:38:30,044 --> 00:38:35,072
+trajectory that's safe now this is okay
+
+703
+00:38:33,095 --> 00:38:37,234
+right this point right here is not in
+
+704
+00:38:35,072 --> 00:38:39,721
+the unsafe region because we haven't
+
+705
+00:38:38,089 --> 00:38:44,091
+executed we've already executed h1 here
+
+706
+00:38:40,369 --> 00:38:47,390
+remember a point corresponds to and it's
+
+707
+00:38:44,109 --> 00:38:53,420
+the instruction that we've completed
+
+708
+00:38:47,039 --> 00:38:54,047
+that instruction so then so here we're
+
+709
+00:38:53,042 --> 00:38:56,093
+skirting the unsafe region but it's
+
+710
+00:38:55,019 --> 00:38:58,908
+still okay so this is a safe trajectory
+
+711
+00:38:56,093 --> 00:39:03,772
+we'll get the right answer for this one
+
+712
+00:38:59,079 --> 00:39:09,082
+however this trajectory is unsafe
+
+713
+00:39:04,609 --> 00:39:12,655
+because it it enters the unsafe region
+
+714
+00:39:09,109 --> 00:39:16,250
+at this point here and even though it
+
+715
+00:39:13,069 --> 00:39:17,510
+quickly exits the there's an
+
+716
+00:39:16,025 --> 00:39:21,121
+interleaving there that creates a
+
+717
+00:39:17,051 --> 00:39:21,058
+potential for a correct answer
+
+718
+00:39:26,007 --> 00:39:31,176
+okay so the question is how do we
+
+719
+00:39:29,008 --> 00:39:32,092
+guarantee a safe trajectory and this is
+
+720
+00:39:31,869 --> 00:39:38,410
+the this is what we call synchronization
+
+721
+00:39:33,064 --> 00:39:40,102
+so somehow we want to we want to sort of
+
+722
+00:39:38,041 --> 00:39:45,097
+configure the kernel so that'll never
+
+723
+00:39:41,002 --> 00:39:47,811
+schedule an unsafe trajectory so how do
+
+724
+00:39:45,097 --> 00:39:52,153
+we do that
+
+725
+00:39:47,829 --> 00:39:55,930
+so somehow we we have to synchronize the
+
+726
+00:39:53,053 --> 00:39:58,054
+execution of those threads and another
+
+727
+00:39:55,093 --> 00:39:59,098
+way to think of this is that we we need
+
+728
+00:39:58,054 --> 00:40:04,054
+to guarantee mutually exclusive access
+
+729
+00:40:00,043 --> 00:40:06,118
+to the critical sections so once once
+
+730
+00:40:04,054 --> 00:40:08,122
+the kernel begins once the thread starts
+
+731
+00:40:07,018 --> 00:40:11,026
+actually executing the first instruction
+
+732
+00:40:09,022 --> 00:40:14,023
+in its critical section we don't want it
+
+733
+00:40:11,026 --> 00:40:16,039
+to be interrupted by another thread that
+
+734
+00:40:14,023 --> 00:40:17,122
+has a similar critical section okay we
+
+735
+00:40:16,039 --> 00:40:19,105
+don't want it to be interrupted we don't
+
+736
+00:40:18,022 --> 00:40:22,117
+want one one critical section with
+
+737
+00:40:20,005 --> 00:40:24,091
+respect to certain global variable to be
+
+738
+00:40:23,017 --> 00:40:27,216
+interrupted by another thread that has
+
+739
+00:40:24,091 --> 00:40:29,188
+all right that's currently within that
+
+740
+00:40:27,369 --> 00:40:46,210
+same critical section okay sorry yes
+
+741
+00:40:30,088 --> 00:40:46,096
+question okay so the question is how
+
+742
+00:40:46,021 --> 00:40:49,069
+likely is it that you get a correct
+
+743
+00:40:47,068 --> 00:40:51,075
+trajectory and it happens right you can
+
+744
+00:40:49,069 --> 00:40:56,070
+run it sometimes you do it just depends
+
+745
+00:40:52,038 --> 00:40:59,056
+usually it's wrong sometimes it's right
+
+746
+00:40:56,007 --> 00:41:00,088
+and it just depends it just depends on
+
+747
+00:40:59,056 --> 00:41:04,078
+how the kernel schedule it and you can't
+
+748
+00:41:01,051 --> 00:41:06,130
+assume any particular scheduling right
+
+749
+00:41:04,078 --> 00:41:08,101
+so if you say if you want to if you want
+
+750
+00:41:07,003 --> 00:41:10,782
+to claim that you would never get the
+
+751
+00:41:09,001 --> 00:41:12,076
+right answer then you're assuming that
+
+752
+00:41:11,079 --> 00:41:15,153
+the kernel is always going to schedule
+
+753
+00:41:12,076 --> 00:41:16,168
+the unsafe trajectory but you can't
+
+754
+00:41:15,819 --> 00:41:20,250
+assume that in fact it doesn't sometimes
+
+755
+00:41:17,068 --> 00:41:19,125
+you just get lucky
+
+756
+00:41:22,066 --> 00:41:27,255
+and then it turns out you have to you
+
+757
+00:41:26,044 --> 00:41:31,093
+have to call this function with a pretty
+
+758
+00:41:27,849 --> 00:41:33,930
+big number in order to trip it up it so
+
+759
+00:41:31,093 --> 00:41:36,115
+the and it makes sense right it's
+
+760
+00:41:33,093 --> 00:41:41,222
+usually what what the kernel does is
+
+761
+00:41:37,015 --> 00:41:45,174
+that we can only schedule
+
+762
+00:41:42,059 --> 00:41:46,155
+we can only reschedule a thread you know
+
+763
+00:41:45,309 --> 00:41:50,710
+swap it out and schedule another thread
+
+764
+00:41:47,019 --> 00:41:52,047
+in when there's some exception okay so
+
+765
+00:41:50,071 --> 00:41:52,970
+that that passes control back to the
+
+766
+00:41:52,299 --> 00:41:56,230
+kernel
+
+767
+00:41:53,609 --> 00:41:59,230
+so these exceptions are in two forms
+
+768
+00:41:56,023 --> 00:42:00,852
+either calling assistant making system
+
+769
+00:41:59,023 --> 00:42:03,552
+calls so that'll that'll trap into the
+
+770
+00:42:01,059 --> 00:42:06,060
+kernel so that's a form of exception or
+
+771
+00:42:03,759 --> 00:42:08,763
+the timer interrupt goes off which
+
+772
+00:42:06,069 --> 00:42:11,121
+transfers control back to the back to
+
+773
+00:42:08,799 --> 00:42:13,990
+the kernel so the timer the timer is
+
+774
+00:42:11,589 --> 00:42:16,617
+going off on intervals of like
+
+775
+00:42:13,099 --> 00:42:20,478
+milliseconds right so if we're just
+
+776
+00:42:16,869 --> 00:42:23,910
+doing one iteration in each thread when
+
+777
+00:42:21,369 --> 00:42:25,690
+a thread gets executed the chances are
+
+778
+00:42:24,279 --> 00:42:28,930
+very low that the timer is going to go
+
+779
+00:42:25,069 --> 00:42:32,140
+off while that thread is executing you
+
+780
+00:42:28,093 --> 00:42:34,096
+know it's its little loop but as we and
+
+781
+00:42:33,004 --> 00:42:35,103
+we're not making any system calls right
+
+782
+00:42:35,023 --> 00:42:38,074
+so there's there's nothing though
+
+783
+00:42:36,039 --> 00:42:40,158
+there's nothing we're not we're not
+
+784
+00:42:38,074 --> 00:42:42,139
+we're not we're not passing control back
+
+785
+00:42:40,509 --> 00:42:45,250
+into the kernel ourselves so the only
+
+786
+00:42:43,039 --> 00:42:48,678
+way the kernel is going to get access is
+
+787
+00:42:45,025 --> 00:42:50,047
+if the timer interrupts goes off so if
+
+788
+00:42:49,029 --> 00:42:53,980
+we're doing a very small number of
+
+789
+00:42:50,047 --> 00:42:55,066
+iterations the probability that you know
+
+790
+00:42:53,098 --> 00:42:58,887
+so here's the timer interval it's going
+
+791
+00:42:55,066 --> 00:43:01,215
+off at intervals like this here this the
+
+792
+00:42:59,769 --> 00:43:03,700
+probability we have to
+
+793
+00:43:01,809 --> 00:43:05,890
+that's thread would have to have been
+
+794
+00:43:03,007 --> 00:43:07,030
+scheduled right before a timer interrupt
+
+795
+00:43:05,089 --> 00:43:09,708
+will go off or to interrupt that one or
+
+796
+00:43:07,093 --> 00:43:11,191
+two iterations so it turns out we have
+
+797
+00:43:10,509 --> 00:43:15,400
+to schedule we have to call this
+
+798
+00:43:12,091 --> 00:43:18,166
+function with a lot of within ITER's
+
+799
+00:43:15,004 --> 00:43:20,086
+being fairly large so that the the
+
+800
+00:43:19,066 --> 00:43:23,925
+probability of the timer interrupts
+
+801
+00:43:21,022 --> 00:43:26,841
+going off during that during that during
+
+802
+00:43:24,519 --> 00:43:29,603
+that loop but gets increasingly large
+
+803
+00:43:27,039 --> 00:43:30,071
+that makes sense
+
+804
+00:43:35,089 --> 00:43:39,137
+so the classic solution from this comes
+
+805
+00:43:37,739 --> 00:43:44,160
+from the early 1960s one of the most
+
+806
+00:43:39,569 --> 00:43:47,606
+famous computer scientists a Dutchman
+
+807
+00:43:44,016 --> 00:43:50,405
+named Edgar Edgar Dykstra and he came up
+
+808
+00:43:47,939 --> 00:43:51,020
+with the the classical first solution to
+
+809
+00:43:50,549 --> 00:43:55,565
+this problem which is what we're going
+
+810
+00:43:51,749 --> 00:43:56,831
+to look at it it's still the first it's
+
+811
+00:43:55,709 --> 00:43:59,738
+fundamental and very general purpose and
+
+812
+00:43:57,569 --> 00:44:03,630
+there's there's been many iterations and
+
+813
+00:43:59,999 --> 00:44:06,010
+variations on this idea but semaphores
+
+814
+00:44:03,063 --> 00:44:11,672
+were the first and classic solution
+
+815
+00:44:06,109 --> 00:44:17,640
+which we'll look at okay so a semaphore
+
+816
+00:44:12,239 --> 00:44:20,130
+is that is a non- global integer that's
+
+817
+00:44:17,064 --> 00:44:26,453
+used as a synchronization variable by
+
+818
+00:44:20,013 --> 00:44:30,592
+two to kernel functions called PM z our
+
+819
+00:44:27,029 --> 00:44:30,097
+two system calls called P and V
+
+820
+00:44:32,014 --> 00:44:41,015
+these P&V or correspond to the Dutch
+
+821
+00:44:35,012 --> 00:44:42,065
+words but we just just we just call them
+
+822
+00:44:41,015 --> 00:44:47,081
+P and V right you just have to learn
+
+823
+00:44:42,065 --> 00:44:52,124
+what what they do so each of these takes
+
+824
+00:44:47,081 --> 00:44:56,156
+as an argument of a semaphore and the P
+
+825
+00:44:53,024 --> 00:45:03,026
+operation has the following semantics if
+
+826
+00:44:57,056 --> 00:45:08,057
+if s is non zero then decrement it by 1
+
+827
+00:45:03,044 --> 00:45:11,090
+and return immediately and this test if
+
+828
+00:45:08,066 --> 00:45:14,087
+it that it's non zero and the decrement
+
+829
+00:45:11,009 --> 00:45:23,024
+occur atomically so so they'll never be
+
+830
+00:45:14,087 --> 00:45:27,158
+interrupted however if s is zero then
+
+831
+00:45:24,005 --> 00:45:32,087
+suspend this thread until s becomes non
+
+832
+00:45:28,058 --> 00:45:38,102
+zero and that thread then is restarted
+
+833
+00:45:32,087 --> 00:45:41,144
+by a V operation okay so if T if the
+
+834
+00:45:39,002 --> 00:45:44,053
+semaphore is zero P just blocks it just
+
+835
+00:45:42,044 --> 00:45:48,062
+gets suspended until it gets restarted
+
+836
+00:45:44,053 --> 00:45:51,152
+by a V operation and then after it
+
+837
+00:45:48,062 --> 00:45:55,063
+restarts the P operation now can
+
+838
+00:45:52,052 --> 00:45:58,087
+decrement s by one and return control to
+
+839
+00:45:55,063 --> 00:45:58,087
+the caller
+
+840
+00:46:02,349 --> 00:46:07,414
+okay the Z operation just increments s
+
+841
+00:46:05,018 --> 00:46:10,867
+by one and this increment unlike that
+
+842
+00:46:07,999 --> 00:46:12,680
+count plus plus that we looked at just
+
+843
+00:46:11,029 --> 00:46:15,031
+looked at that increment occurs
+
+844
+00:46:12,068 --> 00:46:18,187
+atomically okay so it can never be
+
+845
+00:46:15,229 --> 00:46:22,258
+interrupted and then after it increments
+
+846
+00:46:18,799 --> 00:46:24,170
+s it checks to see if there's any any
+
+847
+00:46:22,519 --> 00:46:25,600
+threads that are blocked in a pea
+
+848
+00:46:24,017 --> 00:46:28,846
+operation so you can think of the kernel
+
+849
+00:46:26,329 --> 00:46:31,375
+just keeps a queue of threads that are
+
+850
+00:46:28,999 --> 00:46:34,220
+blocked in a pea operation and the V
+
+851
+00:46:31,789 --> 00:46:36,410
+operation after it increments s it
+
+852
+00:46:34,022 --> 00:46:38,851
+checks that queue for any any threads
+
+853
+00:46:36,041 --> 00:46:40,690
+that were blocked because when they did
+
+854
+00:46:39,049 --> 00:46:45,200
+the pea operation the semaphore was zero
+
+855
+00:46:41,059 --> 00:46:46,087
+and then it restarts exactly one of
+
+856
+00:46:45,002 --> 00:46:48,053
+those threads in some indeterminate
+
+857
+00:46:46,339 --> 00:46:52,130
+order okay in some worker that you can't
+
+858
+00:46:48,071 --> 00:46:56,072
+you can't assume it just picks one using
+
+859
+00:46:52,013 --> 00:47:03,040
+some some selection algorithm and it and
+
+860
+00:46:56,072 --> 00:47:07,651
+then it it it unblocked the suspended
+
+861
+00:47:03,004 --> 00:47:09,077
+the suspended process which then
+
+862
+00:47:08,299 --> 00:47:12,910
+completes its pea operation by
+
+863
+00:47:10,013 --> 00:47:12,091
+decrementing yes
+
+864
+00:47:16,619 --> 00:47:20,770
+okay this seems like really simple but
+
+865
+00:47:19,045 --> 00:47:23,053
+it can be kind of hard to get your head
+
+866
+00:47:20,077 --> 00:47:33,175
+around the first time you see it so
+
+867
+00:47:23,053 --> 00:47:38,071
+there any questions about PMD okay so
+
+868
+00:47:34,075 --> 00:47:41,164
+that the key idea that the assembly
+
+869
+00:47:38,071 --> 00:47:45,084
+these definitions of P and V is that it
+
+870
+00:47:42,064 --> 00:47:47,125
+imposes an invariant on semaphores
+
+871
+00:47:45,084 --> 00:47:51,172
+called the semaphore invariant which is
+
+872
+00:47:48,025 --> 00:47:55,644
+s which is that for a semaphore s being
+
+873
+00:47:52,072 --> 00:47:56,131
+operated on by P and D operations s is
+
+874
+00:47:55,869 --> 00:47:59,580
+always greater than or equal to zero
+
+875
+00:47:57,031 --> 00:47:59,058
+okay
+
+876
+00:48:00,119 --> 00:48:05,920
+and that doesn't seem very exciting but
+
+877
+00:48:03,097 --> 00:48:06,163
+it turns out that this is a very useful
+
+878
+00:48:05,092 --> 00:48:09,139
+property that will allow us to enforce
+
+879
+00:48:07,063 --> 00:48:13,131
+mutual mutual exclusion on these
+
+880
+00:48:10,039 --> 00:48:17,130
+critical sections so the T and V
+
+881
+00:48:14,031 --> 00:48:21,067
+operations are provided by P threads in
+
+882
+00:48:18,003 --> 00:48:23,047
+the form of three functions there's a
+
+883
+00:48:21,067 --> 00:48:24,130
+Semin it functions which initializes the
+
+884
+00:48:23,074 --> 00:48:26,155
+semaphore to some value
+
+885
+00:48:25,003 --> 00:48:30,076
+okay so semaphore is can be initialized
+
+886
+00:48:27,055 --> 00:48:36,118
+to any any value greater than or equal
+
+887
+00:48:31,003 --> 00:48:41,011
+to zero some weight is the T operation
+
+888
+00:48:37,018 --> 00:48:43,102
+and some post is the V operation okay
+
+889
+00:48:41,083 --> 00:48:46,117
+and because I'm old-school
+
+890
+00:48:44,002 --> 00:48:50,841
+I provide wrapper functions for those in
+
+891
+00:48:47,017 --> 00:48:55,068
+the in your si si PP dot H file called P
+
+892
+00:48:50,859 --> 00:48:55,680
+and D okay it's also more compact to
+
+893
+00:48:59,279 --> 00:49:08,310
+okay so recall our recall our buggy
+
+894
+00:49:04,599 --> 00:49:13,150
+program called bad counts II which was
+
+895
+00:49:08,589 --> 00:49:14,628
+giving us the wrong answers for count so
+
+896
+00:49:13,015 --> 00:49:20,041
+how do we use semaphores to fix this
+
+897
+00:49:14,979 --> 00:49:25,900
+program so the basic idea is to create a
+
+898
+00:49:20,041 --> 00:49:27,067
+semaphore which is initialized to 1 and
+
+899
+00:49:25,009 --> 00:49:28,368
+so by definition we'll call any
+
+900
+00:49:27,067 --> 00:49:31,069
+semaphore which is initialized to 1
+
+901
+00:49:29,259 --> 00:49:34,930
+that's used for to provide mutual
+
+902
+00:49:31,069 --> 00:49:36,888
+exclusion we'll call that a mutex okay
+
+903
+00:49:34,093 --> 00:49:41,372
+this goes back to the early Dijkstra
+
+904
+00:49:37,509 --> 00:49:44,607
+papers so we'll associate a unique mutex
+
+905
+00:49:42,209 --> 00:49:49,215
+initialized to 1 for each shared
+
+906
+00:49:45,489 --> 00:49:51,537
+variable in our program ok so in this
+
+907
+00:49:49,269 --> 00:49:52,365
+case count we have count so we have one
+
+908
+00:49:51,969 --> 00:49:56,034
+shared variable that we're concerned
+
+909
+00:49:53,229 --> 00:49:59,170
+about so we'll we'll create one new text
+
+910
+00:49:56,619 --> 00:50:02,170
+that will call mutex and then you
+
+911
+00:49:59,017 --> 00:50:06,816
+surround the critical section with
+
+912
+00:50:02,017 --> 00:50:09,606
+respect to count with a pea you call PE
+
+913
+00:50:06,969 --> 00:50:12,690
+then you execute the critical section
+
+914
+00:50:09,759 --> 00:50:12,690
+and then you call V
+
+915
+00:50:14,039 --> 00:50:17,115
+now there's some there's some
+
+916
+00:50:16,289 --> 00:50:21,150
+terminology we'll use and we talked
+
+917
+00:50:18,015 --> 00:50:24,093
+about semaphores so a binary semaphore
+
+918
+00:50:21,015 --> 00:50:27,644
+is is the semaphore value is always 0 1
+
+919
+00:50:24,093 --> 00:50:28,862
+and then a mutex is this sort it is a
+
+920
+00:50:27,779 --> 00:50:34,140
+binary semaphore that's being used to
+
+921
+00:50:29,699 --> 00:50:37,757
+for mutual exclusion the P operation is
+
+922
+00:50:34,014 --> 00:50:40,493
+called locking the mutex will refer to a
+
+923
+00:50:38,279 --> 00:50:44,375
+V is sometimes unlocking or releasing
+
+924
+00:50:40,619 --> 00:50:46,664
+the mutex and if a process is holding
+
+925
+00:50:45,239 --> 00:50:53,130
+the mutex then that means it's been
+
+926
+00:50:47,069 --> 00:50:55,073
+locked but not not not released so
+
+927
+00:50:53,013 --> 00:50:56,462
+mutexes and binary semaphore s are
+
+928
+00:50:55,109 --> 00:51:00,116
+always initialized to 1
+
+929
+00:50:56,579 --> 00:51:02,627
+accounting semaphore and the mutex is
+
+930
+00:51:00,809 --> 00:51:04,862
+used for mutual excuse exclusion but you
+
+931
+00:51:03,059 --> 00:51:08,066
+can also use semaphores to count sort of
+
+932
+00:51:05,339 --> 00:51:11,426
+events in the system and oftentimes for
+
+933
+00:51:08,759 --> 00:51:15,660
+those accounting semaphores have sort of
+
+934
+00:51:12,209 --> 00:51:24,215
+non non values that are greater than 1
+
+935
+00:51:15,066 --> 00:51:26,525
+okay so for mutual exclusion we'll do to
+
+936
+00:51:24,809 --> 00:51:30,821
+fix our program we create a new program
+
+937
+00:51:27,119 --> 00:51:34,208
+called good count c and here we
+
+938
+00:51:30,929 --> 00:51:38,972
+initialize a mutex we create a mutex and
+
+939
+00:51:35,009 --> 00:51:42,044
+initialize it to 1 and then we surround
+
+940
+00:51:39,359 --> 00:51:44,396
+the the critical section which is the 3
+
+941
+00:51:42,359 --> 00:51:46,385
+assembly language instructions embodied
+
+942
+00:51:44,729 --> 00:51:49,380
+that implements this count plus plus
+
+943
+00:51:46,619 --> 00:51:54,682
+instruction we surrounded it with a P
+
+944
+00:51:49,038 --> 00:51:58,867
+followed by it via V and if we do that
+
+945
+00:51:55,249 --> 00:51:58,345
+we always get the right answer
+
+946
+00:51:59,098 --> 00:52:04,121
+but you know P and D our system calls so
+
+947
+00:52:03,859 --> 00:52:06,680
+there's overhead associated with these
+
+948
+00:52:05,021 --> 00:52:08,110
+so they're not free in fact they're
+
+949
+00:52:06,068 --> 00:52:09,667
+orders of magnitude this program runs on
+
+950
+00:52:08,299 --> 00:52:13,375
+orders of magnitude slower than the
+
+951
+00:52:10,279 --> 00:52:20,420
+incorrect buggy version all right so so
+
+952
+00:52:14,059 --> 00:52:22,062
+why do these mutexes work so here we've
+
+953
+00:52:20,042 --> 00:52:25,046
+got a progress graph now where we've
+
+954
+00:52:22,359 --> 00:52:28,700
+we've decorated our program with P and V
+
+955
+00:52:25,046 --> 00:52:30,140
+operations so we put the P before the
+
+956
+00:52:28,007 --> 00:52:35,012
+critical section we execute the critical
+
+957
+00:52:31,004 --> 00:52:37,903
+section and then we call V and now if
+
+958
+00:52:36,002 --> 00:52:41,099
+you were to look a number P and Z P
+
+959
+00:52:38,299 --> 00:52:44,325
+increments the sum of P decrement the
+
+960
+00:52:42,017 --> 00:52:47,093
+sign before V increments the semaphore
+
+961
+00:52:44,559 --> 00:52:51,230
+so if you were just to look at the value
+
+962
+00:52:47,093 --> 00:52:54,188
+of that semaphore for every point in the
+
+963
+00:52:51,023 --> 00:52:59,048
+execution state space you'd get these
+
+964
+00:52:55,088 --> 00:53:00,140
+you'd get these values so here we
+
+965
+00:52:59,048 --> 00:53:04,093
+initialize the semaphore at the origin
+
+966
+00:53:01,004 --> 00:53:10,453
+we initialized it to 1 so the value of
+
+967
+00:53:04,093 --> 00:53:12,122
+of our semaphore at the origin is 1 and
+
+968
+00:53:10,849 --> 00:53:15,740
+let's say we just move along so we're
+
+969
+00:53:13,022 --> 00:53:20,048
+just executing thread 1 so after H 1 the
+
+970
+00:53:15,074 --> 00:53:22,076
+semaphore is 1 we do the PE the
+
+971
+00:53:20,048 --> 00:53:26,065
+semaphore is 1 so P just decrement sit
+
+972
+00:53:22,094 --> 00:53:29,149
+and and proceeds so now the semaphore
+
+973
+00:53:26,065 --> 00:53:33,089
+value becomes 0 and it remains zero
+
+974
+00:53:30,049 --> 00:53:36,053
+until we execute the V and when we
+
+975
+00:53:33,089 --> 00:53:39,188
+finished executing the V the semaphore
+
+976
+00:53:36,089 --> 00:53:42,140
+now is is 1 again ok so if we go through
+
+977
+00:53:40,088 --> 00:53:46,091
+a similar reasoning if we look at the
+
+978
+00:53:43,004 --> 00:53:50,090
+trajectory to get to any point in this
+
+979
+00:53:47,018 --> 00:53:55,040
+state space so let's say let's say this
+
+980
+00:53:51,026 --> 00:53:59,305
+point right here so to get there we
+
+981
+00:53:55,004 --> 00:54:03,083
+could we could execute thread 1 up to
+
+982
+00:53:59,539 --> 00:54:08,450
+this point finish the l1 and then
+
+983
+00:54:04,019 --> 00:54:11,097
+execute h 2 and then do the at this
+
+984
+00:54:08,045 --> 00:54:15,048
+point the semaphore is 0
+
+985
+00:54:11,097 --> 00:54:17,130
+and then tea decrements the semaphore so
+
+986
+00:54:15,075 --> 00:54:18,120
+now it's minus one but that's that's
+
+987
+00:54:18,003 --> 00:54:21,072
+impossible
+
+988
+00:54:19,002 --> 00:54:24,087
+that can't happen because P blocks
+
+989
+00:54:21,099 --> 00:54:27,141
+remember if if the semaphore is 0 P
+
+990
+00:54:25,005 --> 00:54:31,016
+blocks it doesn't decrement it okay so
+
+991
+00:54:28,041 --> 00:54:35,118
+the semantics of the T operation
+
+992
+00:54:31,016 --> 00:54:39,045
+prohibits this this this transition it
+
+993
+00:54:36,018 --> 00:54:41,049
+prohibits this transition to the state
+
+994
+00:54:39,045 --> 00:54:47,118
+whereas semaphore is zero to a state
+
+995
+00:54:41,049 --> 00:54:49,092
+where it would be minus 1 and so it
+
+996
+00:54:48,018 --> 00:54:52,065
+creates it creates what we call a
+
+997
+00:54:49,092 --> 00:54:54,186
+forbidden region so these these points
+
+998
+00:54:52,065 --> 00:54:59,072
+in the state space where the semaphore
+
+999
+00:54:55,086 --> 00:55:02,097
+would have a value of minus 1 are
+
+1000
+00:54:59,072 --> 00:55:07,095
+infeasible that can never be reached by
+
+1001
+00:55:02,097 --> 00:55:09,102
+the definition of of T and V okay so
+
+1002
+00:55:07,095 --> 00:55:14,126
+this this forms a forbidden region
+
+1003
+00:55:10,047 --> 00:55:17,109
+around the unsafe region and in doing so
+
+1004
+00:55:15,026 --> 00:55:19,122
+provides mutually exclusive access to
+
+1005
+00:55:18,009 --> 00:55:26,013
+thee to the critical sections in each
+
+1006
+00:55:20,022 --> 00:55:30,057
+thread okay so if so this is the
+
+1007
+00:55:26,013 --> 00:55:32,049
+fundamental reason why T's and V's can
+
+1008
+00:55:30,057 --> 00:55:34,058
+be used to provide mutually exclusive
+
+1009
+00:55:32,049 --> 00:55:34,067
+access
+
+1010
+00:55:36,035 --> 00:55:45,040
+so any questions on this I explained it
+
+1011
+00:55:41,006 --> 00:55:44,014
+so clearly that there's no questions
+
+1012
+00:55:47,044 --> 00:55:52,663
+all right good well you get to go you
+
+1013
+00:55:49,091 --> 00:55:59,050
+get to get to leave early then work on
+
+1014
+00:55:53,059 --> 00:56:02,630
+your Mallik lab all right so we'll see
+
+1015
+00:55:59,869 --> 00:56:04,220
+you Monday we're going to look at some
+
+1016
+00:56:02,063 --> 00:56:05,075
+sort of some advanced topics this is
+
+1017
+00:56:04,022 --> 00:56:08,131
+like her first introduction to
+
+1018
+00:56:05,075 --> 00:56:10,894
+synchronization on Tuesday we'll look at
+
+1019
+00:56:08,329 --> 00:56:13,400
+more advanced topics in synchronization
+
+1020
+00:56:11,569 --> 00:56:15,571
+in ways ways that you can use semaphores
+
+1021
+00:56:13,004 --> 00:56:16,090
+for to provide other other more
+
+1022
+00:56:15,589 --> 00:56:22,720
+interesting other interesting kinds of
+
+1023
+00:56:17,026 --> 00:56:22,072
+synchronization for your programs okay
+
