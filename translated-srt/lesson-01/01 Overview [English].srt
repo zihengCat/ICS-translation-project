@@ -1,0 +1,3784 @@
+1
+00:00:00,000 --> 00:00:01,449
+ Hello, everyone
+
+2
+00:00:01,449 --> 00:00:04,019
+ I'd like to welcome you all to this
+
+3
+00:00:04,660 --> 00:00:12,300
+ Fall's this term's instance of this course is officially either 15 to 13 from computer science
+
+4
+00:00:12,849 --> 00:00:16,499
+ Or 18 to 13 from electrical and computer engineering
+
+5
+00:00:17,140 --> 00:00:24,449
+ but a large number the people enrolled in this course are in one called 513 which is for graduate students and
+
+6
+00:00:25,449 --> 00:00:30,239
+ To be totally honest you're not supposed to be here because you're supposed to watch the videos
+
+7
+00:00:30,820 --> 00:00:37,590
+ The lectures by video later, but we're not checking any card, so I don't really know who you are. Oh
+
+8
+00:00:39,460 --> 00:00:46,200
+ Anyways, this course is as you can see a very popular course on campus we have over 700 700
+
+9
+00:00:46,840 --> 00:00:48,840
+ 600 shouldn't exaggerate
+
+10
+00:00:48,940 --> 00:00:53,640
+ students on campus enrolled in one of those three versions of the course
+
+11
+00:00:54,100 --> 00:00:58,379
+ Which if you think about a university of the size of CMU that's like?
+
+12
+00:00:59,230 --> 00:01:01,500
+ about five percent of the total
+
+13
+00:01:02,859 --> 00:01:04,859
+ student population
+
+14
+00:01:05,619 --> 00:01:08,039
+ So we're very glad to
+
+15
+00:01:09,189 --> 00:01:12,239
+ Have you here and this game is too high I?
+
+16
+00:01:13,390 --> 00:01:15,390
+ Think we overdid the game
+
+17
+00:01:16,479 --> 00:01:18,629
+ Try that that's better um
+
+18
+00:01:19,930 --> 00:01:21,930
+ so my name is Randy Bryant and
+
+19
+00:01:22,479 --> 00:01:28,709
+ My co-instructor is Dave. O'halloran and those names might be familiar if you have been to the bookstore
+
+20
+00:01:30,740 --> 00:01:35,019
+ Because the book was written by us, and we actually wrote this book
+
+21
+00:01:35,780 --> 00:01:38,860
+ We started to 13 as a course in
+
+22
+00:01:40,040 --> 00:01:42,040
+ 1998 ah
+
+23
+00:01:42,470 --> 00:01:45,699
+ and I know that your children then and all that stuff but
+
+24
+00:01:46,490 --> 00:01:52,539
+ out of response for a new type of course that you'll see today that sort of gives people a
+
+25
+00:01:53,060 --> 00:01:58,810
+ In-depth understanding of systems, but more from a high-level or programmers perspective
+
+26
+00:01:58,810 --> 00:02:01,149
+ And we'll talk some about the philosophy of the course later
+
+27
+00:02:02,270 --> 00:02:06,009
+ So this book has used as you see just came out its third edition
+
+28
+00:02:07,250 --> 00:02:08,170
+ Last March
+
+29
+00:02:08,170 --> 00:02:13,929
+ And that's the required text for the course and there is nothing you can do
+
+30
+00:02:14,239 --> 00:02:18,039
+ To avoid buying that book and it's not because we're greedy
+
+31
+00:02:18,890 --> 00:02:26,860
+ Actually, we take the money we get from royalty for students in this course or any CMU course and we donate it to CMU
+
+32
+00:02:27,530 --> 00:02:34,149
+ So we're not actually making any money out of you buying the book, but it's a simple reality that the new version is
+
+33
+00:02:34,790 --> 00:02:42,790
+ Different than the old we expect you to be using the new version. There are no electronic copies. There are no
+
+34
+00:02:43,730 --> 00:02:47,980
+ pirated versions, so you basically have to buy the book but and
+
+35
+00:02:48,709 --> 00:02:51,309
+ I don't really apologize to that because I
+
+36
+00:02:51,829 --> 00:02:54,759
+ Know you or your parents do somebody's paying
+
+37
+00:02:54,890 --> 00:02:59,140
+ a lot of money for you to be here and so the price of the book is really a
+
+38
+00:02:59,510 --> 00:03:01,929
+ relatively small amount relative to that and
+
+39
+00:03:03,350 --> 00:03:07,449
+ This course by the way is not some courses. There's oh yeah
+
+40
+00:03:07,450 --> 00:03:10,299
+ This book you might want to look at it once in a while
+
+41
+00:03:10,299 --> 00:03:16,269
+ But actually the course has nothing to do with it this course the book and the courts are one
+
+42
+00:03:16,519 --> 00:03:19,059
+ they're very tied together there'll be parts of
+
+43
+00:03:19,850 --> 00:03:21,680
+ the book that
+
+44
+00:03:21,680 --> 00:03:28,120
+ we don't go into all the details that are in the book sometimes, but we expect you to be able to figure it out and
+
+45
+00:03:30,200 --> 00:03:37,660
+ So really the course in the book are tied together and they very much the the progress of the course the topics covered
+
+46
+00:03:37,760 --> 00:03:40,149
+ How it's covered everything about it is?
+
+47
+00:03:43,250 --> 00:03:49,239
+ Consistent with the book and we wrote the book because of the course think of them as course notes
+
+48
+00:03:50,540 --> 00:03:56,049
+ So and the reason why we are teaching this term by the way, we haven't taught together in several years
+
+49
+00:03:56,209 --> 00:03:59,469
+ but because this is the first roll out of this book and
+
+50
+00:04:00,230 --> 00:04:02,079
+ Not only is it being used here
+
+51
+00:04:02,079 --> 00:04:08,469
+ But it's actually used by about 250 schools around the world and many of those people are also
+
+52
+00:04:09,200 --> 00:04:11,200
+ Going through the same
+
+53
+00:04:12,109 --> 00:04:13,340
+ activities of
+
+54
+00:04:13,340 --> 00:04:16,810
+ teaching for it from this new edition for the first time and
+
+55
+00:04:17,030 --> 00:04:21,820
+ So we wanted to make sure all the material for the course was sort of put in order and things
+
+56
+00:04:22,190 --> 00:04:27,609
+ because other universities and other colleges use this material of
+
+57
+00:04:28,070 --> 00:04:33,579
+ The supporting material we've developed so that's the course and today
+
+58
+00:04:34,220 --> 00:04:37,570
+ Is the first lecture we're sort of doing a tag team here?
+
+59
+00:04:37,570 --> 00:04:42,009
+ I'll talk the high level what the course is about what the main themes are and
+
+60
+00:04:42,740 --> 00:04:44,740
+ Dave will talk more about the logistics
+
+61
+00:04:47,930 --> 00:04:52,239
+ So we refer the the saying we have when?
+
+62
+00:04:54,650 --> 00:04:58,870
+ the very first time I typed the number of this course
+
+63
+00:04:59,659 --> 00:05:00,830
+ into a
+
+64
+00:05:00,830 --> 00:05:07,510
+ Text Editor. I realized. I have typed those five digits many times in my career because it's the zip code of
+
+65
+00:05:08,090 --> 00:05:12,310
+ CMU one five two one three (15-213) so that's where we come up with the same
+
+66
+00:05:16,610 --> 00:05:18,610
+ so um
+
+67
+00:05:18,830 --> 00:05:22,659
+ There's a few things about this course for the most part
+
+68
+00:05:23,479 --> 00:05:27,069
+ You know in your normal undergraduate curriculum when you've learned programming
+
+69
+00:05:27,680 --> 00:05:33,609
+ You've been very much separated from the realities of the machine you just think about code just
+
+70
+00:05:33,889 --> 00:05:36,639
+ You put some text into some
+
+71
+00:05:37,909 --> 00:05:42,309
+ little box somehow and outcomes of behavior that
+
+72
+00:05:43,280 --> 00:05:49,209
+ It hopefully is what you intended the program to do the purpose of this course is to give you enough
+
+73
+00:05:49,729 --> 00:05:54,158
+ understanding of what that box is doing when it executes your code and
+
+74
+00:05:54,740 --> 00:05:56,740
+ Through that to help you
+
+75
+00:05:56,900 --> 00:05:57,840
+ um
+
+76
+00:05:57,840 --> 00:06:02,959
+ Become better at what you're trying to do so some of the outcomes is
+
+77
+00:06:04,259 --> 00:06:07,699
+ There's really two types of outcomes from this course one
+
+78
+00:06:07,699 --> 00:06:13,099
+ Is that if this is the only system's course you ever take in your whole life you will get useful
+
+79
+00:06:13,470 --> 00:06:15,649
+ material from it you will learn tools
+
+80
+00:06:16,320 --> 00:06:22,249
+ tricks methods that will help you if you ever are in involved in software development
+
+81
+00:06:23,610 --> 00:06:26,360
+ large-scale software engineering projects
+
+82
+00:06:27,090 --> 00:06:31,310
+ systems hardware design any aspect of computer technology
+
+83
+00:06:31,949 --> 00:06:37,129
+ This will help you be better at what you do you'll understand what programs do
+
+84
+00:06:37,130 --> 00:06:44,839
+ how they work what the machines that support them do why sometimes they work really well and why sometimes they don't work so well
+
+85
+00:06:46,470 --> 00:06:52,609
+ It also is intended as a sort of stepping stone into a whole number of other courses at
+
+86
+00:06:53,250 --> 00:06:58,459
+ CMU that will give you more in-depth understanding of computer technology
+
+87
+00:06:58,680 --> 00:07:05,269
+ but our sort of specialized by topical area whether it's computer networking or operating systems or
+
+88
+00:07:06,479 --> 00:07:08,099
+ embedded systems
+
+89
+00:07:08,099 --> 00:07:11,389
+ where you'll take the sort of ideas from this course and be able to
+
+90
+00:07:11,940 --> 00:07:16,729
+ Then learn in a somewhat narrower, but deeper sense what's really going on
+
+91
+00:07:18,300 --> 00:07:23,990
+ And so it really is trying to serve those two goals of making you more effective giving you useful
+
+92
+00:07:24,210 --> 00:07:28,489
+ ideas and tools right away, but also preparing you for later courses
+
+93
+00:07:29,340 --> 00:07:36,470
+ So one way we talk about this instead of what why what kind of stuff will you learn from this course is
+
+94
+00:07:36,930 --> 00:07:44,449
+ to go through a series of what we call great realities places where sort of computers meet up
+
+95
+00:07:45,060 --> 00:07:48,289
+ real-life computers get meet up against your expectations
+
+96
+00:07:48,289 --> 00:07:49,979
+ And maybe they're not quite the same
+
+97
+00:07:49,979 --> 00:07:54,499
+ So one of them is and the first part of the course is going to take a fairly detailed look
+
+98
+00:07:54,810 --> 00:07:57,289
+ How numbers are represented in computers?
+
+99
+00:07:57,289 --> 00:08:04,819
+ And you'll learn some things that are on one hand surprising and another hand will start to make sense when you understand it better
+
+100
+00:08:06,120 --> 00:08:08,750
+ So a simple case is
+
+101
+00:08:10,230 --> 00:08:12,090
+ for numbers
+
+102
+00:08:12,090 --> 00:08:17,840
+ I don't know when it was but it was probably in about eighth grade, Algebra that I learned that
+
+103
+00:08:18,390 --> 00:08:23,479
+ If you square a number it will be at least zero if it's not an imaginary number
+
+104
+00:08:23,480 --> 00:08:27,019
+ So a either an integer or a real number
+
+105
+00:08:27,330 --> 00:08:32,780
+ You'd expect to square it and it to be a positive value or perhaps zero. Right?
+
+106
+00:08:34,050 --> 00:08:40,909
+ And that's actually generally true with floats a representation of floating point numbers, but with
+
+107
+00:08:41,610 --> 00:08:43,530
+ integers
+
+108
+00:08:43,530 --> 00:08:48,559
+ Or int you know the computer representation of integers. It's not so clear
+
+109
+00:08:49,110 --> 00:08:54,590
+ so for example if you square 40,000 on most computers, then you'll get
+
+110
+00:08:55,320 --> 00:08:57,320
+ Whatever that should be
+
+111
+00:08:57,360 --> 00:08:59,360
+ as you'd expect
+
+112
+00:08:59,490 --> 00:09:01,490
+ But what if you square
+
+113
+00:09:01,560 --> 00:09:03,560
+ 50,000 so
+
+114
+00:09:03,720 --> 00:09:05,720
+ You could do this in your head
+
+115
+00:09:06,000 --> 00:09:11,960
+ But I actually built into this laptop is a computer, so I'm going to go ahead and use it
+
+116
+00:09:17,220 --> 00:09:19,339
+ We just size it a little bit...
+
+117
+00:09:23,780 --> 00:09:25,939
+ And use the tool
+
+118
+00:09:27,690 --> 00:09:30,710
+ Which on Unix systems is called?
+
+119
+00:09:32,610 --> 00:09:35,210
+ What's going on before...
+
+120
+00:09:43,410 --> 00:09:45,410
+ Here we are on
+
+121
+00:09:45,870 --> 00:09:52,280
+ Linux system is called GDB. But on a Macintosh OSX it's called LLDB
+
+122
+00:09:52,280 --> 00:09:57,229
+ But they're pretty much the same program you will get to know this program really really well this terms
+
+123
+00:09:58,230 --> 00:10:01,130
+ So like I said if you square 40,000
+
+124
+00:10:03,360 --> 00:10:05,360
+ you'll get
+
+125
+00:10:06,210 --> 00:10:08,210
+ What you'd expect?
+
+126
+00:10:08,970 --> 00:10:11,870
+ But let's change this to 50,000
+
+127
+00:10:15,420 --> 00:10:17,190
+
+
+128
+00:10:17,190 --> 00:10:25,159
+ And you get a very peculiar number that doesn't look anything like you'd expect 50,000 squared to be and in fact. It's negative and
+
+129
+00:10:27,270 --> 00:10:33,770
+ so that might just seem like well there must be a mistake or something no that that's just the way it is because
+
+130
+00:10:34,800 --> 00:10:39,710
+ this computer is expecting numbers to be represented as 32-bit values and
+
+131
+00:10:40,050 --> 00:10:42,859
+ the bit pattern that you get when you
+
+132
+00:10:43,560 --> 00:10:45,480
+ do this multiplication
+
+133
+00:10:45,480 --> 00:10:48,080
+ happens to be the representation of a negative number
+
+134
+00:10:48,600 --> 00:10:50,600
+ so that's a an
+
+135
+00:10:50,790 --> 00:10:52,969
+ example of where your normal
+
+136
+00:10:53,490 --> 00:10:56,270
+ expectations about integer arithmetic may or may not hold
+
+137
+00:10:57,089 --> 00:10:59,089
+ on the other hand
+
+138
+00:10:59,339 --> 00:11:01,339
+ There are some places
+
+139
+00:11:08,130 --> 00:11:10,130
+ like if I try to
+
+140
+00:11:10,200 --> 00:11:15,679
+ Do the same thing multiplying 300 by 400 by 500 by 600 then all of a sudden
+
+141
+00:11:15,680 --> 00:11:20,330
+ I also get a number that clearly is not what you'd expect because the same thing has happened
+
+142
+00:11:20,580 --> 00:11:22,440
+ I've gotten an overflow
+
+143
+00:11:22,440 --> 00:11:26,030
+ It happens that it's overflowed to a value that's positive not negative
+
+144
+00:11:26,190 --> 00:11:30,650
+ But it still is obviously not the integer product of those four numbers
+
+145
+00:11:31,620 --> 00:11:34,070
+ On the other hand one thing you'll find is
+
+146
+00:11:34,950 --> 00:11:37,499
+ even though this arithmetic is now not a
+
+147
+00:11:39,069 --> 00:11:42,149
+ normal sort of integer arithmetic
+
+148
+00:11:43,660 --> 00:11:49,439
+ it actually has some well-behaved properties. So for example if you look at
+
+149
+00:11:53,649 --> 00:11:59,998
+ what I've done is I just moved the 300 around from the beginning of the product to the end of the product and
+
+150
+00:12:00,249 --> 00:12:07,858
+ So now if you think about how associativity and community works, I'm basically multiplying these four numbers in a different order
+
+151
+00:12:07,859 --> 00:12:09,989
+ But what you see is you get the same
+
+152
+00:12:11,019 --> 00:12:12,850
+ funny-looking result
+
+153
+00:12:12,850 --> 00:12:19,230
+ No matter how you do it so what you can say from this is integer arithmetic is commutative and associative so it obeys
+
+154
+00:12:19,779 --> 00:12:26,789
+ some of the conventional mathematical properties it just isn't what you'd expect it to be it's not a
+
+155
+00:12:28,089 --> 00:12:30,089
+ a
+
+156
+00:12:32,259 --> 00:12:34,829
+ normal sort of mathematical integer arithmetic
+
+157
+00:12:36,160 --> 00:12:38,160
+ so
+
+158
+00:12:39,069 --> 00:12:41,069
+ the cartoon here
+
+159
+00:12:43,809 --> 00:12:49,949
+ shows an example that's a similar possibility we get to it
+
+160
+00:12:57,980 --> 00:13:00,649
+ Oh, I guess it comes at the end I don't know
+
+161
+00:13:01,590 --> 00:13:03,769
+  So the next question is a
+
+162
+00:13:04,380 --> 00:13:05,430
+ addition
+
+163
+00:13:05,430 --> 00:13:12,680
+ associative right can you order the numbers and then probably might have figured bolted and the integer arithmetic?
+
+164
+00:13:12,900 --> 00:13:18,709
+ even though as this potential for overflow. It is associative, and it's commutative, too
+
+165
+00:13:19,440 --> 00:13:22,279
+ But for floats. It's not really quite the same
+
+166
+00:13:23,310 --> 00:13:30,829
+ Because the range of values you can get in floating pointers so extreme that some numbers kind of disappear on you
+
+167
+00:13:30,830 --> 00:13:32,830
+ So the example I'll show without
+
+168
+00:13:33,210 --> 00:13:35,210
+ Having to use a computer to do it is
+
+169
+00:13:35,790 --> 00:13:43,459
+ if you take a big number and subtract it from itself you'll get zero so if you add that to 3.14 you'll get
+
+170
+00:13:43,980 --> 00:13:45,390
+ 3.14
+
+171
+00:13:45,390 --> 00:13:47,390
+ but if you take
+
+172
+00:13:48,150 --> 00:13:50,630
+ those two numbers and you reorder the
+
+173
+00:13:51,270 --> 00:13:53,300
+ how you combine them so that that
+
+174
+00:13:54,510 --> 00:14:00,740
+ 3.14 compared to a -1e20 is so insignificant that that result gets turned into
+
+175
+00:14:02,670 --> 00:14:07,940
+ -1e20 and you add that to 1e20 and you end up with zero
+
+176
+00:14:08,370 --> 00:14:11,750
+ So it's not associative, and so what you see is
+
+177
+00:14:14,580 --> 00:14:20,930
+ The both these number systems have some peculiarities and it all comes down to the fact that they use finite
+
+178
+00:14:21,480 --> 00:14:26,120
+ representations of things that are potentially infinite in their expanse and
+
+179
+00:14:26,730 --> 00:14:30,170
+ so there's some compromises in how those work and
+
+180
+00:14:30,510 --> 00:14:35,840
+ what the compromise is you can overflow an integer and run out of room and
+
+181
+00:14:36,210 --> 00:14:40,460
+ in floating point numbers you have roundoff problems where you should have drop the
+
+182
+00:14:40,950 --> 00:14:46,669
+ digits that are significant you can also overflow floating points, but the more common problem is roundoff
+
+183
+00:14:48,510 --> 00:14:55,430
+ So this is shown in this cartoon this idea of overflow of somebody counting sheep which in the u.s.
+
+184
+00:14:55,430 --> 00:14:59,930
+ Is in English language at least a way to fall asleep and when
+
+185
+00:15:00,660 --> 00:15:02,660
+ he or she goes from
+
+186
+00:15:03,380 --> 00:15:08,030
+ 32,767 and then increment set by one gets
+
+187
+00:15:09,090 --> 00:15:13,009
+ -32,768 and we'll see exactly why that happens
+
+188
+00:15:13,010 --> 00:15:15,830
+ but basically the numbers are going up to the
+
+189
+00:15:16,170 --> 00:15:20,930
+ largest value can represent and then when it goes one more it becomes a negative number.
+
+190
+00:15:25,170 --> 00:15:28,550
+ So these are really important things to understand. I mean
+
+191
+00:15:29,280 --> 00:15:31,879
+ 90% of the time maybe you can just get by
+
+192
+00:15:32,460 --> 00:15:37,759
+ writing programs and not worrying about whether your numbers are going to exceed their possible range
+
+193
+00:15:38,130 --> 00:15:43,040
+ But they sometimes when this could be really important if you're like
+
+194
+00:15:43,140 --> 00:15:47,989
+ you know controlling a rocket you really don't want the positive
+
+195
+00:15:48,990 --> 00:15:56,840
+ thrust to become negative or something like that, so you can see you there this could be an important consideration
+
+196
+00:15:57,750 --> 00:15:59,370
+ similarly there's
+
+197
+00:15:59,370 --> 00:16:01,400
+ well-known instances of security vulnerabilities
+
+198
+00:16:01,950 --> 00:16:05,780
+ where somebody wrote code that sort of expected a
+
+199
+00:16:06,480 --> 00:16:13,340
+ positive number in some place and a clever person figured out if I supply a negative number I can fool the system and get it
+
+200
+00:16:13,340 --> 00:16:14,580
+ to do bad things
+
+201
+00:16:14,580 --> 00:16:16,410
+ so these are the kind of
+
+202
+00:16:16,410 --> 00:16:24,079
+ corner cases that you need to understand better if you're either working in programs where it's really really important that it worked correctly.
+
+203
+00:16:24,600 --> 00:16:27,260
+ Or you're really worried about security vulnerabilities
+
+204
+00:16:27,990 --> 00:16:32,780
+ anytime you have possible for corner cases you have to understand these nuances better.
+
+205
+00:16:33,720 --> 00:16:41,299
+ A similarly for floating-point if you're going to use floating-point for serious computation whether it's scientific research or for
+
+206
+00:16:42,030 --> 00:16:44,030
+ designing bridges or
+
+207
+00:16:44,280 --> 00:16:48,769
+ nuclear power plants or something you better understand what the characteristics are
+
+208
+00:16:50,400 --> 00:16:58,099
+ So that's our first one, and we'll spend a couple weeks talking about numbers and number of representations and their properties here
+
+209
+00:16:59,100 --> 00:17:06,320
+ The second is we're going to spend a lot of time in this course learning about machine level programming meaning what the
+
+210
+00:17:06,630 --> 00:17:11,030
+ instructions are that actually get executed by the computer and that can be
+
+211
+00:17:11,579 --> 00:17:13,050
+ described in Assembly Language
+
+212
+00:17:13,050 --> 00:17:19,939
+ Which is a text version of it or an object code which is the actual bit-level binary encoding of
+
+213
+00:17:20,699 --> 00:17:26,549
+ instructions, and we'll learn a fair bit about that and spend amount of time seeing how
+
+214
+00:17:27,069 --> 00:17:29,069
+ code that you write in C
+
+215
+00:17:30,040 --> 00:17:33,989
+ gets turned into machine code and how that gets executed on the machine
+
+216
+00:17:34,690 --> 00:17:38,759
+ One thing I'll say is that historically courses like this would teach
+
+217
+00:17:39,430 --> 00:17:41,430
+ Assembly code by having you write
+
+218
+00:17:41,920 --> 00:17:44,249
+ programs in Assembly that do
+
+219
+00:17:45,370 --> 00:17:50,099
+ various things not usually very interesting because it's a lot of work to write assembly program
+
+220
+00:17:50,350 --> 00:17:56,790
+ this course is much more about taking the assembly code that's been generated
+ by a compiler the  C compiler and
+
+221
+00:17:57,070 --> 00:18:00,270
+ looking at it and understanding it. That's a different set of skills
+
+222
+00:18:00,790 --> 00:18:02,790
+ than you need to write it on your own
+
+223
+00:18:05,740 --> 00:18:09,000
+ And in particular, we're going to look at the language of of
+
+224
+00:18:09,610 --> 00:18:13,920
+ Intel processors the most recent versions of them are called x86-64
+
+225
+00:18:14,470 --> 00:18:16,470
+
+226
+00:18:16,630 --> 00:18:21,119
+ The 64-bit version of their instruction set.
+ And one thing that's new in this course
+
+227
+00:18:21,880 --> 00:18:25,469
+ compared to previous ones we used to teach 32-bit stuff
+
+228
+00:18:26,170 --> 00:18:27,880
+ this course is
+
+229
+00:18:27,880 --> 00:18:29,880
+ 64-bits all the time
+
+230
+00:18:32,890 --> 00:18:39,749
+ Another one that we'll talk about a fair amount that is 
+ really fairly visible to programmers surprisingly visible is
+
+231
+00:18:40,510 --> 00:18:47,040
+ aspects of the memory system.
+ So modern computers have a very complex layered memory system
+
+232
+00:18:47,650 --> 00:18:52,739
+ to try and give you high performance in high capacity at the same time.
+
+233
+00:18:53,320 --> 00:18:59,220
+ And there's some results of that system that can mean that 
+ if you program write a program
+
+234
+00:18:59,220 --> 00:19:01,020
+ well it might work really well
+
+235
+00:19:01,020 --> 00:19:06,989
+ And if you don't it could run very poorly because it's not making use of this hierarchical memory system
+
+236
+00:19:07,330 --> 00:19:12,630
+ So and also there's a lot of bugs that show up especially in C programs
+
+237
+00:19:13,360 --> 00:19:17,490
+ that have to do with memory referencing errors.
+ And so, understanding
+
+238
+00:19:18,190 --> 00:19:23,100
+ what those errors are what their manifestation is how to prevent them is a big part of the course
+
+239
+00:19:24,100 --> 00:19:29,850
+ So for example if I define a struct that contains two integer
+
+240
+00:19:30,850 --> 00:19:36,900
+ values a in an array and a double precision floating point number d 
+ and if I
+
+241
+00:19:38,910 --> 00:19:46,739
+ this function fun you'll see what it does is it's given an argument i and it
+ sets the i's element of a to some
+
+242
+00:19:47,710 --> 00:19:49,600
+ strange-looking value
+
+243
+00:19:49,600 --> 00:19:51,100
+ so
+
+244
+00:19:51,100 --> 00:19:55,469
+ As you know I should really only be either 0 or 1
+
+245
+00:19:57,010 --> 00:20:03,119
+ with this code because that's the range of possible values of this array a
+
+246
+00:20:04,150 --> 00:20:05,679
+ but
+
+247
+00:20:05,679 --> 00:20:07,949
+ we can try other things too, so
+
+248
+00:20:08,890 --> 00:20:12,959
+ In particular if you run it on either one or two
+
+249
+00:20:13,900 --> 00:20:15,929
+ You'll get what you'd expect that
+
+250
+00:20:16,900 --> 00:20:21,359
+ you assigned a 3.14 to element d of this structure and
+
+251
+00:20:22,630 --> 00:20:24,630
+ When you read it back you get the same thing
+
+252
+00:20:25,390 --> 00:20:30,509
+ and in fact, but now if I set a of two
+
+253
+00:20:31,390 --> 00:20:36,390
+ To this number all of a sudden, you'll see that my floating-point number which
+
+254
+00:20:37,030 --> 00:20:43,949
+ seems to have nothing to do with a has changed and if I do that same thing with I
+
+255
+00:20:44,799 --> 00:20:49,559
+ equal to three you'll see I get a number that's closer to two then to 3.14 and
+
+256
+00:20:50,799 --> 00:20:52,799
+ if I keep going
+
+257
+00:20:53,770 --> 00:20:56,429
+ well nothing much happens until I
+
+258
+00:20:57,820 --> 00:20:59,820
+ hit
+
+259
+00:21:01,750 --> 00:21:04,020
+ 6 and then the program crashes
+
+260
+00:21:05,020 --> 00:21:06,250
+ so
+
+261
+00:21:06,250 --> 00:21:12,900
+ Something interesting is going on here at least something quirky is going on and the reason is again
+
+262
+00:21:12,900 --> 00:21:17,039
+ it has to do with how data is laid out in memory and
+
+263
+00:21:17,440 --> 00:21:21,120
+ how its accessed and one of the features of C and C++
+
+264
+00:21:21,460 --> 00:21:25,650
+ is it doesn't do any bounds checking on a race it will happily let you
+
+265
+00:21:26,350 --> 00:21:27,880
+
+266
+00:21:27,880 --> 00:21:32,549
+ reference element number 5 million of a two element array and not complain
+
+267
+00:21:33,159 --> 00:21:37,259
+ But the operating system might complain as it did here and it
+
+268
+00:21:37,929 --> 00:21:40,379
+ in this particular structure
+
+269
+00:21:40,380 --> 00:21:47,429
+ And we'll see more about how structures are implemented and laid out, 
+ but basically the two if each of these
+
+270
+00:21:48,220 --> 00:21:55,020
+ blocks in this vertical chain represents 4 bytes and so the two elements of a each are 4 bytes
+
+271
+00:21:55,990 --> 00:21:58,560
+ d is 8 bytes and then there's some other
+
+272
+00:21:59,500 --> 00:22:01,500
+ stuff in the other
+
+273
+00:22:02,950 --> 00:22:05,939
+ beyond that's not actually in the struct itself
+
+274
+00:22:07,240 --> 00:22:09,240
+ so you'll see that if I
+
+275
+00:22:09,670 --> 00:22:11,970
+ reference either a of 0 or a of 1
+
+276
+00:22:12,760 --> 00:22:16,800
+ Then I will just modify that array is designed
+
+277
+00:22:17,020 --> 00:22:21,900
+ But when I'm calling fun of 2 or fun of 3 
+ what I'm actually doing is altering
+
+278
+00:22:22,300 --> 00:22:26,100
+ The the bytes that encode this number d
+
+279
+00:22:26,100 --> 00:22:29,639
+ and that's why you saw the sort of funny numbers come out of it and
+
+280
+00:22:29,710 --> 00:22:32,879
+ As I go up at some point when I hit 6 I'm
+
+281
+00:22:33,490 --> 00:22:40,440
+ modifying some state of the program that 
+ it's using to kind of keep things organized most likely how it
+
+282
+00:22:40,870 --> 00:22:46,560
+ Keeps track of of allocated memory, and that's causing the program to crash
+
+283
+00:22:47,320 --> 00:22:50,009
+ so this is a pretty good demonstration of a
+
+284
+00:22:50,890 --> 00:22:53,160
+ Why C programming can drive you crazy
+
+285
+00:22:54,340 --> 00:22:59,100
+ Because as you saw it doesn't do bounds checking 
+ so it's easy to write code that
+
+286
+00:23:00,430 --> 00:23:02,430
+ does invalid stuff
+
+287
+00:23:03,760 --> 00:23:05,710
+ It's also
+
+288
+00:23:05,710 --> 00:23:07,480
+ often the case that
+
+289
+00:23:07,480 --> 00:23:14,039
+ you'll cause some problem, and it has a sort of action a distance feature that you can modify some think you're
+
+290
+00:23:14,560 --> 00:23:19,799
+ Modifying some data structure and what you're doing because of the way things are organized in memory
+
+291
+00:23:20,080 --> 00:23:23,699
+ You're changing something totally unrelated somewhere else in the program
+
+292
+00:23:24,250 --> 00:23:27,690
+ You'd imagine. They're not just one apart, but they're 10,000 apart and
+
+293
+00:23:28,600 --> 00:23:30,779
+ things might just run fine for
+
+294
+00:23:31,510 --> 00:23:32,970
+ hours days or weeks
+
+295
+00:23:32,970 --> 00:23:40,889
+ and then always say at some point that data that got corrupted a long time ago gets accessed and
+
+296
+00:23:41,260 --> 00:23:43,210
+ something goes wrong, so
+
+297
+00:23:43,210 --> 00:23:50,999
+ This can be some of the worst nightmare debugging nightmares that exist on Earth is to try and figure out memory referencing herbs
+
+298
+00:23:54,520 --> 00:23:58,950
+ So this is actually one argument not to program in C or C++
+
+299
+00:24:00,220 --> 00:24:04,049
+ and it's a valid argument, I'll admit. 
+ But also as a
+
+300
+00:24:05,220 --> 00:24:06,510
+ person who's writing a lot of C
+
+301
+00:24:06,510 --> 00:24:13,079
+ programming you just get more experienced, 
+ and you know at times that you should actually put bounds checking in your own code
+
+302
+00:24:13,330 --> 00:24:17,490
+ and there's also tools available that will help you 
+
+303
+00:24:19,990 --> 00:24:26,069
+ bulletproof your code so that it will detect these kind of problems, so it's not like you have to change languages
+
+304
+00:24:26,070 --> 00:24:28,830
+ But it is a particular feature of these languages
+
+305
+00:24:30,370 --> 00:24:34,829
+ and so understanding sort of the machine-level representation of Data Structures
+
+306
+00:24:34,830 --> 00:24:39,120
+ And how they work is very really makes a huge difference in your ability to
+
+307
+00:24:39,580 --> 00:24:45,809
+ deal with these kind of vulnerabilities and things of vulnerabilities by the way 
+ also from a security perspective
+
+308
+00:24:49,390 --> 00:24:55,109
+ The the fourth Sort of theme, we'll cover in the course is getting performance out of programs
+
+309
+00:24:55,929 --> 00:25:00,929
+ Other parts of the curriculum in CS do much more emphasis on getting the right
+
+310
+00:25:01,210 --> 00:25:08,850
+ Algorithm at the right Data Structure, and that's really well and good. 
+ It's important stuff, I don't deny it. But they some amount of the
+
+311
+00:25:09,669 --> 00:25:11,669
+ sort of 
+
+312
+00:25:11,890 --> 00:25:18,359
+ Low-level optimization that you need to do that. 
+ You need to understand what the system does what makes it run well,
+
+313
+00:25:18,360 --> 00:25:22,679
+ what makes it run poorly in order to be able to do that kind of optimization
+
+314
+00:25:23,289 --> 00:25:25,679
+ So the example. We like to use is
+
+315
+00:25:27,429 --> 00:25:34,979
+ These two functions do exactly the same thing in terms of their their behavior what they do is
+
+316
+00:25:35,470 --> 00:25:37,470
+ Copy a
+
+317
+00:25:38,289 --> 00:25:40,030
+ Matrix or Array
+
+318
+00:25:40,030 --> 00:25:47,729
+ from called source or src to a destination DST. 
+ They're both size to be
+
+319
+00:25:48,970 --> 00:25:50,970
+ 2048 rows
+
+320
+00:25:51,010 --> 00:25:53,129
+ 2048 columns two-dimensional arrays
+
+321
+00:25:53,130 --> 00:25:53,890
+
+322
+00:25:53,890 --> 00:25:59,669
+ And you'll see that the programs do the obvious thing 
+ you have a nested pair of loops to do the row and column
+
+323
+00:25:59,799 --> 00:26:02,309
+ indices and you just copy from
+
+324
+00:26:02,919 --> 00:26:07,229
+ One source element to a destination element the only thing that's different
+
+325
+00:26:07,840 --> 00:26:09,870
+ you'll see is that the two
+
+326
+00:26:10,870 --> 00:26:12,159
+ loops
+
+327
+00:26:12,159 --> 00:26:18,779
+ their nesting is different the nesting order is different in one case. I'm going kind of row first
+
+328
+00:26:20,960 --> 00:26:27,369
+ Going through all the rows and then the columns and the other is for any given row. I'm copying all the columns
+
+329
+00:26:27,370 --> 00:26:29,620
+ That's really the only difference between these two programs
+
+330
+00:26:30,710 --> 00:26:33,939
+ but what you'll find if you run it on a typical system is
+
+331
+00:26:34,580 --> 00:26:38,679
+ that that one is much faster than the other in this particular machine
+
+332
+00:26:38,680 --> 00:26:42,970
+ we ran it on it was about close to 20 times difference in performance
+
+333
+00:26:43,100 --> 00:26:50,289
+ So something fishy is going on if the same program that differs only in this seemingly
+
+334
+00:26:50,900 --> 00:26:57,910
+ insignificant way a way that has no effect whatsoever on its functionality can have this much performance difference and
+
+335
+00:26:58,370 --> 00:27:00,370
+ so to understand this
+
+336
+00:27:00,680 --> 00:27:03,100
+ You need to stare at the cover of the book
+
+337
+00:27:07,520 --> 00:27:09,520
+ because basically
+
+338
+00:27:10,310 --> 00:27:12,340
+ You're two different points of this
+
+339
+00:27:13,220 --> 00:27:19,659
+ Strange-looking picture that's on your book and since there's no axes or labels on it. It makes no [sense] whatsoever
+
+340
+00:27:20,510 --> 00:27:22,510
+ But it's there
+
+341
+00:27:22,580 --> 00:27:28,629
+ so what you see is this picture shows four different memory access patterns, and I won't go into the details of
+
+342
+00:27:29,510 --> 00:27:35,140
+ what the throughput measured in megabytes per second on on A
+
+343
+00:27:35,750 --> 00:27:37,989
+ basically a copying program was and
+
+344
+00:27:38,960 --> 00:27:46,299
+ Without going into the details what you'll see is these two functions sort of sit at different points in this memory access pattern
+
+345
+00:27:46,430 --> 00:27:52,539
+ the one that goes through row by Row is much better than the one that goes through Column by Column and
+
+346
+00:27:53,870 --> 00:28:00,610
+ As a result you're getting a lot better performance that it has to do with this memory Hierarchy and what they call the cache memories
+
+347
+00:28:01,340 --> 00:28:03,340
+ That you're getting way better
+
+348
+00:28:03,770 --> 00:28:06,820
+ performance out [of] it in case [than] the other so
+
+349
+00:28:08,150 --> 00:28:10,989
+ [that's] explains what the cover of the book is about and
+
+350
+00:28:11,660 --> 00:28:14,139
+ we'll talk about it more later in the course and
+
+351
+00:28:14,930 --> 00:28:21,279
+ Then a final part of the course talks more about not just getting computers to run little programs in isolation
+
+352
+00:28:21,280 --> 00:28:26,980
+ but getting computers that talk to each other over networks and implement [services] like
+
+353
+00:28:27,410 --> 00:28:31,960
+ web servers and other functions like that which of course is where
+
+354
+00:28:32,679 --> 00:28:35,109
+ Most in the world of computing sits today. It's not just
+
+355
+00:28:35,929 --> 00:28:38,229
+ isolated machines, but computers that
+
+356
+00:28:39,110 --> 00:28:43,329
+ Interact with each other over the network. They're embedded controllers that are
+
+357
+00:28:44,090 --> 00:28:46,090
+ interacting with the physical world, so
+
+358
+00:28:46,429 --> 00:28:49,329
+ Really the the world of computers is a much richer
+
+359
+00:28:49,580 --> 00:28:54,549
+ Environment and will cover at least some aspects of that in the final part of this course
+
+360
+00:28:57,649 --> 00:28:59,539
+ so as
+
+361
+00:28:59,539 --> 00:29:03,849
+ I mentioned the other feature of this course is it will get you ready for other systems?
+
+362
+00:29:04,070 --> 00:29:09,399
+ Courses you might take it cmU and here. [we] [listed] actually a subset of the courses
+
+363
+00:29:09,919 --> 00:29:13,898
+ at the University that require this course is a prerequisite and
+
+364
+00:29:14,869 --> 00:29:18,069
+ They're mostly in computer science and ece
+
+365
+00:29:18,799 --> 00:29:22,959
+ But you'll see. It's quite a range of of different courses and
+
+366
+00:29:24,139 --> 00:29:26,139
+ each of them Builds on
+
+367
+00:29:26,509 --> 00:29:31,779
+ say one or multiple aspects of the material [you] learn in the course, so
+
+368
+00:29:32,659 --> 00:29:37,599
+ The reason why we make everyone take this course including incoming [master] students is
+
+369
+00:29:38,090 --> 00:29:42,639
+ That all these other courses at the university have come to rely on
+
+370
+00:29:43,039 --> 00:29:47,229
+ students being familiar and having done the work of two thirteen
+
+371
+00:29:47,869 --> 00:29:53,259
+ or five thirteen as a prerequisite and they can build on that material [and]
+
+372
+00:29:54,080 --> 00:29:58,480
+ Sort of cover more ground as a result rather than having to do what would otherwise be
+
+373
+00:29:58,700 --> 00:30:05,019
+ Somewhat remedial work on it and in fact one of the part of the genesis of this course was the people who taught
+
+374
+00:30:05,240 --> 00:30:07,329
+ the operating system course a
+
+375
+00:30:07,970 --> 00:30:09,529
+ 410
+
+376
+00:30:09,529 --> 00:30:15,729
+ sort of complained that they were spending too much time at the beginning of the course talking about some very basics of machine programming and
+
+377
+00:30:16,999 --> 00:30:22,629
+ And dave and [I] said oh well we can cover that so that was part of what got this course started
+
+378
+00:30:24,230 --> 00:30:30,279
+ And as I mentioned that the course has a sort of perspective that's very different from traditional
+
+379
+00:30:30,679 --> 00:30:37,809
+ Systems courses most systems courses including that whole array saw there were about how do I build some?
+
+380
+00:30:38,269 --> 00:30:43,299
+ Particular feature, how do I implement an operating system? How do I design a pipeline?
+
+381
+00:30:43,850 --> 00:30:45,850
+ microprocessor
+
+382
+00:30:46,090 --> 00:30:50,500
+ And don't it's all important stuff to know we really want the people who are out there
+
+383
+00:30:51,110 --> 00:30:55,809
+ Building operating systems and designing microprocessors to have learned how to do it
+
+384
+00:30:56,690 --> 00:31:02,140
+ On the other hand is a way to sort of get new into this and get the introduction and get the experience
+
+385
+00:31:02,419 --> 00:31:07,179
+ We find it more [useful] to take what we call a programmers [perspective] meaning
+
+386
+00:31:09,320 --> 00:31:11,320
+ understanding of
+
+387
+00:31:11,659 --> 00:31:18,909
+ What you as a person who sits in front of a computer screen and types code I need [to] know about that machine
+
+388
+00:31:18,909 --> 00:31:23,679
+ You're typing code for in order to be effective at doing it as opposed to
+
+389
+00:31:24,200 --> 00:31:27,520
+ Somebody who some day going to be designing the actual machine itself?
+
+390
+00:31:28,820 --> 00:31:30,409
+ so that
+
+391
+00:31:30,409 --> 00:31:33,339
+ by taking that perspective it gives you sort of an
+
+392
+00:31:33,559 --> 00:31:40,839
+ Understanding so now when you go off [to] implement it you'll actually know what these features are and why it's important to implement them well
+
+393
+00:31:41,570 --> 00:31:45,820
+ But also that by doing this programmers perspective it lets you
+
+394
+00:31:46,190 --> 00:31:52,899
+ Right away get tools that you can use in other places where you're writing programs are doing anything related to it
+
+395
+00:31:53,330 --> 00:31:59,500
+ And be more effective at that, so this programmers perspective really gives this dual
+
+396
+00:32:00,409 --> 00:32:02,210
+ benefit to it that
+
+397
+00:32:02,210 --> 00:32:08,079
+ We feel is very useful and students have taken the course in the past have expressed that as well
+
+398
+00:32:08,929 --> 00:32:11,619
+ So as I mentioned the we have two instructors
+
+399
+00:32:12,440 --> 00:32:14,440
+ for the course and
+
+400
+00:32:15,230 --> 00:32:18,819
+ They also happen to be authors and the longest
+
+401
+00:32:19,880 --> 00:32:21,880
+ We've probably taught this course
+
+402
+00:32:22,130 --> 00:32:26,169
+ More than anyone else, but it's also taught by other people on [campus] as well
+
+403
+00:32:27,140 --> 00:32:32,379
+ So what I'm going to do now is hand my pair of microphones over two days
+
+404
+00:32:33,950 --> 00:32:39,309
+ All right, welcome good afternoon. It's great to see you. My name is Dave wilhelm hren and
+
+405
+00:32:40,190 --> 00:32:43,450
+ I'm just delighted to have the opportunity to
+
+406
+00:32:44,360 --> 00:32:46,659
+ Be one of your instructors this term
+
+407
+00:32:49,460 --> 00:32:51,460
+ this course is
+
+408
+00:32:51,919 --> 00:32:57,669
+ One of the reason I'm so excited to be teaching this course. I mean, I just love this course and
+
+409
+00:32:58,200 --> 00:33:02,939
+ The real reason is the the opportunity of represents to have an impact on?
+
+410
+00:33:03,489 --> 00:33:04,659
+ people's lives
+
+411
+00:33:04,659 --> 00:33:07,108
+ We really believe that the material you learned this semester
+
+412
+00:33:08,289 --> 00:33:14,069
+ can help a really positive and long-lasting impact on on your careers and
+
+413
+00:33:14,590 --> 00:33:17,220
+ It'll help you not only with your future classes, but also
+
+414
+00:33:18,279 --> 00:33:24,238
+ Future positions you have and I hear this from people all all the time
+
+415
+00:33:24,970 --> 00:33:26,970
+ Former CMU students and
+
+416
+00:33:27,429 --> 00:33:32,069
+ Students around the world to have taken the equivalent of [213] at their schools
+
+417
+00:33:33,399 --> 00:33:34,869
+ even a
+
+418
+00:33:34,869 --> 00:33:35,820
+ couple years ago
+
+419
+00:33:35,820 --> 00:33:43,169
+ We were interviewing a faculty member finished tenure-track faculty member who went to did his undergrad at CMU
+
+420
+00:33:43,659 --> 00:33:47,969
+ and then went off to Stanford got his phd at Stanford and was coming back to
+
+421
+00:33:49,210 --> 00:33:51,210
+ you know join the faculty and
+
+422
+00:33:52,299 --> 00:33:57,658
+ He told me that 213 changed his life in our interview, and I don't know if he was trying to butter me up
+
+423
+00:33:58,539 --> 00:34:04,229
+ but I I think I believe him he he said it changed his whole life in the sense that it gave him a
+
+424
+00:34:04,600 --> 00:34:06,600
+ Research Direction, you know he didn't really know what?
+
+425
+00:34:07,389 --> 00:34:14,699
+ What he knew it kind of like computer science, but it didn't really know what direction to go and and after he took to 13
+
+426
+00:34:15,460 --> 00:34:19,319
+ He knew they wanted to to do his word was life's work in systems
+
+427
+00:34:20,020 --> 00:34:21,309
+ [now]
+
+428
+00:34:21,309 --> 00:34:25,619
+ it was just remarkable right to come back and have we ended up actually hiring him and
+
+429
+00:34:25,899 --> 00:34:30,929
+ He told me that everybody in his lab at stanford all of the grad students had a copy of a book on their desk
+
+430
+00:34:31,419 --> 00:34:33,159
+ [front] and they were from all over
+
+431
+00:34:33,159 --> 00:34:35,159
+ You know all different schools
+
+432
+00:34:35,710 --> 00:34:40,290
+ and so I mean I even I was in a bookstore in Beijing a
+
+433
+00:34:40,960 --> 00:34:44,309
+ couple Years ago right outside the [PKU] campus and
+
+434
+00:34:45,159 --> 00:34:50,669
+ I was up on the fifth floor trying to see if I could find a copy of the textbook and I found the
+
+435
+00:34:51,819 --> 00:34:53,819
+ English version in one aisle and
+
+436
+00:34:54,460 --> 00:34:57,839
+ then a couple aisles over I found the Chinese version I was
+
+437
+00:34:59,589 --> 00:35:02,609
+ Going through the Chinese version and the sky tapped me on my shoulder
+
+438
+00:35:03,160 --> 00:35:10,319
+ And I turned around [he] says oh man that that book is really good. You should the English version is two aisles over
+
+439
+00:35:13,360 --> 00:35:14,860
+ and I mean
+
+440
+00:35:14,860 --> 00:35:16,860
+ It just blew me away to be
+
+441
+00:35:17,470 --> 00:35:19,470
+ to be in the head of someone like
+
+442
+00:35:19,930 --> 00:35:24,389
+ Halfway around the world. It was just that it was just one of those moments, and so I'm
+
+443
+00:35:25,060 --> 00:35:28,110
+ I'm not trying to boast. I'm just trying what I want
+
+444
+00:35:28,110 --> 00:35:34,139
+ I want to give you the sense of what it what an opportunity this course represents for for [Randi] and I to
+
+445
+00:35:35,110 --> 00:35:37,110
+ to have what we hope will be a
+
+446
+00:35:37,450 --> 00:35:40,200
+ Really positive impact on on your lives
+
+447
+00:35:40,900 --> 00:35:42,900
+ [so]
+
+448
+00:35:43,450 --> 00:35:45,600
+ [let] me we have kind of a
+
+449
+00:35:47,380 --> 00:35:53,940
+ Kind of a funny organization for the course to it in response to that just that the tremendous demand
+
+450
+00:35:53,940 --> 00:35:55,940
+ We have we found that we have for it
+
+451
+00:35:56,380 --> 00:35:58,950
+ So there's there's actually three course numbers
+
+452
+00:35:59,680 --> 00:36:02,970
+ But it's all the same course okay. It's identical course
+
+453
+00:36:04,119 --> 00:36:06,839
+ 513 [15] [513] is for our master students
+
+454
+00:36:07,750 --> 00:36:09,780
+ and the 513
+
+455
+00:36:10,510 --> 00:36:14,129
+ 513 doesn't have a formal lecture. So there's no seats assigned to it
+
+456
+00:36:15,310 --> 00:36:17,850
+ instead we'll videotape the lectures and
+
+457
+00:36:18,369 --> 00:36:23,459
+ we'll make those available on the course web web page for our for our graduate students and
+
+458
+00:36:23,980 --> 00:36:25,980
+ the reason we do this is just because
+
+459
+00:36:26,530 --> 00:36:28,530
+ in the past well, we
+
+460
+00:36:28,750 --> 00:36:34,199
+ We didn't have enough seats for everyone and there would be cases where there might be a hundred 150
+
+461
+00:36:36,130 --> 00:36:37,900
+ [Master] students on the Waitlist
+
+462
+00:36:37,900 --> 00:36:43,590
+ They wouldn't be [able] to get into the course and [we] we didn't really want that because they need this course for to take other
+
+463
+00:36:43,590 --> 00:36:45,400
+ courses
+
+464
+00:36:45,400 --> 00:36:47,400
+ So that's the reason why we have this
+
+465
+00:36:48,040 --> 00:36:51,509
+ This sort of does not meet version of 213 is
+
+466
+00:36:52,390 --> 00:36:57,330
+ 513 because we can admit as many all the master's students that that need to take the course?
+
+467
+00:36:57,850 --> 00:36:58,930
+ now
+
+468
+00:36:58,930 --> 00:37:03,480
+ 15 to 13 and 18 to 13 or are for undergraduates in
+
+469
+00:37:04,300 --> 00:37:06,300
+ computer science and ece
+
+470
+00:37:07,119 --> 00:37:08,350
+ respectively
+
+471
+00:37:08,350 --> 00:37:10,350
+ okay, and
+
+472
+00:37:12,010 --> 00:37:14,909
+ The undergraduates will go to lectures and recitations
+
+473
+00:37:15,490 --> 00:37:20,399
+ [okay], in person graduate students will watch videotapes of those but otherwise yes
+
+474
+00:37:21,220 --> 00:37:23,699
+ For those videotapes will they be available [Kamal]?
+
+475
+00:37:25,839 --> 00:37:28,349
+ Yeah, we're making them available to everyone actually
+
+476
+00:37:30,369 --> 00:37:36,689
+ Sorry and lecture slides as well. Everything is available on the course [web] [page], so
+
+477
+00:37:40,119 --> 00:37:42,119
+ So you'll be doing
+
+478
+00:37:45,160 --> 00:37:48,059
+ The all of students will have equal access to office hours
+
+479
+00:37:49,990 --> 00:37:51,990
+ [the] staff mailing list and
+
+480
+00:37:52,990 --> 00:37:54,990
+ everybody does the same labs and
+
+481
+00:37:55,300 --> 00:37:57,749
+ The same exams okay, so it's just a question
+
+482
+00:37:58,000 --> 00:38:02,669
+ it's just a matter of whether you're good a lecture in person or if [you're] [watching] [on] video in fact if
+
+483
+00:38:03,040 --> 00:38:07,619
+ You know since it's available to everybody if you miss lecture, it'll be there on the web page
+
+484
+00:38:07,619 --> 00:38:13,409
+ And you can catch up which I know you'll probably do actually I know most of you will never miss class, right?
+
+485
+00:38:13,410 --> 00:38:16,020
+ But the few of you who do you'll be able to watch the video?
+
+486
+00:38:19,300 --> 00:38:21,300
+ Okay
+
+487
+00:38:21,490 --> 00:38:25,050
+ All right, this is the one part I list the part I hate I
+
+488
+00:38:26,020 --> 00:38:29,280
+ Love teaching that this is this is the one part teaching that
+
+489
+00:38:29,770 --> 00:38:33,989
+ None of us really like but we have to talk about it, and that's academic integrity
+
+490
+00:38:34,990 --> 00:38:37,679
+ if you're new on campus
+
+491
+00:38:40,630 --> 00:38:46,829
+ [coming] from a international school if you're an international student new on campus
+
+492
+00:38:48,460 --> 00:38:52,799
+ [there] might be different notions of academic integrity and
+
+493
+00:38:53,589 --> 00:38:56,009
+ different notions of cheating at your
+
+494
+00:38:57,069 --> 00:38:59,129
+ undergraduate school or your old school
+
+495
+00:38:59,770 --> 00:39:06,780
+ So if you're new on campus [pay] very close attention to this because at Carnegie Mellon, we take academic integrity
+
+496
+00:39:08,049 --> 00:39:11,999
+ Very seriously okay. It's not a wink wink. Nod, nod
+
+497
+00:39:14,020 --> 00:39:16,020
+ [we're] very serious about it
+
+498
+00:39:17,559 --> 00:39:23,009
+ And we want you we want everybody doing their own work to preserve the integrity of the courses
+
+499
+00:39:25,329 --> 00:39:27,749
+ So what exactly is cheating?
+
+500
+00:39:29,140 --> 00:39:31,680
+ so if you share code with anybody either
+
+501
+00:39:33,099 --> 00:39:35,040
+ copying
+
+502
+00:39:35,040 --> 00:39:38,989
+ Retyping looking at somebody's code like if you look at somebody's code on the screen
+
+503
+00:39:40,860 --> 00:39:45,739
+ Or if you give somebody a file all of those all of those
+
+504
+00:39:47,160 --> 00:39:49,939
+ examples of sharing are cheating
+
+505
+00:39:51,300 --> 00:39:56,390
+ If if you describe your code like line by line to somebody that's cheating
+
+506
+00:39:59,310 --> 00:40:04,249
+ If you coach somebody line by line, that's cheating
+
+507
+00:40:07,200 --> 00:40:11,300
+ Searching the web for solutions. Just [the] act of searching is cheating
+
+508
+00:40:12,060 --> 00:40:13,740
+ and this is a
+
+509
+00:40:13,740 --> 00:40:20,300
+ this is a real problem for us in particular because the course is offered all around the world and
+
+510
+00:40:22,050 --> 00:40:29,179
+ People either maliciously or or sometimes just they're proud of their work, and they post it. You know for employers on like public github sites
+
+511
+00:40:30,600 --> 00:40:35,329
+ So it's it might be tempting to to search for these solutions
+
+512
+00:40:36,660 --> 00:40:38,929
+ but even the act of searching is cheating and
+
+513
+00:40:40,200 --> 00:40:47,060
+ definitely if you find some a solution in and use it that's cheating even if you modify it afterwards and
+
+514
+00:40:48,480 --> 00:40:54,230
+ [I] just want you to remember I can I know how to use [google] just as well as anybody else right so [I] I
+
+515
+00:40:54,480 --> 00:40:56,480
+ Can search for solutions [too]?
+
+516
+00:41:01,410 --> 00:41:03,060
+ so
+
+517
+00:41:03,060 --> 00:41:05,330
+ Copying code. You know you might [be] tempted
+
+518
+00:41:05,940 --> 00:41:11,240
+ You might be tempted to copy code from someone who took the class you know in a previous semester
+
+519
+00:41:12,420 --> 00:41:14,450
+ Don't do it. That's that's cheating [-]
+
+520
+00:41:15,210 --> 00:41:19,160
+ Now what's not cheating so you can you can help each other use tools?
+
+521
+00:41:20,070 --> 00:41:25,400
+ you know somebody's having trouble using GDB or you know they have questions about how to run
+
+522
+00:41:26,520 --> 00:41:30,199
+ Use a text editor [that] stuff's all great. You [can] help each other out
+
+523
+00:41:31,200 --> 00:41:34,820
+ Using the tools how to log [into] the shark machines all of that kind of stuff
+
+524
+00:41:35,760 --> 00:41:37,560
+ [and] you
+
+525
+00:41:37,560 --> 00:41:42,019
+ Can help you can discuss sort of high-level design issues, and that's probably a good idea. Yes
+
+526
+00:41:46,460 --> 00:41:49,299
+ Yeah, yeah, did you take it a previous semester? [oh]?
+
+527
+00:41:54,980 --> 00:41:59,920
+ Okay, yeah the question [was] if you took it in a previous [semester] can use your your work and the answer is yes
+
+528
+00:42:03,770 --> 00:42:07,989
+ So it you can also talk to each other about high level you know design issues
+
+529
+00:42:08,300 --> 00:42:12,430
+ you know, how are you are using an explicit list or using a
+
+530
+00:42:13,970 --> 00:42:20,500
+ Segregated list for your Malik lab. Okay that kind of stuff is is is okay, okay high level okay?
+
+531
+00:42:20,870 --> 00:42:22,870
+ Low level not okay
+
+532
+00:42:23,600 --> 00:42:26,499
+ And basically what we want you to write your [own] code
+
+533
+00:42:28,340 --> 00:42:34,779
+ This is not you know. It's kind of a cut and paste world these days right. You look stuff up on Google's Stack overflow
+
+534
+00:42:36,050 --> 00:42:38,050
+ You cut and paste it
+
+535
+00:42:38,960 --> 00:42:41,289
+ But that's not that's not the way. We do it here
+
+536
+00:42:43,310 --> 00:42:51,190
+ [we] want you to do the work yourself. We want you to enjoy the experience of figuring things out and learning how to solve problems
+
+537
+00:42:54,680 --> 00:42:56,680
+ now the consequences for cheating
+
+538
+00:42:57,170 --> 00:42:59,170
+ There's a single sanction
+
+539
+00:42:59,480 --> 00:43:00,830
+ if
+
+540
+00:43:00,830 --> 00:43:04,840
+ You're caught cheating you'll you'll be expelled from the course with an R
+
+541
+00:43:05,660 --> 00:43:11,950
+ There's no exceptions all right if you drop the course we'll just reinstate you and then [flunk] you
+
+542
+00:43:15,500 --> 00:43:17,500
+ it's really a
+
+543
+00:43:17,660 --> 00:43:20,319
+ It's a very serious very serious
+
+544
+00:43:22,070 --> 00:43:26,469
+ Penalty because we just take it. We take it so seriously at at sub
+
+545
+00:43:30,080 --> 00:43:33,219
+ And it's just it's just something we don't want you to do
+
+546
+00:43:35,810 --> 00:43:40,390
+ We have amazing tools to detect code plagiarism
+
+547
+00:43:48,500 --> 00:43:51,610
+ We have amazing tools to detect plagiarism that are
+
+548
+00:43:53,990 --> 00:43:55,990
+ that are resilient to
+
+549
+00:43:56,510 --> 00:43:57,890
+ renaming
+
+550
+00:43:57,890 --> 00:44:01,059
+ Reformatting they operate at a very deep syntactic level
+
+551
+00:44:01,880 --> 00:44:03,200
+ and
+
+552
+00:44:03,200 --> 00:44:06,819
+ So just please please don't do it
+
+553
+00:44:07,700 --> 00:44:12,009
+ We have I think 18 tas will have office hours almost every day of the week
+
+554
+00:44:13,430 --> 00:44:16,209
+ There's plenty of opportunities and ways to get help
+
+555
+00:44:18,350 --> 00:44:20,350
+ start early
+
+556
+00:44:20,720 --> 00:44:25,360
+ If you get stuck start early enough so that you get stuck you can go ask for help
+
+557
+00:44:27,560 --> 00:44:29,560
+ [we] have the
+
+558
+00:44:29,780 --> 00:44:33,400
+ Automatic extensions built-in if you need more time I'll talk about that later
+
+559
+00:44:34,040 --> 00:44:36,040
+ form of Grace days
+
+560
+00:44:36,320 --> 00:44:38,499
+ But please please whatever you do
+
+561
+00:44:40,190 --> 00:44:42,190
+ Don't cheat
+
+562
+00:44:42,200 --> 00:44:48,999
+ It's just tragic when it happens last last fall 25 students were expelled from the course
+
+563
+00:44:50,390 --> 00:44:53,829
+ Some were expelled from the [university] because it was a second offense
+
+564
+00:44:55,370 --> 00:45:01,870
+ Many were sent home. [I] talked to students who were like the only person in their family to go to college
+
+565
+00:45:02,780 --> 00:45:06,940
+ The only person in their village to go to college, and they were going home
+
+566
+00:45:07,730 --> 00:45:10,930
+ Without without a degree, and it's just tragic. It's just
+
+567
+00:45:11,930 --> 00:45:14,919
+ So please please [please] don't do it do your own work
+
+568
+00:45:15,800 --> 00:45:17,030
+ and
+
+569
+00:45:17,030 --> 00:45:19,209
+ It'll be a wonderful experience
+
+570
+00:45:22,520 --> 00:45:27,949
+ Randy mentioned the the textbook is computer systems the programmers perspective third edition
+
+571
+00:45:30,390 --> 00:45:32,390
+ you can there's a whole bunch of
+
+572
+00:45:33,210 --> 00:45:38,990
+ Supporting material on the on the books website at CFa Pt. Dot [c] [s] cMU edu
+
+573
+00:45:39,960 --> 00:45:46,669
+ and as randy mentioned this this book really matters for the course because actually the book came out of the course right, so
+
+574
+00:45:47,400 --> 00:45:51,230
+ The book is the course of course. [that's] the book on and
+
+575
+00:45:51,900 --> 00:45:57,860
+ So it'll it'll really help you. Love it the labs that we do come directly from material that we discuss in the book
+
+576
+00:45:58,620 --> 00:46:02,779
+ So what I would encourage all of you to do, and I'm not sure if anybody has ever taken this advice
+
+577
+00:46:02,780 --> 00:46:05,540
+ But I say it every year anyway, because I believe it
+
+578
+00:46:06,330 --> 00:46:13,759
+ But I think a really good strategy for studying and preparing for this course would be to read each chapter three times
+
+579
+00:46:15,480 --> 00:46:17,570
+ Okay, read it three times
+
+580
+00:46:18,720 --> 00:46:24,080
+ [work] the practice problem, so we have littered throughout the book or practice problems with solutions at the end of the
+
+581
+00:46:24,660 --> 00:46:29,780
+ the end of the chapter and these practice problems are like little sort of bite-size morsels just to kind of
+
+582
+00:46:30,060 --> 00:46:32,060
+ just to kind of check your
+
+583
+00:46:32,430 --> 00:46:35,030
+ Kind of Sanity check of your understanding of the material
+
+584
+00:46:36,270 --> 00:46:38,780
+ So I think if you've read this if you read the book
+
+585
+00:46:38,960 --> 00:46:43,310
+ each chapter three times and work the practice problems you it that would be an excellent way to
+
+586
+00:46:45,750 --> 00:46:47,750
+ Go through the semester and prepare
+
+587
+00:46:48,930 --> 00:46:55,340
+ The other book we use is the [colonel] Hannon [Richie's] classic C programming book I?
+
+588
+00:46:56,850 --> 00:46:58,080
+ think
+
+589
+00:46:58,080 --> 00:47:00,080
+ This is still this was written a long time ago
+
+590
+00:47:00,840 --> 00:47:04,969
+ It's still the best book around. I think for C. It's a it's a beautiful
+
+591
+00:47:05,910 --> 00:47:08,630
+ Example of technical writing it was one of the inspirations
+
+592
+00:47:08,670 --> 00:47:14,240
+ I used when I was writing the book you know I tried to find that same clarity and
+
+593
+00:47:15,480 --> 00:47:17,929
+ precision that they that they
+
+594
+00:47:18,690 --> 00:47:20,690
+ Turn Hand and RicCi
+
+595
+00:47:22,590 --> 00:47:27,140
+ Have in their book, so this is a this is a really good book. I mean, this is kind of book
+
+596
+00:47:27,140 --> 00:47:33,429
+ It's a reference, but it's a kind of book you can just read from beginning to end and get a really good [understanding] of see
+
+597
+00:47:37,910 --> 00:47:44,020
+ There's a there's four main components to the course there's lectures where we go over the high-level concepts
+
+598
+00:47:45,049 --> 00:47:47,379
+ recitations where which meet
+
+599
+00:47:48,349 --> 00:47:50,349
+ Once a week for [an] hour
+
+600
+00:47:50,720 --> 00:47:58,179
+ [led] [by] a Ta and the purpose of the recitations is really to help you with the labs right so it's very practical and hands-on
+
+601
+00:47:59,539 --> 00:48:00,680
+ [There's]
+
+602
+00:48:00,680 --> 00:48:02,079
+ There's seven of those labs
+
+603
+00:48:02,079 --> 00:48:06,189
+ And these are really the heart and soul of the course this is where
+
+604
+00:48:06,559 --> 00:48:11,679
+ This is where all the real learning comes in I think when you actually have to do this stuff
+
+605
+00:48:11,680 --> 00:48:16,869
+ And that's why we take the cheating part so seriously because if you do these labs
+
+606
+00:48:17,390 --> 00:48:20,680
+ You're going to learn an incredible amount of really cool stuff
+
+607
+00:48:21,230 --> 00:48:23,379
+ if you don't do them you won't learn anything, [so]
+
+608
+00:48:26,150 --> 00:48:29,980
+ [each] one of these these labs is one or two weeks each
+
+609
+00:48:30,950 --> 00:48:32,329
+ and
+
+610
+00:48:32,329 --> 00:48:33,740
+ Involves
+
+611
+00:48:33,740 --> 00:48:35,919
+ Typically some kind of programming or measurement
+
+612
+00:48:36,650 --> 00:48:39,940
+ there's also two exams a midterm and [a] final the
+
+613
+00:48:41,089 --> 00:48:43,089
+ The exams are proctored
+
+614
+00:48:44,450 --> 00:48:46,450
+ They're online
+
+615
+00:48:47,000 --> 00:48:48,470
+ proctored in
+
+616
+00:48:48,470 --> 00:48:54,520
+ Wien and and gates and what we do for the exams is we have like we take like four days
+
+617
+00:48:55,400 --> 00:48:57,460
+ From 10:00 to 10:00 and then you can sign up
+
+618
+00:48:57,460 --> 00:49:04,899
+ and then we have like multiple clusters that are [network] isolated and then you can sign up for a slot like a 6-hour slot and
+
+619
+00:49:05,059 --> 00:49:06,230
+ the
+
+620
+00:49:06,230 --> 00:49:10,599
+ Midterm is like nominally like an hour [eighty] minute exam. That's the same exam
+
+621
+00:49:10,599 --> 00:49:16,629
+ Where you we gave when we used to have people sitting in person so it's nominally like 80 minutes
+
+622
+00:49:16,630 --> 00:49:21,730
+ but we give you like a five or six hour window to do it okay, so there's
+
+623
+00:49:23,270 --> 00:49:27,189
+ So you can sign up any time any day that there's a slot, okay?
+
+624
+00:49:27,190 --> 00:49:33,549
+ So there's flexibilities [that] can kind of tailor it to your your schedule, and we I think we've also removed all the time pressure
+
+625
+00:49:33,710 --> 00:49:35,240
+ right so which is
+
+626
+00:49:35,240 --> 00:49:39,879
+ you can you can go back you can check your work you can you can just kind of relax and
+
+627
+00:49:40,609 --> 00:49:41,869
+ not
+
+628
+00:49:41,869 --> 00:49:43,869
+ not not be worried about
+
+629
+00:49:43,970 --> 00:49:45,970
+ How quickly you do it?
+
+630
+00:49:50,849 --> 00:49:57,529
+ now there's many different ways to get help the main source of information is the course webpage that's a
+
+631
+00:49:59,520 --> 00:50:01,849
+ wwf cmU edu Tildy
+
+632
+00:50:02,640 --> 00:50:07,910
+ [213] and all the information is [there] we've got a complete schedule of lectures and assignments
+
+633
+00:50:09,030 --> 00:50:14,090
+ We don't change it that it's fixed it. So you can look [at] that and and plan your semester
+
+634
+00:50:14,640 --> 00:50:20,869
+ Knowing that those dates of won't change we've actually even got all of the lectures posted ahead of time for
+
+635
+00:50:22,109 --> 00:50:26,809
+ For the other instructors around the world who [are] using the book so we needed to get them all already
+
+636
+00:50:29,190 --> 00:50:36,830
+ There's also news at at the very beginning. There's sort of news if we need to make announcements. We'll post it there
+
+637
+00:50:37,619 --> 00:50:40,969
+ We don't use either blackboard our piazza in the course
+
+638
+00:50:43,170 --> 00:50:45,170
+ instead we have a
+
+639
+00:50:46,140 --> 00:50:48,119
+ staff mailing list
+
+640
+00:50:48,119 --> 00:50:54,949
+ That you can that you can send mail to if you have questions and all of the tas and all of the faculty are
+
+641
+00:50:56,520 --> 00:50:59,209
+ Subscribed to that staff mailing list and so we'll all see it
+
+642
+00:50:59,880 --> 00:51:01,349
+ and
+
+643
+00:51:01,349 --> 00:51:06,349
+ We usually we try to have you know really fast feedback, right so there's so many people
+
+644
+00:51:07,410 --> 00:51:09,410
+ so many people looking at
+
+645
+00:51:10,140 --> 00:51:14,839
+ your emails that chance is very high you'll get an answer back quickly the
+
+646
+00:51:15,660 --> 00:51:20,270
+ Disadvantage of having this advantage of this mailing list is that it allows [us] to control the message
+
+647
+00:51:22,260 --> 00:51:25,040
+ And control what we're it's what feedback
+
+648
+00:51:25,040 --> 00:51:32,209
+ We're giving back to you the disadvantage is that we often get the same question over and over again and so for that
+
+649
+00:51:32,280 --> 00:51:36,769
+ We've established a faq if we find we're getting same questions over and over
+
+650
+00:51:37,140 --> 00:51:40,460
+ We've established a faq on the on the course [web] [page]
+
+651
+00:51:41,280 --> 00:51:45,139
+ for sort of organized by labs ok so you can
+
+652
+00:51:45,780 --> 00:51:50,630
+ You can see the answers to frequently asked [questions] on the there
+
+653
+00:51:52,470 --> 00:51:57,889
+ We have office hours. I think [we're] still trying to eat. We we're still trying to meet
+
+654
+00:51:58,860 --> 00:52:01,970
+ with the staff and figure out the exact office hours, but what I'm
+
+655
+00:52:02,490 --> 00:52:07,760
+ What we're thinking now [is] that we'll have office hours so six days a week, [okay] every day. That's Saturday
+
+656
+00:52:09,780 --> 00:52:14,450
+ The they will be at the same time [in] same place every day so from 5:45
+
+657
+00:52:16,110 --> 00:52:17,910
+ to
+
+658
+00:52:17,910 --> 00:52:19,200
+ 8:30
+
+659
+00:52:19,200 --> 00:52:23,359
+ in [wean] in a queen 5207 cluster
+
+660
+00:52:24,120 --> 00:52:30,859
+ Will have [213] tas there to to help to answer your questions okay? So you don't have to make
+
+661
+00:52:31,500 --> 00:52:35,750
+ Appointments, [I] mean you can make an appointment to see any staff member of course
+
+662
+00:52:36,840 --> 00:52:41,690
+ But you don't you you know that at the same time same place every day. There's somebody you can go to for help
+
+663
+00:52:47,520 --> 00:52:50,030
+ Okay for our labs and exams every assignment
+
+664
+00:52:50,700 --> 00:52:54,049
+ Every lab is a single person so we don't have any group projects
+
+665
+00:52:55,080 --> 00:52:57,470
+ We want you to do the work yourself now
+
+666
+00:52:57,470 --> 00:53:02,329
+ You know it's important to work in groups, and you will learn how to work in groups and other classes
+
+667
+00:53:03,240 --> 00:53:08,810
+ See us classes, but not [NC] 13 we want this is a kind of a core course we want you to figure stuff out yourself
+
+668
+00:53:10,500 --> 00:53:13,160
+ All of our hand ends will be due at 11:59 p.m.
+
+669
+00:53:13,200 --> 00:53:17,179
+ on either a Tuesday or Thursday, and this is you can see which on the
+
+670
+00:53:17,790 --> 00:53:19,790
+ schedule page on the course webpage
+
+671
+00:53:20,520 --> 00:53:23,630
+ And all of our hand [ins] are using auto Lab
+
+672
+00:53:25,140 --> 00:53:27,140
+ where
+
+673
+00:53:27,240 --> 00:53:30,350
+ You know you've probably used it for some of your other classes, but it's a it's
+
+674
+00:53:30,900 --> 00:53:34,400
+ [a] auto grading service that allows you to get instant feedback on your
+
+675
+00:53:34,950 --> 00:53:38,929
+ On your on your hand in so when you hand it in you get feedback right away
+
+676
+00:53:40,290 --> 00:53:43,910
+ The exams like I mentioned are going to be a network isolated clusters
+
+677
+00:53:44,070 --> 00:53:48,110
+ held over multiple days and and you can just sign up for a
+
+678
+00:53:48,840 --> 00:53:50,840
+ Slot that's available now
+
+679
+00:53:51,090 --> 00:53:54,170
+ What usually happens [is] [if] we offer like the exam?
+
+680
+00:53:54,960 --> 00:53:58,369
+ Tuesday, Wednesday, and Thursday the Thursday slot still up immediately
+
+681
+00:54:00,510 --> 00:54:02,510
+ and so
+
+682
+00:54:03,000 --> 00:54:04,680
+ You know I guess I?
+
+683
+00:54:04,680 --> 00:54:06,830
+ Should try to try to sign up soon if you want
+
+684
+00:54:06,869 --> 00:54:13,219
+ but people always seem to want to defer to the end rather than and this is me I'd want to get it over with but
+
+685
+00:54:15,510 --> 00:54:21,619
+ So I just [thought] that is sort of a constraint right that if you can only sign up for slots that
+
+686
+00:54:23,010 --> 00:54:25,010
+ That are available
+
+687
+00:54:25,470 --> 00:54:31,340
+ Okay, now you know we make mistakes. There's we always make mistakes, especially with just so many students
+
+688
+00:54:31,980 --> 00:54:34,609
+ so we there's a there's a
+
+689
+00:54:36,060 --> 00:54:43,189
+ Specific process for appealing grades if you think that there was a that, you're the work wasn't graded properly
+
+690
+00:54:44,070 --> 00:54:49,399
+ So what you do after after either an exam or after your labs are graded
+
+691
+00:54:50,280 --> 00:54:56,540
+ You have [7] days to file an appeal and appeals have to be in in writing and [hardcopy]
+
+692
+00:54:57,359 --> 00:55:02,779
+ [okay], so there's no we won't we won't we won't consider any email any appeals Via email
+
+693
+00:55:03,390 --> 00:55:08,810
+ It has to be in writing and [hardcopy] and you give those to me, and if I'm [not] there
+
+694
+00:55:08,810 --> 00:55:11,449
+ you can just slide it under the desk ok and
+
+695
+00:55:12,510 --> 00:55:15,439
+ What the reason we do it that way is it allows [us] to treat
+
+696
+00:55:17,580 --> 00:55:21,529
+ everybody fairly, so we get all the appeals together [at] once and
+
+697
+00:55:22,080 --> 00:55:28,159
+ Then we can we can we can treat everybody the same way rather than just sort of doing them one at a time like that
+
+698
+00:55:28,650 --> 00:55:30,650
+ ok
+
+699
+00:55:33,539 --> 00:55:35,539
+ Now for our labs we [have]
+
+700
+00:55:37,140 --> 00:55:41,150
+ Ten machines that were donated by intel called the shark machines
+
+701
+00:55:41,730 --> 00:55:44,329
+ so initially our first version of [t] 13
+
+702
+00:55:44,940 --> 00:55:46,019
+ and
+
+703
+00:55:46,019 --> 00:55:50,929
+ I guess we started using intel machines in 1999 we used to alpha
+
+704
+00:55:51,839 --> 00:55:55,518
+ processors for the first year I like to fish
+
+705
+00:55:56,069 --> 00:56:00,319
+ So all of our machines were they were called the fish machines right they were freshwater fish
+
+706
+00:56:01,529 --> 00:56:08,359
+ [and] then we upgraded a few years after that and those were the saltwater fish machines, and then we upgraded
+
+707
+00:56:09,089 --> 00:56:12,318
+ like in 2011 to these nehalem class servers
+
+708
+00:56:13,109 --> 00:56:18,949
+ And run out of fresh water fish and saltwater fish, so the next grade up was sharks, right?
+
+709
+00:56:19,440 --> 00:56:22,609
+ So every fish is it's named after some kind of shark
+
+710
+00:56:23,789 --> 00:56:30,739
+ But these are the same machines that that you'll that auto lab uses for grading right? So there's some consistency for
+
+711
+00:56:33,029 --> 00:56:35,029
+ performance-Oriented labs like Malloc Lab
+
+712
+00:56:35,819 --> 00:56:37,819
+ And you can access them
+
+713
+00:56:38,369 --> 00:56:44,508
+ That [they're] you the names are listed on the course webpage and so you can ssh to a specific machine
+
+714
+00:56:44,910 --> 00:56:47,509
+ They're all identical if you have an Andrew account
+
+715
+00:56:47,509 --> 00:56:49,249
+ You've already got accounts on the machines, right?
+
+716
+00:56:49,249 --> 00:56:55,519
+ So there's nothing special to do or you can just ssh to sharp got ICs and it'll just randomly put you on on
+
+717
+00:56:56,160 --> 00:56:58,160
+ one of the shark machines
+
+718
+00:56:59,339 --> 00:57:05,419
+ Okay, if if you have any trouble logging in just send send mail [to] the staff mailing list
+
+719
+00:57:09,089 --> 00:57:11,988
+ Okay, we know that during the semester things come up
+
+720
+00:57:13,950 --> 00:57:17,359
+ grandparents died especially near the near the final
+
+721
+00:57:22,330 --> 00:57:24,330
+ That's harsh I know
+
+722
+00:57:24,670 --> 00:57:28,649
+ But that things come up right, and you've got your very busy, you're taking a lot of courses
+
+723
+00:57:29,320 --> 00:57:33,059
+ so instead of sort of dealing with requests for extensions and
+
+724
+00:57:33,730 --> 00:57:38,640
+ You know all these special cases what we do is. We give you five [grace] days
+
+725
+00:57:40,060 --> 00:57:42,719
+ that you can then spend as you wish
+
+726
+00:57:43,840 --> 00:57:50,039
+ So if you hand your work in late one day late, you'll automatically consume a great day, okay?
+
+727
+00:57:50,950 --> 00:57:56,850
+ [we] don't allow you to sort of allocate the grace days you spend one of your grades days by handing in late
+
+728
+00:57:57,820 --> 00:58:00,360
+ So if you have a great day less than you hand in late
+
+729
+00:58:01,030 --> 00:58:07,019
+ You'll spend that great day, but you won't be penalized for the late hand in and so we have five great days
+
+730
+00:58:07,900 --> 00:58:09,900
+ over the entire semester
+
+731
+00:58:09,970 --> 00:58:11,970
+ and
+
+732
+00:58:12,160 --> 00:58:13,270
+ A
+
+733
+00:58:13,270 --> 00:58:15,270
+ maximum of two great days
+
+734
+00:58:15,340 --> 00:58:20,340
+ For the assignments now we're going to set up since the first three assignments are kind of
+
+735
+00:58:21,040 --> 00:58:23,040
+ Not as programming intensive
+
+736
+00:58:23,680 --> 00:58:25,680
+ And don't take as much time
+
+737
+00:58:26,110 --> 00:58:29,249
+ we're not going to allow any great days for those because a
+
+738
+00:58:29,770 --> 00:58:37,169
+ One Grace day one sorry one great day and then for the the latter [four] labs which are much more intense
+
+739
+00:58:37,170 --> 00:58:42,240
+ we're going to allow you to a max of two great states and the reason we're doing this is because we
+
+740
+00:58:42,700 --> 00:58:45,630
+ Don't want you to burn you're good these great days are valuable
+
+741
+00:58:46,300 --> 00:58:51,539
+ They're critical especially later in the semester when have you really really dizzy
+
+742
+00:58:53,200 --> 00:58:58,740
+ So we don't want you to burn off your grace days early in the semester and this happens every semester
+
+743
+00:58:58,740 --> 00:59:05,580
+ And it's and then when alec lab comes up. There's no gray space left, and it's really it's really sad to [see] that
+
+744
+00:59:06,400 --> 00:59:09,779
+ And so we're going to limit you to one for those first three
+
+745
+00:59:10,960 --> 00:59:12,960
+ Just to help you save you from yourself
+
+746
+00:59:15,550 --> 00:59:17,550
+ now
+
+747
+00:59:18,160 --> 00:59:20,080
+ it
+
+748
+00:59:20,080 --> 00:59:25,830
+ The the the nominal late penalty if you don't have a great days [fifteen] percent [per] day
+
+749
+00:59:27,070 --> 00:59:28,210
+ and
+
+750
+00:59:28,210 --> 00:59:33,570
+ We don't allow any hand in three days after the due date at all so that [auto] live shuts off the min
+
+751
+00:59:33,570 --> 00:59:35,570
+ And then that's it
+
+752
+00:59:36,670 --> 00:59:42,750
+ now if there's some kind of catastrophic event you know then you know please contact us for
+
+753
+00:59:43,570 --> 00:59:49,709
+ [an] extension right so we're not you know we try to be reasonable, but most of the most of the
+
+754
+00:59:50,770 --> 00:59:54,929
+ Most of the reasons that for requesting extensions. You can handle yourself
+
+755
+00:59:55,960 --> 00:59:57,960
+ Using your grades days
+
+756
+00:59:59,890 --> 01:00:05,009
+ and just I mean this is that this is advice that give every semester to but I
+
+757
+01:00:07,510 --> 01:00:11,249
+ but it's people often don't don't pay attention but or
+
+758
+01:00:11,920 --> 01:00:13,420
+ just
+
+759
+01:00:13,420 --> 01:00:18,120
+ They're unable to but but really for every one of these assignments you want to start early
+
+760
+01:00:19,060 --> 01:00:24,360
+ [and] the reason is you need to give yourself time to to go seek help if you get stuck
+
+761
+01:00:25,120 --> 01:00:31,199
+ because the nature of these very programming intensive assignments like we have [in] 213 is that you're going to get stuck and
+
+762
+01:00:31,780 --> 01:00:36,900
+ And often it's very hard to to bound the time you spend on on some of these assignments
+
+763
+01:00:37,930 --> 01:00:41,280
+ You know it's not like problem sets where you can kind of predict you know this will take
+
+764
+01:00:41,830 --> 01:00:44,459
+ There's no taking like three hours to do these problem [sets]
+
+765
+01:00:45,160 --> 01:00:48,029
+ For a lot of the [213] assignments. It's very difficult to
+
+766
+01:00:48,760 --> 01:00:50,969
+ To sort of manage your time and bound your time
+
+767
+01:00:51,070 --> 01:00:56,759
+ So for that [reason] you really want to start early to give yourself a chance to get help when you get stuck
+
+768
+01:00:58,180 --> 01:01:02,880
+ Now in the lecture hall of you're permitted to have your laptop
+
+769
+01:01:06,130 --> 01:01:08,130
+ but we ask you not to
+
+770
+01:01:09,550 --> 01:01:16,560
+ Send email or instant messaging or cell phone texting or anything like that if you here we want you to to be attentive and engaged
+
+771
+01:01:19,120 --> 01:01:20,900
+ the
+
+772
+01:01:20,900 --> 01:01:25,299
+ Your presence in lectures and recitations is voluntary so we don't take
+
+773
+01:01:26,060 --> 01:01:28,060
+ We don't take role at either of those
+
+774
+01:01:28,730 --> 01:01:30,760
+ We encourage you to come, but it's not required
+
+775
+01:01:31,970 --> 01:01:35,530
+ And no recordings of any kind except this one
+
+776
+01:01:39,110 --> 01:01:45,009
+ Okay, the exams and labs are weighted equally 50% midterms 20 finals 30
+
+777
+01:01:45,680 --> 01:01:48,879
+ And final grades are based on a straight 90 80 70
+
+778
+01:01:49,820 --> 01:01:51,820
+ scale
+
+779
+01:01:52,490 --> 01:01:54,490
+ Now rough outline of the semester
+
+780
+01:01:55,730 --> 01:02:03,250
+ the first [three] labs cover programs reference the machine representations of programs and data
+
+781
+01:02:04,640 --> 01:02:08,199
+ Data lab is how we teach you about fit level representations of Data?
+
+782
+01:02:08,780 --> 01:02:13,840
+ So you'll sell collection of puzzles and see like a puzzle might be is
+
+783
+01:02:14,720 --> 01:02:16,670
+ a little function
+
+784
+01:02:16,670 --> 01:02:23,289
+ That you have to implement and like absolute value so a function that returns the absolute value of its art input argument
+
+785
+01:02:23,870 --> 01:02:29,380
+ The kicker is that we restrict the set of operators that [you] can use and it has to be straight line code
+
+786
+01:02:29,380 --> 01:02:31,380
+ no conditionals or loops and
+
+787
+01:02:31,940 --> 01:02:37,450
+ So to solve these puzzles so imagine how you might try to solve absolute value without using an if statement
+
+788
+01:02:37,820 --> 01:02:41,769
+ right the normal way to do it would be if x less than zero return [x]
+
+789
+01:02:43,370 --> 01:02:45,370
+ or Negative x
+
+790
+01:02:47,030 --> 01:02:49,030
+ See I told you we make mistakes
+
+791
+01:02:50,540 --> 01:02:56,050
+ [but] imagine how you might do that without using conditionals and only using bit level [C] operations
+
+792
+01:02:56,570 --> 01:03:00,789
+ Right, so this is how this is how this is our way [of] teaching you?
+
+793
+01:03:02,210 --> 01:03:09,010
+ How data is really represented in the machine now [the] bomb Lab which you've probably heard at this is
+
+794
+01:03:09,680 --> 01:03:13,240
+ this is a kind of famous all [over] the world now and
+
+795
+01:03:14,600 --> 01:03:21,309
+ at CmU the bomb lab is the way we teach you how to read and understand assembly language and
+
+796
+01:03:23,030 --> 01:03:25,149
+ a bomb just briefly a
+
+797
+01:03:25,730 --> 01:03:31,419
+ bomb is a is a C program that consists of a collection of six phases and
+
+798
+01:03:32,420 --> 01:03:35,290
+ Each Phase wants you to type something in at the keyboard?
+
+799
+01:03:36,290 --> 01:03:41,350
+ If you type in the what it wants you to type what it expects you to type?
+
+800
+01:03:42,560 --> 01:03:44,560
+ then you've diffused that phase and
+
+801
+01:03:45,020 --> 01:03:49,120
+ it goes to the next phase then you have to type with that phase once and
+
+802
+01:03:49,460 --> 01:03:52,330
+ If you [defuse] all the phases then you've diffused the bomb
+
+803
+01:03:53,720 --> 01:03:58,570
+ however if you type in the wrong thing then the bomb explodes by printing boom
+
+804
+01:03:59,900 --> 01:04:01,900
+ [and] you have to try it again
+
+805
+01:04:02,030 --> 01:04:05,409
+ and the kicker is in either case when if you explode the bomb
+
+806
+01:04:06,380 --> 01:04:08,380
+ or defuse a
+
+807
+01:04:08,540 --> 01:04:13,090
+ phase that information gets sent to auto Lab if you and
+
+808
+01:04:13,820 --> 01:04:17,169
+ We use the defusing string that that your bomb sends us
+
+809
+01:04:17,750 --> 01:04:22,120
+ And we check it out on a copy of your bomb that we keep on the server
+
+810
+01:04:22,610 --> 01:04:25,390
+ That's another thing every everybody gets a different bomb
+
+811
+01:04:26,390 --> 01:04:28,390
+ slightly different bomb
+
+812
+01:04:29,210 --> 01:04:31,070
+ so we check so
+
+813
+01:04:31,070 --> 01:04:35,769
+ When you defuse when you just use the phase auto lab takes the string that it
+
+814
+01:04:36,230 --> 01:04:40,419
+ that your bomb sends us and then compares against the local copy of your bomb if
+
+815
+01:04:41,150 --> 01:04:44,140
+ You explode phase you lose half a point
+
+816
+01:04:45,620 --> 01:04:49,149
+ So there's a real consequence to exploding a bomb it's very very tense
+
+817
+01:04:52,869 --> 01:04:55,769
+ until you learn how to use [GDB] to set a breakpoint
+
+818
+01:04:57,190 --> 01:05:00,570
+ Before the function that sends the information to the server
+
+819
+01:05:01,630 --> 01:05:05,460
+ And we want you to do that right so a bombs are really
+
+820
+01:05:06,040 --> 01:05:09,089
+ The bombs really beautiful. It's kind of fun. It's kind of like a video game
+
+821
+01:05:10,780 --> 01:05:16,830
+ it it teaches you how to read compiler generated code because
+
+822
+01:05:18,130 --> 01:05:23,310
+ The only oh the kicker is sorry the kicker is we don't give you the source code all we give you is the binary
+
+823
+01:05:24,280 --> 01:05:29,489
+ Hence the binary bomb so in order to defuse a bomb you've got to fire up GDB
+
+824
+01:05:30,310 --> 01:05:35,129
+ single trace through the find where the code is for each phase single trace through that code and
+
+825
+01:05:36,010 --> 01:05:39,330
+ sort of reverse engineer and figure out what it wants you to type [in] and
+
+826
+01:05:40,780 --> 01:05:47,129
+ then you'll quickly find out where that function that explodes the bomb is and you'll put a breakpoint there and
+
+827
+01:05:48,190 --> 01:05:50,190
+ so we want you to do that because
+
+828
+01:05:50,830 --> 01:05:54,749
+ The bomb besides teaching you how to program assembly language it also
+
+829
+01:05:55,089 --> 01:06:00,899
+ Teaches you sort of organically how to use GDB because you really can't do [it] if you don't use if you don't run GDB
+
+830
+01:06:02,290 --> 01:06:03,940
+ and
+
+831
+01:06:03,940 --> 01:06:08,159
+ Then the the [third] lab is this is a new lab the semester
+
+832
+01:06:08,800 --> 01:06:11,249
+ the Randy's developed called the attack Lab and
+
+833
+01:06:13,030 --> 01:06:20,489
+ We developed this lab specifically for 64-bit architecture, so this is a reflection of the change from 32 bits to 64 bits
+
+834
+01:06:21,820 --> 01:06:25,499
+ And this is really excited about this one. You'll learn how to
+
+835
+01:06:27,130 --> 01:06:29,280
+ You'll learn how to write exploits using
+
+836
+01:06:31,839 --> 01:06:38,099
+ Return to a sort of a modern technique called return to return oriented programming which is kind of the modern
+
+837
+01:06:38,770 --> 01:06:42,239
+ Modern way that hackers deal with the fact that stacks in
+
+838
+01:06:43,180 --> 01:06:45,070
+ newer machines
+
+839
+01:06:45,070 --> 01:06:47,070
+ move around and
+
+840
+01:06:47,650 --> 01:06:49,450
+ and are
+
+841
+01:06:49,450 --> 01:06:50,680
+ prohibitive
+
+842
+01:06:50,680 --> 01:06:56,159
+ And make an impossible to execute code on the on the stack, so this the brand new labs really
+
+843
+01:06:56,160 --> 01:06:58,030
+ I think it's really going to be
+
+844
+01:06:58,030 --> 01:07:00,030
+ Really going to be neat
+
+845
+01:07:01,829 --> 01:07:07,788
+ In the memory Hierarchy when we study the memory Hierarchy we we have a [cash] lab called the cash lab
+
+846
+01:07:08,130 --> 01:07:12,440
+ Where you'll build your [own] cash simulator, so this is how you sort of learn how?
+
+847
+01:07:13,559 --> 01:07:15,150
+ this hardware
+
+848
+01:07:15,150 --> 01:07:18,019
+ That randy was mentioning called it cache Memory works
+
+849
+01:07:18,390 --> 01:07:23,779
+ You'll build a simulator and see for that and then you'll take a small transpose function
+
+850
+01:07:24,749 --> 01:07:32,059
+ And you'll try to make that that code run with as few misses as possible on your simulator and this will involve
+
+851
+01:07:32,369 --> 01:07:36,798
+ Sort of understanding of how the memory Hierarchy works and how to exploit it
+
+852
+01:07:41,069 --> 01:07:45,439
+ the part of the course where you we sort of transitioned from Hardware to
+
+853
+01:07:46,890 --> 01:07:50,480
+ Interacting with the the system [software] that the operating system
+
+854
+01:07:52,140 --> 01:07:54,140
+ There's sort of a concept
+
+855
+01:07:54,930 --> 01:07:57,230
+ That we call exceptional control [flaws] that
+
+856
+01:07:58,259 --> 01:08:00,409
+ exists in all parts of the system
+
+857
+01:08:00,410 --> 01:08:06,529
+ and it sort of represents that intellectual transition from hardware to software so
+
+858
+01:08:07,440 --> 01:08:09,329
+ this is how
+
+859
+01:08:09,329 --> 01:08:12,679
+ This was sort of a key idea that allowed us to kind of smoothly
+
+860
+01:08:13,349 --> 01:08:15,349
+ move from from Hardware to software
+
+861
+01:08:15,929 --> 01:08:18,469
+ in some intellectually consistent way and
+
+862
+01:08:19,080 --> 01:08:23,269
+ So the the ideas that you cover an exceptional control floor like low hard
+
+863
+01:08:23,699 --> 01:08:26,479
+ Low-level Hardware interrupts and exceptions and
+
+864
+01:08:26,790 --> 01:08:34,639
+ Then at the higher level sort of involving hardware and operating system software is the idea of an opera of the process context switch
+
+865
+01:08:35,580 --> 01:08:40,429
+ [ok], so this is this is where you start to learn [what] processes are and how to
+
+866
+01:08:41,190 --> 01:08:43,580
+ how to ask the Kernel to create in
+
+867
+01:08:44,279 --> 01:08:47,928
+ manage processes for you at the next higher level or a
+
+868
+01:08:48,540 --> 01:08:51,379
+ software form of exceptional control flow called a signal
+
+869
+01:08:51,929 --> 01:08:54,408
+ so this exists Solely on the Linux Kernel and
+
+870
+01:08:54,869 --> 01:09:02,509
+ Then and then even at a higher level at there's an application C language version of exceptional control flow
+
+871
+01:09:02,850 --> 01:09:04,850
+ Call set Jump and long jump
+
+872
+01:09:04,980 --> 01:09:11,480
+ So this this notion of exceptional control flow kind of exists in all parts of the system. We covered all at once
+
+873
+01:09:12,359 --> 01:09:14,359
+ And the lab that we use
+
+874
+01:09:16,059 --> 01:09:18,509
+ to sort of exercise all these ideas is
+
+875
+01:09:19,869 --> 01:09:23,879
+ Called the shell lab and in the shell lab you'll write your own Linux shell
+
+876
+01:09:24,670 --> 01:09:31,319
+ Which is really cool, so that's the program the command line program that you interact with whenever you log into a linux box
+
+877
+01:09:31,989 --> 01:09:33,989
+ You're going to write your [own]
+
+878
+01:09:34,809 --> 01:09:36,929
+ And I don't look for me
+
+879
+01:09:36,929 --> 01:09:42,179
+ That was really exciting when I could like write something that looked like a real shell. It was pretty neat
+
+880
+01:09:45,099 --> 01:09:49,409
+ The next area is well study is called Virtual memory
+
+881
+01:09:50,469 --> 01:09:53,698
+ Virtual memory is a sort of combination of hardware and software
+
+882
+01:09:54,520 --> 01:10:00,779
+ [that] presents an abstraction to you of this variant of memory is a very large array of bytes
+
+883
+01:10:02,679 --> 01:10:09,899
+ When in reality memory is a Hierarchy of hardware and of cache memories and D rams virtual memory?
+
+884
+01:10:10,659 --> 01:10:14,939
+ Provides a very high-level abstraction and as just a linear sequence of bytes
+
+885
+01:10:15,400 --> 01:10:21,929
+ It also does provide a lot of a lot of other useful abstractions that make many different parts of the system
+
+886
+01:10:22,389 --> 01:10:26,578
+ Much [easier] to manage ok so we'll learn we learn about virtual memory
+
+887
+01:10:28,150 --> 01:10:34,949
+ [we'll] learn how it works. We'll learn about the performance impact potential performance impact that it has on your programs
+
+888
+01:10:36,250 --> 01:10:38,399
+ And and we'll also learn how to manage
+
+889
+01:10:38,980 --> 01:10:44,159
+ That large pool of memory that it makes available to you and the lab that we do that
+
+890
+01:10:45,159 --> 01:10:50,699
+ [the] lab where you'll do that is called Malloc lab and in the malloc lab you'll write your own malloc and free
+
+891
+01:10:51,969 --> 01:10:59,549
+ functions [ok] so you'll you'll reinvent the functionality of the lib C malloc and free and this is a
+
+892
+01:11:02,230 --> 01:11:09,689
+ Maybe a minute. Maybe it's two pages of code, but it'll be a guarantee. It'll be the most sophisticated
+
+893
+01:11:11,320 --> 01:11:13,529
+ Difficult two pages of code you've written
+
+894
+01:11:15,040 --> 01:11:21,119
+ Not only because since it's managing the memory system. You can't use all of I mean C
+
+895
+01:11:21,119 --> 01:11:23,969
+ Doesn't have many C. Doesn't help you out a lot
+
+896
+01:11:25,480 --> 01:11:26,590
+ with
+
+897
+01:11:26,590 --> 01:11:29,219
+ extractions for Data Structures, but when you're writing
+
+898
+01:11:29,590 --> 01:11:34,770
+ But at least it does give you ideas like Strux unions that you can use to
+
+899
+01:11:35,260 --> 01:11:39,000
+ Structure your memory when you're writing a malloc package you can't use any of those
+
+900
+01:11:39,610 --> 01:11:41,139
+ You have to [ride]
+
+901
+01:11:41,139 --> 01:11:43,139
+ exclusively on pointers and casting
+
+902
+01:11:43,630 --> 01:11:45,070
+ because you
+
+903
+01:11:45,070 --> 01:11:47,070
+ Malloc Tax is working at such a low level
+
+904
+01:11:48,040 --> 01:11:51,540
+ And so it's a very very difficult piece of code
+
+905
+01:11:52,810 --> 01:11:58,259
+ For that reason, but also the design space for malloc is is enormous you [have] many options
+
+906
+01:11:58,750 --> 01:12:04,469
+ They all have implications that trade-off performance and a memory efficiency
+
+907
+01:12:06,400 --> 01:12:08,349
+ and
+
+908
+01:12:08,349 --> 01:12:10,349
+ finally in the last part of the course
+
+909
+01:12:12,099 --> 01:12:14,099
+ we deal with I/o
+
+910
+01:12:14,770 --> 01:12:19,109
+ Input/output so so far in the course we've just talked about sort of running programs
+
+911
+01:12:19,480 --> 01:12:24,629
+ On machines in the last part of the course we'll talk about input and output sending data
+
+912
+01:12:25,360 --> 01:12:27,480
+ into and out of the machine
+
+913
+01:12:28,360 --> 01:12:30,839
+ so we'll look at basic concepts of Linux I/o
+
+914
+01:12:31,989 --> 01:12:33,489
+ will
+
+915
+01:12:33,489 --> 01:12:40,649
+ And since I think the most interesting form of I/o is is networking which allows you to talk to machines anywhere in the world
+
+916
+01:12:42,070 --> 01:12:47,820
+ Using the internet, [we'll] also talk we'll learn how to do network programming you'll learn how to write programs that
+
+917
+01:12:49,389 --> 01:12:51,389
+ Use the sockets interface
+
+918
+01:12:52,570 --> 01:12:59,219
+ which is the basic interface for the internet to talk to machines any potentially any machine in the in the world and
+
+919
+01:12:59,949 --> 01:13:03,749
+ That's really exciting. [I] mean once I can still remember when
+
+920
+01:13:04,300 --> 01:13:07,469
+ Developing this course. I had two windows open on my machine
+
+921
+01:13:07,889 --> 01:13:13,109
+ I was ssh into two different machines, and I wrote a program to send a message like hello world
+
+922
+01:13:13,690 --> 01:13:20,009
+ From one machine to the other and when that hello world appeared on the second windows like so exciting
+
+923
+01:13:20,010 --> 01:13:22,500
+ [I] mean if you're a nerd it's really exciting
+
+924
+01:13:23,020 --> 01:13:25,020
+ but
+
+925
+01:13:25,510 --> 01:13:27,510
+ but just the thought that
+
+926
+01:13:27,520 --> 01:13:34,140
+ That could have been at any machine right that could have been any machine that does just like opens up a whole new world
+
+927
+01:13:39,640 --> 01:13:41,640
+ Okay, all of our
+
+928
+01:13:41,710 --> 01:13:49,529
+ all of our hands are using a system called auto lab which was developed here, and you can access it if you
+
+929
+01:13:50,290 --> 01:13:54,959
+ if you are on the roster as of this morning if you go [to] the auto Lab link
+
+930
+01:13:55,210 --> 01:13:58,080
+ Then you'll see this course was based on your page
+
+931
+01:13:58,600 --> 01:14:00,550
+ [if] you're not enrolled
+
+932
+01:14:00,550 --> 01:14:02,550
+ [you] won't have an auto lab account
+
+933
+01:14:02,980 --> 01:14:06,149
+ and you have to be enrolled to get an auto lab account, so
+
+934
+01:14:07,330 --> 01:14:13,109
+ If you if you want to try to wait it out, and wait for people to drop. I'll make the first couple of
+
+935
+01:14:13,330 --> 01:14:17,969
+ Elite the first assignment due available from the course web page, so you can work on it without
+
+936
+01:14:18,760 --> 01:14:21,780
+ Actually handing [into] auto lab but at least you can keep going
+
+937
+01:14:27,160 --> 01:14:31,859
+ Okay, if you enroll actually I didn't update this but I updated the auto lab accounts today
+
+938
+01:14:33,760 --> 01:14:36,540
+ Now one final thing if you have waitlist questions
+
+939
+01:14:37,270 --> 01:14:39,070
+ Please don't
+
+940
+01:14:39,070 --> 01:14:42,750
+ don't send email to the staff because we don't control the [waiver], so
+
+941
+01:14:44,710 --> 01:14:51,359
+ You should contact one of these either Cathy Catherine or zahra depending on which class you had
+
+942
+01:14:53,110 --> 01:14:59,069
+ Okay, so that's that welcome again looking forward to a great semester, [and] we'll see you on Thursday
+

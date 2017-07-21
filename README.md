@@ -4,7 +4,7 @@
 
 # 说明
 
-*-213: Introduction to Computer Systems(ICS)* 是最好的计算机导论课程之一，**目前此课程并不提供英/中字幕。**
+**-213: Introduction to Computer Systems(ICS)** 是最好的计算机导论课程之一，**目前此课程并不提供英/中字幕。**
 我们希望为这门优秀的计算机导论课制作英/中字幕，帮助更多同学学习、入门计算机的世界。
 
 # 翻译源
@@ -81,11 +81,11 @@
 
 ```
 auto-srt/lesson-[01-27]/<en.srt/ch.srt>
-translated-srt/
+translated-srt/lesson-[01-27]/<en.srt/ch.srt>
 README.md
 ```
 - `auto-srt`下存放**YouTube自动生成字幕**。
-- `translated-srt`下存放**翻译校对后字幕**。
+- `translated-srt`下存放**翻译/校对后字幕**。
 
 ## 字幕格式
 
