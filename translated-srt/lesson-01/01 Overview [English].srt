@@ -1368,7 +1368,7 @@
 
 339
 00:27:13,220 --> 00:27:19,659
- Strange-looking picture that's on your book and since there's no axes or labels on it. It makes no [sense] whatsoever
+ strange-looking picture that's on your book and since there's no axes or labels on it. It makes no sense whatsoever
 
 340
 00:27:20,510 --> 00:27:22,510
@@ -1380,7 +1380,7 @@
 
 342
 00:27:29,510 --> 00:27:35,140
- what the throughput measured in megabytes per second on on A
+ what the throughput measured in megabytes per second on on a
 
 343
 00:27:35,750 --> 00:27:37,989
@@ -1388,15 +1388,15 @@
 
 344
 00:27:38,960 --> 00:27:46,299
- Without going into the details what you'll see is these two functions sort of sit at different points in this memory access pattern
+ without going into the details what you'll see is these two functions sort of sit at different points in this memory access pattern
 
 345
 00:27:46,430 --> 00:27:52,539
- the one that goes through row by Row is much better than the one that goes through Column by Column and
+ the one that goes through row by row is much better than the one that goes through column by column and
 
 346
 00:27:53,870 --> 00:28:00,610
- As a result you're getting a lot better performance that it has to do with this memory Hierarchy and what they call the cache memories
+ as a result you're getting a lot better performance that it has to do with this memory Hierarchy and what they call the cache memories
 
 347
 00:28:01,340 --> 00:28:03,340
@@ -1404,11 +1404,11 @@
 
 348
 00:28:03,770 --> 00:28:06,820
- performance out [of] it in case [than] the other so
+ performance out of it in case than the other so
 
 349
 00:28:08,150 --> 00:28:10,989
- [that's] explains what the cover of the book is about and
+ that's explains what the cover of the book is about and
 
 350
 00:28:11,660 --> 00:28:14,139
@@ -1420,7 +1420,7 @@
 
 352
 00:28:21,280 --> 00:28:26,980
- but getting computers that talk to each other over networks and implement [services] like
+ but getting computers that talk to each other over networks and implement services like
 
 353
 00:28:27,410 --> 00:28:31,960
@@ -1436,7 +1436,8 @@
 
 356
 00:28:39,110 --> 00:28:43,329
- Interact with each other over the network. They're embedded controllers that are
+ interact with each other over the network. 
+ They're embedded controllers that are
 
 357
 00:28:44,090 --> 00:28:46,090
@@ -1448,7 +1449,7 @@
 
 359
 00:28:49,580 --> 00:28:54,549
- Environment and will cover at least some aspects of that in the final part of this course
+ environment and will cover at least some aspects of that in the final part of this course
 
 360
 00:28:57,649 --> 00:28:59,539
@@ -1456,11 +1457,11 @@
 
 361
 00:28:59,539 --> 00:29:03,849
- I mentioned the other feature of this course is it will get you ready for other systems?
+ I mentioned the other feature of this course is it will get you ready for other systems
 
 362
 00:29:04,070 --> 00:29:09,399
- Courses you might take it cmU and here. [we] [listed] actually a subset of the courses
+ courses you might take it CMU and here we listed actually a subset of the courses
 
 363
 00:29:09,919 --> 00:29:13,898
@@ -1468,7 +1469,7 @@
 
 364
 00:29:14,869 --> 00:29:18,069
- They're mostly in computer science and ece
+ They're mostly in Computer Science and ECE
 
 365
 00:29:18,799 --> 00:29:22,959
@@ -1476,15 +1477,15 @@
 
 366
 00:29:24,139 --> 00:29:26,139
- each of them Builds on
+ each of them builds on
 
 367
 00:29:26,509 --> 00:29:31,779
- say one or multiple aspects of the material [you] learn in the course, so
+ say one or multiple aspects of the material you learn in the course, so
 
 368
 00:29:32,659 --> 00:29:37,599
- The reason why we make everyone take this course including incoming [master] students is
+ The reason why we make everyone take this course including incoming master students is
 
 369
 00:29:38,090 --> 00:29:42,639
@@ -1496,11 +1497,11 @@
 
 371
 00:29:47,869 --> 00:29:53,259
- or five thirteen as a prerequisite and they can build on that material [and]
+ or five thirteen as a prerequisite and they can build on that material and
 
 372
 00:29:54,080 --> 00:29:58,480
- Sort of cover more ground as a result rather than having to do what would otherwise be
+ sort of cover more ground as a result rather than having to do what would otherwise be
 
 373
 00:29:58,700 --> 00:30:05,019
@@ -1508,7 +1509,7 @@
 
 374
 00:30:05,240 --> 00:30:07,329
- the operating system course a
+ the operating system course 
 
 375
 00:30:07,970 --> 00:30:09,529
@@ -1520,7 +1521,7 @@
 
 377
 00:30:16,999 --> 00:30:22,629
- And dave and [I] said oh well we can cover that so that was part of what got this course started
+ Dave and I said oh well we can cover that so that was part of what got this course started
 
 378
 00:30:24,230 --> 00:30:30,279
@@ -1528,15 +1529,14 @@
 
 379
 00:30:30,679 --> 00:30:37,809
- Systems courses most systems courses including that whole array saw there were about how do I build some?
+ Systems courses most systems courses including that whole array saw there were about how do I build some
 
 380
 00:30:38,269 --> 00:30:43,299
- Particular feature, how do I implement an operating system? How do I design a pipeline?
+ Particular feature, how do I implement an operating system How do I design a pipeline microprocessor
 
 381
 00:30:43,850 --> 00:30:45,850
- microprocessor
 
 382
 00:30:46,090 --> 00:30:50,500
@@ -1552,7 +1552,7 @@
 
 385
 00:31:02,419 --> 00:31:07,179
- We find it more [useful] to take what we call a programmers [perspective] meaning
+ We find it more useful to take what we call a programmers perspective meaning
 
 386
 00:31:09,320 --> 00:31:11,320
@@ -1560,7 +1560,7 @@
 
 387
 00:31:11,659 --> 00:31:18,909
- What you as a person who sits in front of a computer screen and types code I need [to] know about that machine
+ What you as a person who sits in front of a computer screen and types code I need to know about that machine
 
 388
 00:31:18,909 --> 00:31:23,679
@@ -1580,7 +1580,8 @@
 
 392
 00:31:33,559 --> 00:31:40,839
- Understanding so now when you go off [to] implement it you'll actually know what these features are and why it's important to implement them well
+ Understanding so now when you go off to implement it 
+ you'll actually know what these features are and why it's important to implement them well
 
 393
 00:31:41,570 --> 00:31:45,820
@@ -1620,7 +1621,7 @@
 
 402
 00:32:22,130 --> 00:32:26,169
- More than anyone else, but it's also taught by other people on [campus] as well
+ More than anyone else, but it's also taught by other people on campus as well
 
 403
 00:32:27,140 --> 00:32:32,379
@@ -1648,7 +1649,7 @@
 
 409
 00:32:58,200 --> 00:33:02,939
- The real reason is the the opportunity of represents to have an impact on?
+ The real reason is the the opportunity of represents to have an impact on
 
 410
 00:33:03,489 --> 00:33:04,659
@@ -1676,7 +1677,7 @@
 
 416
 00:33:27,429 --> 00:33:32,069
- Students around the world to have taken the equivalent of [213] at their schools
+ Students around the world to have taken the equivalent of 213 at their schools
 
 417
 00:33:33,399 --> 00:33:34,869
@@ -1692,7 +1693,7 @@
 
 420
 00:33:43,659 --> 00:33:47,969
- and then went off to Stanford got his phd at Stanford and was coming back to
+ and then went off to Stanford got his PhD at Stanford and was coming back to
 
 421
 00:33:49,210 --> 00:33:51,210
@@ -1708,11 +1709,12 @@
 
 424
 00:34:04,600 --> 00:34:06,600
- Research Direction, you know he didn't really know what?
+ Research Direction, you know he didn't really know what
 
 425
 00:34:07,389 --> 00:34:14,699
- What he knew it kind of like computer science, but it didn't really know what direction to go and and after he took to 13
+ What he knew it kind of like computer science, 
+ but it didn't really know what direction to go and and after he took to 213
 
 426
 00:34:15,460 --> 00:34:19,319
@@ -1720,7 +1722,7 @@
 
 427
 00:34:20,020 --> 00:34:21,309
- [now]
+ now
 
 428
 00:34:21,309 --> 00:34:25,619
@@ -1732,7 +1734,7 @@
 
 430
 00:34:31,419 --> 00:34:33,159
- [front] and they were from all over
+ front and they were from all over
 
 431
 00:34:33,159 --> 00:34:35,159
@@ -1744,7 +1746,7 @@
 
 433
 00:34:40,960 --> 00:34:44,309
- couple Years ago right outside the [PKU] campus and
+ couple Years ago right outside the PKU campus and
 
 434
 00:34:45,159 --> 00:34:50,669
@@ -1764,7 +1766,7 @@
 
 438
 00:35:03,160 --> 00:35:10,319
- And I turned around [he] says oh man that that book is really good. You should the English version is two aisles over
+ and I turned around he says oh man that that book is really good. You should the English version is two aisles over
 
 439
 00:35:13,360 --> 00:35:14,860
@@ -1788,7 +1790,7 @@
 
 444
 00:35:28,110 --> 00:35:34,139
- I want to give you the sense of what it what an opportunity this course represents for for [Randi] and I to
+ I want to give you the sense of what it what an opportunity this course represents for I to
 
 445
 00:35:35,110 --> 00:35:37,110
@@ -1796,19 +1798,19 @@
 
 446
 00:35:37,450 --> 00:35:40,200
- Really positive impact on on your lives
+ really positive impact on on your lives
 
 447
 00:35:40,900 --> 00:35:42,900
- [so]
+ so
 
 448
 00:35:43,450 --> 00:35:45,600
- [let] me we have kind of a
+ let me we have kind of a
 
 449
 00:35:47,380 --> 00:35:53,940
- Kind of a funny organization for the course to it in response to that just that the tremendous demand
+ kind of a funny organization for the course to it in response to that just that the tremendous demand
 
 450
 00:35:53,940 --> 00:35:55,940
@@ -1824,7 +1826,7 @@
 
 453
 00:36:04,119 --> 00:36:06,839
- 513 [15] [513] is for our master students
+ 15-513 is for our master students
 
 454
 00:36:07,750 --> 00:36:09,780
@@ -1856,11 +1858,11 @@
 
 461
 00:36:36,130 --> 00:36:37,900
- [Master] students on the Waitlist
+ master students on the waitlist
 
 462
 00:36:37,900 --> 00:36:43,590
- They wouldn't be [able] to get into the course and [we] we didn't really want that because they need this course for to take other
+ They wouldn't be able to get into the course and we we didn't really want that because they need this course for to take other
 
 463
 00:36:43,590 --> 00:36:45,400
@@ -1876,7 +1878,7 @@
 
 466
 00:36:52,390 --> 00:36:57,330
- 513 because we can admit as many all the master's students that that need to take the course?
+ 513 because we can admit as many all the master's students that that need to take the course
 
 467
 00:36:57,850 --> 00:36:58,930
@@ -1888,7 +1890,7 @@
 
 469
 00:37:04,300 --> 00:37:06,300
- computer science and ece
+ Computer Science and ECE
 
 470
 00:37:07,119 --> 00:37:08,350
@@ -1904,11 +1906,11 @@
 
 473
 00:37:15,490 --> 00:37:20,399
- [okay], in person graduate students will watch videotapes of those but otherwise yes
+ okay, in person graduate students will watch videotapes of those but otherwise yes
 
 474
 00:37:21,220 --> 00:37:23,699
- For those videotapes will they be available [Kamal]?
+ For those videotapes will they be available...?
 
 475
 00:37:25,839 --> 00:37:28,349
@@ -1916,7 +1918,7 @@
 
 476
 00:37:30,369 --> 00:37:36,689
- Sorry and lecture slides as well. Everything is available on the course [web] [page], so
+ Sorry and lecture slides as well. Everything is available on the course web page, so
 
 477
 00:37:40,119 --> 00:37:42,119
@@ -1928,7 +1930,7 @@
 
 479
 00:37:49,990 --> 00:37:51,990
- [the] staff mailing list and
+ the staff mailing list and
 
 480
 00:37:52,990 --> 00:37:54,990
@@ -1940,7 +1942,7 @@
 
 482
 00:37:58,000 --> 00:38:02,669
- it's just a matter of whether you're good a lecture in person or if [you're] [watching] [on] video in fact if
+ it's just a matter of whether you're good a lecture in person or if you're watching on video in fact if
 
 483
 00:38:03,040 --> 00:38:07,619
@@ -1960,11 +1962,11 @@
 
 487
 00:38:21,490 --> 00:38:25,050
- All right, this is the one part I list the part I hate I
+ All right, this is the one part I list the part I hate 
 
 488
 00:38:26,020 --> 00:38:29,280
- Love teaching that this is this is the one part teaching that
+ I love teaching that this is this is the one part teaching that
 
 489
 00:38:29,770 --> 00:38:33,989
@@ -1976,11 +1978,11 @@
 
 491
 00:38:40,630 --> 00:38:46,829
- [coming] from a international school if you're an international student new on campus
+ coming from a international school if you're an international student new on campus
 
 492
 00:38:48,460 --> 00:38:52,799
- [there] might be different notions of academic integrity and
+ there might be different notions of academic integrity and
 
 493
 00:38:53,589 --> 00:38:56,009
@@ -1992,15 +1994,15 @@
 
 495
 00:38:59,770 --> 00:39:06,780
- So if you're new on campus [pay] very close attention to this because at Carnegie Mellon, we take academic integrity
+ So if you're new on campus pay very close attention to this because at Carnegie Mellon, we take academic integrity
 
 496
 00:39:08,049 --> 00:39:11,999
- Very seriously okay. It's not a wink wink. Nod, nod
+ very seriously okay. It's not a wink wink, nod nod
 
 497
 00:39:14,020 --> 00:39:16,020
- [we're] very serious about it
+ we're very serious about it
 
 498
 00:39:17,559 --> 00:39:23,009
@@ -2020,11 +2022,11 @@
 
 502
 00:39:35,040 --> 00:39:38,989
- Retyping looking at somebody's code like if you look at somebody's code on the screen
+ retyping looking at somebody's code like if you look at somebody's code on the screen
 
 503
 00:39:40,860 --> 00:39:45,739
- Or if you give somebody a file all of those all of those
+ or if you give somebody a file all of those all of those
 
 504
 00:39:47,160 --> 00:39:49,939
@@ -2040,7 +2042,7 @@
 
 507
 00:40:07,200 --> 00:40:11,300
- Searching the web for solutions. Just [the] act of searching is cheating
+ Searching the web for solutions. Just the act of searching is cheating
 
 508
 00:40:12,060 --> 00:40:13,740
@@ -2052,7 +2054,7 @@
 
 510
 00:40:22,050 --> 00:40:29,179
- People either maliciously or or sometimes just they're proud of their work, and they post it. You know for employers on like public github sites
+ People either maliciously or or sometimes just they're proud of their work, and they post it. You know for employers on like public GitHub sites
 
 511
 00:40:30,600 --> 00:40:35,329
@@ -2068,11 +2070,11 @@
 
 514
 00:40:48,480 --> 00:40:54,230
- [I] just want you to remember I can I know how to use [google] just as well as anybody else right so [I] I
+ And I just want you to remember I can  know how to use Google just as well as anybody else right so I
 
 515
 00:40:54,480 --> 00:40:56,480
- Can search for solutions [too]?
+ can search for solutions too
 
 516
 00:41:01,410 --> 00:41:03,060
@@ -2080,7 +2082,7 @@
 
 517
 00:41:03,060 --> 00:41:05,330
- Copying code. You know you might [be] tempted
+ Copying code. You know you might be tempted
 
 518
 00:41:05,940 --> 00:41:11,240
@@ -2088,11 +2090,11 @@
 
 519
 00:41:12,420 --> 00:41:14,450
- Don't do it. That's that's cheating [-]
+ Don't do it. That's that's cheating too
 
 520
 00:41:15,210 --> 00:41:19,160
- Now what's not cheating so you can you can help each other use tools?
+ Now what's not cheating so you can you can help each other use tools
 
 521
 00:41:20,070 --> 00:41:25,400
@@ -2100,27 +2102,27 @@
 
 522
 00:41:26,520 --> 00:41:30,199
- Use a text editor [that] stuff's all great. You [can] help each other out
+ Use a text editor that's stuffs all great. You can help each other out
 
 523
 00:41:31,200 --> 00:41:34,820
- Using the tools how to log [into] the shark machines all of that kind of stuff
+ Using the tools how to log into the Shell machines all of that kind of stuff
 
 524
 00:41:35,760 --> 00:41:37,560
- [and] you
+ and you
 
 525
 00:41:37,560 --> 00:41:42,019
- Can help you can discuss sort of high-level design issues, and that's probably a good idea. Yes
+ can help you can discuss sort of high-level design issues, and that's probably a good idea. Yes
 
 526
 00:41:46,460 --> 00:41:49,299
- Yeah, yeah, did you take it a previous semester? [oh]?
+ Yeah, yeah, did you take it a previous semester oh
 
 527
 00:41:54,980 --> 00:41:59,920
- Okay, yeah the question [was] if you took it in a previous [semester] can use your your work and the answer is yes
+ Okay, yeah the question was if you took it in a previous semester can use your your work and the answer is yes
 
 528
 00:42:03,770 --> 00:42:07,989
@@ -2136,15 +2138,16 @@
 
 531
 00:42:20,870 --> 00:42:22,870
- Low level not okay
+ Low-level not okay
 
 532
 00:42:23,600 --> 00:42:26,499
- And basically what we want you to write your [own] code
+ And basically what we want you to write your own code
 
 533
 00:42:28,340 --> 00:42:34,779
- This is not you know. It's kind of a cut and paste world these days right. You look stuff up on Google's Stack overflow
+ This is not you know. It's kind of a cut and paste world these days right. 
+ You look stuff up on Google, Stackoverflow
 
 534
 00:42:36,050 --> 00:42:38,050
@@ -2156,7 +2159,7 @@
 
 536
 00:42:43,310 --> 00:42:51,190
- [we] want you to do the work yourself. We want you to enjoy the experience of figuring things out and learning how to solve problems
+ we want you to do the work yourself. We want you to enjoy the experience of figuring things out and learning how to solve problems
 
 537
 00:42:54,680 --> 00:42:56,680
@@ -2172,11 +2175,11 @@
 
 540
 00:43:00,830 --> 00:43:04,840
- You're caught cheating you'll you'll be expelled from the course with an R
+ You're caught cheating you'll you'll be expelled from the course with an
 
 541
 00:43:05,660 --> 00:43:11,950
- There's no exceptions all right if you drop the course we'll just reinstate you and then [flunk] you
+ There's no exceptions all right if you drop the course we'll just reinstate you and then flunk you
 
 542
 00:43:15,500 --> 00:43:17,500
@@ -2240,11 +2243,11 @@
 
 557
 00:44:27,560 --> 00:44:29,560
- [we] have the
+ we have the
 
 558
 00:44:29,780 --> 00:44:33,400
- Automatic extensions built-in if you need more time I'll talk about that later
+ automatic extensions built-in if you need more time I'll talk about that later
 
 559
 00:44:34,040 --> 00:44:36,040
@@ -2264,11 +2267,12 @@
 
 563
 00:44:50,390 --> 00:44:53,829
- Some were expelled from the [university] because it was a second offense
+ Some were expelled from the university 
+ because it was a second offense
 
 564
 00:44:55,370 --> 00:45:01,870
- Many were sent home. [I] talked to students who were like the only person in their family to go to college
+ Many were sent home. I talked to students who were like the only person in their family to go to college
 
 565
 00:45:02,780 --> 00:45:06,940
@@ -2280,7 +2284,8 @@
 
 567
 00:45:11,930 --> 00:45:14,919
- So please please [please] don't do it do your own work
+ So please please please 
+ Don't do it do your own work
 
 568
 00:45:15,800 --> 00:45:17,030
@@ -2300,7 +2305,7 @@
 
 572
 00:45:33,210 --> 00:45:38,990
- Supporting material on the on the books website at CFa Pt. Dot [c] [s] cMU edu
+ Supporting material on the on the books website at csapp.cs.cmu.edu
 
 573
 00:45:39,960 --> 00:45:46,669
@@ -2308,7 +2313,7 @@
 
 574
 00:45:47,400 --> 00:45:51,230
- The book is the course of course. [that's] the book on and
+ The book is the course, the course is the book on and
 
 575
 00:45:51,900 --> 00:45:57,860
@@ -2332,7 +2337,7 @@
 
 580
 00:46:18,720 --> 00:46:24,080
- [work] the practice problem, so we have littered throughout the book or practice problems with solutions at the end of the
+ work the practice problem, so we have littered throughout the book or practice problems with solutions at the end of the
 
 581
 00:46:24,660 --> 00:46:29,780
@@ -2360,15 +2365,15 @@
 
 587
 00:46:48,930 --> 00:46:55,340
- The other book we use is the [colonel] Hannon [Richie's] classic C programming book I?
+ The other book we use is the Kernighan and Richies classic C programming book
 
 588
 00:46:56,850 --> 00:46:58,080
- think
+ I think
 
 589
 00:46:58,080 --> 00:47:00,080
- This is still this was written a long time ago
+ this is still this was written a long time ago
 
 590
 00:47:00,840 --> 00:47:04,969
@@ -2388,7 +2393,7 @@
 
 594
 00:47:18,690 --> 00:47:20,690
- Turn Hand and RicCi
+ Kernighan and Richies
 
 595
 00:47:22,590 --> 00:47:27,140
@@ -2396,7 +2401,8 @@
 
 596
 00:47:27,140 --> 00:47:33,429
- It's a reference, but it's a kind of book you can just read from beginning to end and get a really good [understanding] of see
+ It's a reference, but it's a kind of book 
+ you can just read from beginning to end and get a really good understanding of C
 
 597
 00:47:37,910 --> 00:47:44,020
@@ -2408,15 +2414,15 @@
 
 599
 00:47:48,349 --> 00:47:50,349
- Once a week for [an] hour
+ Once a week for an hour
 
 600
 00:47:50,720 --> 00:47:58,179
- [led] [by] a Ta and the purpose of the recitations is really to help you with the labs right so it's very practical and hands-on
+ led by a TA and the purpose of the recitations is really to help you with the labs right so it's very practical and hands-on
 
 601
 00:47:59,539 --> 00:48:00,680
- [There's]
+ There's
 
 602
 00:48:00,680 --> 00:48:02,079
@@ -2440,11 +2446,11 @@
 
 607
 00:48:21,230 --> 00:48:23,379
- if you don't do them you won't learn anything, [so]
+ if you don't do them you won't learn anything
 
 608
 00:48:26,150 --> 00:48:29,980
- [each] one of these these labs is one or two weeks each
+ So each one of these these labs is one or two weeks each
 
 609
 00:48:30,950 --> 00:48:32,329
@@ -2452,7 +2458,7 @@
 
 610
 00:48:32,329 --> 00:48:33,740
- Involves
+ involves
 
 611
 00:48:33,740 --> 00:48:35,919
@@ -2460,7 +2466,7 @@
 
 612
 00:48:36,650 --> 00:48:39,940
- there's also two exams a midterm and [a] final the
+ there's also two exams a midterm and a final the
 
 613
 00:48:41,089 --> 00:48:43,089
@@ -2484,7 +2490,7 @@
 
 618
 00:48:57,460 --> 00:49:04,899
- and then we have like multiple clusters that are [network] isolated and then you can sign up for a slot like a 6-hour slot and
+ and then we have like multiple clusters that are network isolated and then you can sign up for a slot like a 6-hour slot and
 
 619
 00:49:05,059 --> 00:49:06,230
@@ -2492,7 +2498,7 @@
 
 620
 00:49:06,230 --> 00:49:10,599
- Midterm is like nominally like an hour [eighty] minute exam. That's the same exam
+ Midterm is like nominally like an hour eighty minute exam. That's the same exam
 
 621
 00:49:10,599 --> 00:49:16,629
@@ -2504,11 +2510,11 @@
 
 623
 00:49:23,270 --> 00:49:27,189
- So you can sign up any time any day that there's a slot, okay?
+ So you can sign up any time any day that there's a slot, okay
 
 624
 00:49:27,190 --> 00:49:33,549
- So there's flexibilities [that] can kind of tailor it to your your schedule, and we I think we've also removed all the time pressure
+ So there's flexibilities that can kind of tailor it to your your schedule, and we I think we've also removed all the time pressure
 
 625
 00:49:33,710 --> 00:49:35,240
@@ -2528,7 +2534,7 @@
 
 629
 00:49:43,970 --> 00:49:45,970
- How quickly you do it?
+ how quickly you do it
 
 630
 00:49:50,849 --> 00:49:57,529
@@ -2536,15 +2542,15 @@
 
 631
 00:49:59,520 --> 00:50:01,849
- wwf cmU edu Tildy
+ www.cmu.edu/~213
 
 632
 00:50:02,640 --> 00:50:07,910
- [213] and all the information is [there] we've got a complete schedule of lectures and assignments
+ and all the information is [there] we've got a complete schedule of lectures and assignments
 
 633
 00:50:09,030 --> 00:50:14,090
- We don't change it that it's fixed it. So you can look [at] that and and plan your semester
+ We don't change it that it's fixed it. So you can look at that and and plan your semester
 
 634
 00:50:14,640 --> 00:50:20,869
@@ -2552,7 +2558,7 @@
 
 635
 00:50:22,109 --> 00:50:26,809
- For the other instructors around the world who [are] using the book so we needed to get them all already
+ For the other instructors around the world who are using the book so we needed to get them all already
 
 636
 00:50:29,190 --> 00:50:36,830
@@ -2560,7 +2566,7 @@
 
 637
 00:50:37,619 --> 00:50:40,969
- We don't use either blackboard our piazza in the course
+ We don't use either blackboard or piazza in the course
 
 638
 00:50:43,170 --> 00:50:45,170
@@ -2596,7 +2602,7 @@
 
 646
 00:51:15,660 --> 00:51:20,270
- Disadvantage of having this advantage of this mailing list is that it allows [us] to control the message
+ Disadvantage of having this advantage of this mailing list is that it allows us to control the message
 
 647
 00:51:22,260 --> 00:51:25,040
@@ -2608,11 +2614,11 @@
 
 649
 00:51:32,280 --> 00:51:36,769
- We've established a faq if we find we're getting same questions over and over
+ We've established a FAQ if we find we're getting same questions over and over
 
 650
 00:51:37,140 --> 00:51:40,460
- We've established a faq on the on the course [web] [page]
+ We've established a FAQ on the on the course web page
 
 651
 00:51:41,280 --> 00:51:45,139
@@ -2620,11 +2626,11 @@
 
 652
 00:51:45,780 --> 00:51:50,630
- You can see the answers to frequently asked [questions] on the there
+ You can see the answers to frequently asked questions on the there
 
 653
 00:51:52,470 --> 00:51:57,889
- We have office hours. I think [we're] still trying to eat. We we're still trying to meet
+ We have office hours. I think we're still trying to eat. We we're still trying to meet
 
 654
 00:51:58,860 --> 00:52:01,970
@@ -2632,11 +2638,11 @@
 
 655
 00:52:02,490 --> 00:52:07,760
- What we're thinking now [is] that we'll have office hours so six days a week, [okay] every day. That's Saturday
+ What we're thinking now is that we'll have office hours so six days a week, okay every day. That's Saturday
 
 656
 00:52:09,780 --> 00:52:14,450
- The they will be at the same time [in] same place every day so from 5:45
+ The they will be at the same time in same place every day so from 5:45
 
 657
 00:52:16,110 --> 00:52:17,910
@@ -2648,15 +2654,16 @@
 
 659
 00:52:19,200 --> 00:52:23,359
- in [wean] in a queen 5207 cluster
+ in a queen 5207 cluster
 
 660
 00:52:24,120 --> 00:52:30,859
- Will have [213] tas there to to help to answer your questions okay? So you don't have to make
+ Will have 213 tas there to to help to answer your questions okay
+ So you don't have to make
 
 661
 00:52:31,500 --> 00:52:35,750
- Appointments, [I] mean you can make an appointment to see any staff member of course
+ Appointments, I mean you can make an appointment to see any staff member of course
 
 662
 00:52:36,840 --> 00:52:41,690
@@ -2680,7 +2687,7 @@
 
 667
 00:53:03,240 --> 00:53:08,810
- See us classes, but not [NC] 13 we want this is a kind of a core course we want you to figure stuff out yourself
+ See us classes, but not in 213 we want this is a kind of a core course we want you to figure stuff out yourself
 
 668
 00:53:10,500 --> 00:53:13,160
@@ -2696,7 +2703,7 @@
 
 671
 00:53:20,520 --> 00:53:23,630
- And all of our hand [ins] are using auto Lab
+ And all of our handings are using auto Lab
 
 672
 00:53:25,140 --> 00:53:27,140
@@ -2708,11 +2715,11 @@
 
 674
 00:53:30,900 --> 00:53:34,400
- [a] auto grading service that allows you to get instant feedback on your
+ a auto grading service that allows you to get instant feedback on your
 
 675
 00:53:34,950 --> 00:53:38,929
- On your on your hand in so when you hand it in you get feedback right away
+ on your on your hand in so when you hand it in you get feedback right away
 
 676
 00:53:40,290 --> 00:53:43,910
@@ -2728,7 +2735,7 @@
 
 679
 00:53:51,090 --> 00:53:54,170
- What usually happens [is] [if] we offer like the exam?
+ What usually happens is if we offer like the exam
 
 680
 00:53:54,960 --> 00:53:58,369
@@ -2740,7 +2747,7 @@
 
 682
 00:54:03,000 --> 00:54:04,680
- You know I guess I?
+ You know I guess I
 
 683
 00:54:04,680 --> 00:54:06,830
@@ -2752,7 +2759,7 @@
 
 685
 00:54:15,510 --> 00:54:21,619
- So I just [thought] that is sort of a constraint right that if you can only sign up for slots that
+ So I just thought that is sort of a constraint right that if you can only sign up for slots that
 
 686
 00:54:23,010 --> 00:54:25,010
@@ -2776,15 +2783,15 @@
 
 691
 00:54:50,280 --> 00:54:56,540
- You have [7] days to file an appeal and appeals have to be in in writing and [hardcopy]
+ You have 7 days to file an appeal and appeals have to be in in writing and hardcopy
 
 692
 00:54:57,359 --> 00:55:02,779
- [okay], so there's no we won't we won't we won't consider any email any appeals Via email
+ okay, so there's no we won't we won't we won't consider any email any appeals via email
 
 693
 00:55:03,390 --> 00:55:08,810
- It has to be in writing and [hardcopy] and you give those to me, and if I'm [not] there
+ It has to be in writing and hardcopy and you give those to me, and if I'm not there
 
 694
 00:55:08,810 --> 00:55:11,449
@@ -2792,11 +2799,11 @@
 
 695
 00:55:12,510 --> 00:55:15,439
- What the reason we do it that way is it allows [us] to treat
+ What the reason we do it that way is it allows us to treat
 
 696
 00:55:17,580 --> 00:55:21,529
- everybody fairly, so we get all the appeals together [at] once and
+ everybody fairly, so we get all the appeals together at once and
 
 697
 00:55:22,080 --> 00:55:28,159
@@ -2808,15 +2815,15 @@
 
 699
 00:55:33,539 --> 00:55:35,539
- Now for our labs we [have]
+ Now for our labs we have
 
 700
 00:55:37,140 --> 00:55:41,150
- Ten machines that were donated by intel called the shark machines
+ ten machines that were donated by Intel called the shark machines
 
 701
 00:55:41,730 --> 00:55:44,329
- so initially our first version of [t] 13
+ so initially our first version of 213
 
 702
 00:55:44,940 --> 00:55:46,019
@@ -2836,7 +2843,7 @@
 
 706
 00:56:01,529 --> 00:56:08,359
- [and] then we upgraded a few years after that and those were the saltwater fish machines, and then we upgraded
+ and then we upgraded a few years after that and those were the saltwater fish machines, and then we upgraded
 
 707
 00:56:09,089 --> 00:56:12,318
@@ -2864,7 +2871,7 @@
 
 713
 00:56:38,369 --> 00:56:44,508
- That [they're] you the names are listed on the course webpage and so you can ssh to a specific machine
+ That you the names are listed on the course webpage and so you can ssh to a specific machine
 
 714
 00:56:44,910 --> 00:56:47,509
@@ -2872,11 +2879,11 @@
 
 715
 00:56:47,509 --> 00:56:49,249
- You've already got accounts on the machines, right?
+ You've already got accounts on the machines, right
 
 716
 00:56:49,249 --> 00:56:55,519
- So there's nothing special to do or you can just ssh to sharp got ICs and it'll just randomly put you on on
+ So there's nothing special to do or you can just ssh to shark.ics and it'll just randomly put you on on
 
 717
 00:56:56,160 --> 00:56:58,160
@@ -2884,7 +2891,7 @@
 
 718
 00:56:59,339 --> 00:57:05,419
- Okay, if if you have any trouble logging in just send send mail [to] the staff mailing list
+ Okay, if if you have any trouble logging in just send send mail to the staff mailing list
 
 719
 00:57:09,089 --> 00:57:11,988
@@ -2908,7 +2915,7 @@
 
 724
 00:57:33,730 --> 00:57:38,640
- You know all these special cases what we do is. We give you five [grace] days
+ You know all these special cases what we do is. We give you five grace days
 
 725
 00:57:40,060 --> 00:57:42,719
@@ -2916,11 +2923,13 @@
 
 726
 00:57:43,840 --> 00:57:50,039
- So if you hand your work in late one day late, you'll automatically consume a great day, okay?
+ So if you hand your work in late one day late, 
+ you'll automatically consume a grace day, okay
 
 727
 00:57:50,950 --> 00:57:56,850
- [we] don't allow you to sort of allocate the grace days you spend one of your grades days by handing in late
+ we don't allow you to sort of allocate the grace days 
+ you spend one of your grace days by handing in late
 
 728
 00:57:57,820 --> 00:58:00,360
@@ -2928,7 +2937,8 @@
 
 729
 00:58:01,030 --> 00:58:07,019
- You'll spend that great day, but you won't be penalized for the late hand in and so we have five great days
+ You'll spend that grace day, but you won't be penalized for the late hand in
+ and so we have five grace days
 
 730
 00:58:07,900 --> 00:58:09,900
@@ -2940,11 +2950,10 @@
 
 732
 00:58:12,160 --> 00:58:13,270
- A
 
 733
 00:58:13,270 --> 00:58:15,270
- maximum of two great days
+ a maximum of two grace days
 
 734
 00:58:15,340 --> 00:58:20,340
@@ -2952,7 +2961,7 @@
 
 735
 00:58:21,040 --> 00:58:23,040
- Not as programming intensive
+ not as programming intensive
 
 736
 00:58:23,680 --> 00:58:25,680
@@ -2964,7 +2973,7 @@
 
 738
 00:58:29,770 --> 00:58:37,169
- One Grace day one sorry one great day and then for the the latter [four] labs which are much more intense
+ One Grace day one sorry one great day and then for the the latter four labs which are much more intense
 
 739
 00:58:37,170 --> 00:58:42,240
@@ -2984,7 +2993,7 @@
 
 743
 00:58:58,740 --> 00:59:05,580
- And it's and then when alec lab comes up. There's no gray space left, and it's really it's really sad to [see] that
+ And it's and then when alec lab comes up. There's no gray space left, and it's really it's really sad to see that
 
 744
 00:59:06,400 --> 00:59:09,779
@@ -3004,7 +3013,7 @@
 
 748
 00:59:20,080 --> 00:59:25,830
- The the the nominal late penalty if you don't have a great days [fifteen] percent [per] day
+ The the the nominal late penalty if you don't have a great days fifteen percent per day
 
 749
 00:59:27,070 --> 00:59:28,210
@@ -3012,7 +3021,7 @@
 
 750
 00:59:28,210 --> 00:59:33,570
- We don't allow any hand in three days after the due date at all so that [auto] live shuts off the min
+ We don't allow any hand in three days after the due date at all so that live shuts off
 
 751
 00:59:33,570 --> 00:59:35,570
@@ -3024,7 +3033,7 @@
 
 753
 00:59:43,570 --> 00:59:49,709
- [an] extension right so we're not you know we try to be reasonable, but most of the most of the
+ an extension right so we're not you know we try to be reasonable, but most of the most of the
 
 754
 00:59:50,770 --> 00:59:54,929
@@ -3032,11 +3041,11 @@
 
 755
 00:59:55,960 --> 00:59:57,960
- Using your grades days
+ Using your Graces days
 
 756
 00:59:59,890 --> 01:00:05,009
- and just I mean this is that this is advice that give every semester to but I
+ and just I mean this is that this is advice that give every semester too but I
 
 757
 01:00:07,510 --> 01:00:11,249
@@ -3052,11 +3061,11 @@
 
 760
 01:00:19,060 --> 01:00:24,360
- [and] the reason is you need to give yourself time to to go seek help if you get stuck
+ and the reason is you need to give yourself time to to go seek help if you get stuck
 
 761
 01:00:25,120 --> 01:00:31,199
- because the nature of these very programming intensive assignments like we have [in] 213 is that you're going to get stuck and
+ because the nature of these very programming intensive assignments like we have in 213 is that you're going to get stuck and
 
 762
 01:00:31,780 --> 01:00:36,900
@@ -3068,11 +3077,11 @@
 
 764
 01:00:41,830 --> 01:00:44,459
- There's no taking like three hours to do these problem [sets]
+ There's no taking like three hours to do these problem sets
 
 765
 01:00:45,160 --> 01:00:48,029
- For a lot of the [213] assignments. It's very difficult to
+ For a lot of the 213 assignments. It's very difficult to
 
 766
 01:00:48,760 --> 01:00:50,969
@@ -3080,7 +3089,7 @@
 
 767
 01:00:51,070 --> 01:00:56,759
- So for that [reason] you really want to start early to give yourself a chance to get help when you get stuck
+ So for that reason you really want to start early to give yourself a chance to get help when you get stuck
 
 768
 01:00:58,180 --> 01:01:02,880
@@ -3132,11 +3141,11 @@
 
 780
 01:01:55,730 --> 01:02:03,250
- the first [three] labs cover programs reference the machine representations of programs and data
+ the first three labs cover programs reference the machine representations of programs and data
 
 781
 01:02:04,640 --> 01:02:08,199
- Data lab is how we teach you about fit level representations of Data?
+ Data lab is how we teach you about fit level representations of data
 
 782
 01:02:08,780 --> 01:02:13,840
@@ -3152,7 +3161,7 @@
 
 785
 01:02:23,870 --> 01:02:29,380
- The kicker is that we restrict the set of operators that [you] can use and it has to be straight line code
+ The kicker is that we restrict the set of operators that you can use and it has to be straight line code
 
 786
 01:02:29,380 --> 01:02:31,380
@@ -3164,7 +3173,7 @@
 
 788
 01:02:37,820 --> 01:02:41,769
- right the normal way to do it would be if x less than zero return [x]
+ right the normal way to do it would be if x less than zero return x
 
 789
 01:02:43,370 --> 01:02:45,370
@@ -3176,23 +3185,23 @@
 
 791
 01:02:50,540 --> 01:02:56,050
- [but] imagine how you might do that without using conditionals and only using bit level [C] operations
+ but imagine how you might do that without using conditionals and only using bit level C operations
 
 792
 01:02:56,570 --> 01:03:00,789
- Right, so this is how this is how this is our way [of] teaching you?
+ Right, so this is how this is how this is our way of teaching you
 
 793
 01:03:02,210 --> 01:03:09,010
- How data is really represented in the machine now [the] bomb Lab which you've probably heard at this is
+ How data is really represented in the machine now the bomb Lab which you've probably heard at this is
 
 794
 01:03:09,680 --> 01:03:13,240
- this is a kind of famous all [over] the world now and
+ this is a kind of famous all over the world now and
 
 795
 01:03:14,600 --> 01:03:21,309
- at CmU the bomb lab is the way we teach you how to read and understand assembly language and
+ at CMU the bomb lab is the way we teach you how to read and understand assembly language and
 
 796
 01:03:23,030 --> 01:03:25,149
@@ -3204,7 +3213,7 @@
 
 798
 01:03:32,420 --> 01:03:35,290
- Each Phase wants you to type something in at the keyboard?
+ Each Phase wants you to type something in at the keyboard
 
 799
 01:03:36,290 --> 01:03:41,350
@@ -3220,7 +3229,7 @@
 
 802
 01:03:49,460 --> 01:03:52,330
- If you [defuse] all the phases then you've diffused the bomb
+ If you defuse all the phases then you've defuse the bomb
 
 803
 01:03:53,720 --> 01:03:58,570
@@ -3228,7 +3237,7 @@
 
 804
 01:03:59,900 --> 01:04:01,900
- [and] you have to try it again
+ and you have to try it again
 
 805
 01:04:02,030 --> 01:04:05,409
@@ -3280,7 +3289,7 @@
 
 817
 01:04:52,869 --> 01:04:55,769
- until you learn how to use [GDB] to set a breakpoint
+ until you learn how to use GDB to set a breakpoint
 
 818
 01:04:57,190 --> 01:05:00,570
@@ -3312,7 +3321,7 @@
 
 825
 01:05:36,010 --> 01:05:39,330
- sort of reverse engineer and figure out what it wants you to type [in] and
+ sort of reverse engineer and figure out what it wants you to type in and
 
 826
 01:05:40,780 --> 01:05:47,129
@@ -3328,7 +3337,7 @@
 
 829
 01:05:55,089 --> 01:06:00,899
- Teaches you sort of organically how to use GDB because you really can't do [it] if you don't use if you don't run GDB
+ Teaches you sort of organically how to use GDB because you really can't do it if you don't use if you don't run GDB
 
 830
 01:06:02,290 --> 01:06:03,940
@@ -3336,7 +3345,7 @@
 
 831
 01:06:03,940 --> 01:06:08,159
- Then the the [third] lab is this is a new lab the semester
+ Then the the third lab is this is a new lab the semester
 
 832
 01:06:08,800 --> 01:06:11,249
@@ -3392,11 +3401,13 @@
 
 845
 01:07:01,829 --> 01:07:07,788
- In the memory Hierarchy when we study the memory Hierarchy we we have a [cash] lab called the cash lab
+ In the memory Hierarchy when we study the memory Hierarchy 
+ we have a cache lab called the cache lab
 
 846
 01:07:08,130 --> 01:07:12,440
- Where you'll build your [own] cash simulator, so this is how you sort of learn how?
+ Where you'll build your own cache simulator, 
+ so this is how you sort of learn how
 
 847
 01:07:13,559 --> 01:07:15,150
@@ -3424,7 +3435,7 @@
 
 853
 01:07:46,890 --> 01:07:50,480
- Interacting with the the system [software] that the operating system
+ interacting with the the system software that the operating system
 
 854
 01:07:52,140 --> 01:07:54,140
@@ -3432,7 +3443,7 @@
 
 855
 01:07:54,930 --> 01:07:57,230
- That we call exceptional control [flaws] that
+ That we call exceptional Control Flow that
 
 856
 01:07:58,259 --> 01:08:00,409
@@ -3452,7 +3463,7 @@
 
 860
 01:08:13,349 --> 01:08:15,349
- move from from Hardware to software
+ move from from Hardware to Software
 
 861
 01:08:15,929 --> 01:08:18,469
@@ -3460,7 +3471,7 @@
 
 862
 01:08:19,080 --> 01:08:23,269
- So the the ideas that you cover an exceptional control floor like low hard
+ So the the ideas that you cover an exceptional control flow like low hard
 
 863
 01:08:23,699 --> 01:08:26,479
@@ -3472,7 +3483,7 @@
 
 865
 01:08:35,580 --> 01:08:40,429
- [ok], so this is this is where you start to learn [what] processes are and how to
+ ok, so this is this is where you start to learn what processes are and how to
 
 866
 01:08:41,190 --> 01:08:43,580
@@ -3488,7 +3499,7 @@
 
 869
 01:08:51,929 --> 01:08:54,408
- so this exists Solely on the Linux Kernel and
+ so this exists solely on the Linux Kernel and
 
 870
 01:08:54,869 --> 01:09:02,509
@@ -3520,7 +3531,7 @@
 
 877
 01:09:31,989 --> 01:09:33,989
- You're going to write your [own]
+ You're going to write your own
 
 878
 01:09:34,809 --> 01:09:36,929
@@ -3540,11 +3551,11 @@
 
 882
 01:09:54,520 --> 01:10:00,779
- [that] presents an abstraction to you of this variant of memory is a very large array of bytes
+ that presents an abstraction to you of this variant of memory is a very large array of bytes
 
 883
 01:10:02,679 --> 01:10:09,899
- When in reality memory is a Hierarchy of hardware and of cache memories and D rams virtual memory?
+ When in reality memory is a Hierarchy of hardware and of cache memories and DRAM virtual memory
 
 884
 01:10:10,659 --> 01:10:14,939
@@ -3556,11 +3567,11 @@
 
 886
 01:10:22,389 --> 01:10:26,578
- Much [easier] to manage ok so we'll learn we learn about virtual memory
+ Much easier to manage ok so we'll learn we learn about virtual memory
 
 887
 01:10:28,150 --> 01:10:34,949
- [we'll] learn how it works. We'll learn about the performance impact potential performance impact that it has on your programs
+ we'll learn how it works. We'll learn about the performance impact potential performance impact that it has on your programs
 
 888
 01:10:36,250 --> 01:10:38,399
@@ -3572,19 +3583,20 @@
 
 890
 01:10:45,159 --> 01:10:50,699
- [the] lab where you'll do that is called Malloc lab and in the malloc lab you'll write your own malloc and free
+ the lab where you'll do that is called Malloc lab and in the malloc lab you'll write your own malloc and free
 
 891
 01:10:51,969 --> 01:10:59,549
- functions [ok] so you'll you'll reinvent the functionality of the lib C malloc and free and this is a
+ functions so you'll you'll reinvent the functionality of the lib C malloc and free and this is a
 
 892
 01:11:02,230 --> 01:11:09,689
- Maybe a minute. Maybe it's two pages of code, but it'll be a guarantee. It'll be the most sophisticated
+ Maybe it's two pages of code, but it'll be a guarantee. 
+ It'll be the most sophisticated
 
 893
 01:11:11,320 --> 01:11:13,529
- Difficult two pages of code you've written
+ difficult two pages of code you've written
 
 894
 01:11:15,040 --> 01:11:21,119
@@ -3592,7 +3604,7 @@
 
 895
 01:11:21,119 --> 01:11:23,969
- Doesn't have many C. Doesn't help you out a lot
+ Doesn't have many, C Doesn't help you out a lot
 
 896
 01:11:25,480 --> 01:11:26,590
@@ -3600,11 +3612,11 @@
 
 897
 01:11:26,590 --> 01:11:29,219
- extractions for Data Structures, but when you're writing
+ abstractions for Data Structures, but when you're writing
 
 898
 01:11:29,590 --> 01:11:34,770
- But at least it does give you ideas like Strux unions that you can use to
+ But at least it does give you ideas like Struct, Union that you can use to
 
 899
 01:11:35,260 --> 01:11:39,000
@@ -3612,7 +3624,7 @@
 
 900
 01:11:39,610 --> 01:11:41,139
- You have to [ride]
+ You have to ride
 
 901
 01:11:41,139 --> 01:11:43,139
@@ -3624,7 +3636,7 @@
 
 903
 01:11:45,070 --> 01:11:47,070
- Malloc Tax is working at such a low level
+ malloc task is working at such a low level
 
 904
 01:11:48,040 --> 01:11:51,540
@@ -3632,7 +3644,7 @@
 
 905
 01:11:52,810 --> 01:11:58,259
- For that reason, but also the design space for malloc is is enormous you [have] many options
+ For that reason, but also the design space for malloc is is enormous you have many options
 
 906
 01:11:58,750 --> 01:12:04,469
@@ -3648,11 +3660,11 @@
 
 909
 01:12:12,099 --> 01:12:14,099
- we deal with I/o
+ we deal with I/O
 
 910
 01:12:14,770 --> 01:12:19,109
- Input/output so so far in the course we've just talked about sort of running programs
+ Input/Output so so far in the course we've just talked about sort of running programs
 
 911
 01:12:19,480 --> 01:12:24,629
@@ -3664,7 +3676,7 @@
 
 913
 01:12:28,360 --> 01:12:30,839
- so we'll look at basic concepts of Linux I/o
+ so we'll look at basic concepts of Linux I/O
 
 914
 01:12:31,989 --> 01:12:33,489
@@ -3672,11 +3684,11 @@
 
 915
 01:12:33,489 --> 01:12:40,649
- And since I think the most interesting form of I/o is is networking which allows you to talk to machines anywhere in the world
+ And since I think the most interesting form of I/O is is networking which allows you to talk to machines anywhere in the world
 
 916
 01:12:42,070 --> 01:12:47,820
- Using the internet, [we'll] also talk we'll learn how to do network programming you'll learn how to write programs that
+ Using the Internet, we'll also talk we'll learn how to do network programming you'll learn how to write programs that
 
 917
 01:12:49,389 --> 01:12:51,389
@@ -3688,11 +3700,11 @@
 
 919
 01:12:59,949 --> 01:13:03,749
- That's really exciting. [I] mean once I can still remember when
+ That's really exciting. I mean once I can still remember when
 
 920
 01:13:04,300 --> 01:13:07,469
- Developing this course. I had two windows open on my machine
+ developing this course. I had two windows open on my machine
 
 921
 01:13:07,889 --> 01:13:13,109
@@ -3700,11 +3712,11 @@
 
 922
 01:13:13,690 --> 01:13:20,009
- From one machine to the other and when that hello world appeared on the second windows like so exciting
+ from one machine to the other and when that hello world appeared on the second windows like so exciting
 
 923
 01:13:20,010 --> 01:13:22,500
- [I] mean if you're a nerd it's really exciting
+ I mean if you're a nerd it's really exciting
 
 924
 01:13:23,020 --> 01:13:25,020
@@ -3728,7 +3740,7 @@
 
 929
 01:13:50,290 --> 01:13:54,959
- if you are on the roster as of this morning if you go [to] the auto Lab link
+ if you are on the roster as of this morning if you go to the auto Lab link
 
 930
 01:13:55,210 --> 01:13:58,080
@@ -3736,11 +3748,11 @@
 
 931
 01:13:58,600 --> 01:14:00,550
- [if] you're not enrolled
+ if you're not enrolled
 
 932
 01:14:00,550 --> 01:14:02,550
- [you] won't have an auto lab account
+ you won't have an auto lab account
 
 933
 01:14:02,980 --> 01:14:06,149
@@ -3748,15 +3760,15 @@
 
 934
 01:14:07,330 --> 01:14:13,109
- If you if you want to try to wait it out, and wait for people to drop. I'll make the first couple of
+ if you want to try to wait it out, and wait for people to drop. I'll make the first couple of
 
 935
 01:14:13,330 --> 01:14:17,969
- Elite the first assignment due available from the course web page, so you can work on it without
+ elite the first assignment due available from the course web page, so you can work on it without
 
 936
 01:14:18,760 --> 01:14:21,780
- Actually handing [into] auto lab but at least you can keep going
+ actually handing into auto lab but at least you can keep going
 
 937
 01:14:27,160 --> 01:14:31,859
@@ -3772,13 +3784,13 @@
 
 940
 01:14:39,070 --> 01:14:42,750
- don't send email to the staff because we don't control the [waiver], so
+ don't send email to the staff because we don't control the waiver, so
 
 941
 01:14:44,710 --> 01:14:51,359
- You should contact one of these either Cathy Catherine or zahra depending on which class you had
+ You should contact one of these either Cathy Catherine or Zara depending on which class you had
 
 942
 01:14:53,110 --> 01:14:59,069
- Okay, so that's that welcome again looking forward to a great semester, [and] we'll see you on Thursday
+ Okay, so that's that welcome again looking forward to a great semester, and we'll see you on Thursday
 
