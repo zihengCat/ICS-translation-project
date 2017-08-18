@@ -33,8 +33,8 @@
 
 ## 课程列表
 
-- lesson-01: Overview *[CN-translating]* *[EN-finished]*
-- lesson-02: Bits ints Part1 *[waiting]*
+- lesson-01: Overview *[EN-finished]*
+- lesson-02: Bits ints Part1 *[EN-translating]*
 - lesson-03: Bits ints Part2 *[waiting]*
 - lesson-04: Floating Point *[waiting]*
 - lesson-05: Machine Level Programming I Basics *[waiting]*
@@ -71,7 +71,7 @@
 - *pull request* 合并翻译文本
 - *issue* 反映问题
 
-请先在**课程列表**处打好标签，再进行翻译/校对：
+请先在**课程列表**处打好标签，再进行翻译/校对工作：
 ```
 - 课程号: 课程名 [翻译状态] [翻译人/审校人]
 ```
@@ -86,6 +86,7 @@ README.md
 ```
 - `auto-srt`下存放**YouTube自动生成字幕**。
 - `translated-srt`下存放**翻译/校对后字幕**。
+- 中/英文字幕根据`.srt`的文件名分辨。
 
 ## 字幕格式
 
