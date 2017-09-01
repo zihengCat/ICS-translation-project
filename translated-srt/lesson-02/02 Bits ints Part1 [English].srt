@@ -636,11 +636,11 @@
 
 160
 00:13:26,420 --> 00:13:31,270
- File I/o about i/o that you can track I want to know
+ File I/O about I/O that you can track I want to know
 
 161
 00:13:31,880 --> 00:13:36,970
- Which set of possible inputs to the system think of different network [connections]?
+ Which set of possible inputs to the system think of different network connections
 
 162
 00:13:37,250 --> 00:13:40,059
@@ -652,7 +652,7 @@
 
 164
 00:13:42,500 --> 00:13:49,419
- Data structure that it's sort of hidden away among some seeing library calls, but it basically is using exactly this
+ data structure that it's sort of hidden away among some seeing library calls, but it basically is using exactly this
 
 165
 00:13:50,150 --> 00:13:56,109
@@ -664,7 +664,7 @@
 
 167
 00:14:01,700 --> 00:14:05,349
- [why] do we use representation of sets in computer science?
+ why do we use representation of sets in computer science
 
 168
 00:14:07,640 --> 00:14:11,799
@@ -692,7 +692,7 @@
 
 174
 00:14:37,040 --> 00:14:39,310
- Exclamation mark Which is often pronounced bang?
+ exclamation mark which is often pronounced bang
 
 175
 00:14:40,250 --> 00:14:42,250
@@ -712,7 +712,7 @@
 
 179
 00:14:58,040 --> 00:15:05,499
- But if you mix and match these you're certainly going to have problems, so the double bar [ones] aren't thinking about
+ But if you mix and match these you're certainly going to have problems, so the double bar ones aren't thinking about
 
 180
 00:15:06,050 --> 00:15:08,050
@@ -728,7 +728,7 @@
 
 183
 00:15:13,880 --> 00:15:21,340
- The number Zero is the thing that faults and anything else any other bit pattern is considered to be true
+ The number Zero is the thing that false and anything else any other bit pattern is considered to be true
 
 184
 00:15:23,720 --> 00:15:27,939
@@ -736,7 +736,7 @@
 
 185
 00:15:28,790 --> 00:15:31,480
- Bonds give you is what's called early termination?
+ bonds give you is what's called early termination
 
 186
 00:15:32,390 --> 00:15:34,220
@@ -748,7 +748,7 @@
 
 188
 00:15:39,440 --> 00:15:43,150
- the some hex Pattern for one, so this is a a
+ the some Hex Pattern for one, so this is a a
 
 189
 00:15:45,320 --> 00:15:46,480
@@ -768,7 +768,7 @@
 
 193
 00:16:08,810 --> 00:16:10,040
- [then]
+ then
 
 194
 00:16:10,040 --> 00:16:12,040
@@ -780,7 +780,7 @@
 
 196
 00:16:19,430 --> 00:16:24,370
- So it's not doing bitwise operations. It's just trying to create true and [False]
+ So it's not doing bitwise operations. It's just trying to create true and false
 
 197
 00:16:24,520 --> 00:16:28,809
@@ -800,11 +800,11 @@
 
 201
 00:16:46,790 --> 00:16:51,399
- Because you mentally slip or because you type something wrong to do the wrong time?
+ Because you mentally slip or because you type something wrong to do the wrong time
 
 202
 00:16:51,770 --> 00:16:59,319
- But in particularly this early termination is something that of [course] people use a lot if you want to make sure that you're not
+ But in particularly this early termination is something that of course people use a lot if you want to make sure that you're not
 
 203
 00:16:59,690 --> 00:17:06,969
@@ -824,7 +824,7 @@
 
 207
 00:17:17,690 --> 00:17:24,309
- That's an aside at this level. We're mostly looking at bits, but just as a programming note. Don't mix these up?
+ that's an aside at this level. We're mostly looking at bits, but just as a programming note. Don't mix these up
 
 208
 00:17:32,480 --> 00:17:39,789
@@ -832,11 +832,11 @@
 
 209
 00:17:40,130 --> 00:17:46,930
- Beginning programmers think about too much, and if there's a curious feature that a left shifts are always the [same]
+ Beginning programmers think about too much, and if there's a curious feature that a left shifts are always the same
 
 210
 00:17:46,930 --> 00:17:53,230
- But there's two different flavors of right shift, [and] we'll see in a little bit later. Why there's two different flavors of right shift
+ But there's two different flavors of right shift, and we'll see in a little bit later. Why there's two different flavors of right shift
 
 211
 00:17:54,560 --> 00:17:56,560
@@ -856,7 +856,7 @@
 
 215
 00:18:02,270 --> 00:18:06,670
- X and you want to shift it some number of positions either to the left or to the right?
+ X and you want to shift it some number of positions either to the left or to the right
 
 216
 00:18:07,280 --> 00:18:09,280
@@ -868,7 +868,7 @@
 
 218
 00:18:15,410 --> 00:18:21,009
- I'm shifting by three, so I'll take the lower [order] five bits move them over three positions
+ I'm shifting by three, so I'll take the lower order five bits move them over three positions
 
 219
 00:18:21,010 --> 00:18:28,869
@@ -896,7 +896,7 @@
 
 225
 00:18:45,080 --> 00:18:51,819
- There's another flavor called the arithmetic shift which it differs in that the rule for what bits you fill in with?
+ There's another flavor called the arithmetic shift which it differs in that the rule for what bits you fill in with
 
 226
 00:18:52,070 --> 00:18:54,070
@@ -912,11 +912,11 @@
 
 229
 00:19:09,440 --> 00:19:14,470
- Where the leading bit was a one that when I shift it to the right?
+ Where the leading bit was a one that when I shift it to the right
 
 230
 00:19:15,740 --> 00:19:18,850
- arithmetic [we] I'll fill it in with once and
+ arithmetic I'll fill it in with once and
 
 231
 00:19:19,490 --> 00:19:25,159
@@ -924,7 +924,7 @@
 
 232
 00:19:25,710 --> 00:19:28,789
- And that's the purpose of it, and why it's called arithmetic. [oh]
+ And that's the purpose of it, and why it's called arithmetic.
 
 233
 00:19:31,620 --> 00:19:33,620
@@ -936,7 +936,7 @@
 
 235
 00:19:35,100 --> 00:19:39,799
- Kind of confusing to [people] is what what should happen if you say?
+ Kind of confusing to people is what what should happen if you say
 
 236
 00:19:39,799 --> 00:19:44,269
@@ -944,7 +944,7 @@
 
 237
 00:19:52,919 --> 00:19:58,519
- And x is a single byte, what do you think you should get?
+ And X is a single byte, what do you think you should get?
 
 238
 00:20:02,640 --> 00:20:09,049
@@ -952,7 +952,7 @@
 
 239
 00:20:09,990 --> 00:20:12,319
- You'll get whatever x was
+ You'll get whatever X was
 
 240
 00:20:17,299 --> 00:20:21,638
@@ -964,7 +964,7 @@
 
 242
 00:20:25,789 --> 00:20:28,539
- The reason that happens is [if] you think about it
+ The reason that happens is if you think about it
 
 243
 00:20:28,539 --> 00:20:32,378
@@ -976,7 +976,7 @@
 
 245
 00:20:37,369 --> 00:20:44,348
- so that's just a warning [I] and some machines [that] does what you just thought it should and other machines that does this and
+ so that's just a warning I and some machines that does what you just thought it should and other machines that does this and
 
 246
 00:20:44,690 --> 00:20:46,639
@@ -984,7 +984,7 @@
 
 247
 00:20:46,639 --> 00:20:49,659
- No, guarantee and see that it will be one way or the other
+ No, guarantee and C that it will be one way or the other
 
 248
 00:20:52,759 --> 00:20:57,159
@@ -992,11 +992,11 @@
 
 249
 00:20:57,799 --> 00:21:02,829
- logically well I guess you [really] want to shift right then but that usually doesn't work either, so
+ logically well I guess you really want to shift right then but that usually doesn't work either, so
 
 250
 00:21:05,450 --> 00:21:08,979
- [now] let's talk about number representation and
+ now let's talk about number representation and
 
 251
 00:21:11,749 --> 00:21:14,139
@@ -1020,7 +1020,7 @@
 
 256
 00:21:43,129 --> 00:21:45,129
- It keeps jumping on [you]
+ It keeps jumping on you
 
 257
 00:21:46,429 --> 00:21:49,028
@@ -1028,7 +1028,7 @@
 
 258
 00:21:49,399 --> 00:21:55,149
- This is just the the conversion then BTU means from bit [sum] a bit level
+ This is just the the conversion then BTU means from bit level
 
 259
 00:21:55,700 --> 00:21:58,479
@@ -1040,15 +1040,15 @@
 
 261
 00:22:04,669 --> 00:22:10,628
- Where each bit is weighted by a power of two and the only difference when we look at two's complement?
+ Where each bit is weighted by a power of two and the only difference when we look at two's complement
 
 262
 00:22:10,629 --> 00:22:12,629
- Which is a way to represent both?
+ Which is a way to represent both
 
 263
 00:22:12,889 --> 00:22:18,669
- Negative and positive [numbers] is we'll consider the most significant bit to be what's called the time bit
+ Negative and positive numbers is we'll consider the most significant bit to be what's called the time bit
 
 264
 00:22:19,159 --> 00:22:21,159
@@ -1100,7 +1100,7 @@
 
 276
 00:23:44,970 --> 00:23:49,250
- positions that are ones use the corresponding [power] of two and you're done and
+ positions that are ones use the corresponding power of two and you're done and
 
 277
 00:23:50,220 --> 00:23:53,150
@@ -1128,7 +1128,7 @@
 
 283
 00:24:24,180 --> 00:24:28,879
- Has a negative value, [so] it will still this is I?
+ Has a negative value, so it will still this is I
 
 284
 00:24:31,740 --> 00:24:37,819
@@ -1152,7 +1152,7 @@
 
 289
 00:24:52,770 --> 00:24:56,180
- the other [bits] stayed at the same, so let's do it [for] this case of
+ the other bits stayed at the same, so let's do it for this case of
 
 290
 00:24:57,090 --> 00:24:59,090
@@ -1168,7 +1168,7 @@
 
 293
 00:25:06,180 --> 00:25:09,740
- [Plus] 4 Plus 2 so that equal minus 10
+ Plus 4 Plus 2 so that equal minus 10
 
 294
 00:25:12,030 --> 00:25:17,149
@@ -1196,7 +1196,7 @@
 
 300
 00:25:51,640 --> 00:25:53,640
- [let's]
+ let's
 
 301
 00:25:54,010 --> 00:25:56,010
